@@ -58,19 +58,24 @@ export function VocabularyProvider({ children }) {
     return await response.json();
   }
 
-  async function getUserLanguages() {
-    const response = await fetch(`${api}user-languages/`, {
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+async function getUserLanguages() {
+  const response = await fetch(`${api}user-languages/`, {
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-    if (!response.ok) {
-      throw new Error("Failed to load languages.");
-    }
-    return await response.json();
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error("Failed to load languages.");
   }
+
+  setUserLanguages(data.learning_languages);
+
+  return data;
+}
 
   async function getLanguages() {
     const response = await fetch(`${api}languages/`, {
@@ -200,7 +205,6 @@ export function VocabularyProvider({ children }) {
     });
 
     const newWord = await response.json();
-    // setWords((prev) => [...prev, newWord]);
 
     return newWord;
   }
@@ -216,7 +220,6 @@ export function VocabularyProvider({ children }) {
     });
 
     const newCategory = await response.json();
-    // setWords((prev) => [...prev, newCategory]);
 
     return newCategory;
   }
@@ -252,10 +255,6 @@ export function VocabularyProvider({ children }) {
 
     const updatedCategory = await response.json();
 
-    // setWords((prev) =>
-    //   prev.map((word) => (word.id === id ? updatedCategory : word)),
-    // );
-
     return updatedCategory;
   }
 
@@ -275,12 +274,6 @@ export function VocabularyProvider({ children }) {
           getUserLanguages(),
           getLanguages(),
         ]);
-
-        console.log("DATA: ", userData);
-
-        console.log("languages: ", languages);
-        console.log("native_language: ", userData.native_language);
-        console.log("learning_languages: ", userData.learning_languages);
 
         if (!userData.languages_active) {
           navigate("/my-quiz/choose-languages");

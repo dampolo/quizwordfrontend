@@ -6,7 +6,7 @@ import useVocabulary from "../../context/useVocabulary";
 import LanguageForm from "./LanguageForm";
 
 function ChooseLanguages() {
-  const { languages, postLanguages } = useVocabulary();
+  const { languages, postLanguages, getUserLanguages } = useVocabulary();
   const navigate = useNavigate();
 
   const [nativeLanguage, setNativeLanguage] = useState("");
@@ -41,6 +41,7 @@ function ChooseLanguages() {
       navigate(
         `/my-quiz/all-words?language=${learningLanguages[0]}`
       );
+      getUserLanguages();
     } catch (err) {
       console.error(err);
     }

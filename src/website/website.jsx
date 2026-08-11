@@ -1,7 +1,23 @@
+import { useAuth } from "../context/useAuth";
 import "./website.scss";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 function Website() {
+  const { loading, isAuthenticated } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="show-container ">
+        <PreLoader />
+      </div>
+    );
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to="/my-quiz" replace />;
+  }
+
+
   return (
     <main>
       <section className="hero">
@@ -21,12 +37,18 @@ function Website() {
             </p>
 
             <div className="hero__buttons">
-              <Link to="/create-account" className="hero__button hero__button--primary">
+              <Link
+                to="/create-account"
+                className="hero__button hero__button--primary"
+              >
                 Register
                 <span>→</span>
               </Link>
 
-              <Link to="/login" className="hero__button hero__button--secondary">
+              <Link
+                to="/login"
+                className="hero__button hero__button--secondary"
+              >
                 Login
               </Link>
             </div>

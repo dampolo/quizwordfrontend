@@ -68,22 +68,27 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     setLoading(true);
+    try {
+      const response = await fetch(`${api}token/`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const response = await fetch(`${api}token/`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+       const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error("Login failed");
+      if (!response.ok) {
+        const error = new Error("Account creation failed");
+        error.response = data;
+        throw error;
+      }
+      return checkAuth();
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
-
-    return checkAuth();
   };
 
   async function createAccount(formData) {

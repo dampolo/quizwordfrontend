@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
 import PreLoader from "../../components/PreLoader/PreLoader";
+import { toast } from "react-toastify";
 
 import "./login-quiz.scss";
 
@@ -10,7 +11,7 @@ function LoginQuiz() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const { login, loading} = useAuth();
+  const { login, loading } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -35,11 +36,16 @@ function LoginQuiz() {
       if (success) {
         navigate("/my-quiz/all-words");
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      const message =
+        err.response?.email?.[0] ||
+        err.response?.password?.[0] ||
+        err.response?.detail?.[0] ||
+        "Account creation failed";
 
+      toast.error(message);
       setFormErrors({
-        api: "Invalid email or password",
+        message: message,
       });
     }
   }
@@ -53,11 +59,11 @@ function LoginQuiz() {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%+\-/*?&])[A-Za-z\d@$!%+\-/*?&]{10,}$/;
 
     if (!values.email || !regexEmail.test(values.email)) {
-      errors.email = "E-Mail ist unvollständig/inkorrekt.";
+      errors.email = "Dein E-Mail ist unvollständig/inkorrekt.";
     }
 
     if (!values.password || !regexPassword.test(values.password)) {
-      errors.password = "Dein Passwort ist nicht korrekt";
+      errors.password = "Dein Passwort ist nicht korrekt.";
     }
 
     return errors;
@@ -147,19 +153,19 @@ function LoginQuiz() {
               />
             </div>
 
-            <div className="warn-txt warn-txt-hight">{formErrors.password}</div>
+            <div className="warn-txt warn-txt-hight">
+              {formErrors.password || formErrors.message}
+            </div>
           </div>
-              
-                { loading ? (
-                  <PreLoader/>
-                ) : (
-                 <></>
-                )  
-              } 
 
+          {loading ? <PreLoader /> : <></>}
 
           <div className="btn-container">
-            <button className="main-quiz-button" type="submit" disabled={loading}>
+            <button
+              className="main-quiz-button"
+              type="submit"
+              disabled={loading}
+            >
               Anmelden
             </button>
           </div>

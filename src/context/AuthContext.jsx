@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
 import useApi from "./ApiContext";
-import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -14,7 +13,6 @@ export function AuthProvider({ children }) {
   const [profile, setProfile] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("");
 
-  const navigate = useNavigate();
 
   const checkAuth = async () => {
     setLoading(true);

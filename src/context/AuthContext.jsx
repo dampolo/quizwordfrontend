@@ -24,17 +24,12 @@ export function AuthProvider({ children }) {
         credentials: "include",
       });
 
-      console.log("Status:", response.status);
-
       if (!response.ok) {
         throw new Error("Not authenticated");
       }
 
       const user = await response.json();
 
-      // if (!user.languages_active) {
-      //   navigate("/my-quiz/choose-languages/");
-      // }
       setUser(user);
       return true;
     } catch {

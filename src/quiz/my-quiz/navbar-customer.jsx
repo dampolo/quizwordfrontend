@@ -34,7 +34,7 @@ function NavbarCustomer() {
             src="/assets/categories-icon.svg"
             alt=""
           />
-          <span className="nav-link-text">Categories</span>
+          <span className="nav-link-text">Kategorien</span>
         </NavLink>
       </li>
 
@@ -44,7 +44,7 @@ function NavbarCustomer() {
           className={({ isActive }) => (isActive ? "active" : "")}
         >
           <img width={24} height={24} src="/assets/words.svg" alt="" />
-          <span className="nav-link-text">All Words</span>
+          <span className="nav-link-text">Wörter</span>
         </NavLink>
       </li>
 
@@ -54,7 +54,7 @@ function NavbarCustomer() {
           className={({ isActive }) => (isActive ? "active" : "")}
         >
           <img width={24} height={24} src="/assets/add.svg" alt="" />
-          <span className="nav-link-text">New</span>
+          <span className="nav-link-text">Neu</span>
         </NavLink>
       </li>
 
@@ -64,7 +64,7 @@ function NavbarCustomer() {
           className={({ isActive }) => (isActive ? "active" : "")}
         >
           <img width={24} height={24} src="/assets/quiz-icon.svg" alt="" />
-          <span className="nav-link-text">Quizzes</span>
+          <span className="nav-link-text">Quizze</span>
         </NavLink>
       </li>
 

@@ -8,5 +8,10 @@
   "VOCABULARY_CATEGORIES": {
     "TITLE": "Vocabulary Categories",
     "DESCRIPTION": "Organize your learning journey by topic and difficulty."
+  },
+   "ADD_NEW_CATEGORY": {
+    "TITLE_1": "Category",
+    "TITLE_2": "Add New Category",
+    "DESCRIPTION": "Create a custom study list"
   }
 }

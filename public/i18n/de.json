@@ -8,5 +8,10 @@
   "VOCABULARY_CATEGORIES": {
     "TITLE": "Vokabelkategorien",
     "DESCRIPTION": "Organisiere deinen Lernfortschritt nach Thema und Schwierigkeitsgrad."
+  },
+  "ADD_NEW_CATEGORY": {
+    "TITLE_1": "Kategorie",
+    "TITLE_2": "Neue Kategorie hinzufügen",
+    "DESCRIPTION": "Erstelle eine individuelle Lernliste"
   }
 }

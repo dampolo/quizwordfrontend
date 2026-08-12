@@ -47,7 +47,7 @@ export default function VocabularyCategories() {
           className="main-quiz-button add-new-category-button"
           to="/my-quiz/add-new-category"
         >
-          + Add New Category
+          + Kategorie
         </Link>
       </header>
 
@@ -111,8 +111,8 @@ export default function VocabularyCategories() {
 
         <Link className="add-card" to="/my-quiz/add-new-category">
           <span>⊕</span>
-          <strong>Add New Category</strong>
-          <small>Create a custom study list</small>
+          <strong>Neue Kategorie hinzufügen</strong>
+          <small>Erstelle eine individuelle Lernliste.</small>
         </Link>
       </section>
     </section>

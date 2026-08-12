@@ -39,8 +39,8 @@ export default function VocabularyCategories() {
     <section className="vocab-page">
       <header className="topbar">
         <div>
-          <h1>Vocabulary Categories</h1>
-          <p>Organize your learning journey by topic and difficulty.</p>
+          <h1>Vokabelkategorien</h1>
+          <p>Organisiere deinen Lernfortschritt nach Thema und Schwierigkeitsgrad.</p>
         </div>
 
         <Link

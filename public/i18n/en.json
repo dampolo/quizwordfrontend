@@ -4,5 +4,9 @@
     "ALL_WORDS": "All Words",
     "NEW": "New",
     "QUIZZES": "Quizzes"
+  },
+  "VOCABULARY_CATEGORIES": {
+    "TITLE": "Vocabulary Categories",
+    "DESCRIPTION": "Organize your learning journey by topic and difficulty."
   }
 }

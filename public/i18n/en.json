@@ -22,5 +22,19 @@
     "CATEGORY": "Category",
     "STREAK": "Streak",
     "ACTIONS": "Actions"
+  },
+  "ADD_NEW_WORD": {
+    "TITLE": "Add New Word",
+    "DESCRIPTION": "Expand your vocabulary with context and mnemonics.",
+    "SOURCE_WORD": "Source Word",
+    "TARGET_WORD": "Target Word",
+    "TERM": "Term",
+    "LANGUAGE": "Language",
+    "TIP": "Tip (Optional)",
+    "TIP_PLACEHOLDER": "Visualize a spring bouncing back",
+    "EXAMPLE_SENTENCE": "Example Sentence (Optional)",
+    "EXAMPLE_SENTENCE_PLACEHOLDER": "Her resilience after the setback was admirable.",
+    "PRO_TIP": "Pro Tip",
+    "PRO_TIP_TEXT": "Adding an example sentence helps our AI generate better flashcard variations for your next study session."
   }
 }

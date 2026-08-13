@@ -22,6 +22,19 @@
     "CATEGORY": "Kategorie",
     "STREAK": "Serie",
     "ACTIONS": "Aktionen"
+  },
+  "ADD_NEW_WORD": {
+    "TITLE": "Neues Wort hinzufügen",
+    "DESCRIPTION": "Erweitere deinen Wortschatz mit Kontext und Eselsbrücken.",
+    "SOURCE_WORD": "Ausgangswort",
+    "TARGET_WORD": "Zielwort",
+    "TERM": "Begriff",
+    "LANGUAGE": "Sprache",
+    "TIP": "Tipp (Optional)",
+    "TIP_PLACEHOLDER": "Stell dir eine Feder vor, die zurückspringt",
+    "EXAMPLE_SENTENCE": "Beispielsatz (Optional)",
+    "EXAMPLE_SENTENCE_PLACEHOLDER": "Ihre Widerstandsfähigkeit nach dem Rückschlag war bewundernswert.",
+    "PRO_TIP": "Profi-Tipp",
+    "PRO_TIP_TEXT": "Ein Beispielsatz hilft unserer KI dabei, bessere Karteikartenvarianten für deine nächste Lerneinheit zu erstellen."
   }
-
 }

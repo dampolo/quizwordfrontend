@@ -156,8 +156,8 @@ export default function AddNewWord() {
       <BackButton to="/my-quiz/all-words/" />
       <header className="page-header">
         <div>
-          <h1>Add New Word</h1>
-          <p>Expand your vocabulary with context and mnemonics.</p>
+          <h1>Neues Wort hinzufügen</h1>
+          <p>Erweitere deinen Wortschatz mit Kontext und Eselsbrücken.</p>
         </div>
       </header>
 
@@ -211,27 +211,27 @@ export default function AddNewWord() {
             >
               <div className="panel-title">
                 <span></span>
-                <strong>SOURCE WORD</strong>
+                <strong>Ausgangswort</strong>
               </div>
 
               {/* source word container */}
               <div className="source_word-contianer">
                 <div className="source_word-input">
                   <label htmlFor="source_word">
-                    Term <span>*</span>
+                    Begriff <span>*</span>
                   </label>
                   <input
                     name="word"
                     value={formData.translations[0].word}
                     onChange={(e) => handleChange(0, e)}
                     placeholder="e.g. Resilience"
-                    autoComplete="off"
+                    autoComplete="name"
                     required
                   />
                 </div>
 
                 <div className="source_word-lang">
-                  <label htmlFor="language">Lang:</label>
+                  <label htmlFor="language">Sprache:</label>
 
                   <select value={nativeLanguage?.id || ""} disabled>
                     <option value="">Wähle Sprache</option>
@@ -250,24 +250,23 @@ export default function AddNewWord() {
                 htmlFor="source_tip"
                 className={`${moreSource ? "" : "source_tip"}`}
               >
-                Tip (Optional)
+                Tipp (Optional)
               </label>
               <input
                 type="text"
                 name="tip"
                 value={formData.translations[0].tip}
                 onChange={(e) => handleChange(0, e)}
-                placeholder="Visualize a spring bouncing back"
+                placeholder="Stell dir eine Feder vor, die zurückspringt"
+                autoComplete="tip"
               />
 
-              <label htmlFor="source_sentence">
-                Example Sentence (Optional)
-              </label>
+              <label htmlFor="source_sentence">Beispielsatz (Optional)</label>
               <textarea
                 name="sentence"
                 value={formData.translations[0].sentence}
                 onChange={(e) => handleChange(0, e)}
-                placeholder="Her resilience after the setback was admirable."
+                placeholder="Ihre Widerstandsfähigkeit nach dem Rückschlag war bewundernswert."
               />
             </div>
 
@@ -300,25 +299,25 @@ export default function AddNewWord() {
             >
               <div className="panel-title">
                 <span></span>
-                <strong>TARGET WORD</strong>
+                <strong>Zielwort</strong>
               </div>
               <div className="target_word-contianer">
                 <div className="target_word-input">
                   <label htmlFor="target_word">
-                    Translation <span>*</span>
+                    Begriff <span>*</span>
                   </label>
                   <input
                     name="word"
                     value={formData.translations[1].word || ""}
                     onChange={(e) => handleChange(1, e)}
                     placeholder="e.g. Resiliencia"
-                    autoComplete="off"
+                    autoComplete="name"
                     required
                   />
                 </div>
 
                 <div className="target_word-lang">
-                  <label htmlFor="language">Lang:</label>
+                  <label htmlFor="language">Sprache:</label>
 
                   <select
                     name="language"
@@ -339,25 +338,25 @@ export default function AddNewWord() {
                 htmlFor="target_tip"
                 className={`${moreTarget ? "" : "target_tip"}`}
               >
-                Tip (Optional)
+                Tipp (Optional)
               </label>
               <input
                 type="text"
                 name="tip"
                 value={formData.translations[1].tip}
                 onChange={(e) => handleChange(1, e)}
-                placeholder="Sounds like 'silence' at the end"
-                autoComplete="off"
+                placeholder="Stell dir eine Feder vor, die zurückspringt"
+                autoComplete="tip"
               />
 
               <label htmlFor="target_sentence">
-                Example Sentence (Optional)
+                Beispielsatz (Optional)
               </label>
               <textarea
                 name="sentence"
                 value={formData.translations[1].sentence}
                 onChange={(e) => handleChange(1, e)}
-                placeholder="Su resiliencia tras el revés fue admirable."
+                placeholder="Ihre Widerstandsfähigkeit nach dem Rückschlag war bewundernswert."
               />
             </div>
             <div className="button-container">
@@ -385,10 +384,10 @@ export default function AddNewWord() {
         <div className="pro-tip">
           <span>💡</span>
           <div>
-            <strong>Pro Tip</strong>
+            <strong>Profi-Tipp</strong>
             <p>
-              Adding an example sentence helps our AI generate better flashcard
-              variations for your next study session.
+              Ein Beispielsatz hilft unserer KI dabei, bessere
+              Karteikartenvarianten für deine nächste Lerneinheit zu erstellen.
             </p>
           </div>
         </div>
@@ -451,7 +450,7 @@ function WordPanel({
         placeholder={tipPlaceholder}
       />
 
-      <label>Example Sentence (Optional)</label>
+      <label>Beispielsatz (Optional)</label>
       <textarea
         name={sentenceName}
         value={values[sentenceName]}

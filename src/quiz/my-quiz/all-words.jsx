@@ -46,7 +46,7 @@ function AllWords() {
     const payload = {
       quiz_name: quizName,
       concepts: selectedWordIds,
-      target_language: language
+      target_language: language,
     };
 
     try {
@@ -54,7 +54,7 @@ function AllWords() {
       toast.success(`Quiz "${quizName}" wurde erstellt!`);
       setDialogOpen(false);
       setSelectedWordIds([]);
-      navigate(`/my-quiz/all-words/?language=${language}`)
+      navigate(`/my-quiz/all-words/?language=${language}`);
     } catch (error) {
       console.error("Failed to create quiz:", error);
     }
@@ -85,10 +85,11 @@ function AllWords() {
     <div className="vocabulary">
       <div className="vocabulary__header">
         <div>
-          <h1>Your Vocabulary</h1>
+          <h1>Deine Vokabeln</h1>
           <p>
-            Organize and track your learning progress. Manage definitions,
-            categories, and review schedules for all your saved expressions.
+            Organisiere und verfolge deinen Lernfortschritt. Verwalte
+            Übersetzungen, Kategorien und Wiederholungspläne für alle deine
+            gespeicherten Ausdrücke.
           </p>
         </div>
 
@@ -129,11 +130,11 @@ function AllWords() {
       <div className="word-list">
         <div className="list-head">
           <div className="check">+</div>
-          <div className="rank">Rank</div>
-          <div className="word">Word & Translation</div>
-          <div className="category">Category</div>
-          <div className="streak">Streak</div>
-          <div className="actions">Actions</div>
+          <div className="rank">Rang</div>
+          <div className="word">Wort & Übersetzung</div>
+          <div className="category">Kategorie</div>
+          <div className="streak">Serie</div>
+          <div className="actions">Aktionen</div>
         </div>
         {words.length === 0 ? (
           <p className="no-words">Du hast hier keine Wörter.</p>

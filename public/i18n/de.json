@@ -13,5 +13,15 @@
     "TITLE_1": "Kategorie",
     "TITLE_2": "Neue Kategorie hinzufügen",
     "DESCRIPTION": "Erstelle eine individuelle Lernliste"
+  },
+  "YOUR_VOCABULARY": {
+    "TITLE": "Deine Vokabeln",
+    "DESCRIPTION": "Organisiere und verfolge deinen Lernfortschritt. Verwalte Übersetzungen, Kategorien und Wiederholungspläne für alle deine gespeicherten Ausdrücke.",
+    "RANK": "Rang",
+    "WORD_TRANSLATION": "Wort & Übersetzung",
+    "CATEGORY": "Kategorie",
+    "STREAK": "Serie",
+    "ACTIONS": "Aktionen"
   }
+
 }

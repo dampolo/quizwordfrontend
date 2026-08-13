@@ -13,5 +13,14 @@
     "TITLE_1": "Category",
     "TITLE_2": "Add New Category",
     "DESCRIPTION": "Create a custom study list"
+  },
+   "YOUR_VOCABULARY": {
+    "TITLE": "Your Vocabulary",
+    "DESCRIPTION": "Organize and track your learning progress. Manage definitions, categories, and review schedules for all your saved expressions.",
+    "RANK": "Rank",
+    "WORD_TRANSLATION": "Word & Translation",
+    "CATEGORY": "Category",
+    "STREAK": "Streak",
+    "ACTIONS": "Actions"
   }
 }

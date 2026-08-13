@@ -71,7 +71,7 @@ function NavbarCustomer() {
       <li>
         <NavLink to="/my-quiz/einstellungen" onClick={closeMenu}>
           <img width={25} height={25} src="/assets/trash.svg" alt="" />
-          <span className="nav-link-text">Trash</span>
+          <span className="nav-link-text">Einstellungen</span>
         </NavLink>
       </li>
     </ul>

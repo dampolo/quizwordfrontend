@@ -35,6 +35,7 @@ import Price from "./website/price";
 import HelpDesk from "./website/help-desk";
 import EditLanguages from "./components/ChooseLanguage/EditLanguages";
 import ResetPassword from "./quiz/auth/reset-password";
+import Settings from "./quiz/my-quiz/Settings/settings";
 
 function App() {
   return (
@@ -94,6 +95,8 @@ function App() {
                 <Route path=":id/quiz-results" element={<QuizResults />} />
                 <Route path="choose-languages" element={<ChooseLanguages />} />
                 <Route path="edit-languages" element={<EditLanguages />} />
+                <Route path="settings" element={<Settings />} />
+
 
             </Route>
           </Route>

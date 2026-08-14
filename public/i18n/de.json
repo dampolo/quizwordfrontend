@@ -41,5 +41,21 @@
     "TITLE": "Aktive Quizze",
     "DESCRIPTION": "Setze deinen Lernfortschritt fort. Teste dein Wissen mit kürzlich hinzugefügten Vokabeln oder konzentriere dich auf deine Schwachstellen.",
     "LAST_UPDATED": "Aktualisiert"
+  },
+  "ALL_QUIZ_WORDS": {
+    "TITLE": "Deine Vokabeln",
+    "DESCRIPTION": "Organisiere und verfolge deinen Lernfortschritt. Verwalte Übersetzungen, Kategorien und Wiederholungspläne für alle deine gespeicherten Ausdrücke.",
+    "RANK": "Rang",
+    "WORD_TRANSLATION": "Wort & Übersetzung",
+    "CATEGORY": "Kategorie",
+    "STREAK": "Serie",
+    "ACTIONS": "Aktionen",
+    "SCORE": "Punktzahl",
+    "DIRECTION": "Richtung",
+    "DATE": "Datum",
+    "DETAILS": "Einzelheiten",
+    "VOCABULARY_DETAILS": "Vokabeldetails",
+    "DETAILS_HINT_1": "Klicke auf,",
+    "DETAILS_HINT_2": " um die Details anzuzeigen."
   }
 }

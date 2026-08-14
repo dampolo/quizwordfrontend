@@ -9,12 +9,12 @@
     "TITLE": "Vocabulary Categories",
     "DESCRIPTION": "Organize your learning journey by topic and difficulty."
   },
-   "ADD_NEW_CATEGORY": {
+  "ADD_NEW_CATEGORY": {
     "TITLE_1": "Category",
     "TITLE_2": "Add New Category",
     "DESCRIPTION": "Create a custom study list"
   },
-   "YOUR_VOCABULARY": {
+  "YOUR_VOCABULARY": {
     "TITLE": "Your Vocabulary",
     "DESCRIPTION": "Organize and track your learning progress. Manage definitions, categories, and review schedules for all your saved expressions.",
     "RANK": "Rank",
@@ -41,5 +41,21 @@
     "TITLE": "Active Quizzes",
     "DESCRIPTION": "Continue your learning journey. Test your knowledge on recently added vocabulary or focus on your weak areas.",
     "LAST_UPDATED": "Last Updated"
+  },
+  "ALL_QUIZ_WORDS": {
+    "TITLE": "Your Vocabulary",
+    "DESCRIPTION": "Organize and track your learning progress. Manage definitions, categories, and review schedules for all your saved expressions.",
+    "RANK": "Rank",
+    "WORD_TRANSLATION": "Word & Translation",
+    "CATEGORY": "Category",
+    "STREAK": "Streak",
+    "ACTIONS": "Actions",
+    "SCORE": "Score",
+    "DIRECTION": "Direction",
+    "DATE": "Date",
+    "DETAILS": "Actions",
+    "VOCABULARY_DETAILS": "Vocabulary Details",
+    "DETAILS_HINT_1": "Click on",
+    "DETAILS_HINT_2": " to see the details."
   }
 }

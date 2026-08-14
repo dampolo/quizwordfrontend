@@ -118,11 +118,11 @@ function AllQuizWords() {
 
       <div className="word-list-attempt">
         <div className="list-head-attempt">
-          <div>Rank</div>
-          <div>Word & Translation</div>
-          <div>Category</div>
-          <div>Streak</div>
-          <div>Actions</div>
+          <div>Rang</div>
+          <div>Wort & Übersetzung</div>
+          <div>Kategorie</div>
+          <div>Serie</div>
+          <div>Aktionen</div>
         </div>
 
         {quiz?.concepts.map((concept) => (
@@ -159,10 +159,10 @@ function AllQuizWords() {
       {/* ATTEMPTS */}
       <div className="attempt-list">
         <div className="list-head-score">
-          <div>SCORE</div>
-          <div>DIRECTION</div>
+          <div>Punktzahl</div>
+          <div>Richtung</div>
           <div>Datum</div>
-          <div>Actions</div>
+          <div>Einzelheiten</div>
         </div>
 
         {attempts.length === 0 ? (
@@ -233,7 +233,7 @@ function AllQuizWords() {
           {attempts.length === 0 ? (
             <p>Du hast bis jetzt keine Quize gemacht.</p>
           ) : details.length === 0 ? (
-            <p>Click on 🔍 to see the details.</p>
+            <p>"Klicke auf 🔍, um die Details anzuzeigen."</p>
           ) : (
             details.map((item) => (
               <div

@@ -36,5 +36,10 @@
     "EXAMPLE_SENTENCE_PLACEHOLDER": "Her resilience after the setback was admirable.",
     "PRO_TIP": "Pro Tip",
     "PRO_TIP_TEXT": "Adding an example sentence helps our AI generate better flashcard variations for your next study session."
+  },
+  "ACTIVE_QUIZZES": {
+    "TITLE": "Active Quizzes",
+    "DESCRIPTION": "Continue your learning journey. Test your knowledge on recently added vocabulary or focus on your weak areas.",
+    "LAST_UPDATED": "Last Updated"
   }
 }

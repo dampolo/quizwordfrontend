@@ -40,19 +40,20 @@ function Quizzes() {
     <section className="vocab-page">
       <header className="topbar">
         <div>
-          <h1>Active Quizzes</h1>
+          <h1>Aktive Quizze</h1>
           <p>
-            Continue your learning journey. Test your knowladge on recently
-            added vocabulary or focus on your weak areas{" "}
+            Setze deinen Lernfortschritt fort. Teste dein Wissen mit kürzlich
+            hinzugefügten Vokabeln oder konzentriere dich auf deine
+            Schwachstellen.
           </p>
         </div>
 
-        <Link
+        {/* <Link
           className="main-quiz-button add-new-category-button"
           to="/my-quiz/add-new-quiz"
         >
           + Add New Quiz
-        </Link>
+        </Link> */}
       </header>
 
       <ul className="languages-list">
@@ -102,7 +103,7 @@ function Quizzes() {
               </Link>
 
               <div className="vocab-card__updated">
-                <span>LAST UPDATED</span>
+                <span>Aktualisiert</span>
                 <strong>
                   {new Date(quiz.updated_at).toLocaleDateString("de-DE", {
                     day: "2-digit",
@@ -116,13 +117,13 @@ function Quizzes() {
         ))}
         {/* Quiz END */}
 
-        <Link className="add-card" to="/my-quiz/add-new-quiz">
+        {/* <Link className="add-card" to="/my-quiz/add-new-quiz">
           <span>⊕</span>
           <strong>Create Custom Quiz</strong>
           <small>
             Hand-pick words from your library to focus your study session
           </small>
-        </Link>
+        </Link> */}
       </div>
     </section>
   );

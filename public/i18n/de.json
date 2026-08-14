@@ -36,5 +36,10 @@
     "EXAMPLE_SENTENCE_PLACEHOLDER": "Ihre Widerstandsfähigkeit nach dem Rückschlag war bewundernswert.",
     "PRO_TIP": "Profi-Tipp",
     "PRO_TIP_TEXT": "Ein Beispielsatz hilft unserer KI dabei, bessere Karteikartenvarianten für deine nächste Lerneinheit zu erstellen."
+  },
+  "ACTIVE_QUIZZES": {
+    "TITLE": "Aktive Quizze",
+    "DESCRIPTION": "Setze deinen Lernfortschritt fort. Teste dein Wissen mit kürzlich hinzugefügten Vokabeln oder konzentriere dich auf deine Schwachstellen.",
+    "LAST_UPDATED": "Aktualisiert"
   }
 }

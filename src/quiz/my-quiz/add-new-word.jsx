@@ -42,11 +42,10 @@ export default function AddNewWord() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    // debugger;
     try {
       await createConcept(formData);
-      toast.success("Word added successfully!");
-      navigate("/my-quiz/all-words/");
+      toast.success(`Wort "${formData.translations[1].word}" wurde hinzugefügt!`);
+      navigate(`/my-quiz/all-words?language=${formData.translations[1].language}`);
 
       // Reset form
       setFormData({
@@ -67,7 +66,13 @@ export default function AddNewWord() {
         ],
       });
     } catch (err) {
-      console.error(err);
+      const message =
+        err.response?.email?.[0] ||
+        err.response?.password?.[0] ||
+        err.response?.detail?.[0] ||
+        "Login Fehler";
+
+      toast.error(message);
     }
   }
 

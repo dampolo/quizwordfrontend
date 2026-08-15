@@ -49,8 +49,6 @@
   }
 }
 
-
-
 .languages-list {
   display: flex;
   flex-wrap: wrap;
@@ -145,7 +143,7 @@
 .list-row-score,
 .list-row-attempt,
 .list-row {
-  padding: 1.2rem 0.5rem;
+  padding: 1.2rem 1rem;
   border-top: 1px solid #efefef;
 
   &:hover {
@@ -155,8 +153,8 @@
 .check,
 .checkbox {
   display: flex;
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .rank {
@@ -230,9 +228,13 @@
 }
 
 .actions {
-  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
+.actions a {
+  margin: 0;
+}
 .pagination {
   display: flex;
   justify-content: space-between;
@@ -319,6 +321,7 @@
       2fr
       75px;
     align-items: center;
+    padding: 1.2rem 0.5rem;
   }
 
   .cards {

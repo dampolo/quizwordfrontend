@@ -14,7 +14,6 @@
     align-items: center;
     height: 1.875rem;
     background: none;
-    width: 4.375rem;
     a {
       display: inline-flex;
       align-items: center;
@@ -79,12 +78,11 @@
     z-index: 5;
     gap: unset;
     padding: 0;
-    padding-inline: 0.5rem;
     max-width: none;
     li {
+      width: 4.375rem;
       a {
         flex-direction: column;
-        padding: .5rem;
         box-sizing: content-box;
         .nav-link-text {
           text-align: center;

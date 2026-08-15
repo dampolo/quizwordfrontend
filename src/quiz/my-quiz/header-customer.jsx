@@ -26,13 +26,13 @@ function HeaderCustomer() {
         <Logo />
       </a>
 
-      <img
+      {/* <img
         width={45}
         height={45}
         className="message"
         src="/assets/bell.svg"
         alt="Nachrichten"
-      />
+      /> */}
 
       <button onClick={showDialog}>
         <img

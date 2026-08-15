@@ -70,7 +70,7 @@ export default function AddNewWord() {
         err.response?.email?.[0] ||
         err.response?.password?.[0] ||
         err.response?.detail?.[0] ||
-        "Login Fehler";
+        "Error";
 
       toast.error(message);
     }

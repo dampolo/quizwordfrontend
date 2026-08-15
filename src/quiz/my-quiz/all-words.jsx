@@ -141,7 +141,7 @@ function AllWords() {
         ) : (
           words.map((word) => (
             <div className="list-row" key={word.id}>
-              <div>
+              <div className="checkbox">
                 <input
                   type="checkbox"
                   checked={selectedWordIds.includes(word.id)}

@@ -145,12 +145,18 @@
 .list-row-score,
 .list-row-attempt,
 .list-row {
-  padding: 1.2rem .5rem;
+  padding: 1.2rem 0.5rem;
   border-top: 1px solid #efefef;
 
   &:hover {
     background: #fafcff;
   }
+}
+.check,
+.checkbox {
+  display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .rank {

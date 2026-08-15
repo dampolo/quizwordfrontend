@@ -166,8 +166,8 @@
 .word {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 14px;
+  justify-content: start;
+  gap: 0.3rem;
 
   h3 {
     color: #4738d6;

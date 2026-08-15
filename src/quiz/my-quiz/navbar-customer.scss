@@ -14,6 +14,7 @@
     align-items: center;
     height: 1.875rem;
     background: none;
+    width: 4.375rem;
     a {
       display: inline-flex;
       align-items: center;
@@ -78,7 +79,7 @@
     z-index: 5;
     gap: unset;
     padding: 0;
-    padding-inline: 1rem;
+    padding-inline: 0.5rem;
     max-width: none;
     li {
       a {

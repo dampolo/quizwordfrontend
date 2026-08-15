@@ -36,11 +36,12 @@ function LoginQuiz() {
         navigate("/my-quiz/all-words");
       }
     } catch (err) {
+
       const message =
         err.response?.email?.[0] ||
         err.response?.password?.[0] ||
         err.response?.detail?.[0] ||
-        "Account creation failed";
+        "Login Fehler";
 
       toast.error(message);
       setFormErrors({

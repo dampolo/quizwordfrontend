@@ -177,7 +177,7 @@ main {
         width: fit-content;
         padding: 0.3125rem 0.9375rem;
         border-radius: basic.$border-radius;
-        margin-block: 1rem;
+        margin-bottom: 1rem;
         border: solid 0.0625rem transparent;
         transition: all 175ms ease-in-out;
         &:hover {
@@ -295,6 +295,9 @@ main .main-content-customer .btn-container .back-button {
       form {
         .input-field {
           padding-left: 3rem;
+        }
+        .btn-password {
+          margin-bottom: 1rem;
         }
         .input-container {
           .input-icon {

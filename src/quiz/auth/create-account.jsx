@@ -272,7 +272,7 @@ function CreateAccount() {
             <div className="checkbox-description">
               <label htmlFor="checkbox">
                 Ich stimme der{" "}
-                <Link className="privacy" to="/legal">
+                <Link className="privacy" to="/privacy-policy" target="blank">
                   Datenschutzerklärung
                 </Link>{" "}
                 zu.

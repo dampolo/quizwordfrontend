@@ -22,17 +22,17 @@ function Footer() {
             Impressum
           </Link>
 
-          <a href="/privacy-policy" className="footer__link" target="blank">
+          <Link href="/privacy-policy" className="footer__link" target="blank">
             Datenschutzerklärung
-          </a>
+          </Link>
 
           <Link to="/help-desk" className="footer__link">
             FAQ
           </Link>
 
-          <a href="#" className="footer__link">
+          <Link href="#" className="footer__link">
             Contact Us
-          </a>
+          </Link>
         </div>
 
         {/* Right Icons */}

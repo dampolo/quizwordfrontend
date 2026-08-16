@@ -261,6 +261,7 @@ function CreateAccount() {
           <div className="checkbox-container">
             <div className="checkbox-content">
               <input
+                id="checkbox"
                 type="checkbox"
                 name="checked"
                 checked={formValues.checked}
@@ -270,10 +271,10 @@ function CreateAccount() {
             </div>
 
             <div className="checkbox-description">
-              <label htmlFor="checkbox">
+              <label htmlFor="checkbox" id="checkbox">
                 Ich stimme der{" "}
-                <Link className="privacy" to="/privacy-policy" target="blank">
-                  Datenschutzerklärung
+                <Link className="privacy" to="/privacy-policy" target="blank"> 
+                  Datenschutzerklärung 
                 </Link>{" "}
                 zu.
               </label>

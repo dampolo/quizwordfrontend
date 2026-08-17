@@ -107,7 +107,7 @@ function Quizzes() {
                 </Link>
   
                 <div className="vocab-card__updated">
-                  <span>Aktualisiert</span>
+                  <span>Erstellt:</span>
                   <strong>
                     {new Date(quiz.updated_at).toLocaleDateString("de-DE", {
                       day: "2-digit",

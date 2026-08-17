@@ -15,6 +15,7 @@ export default function AddNewWord() {
     clearCategories,
     languages,
     nativeLanguage,
+    userLanguages
   } = useVocabulary();
 
   const navigate = useNavigate();
@@ -331,7 +332,7 @@ export default function AddNewWord() {
                     required
                   >
                     <option value="">Wähle</option>
-                    {languages.map((lang) => (
+                    {userLanguages.map((lang) => (
                       <option key={lang.id} value={lang.id}>
                         {lang.language_name}
                       </option>

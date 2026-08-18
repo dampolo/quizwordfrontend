@@ -10,11 +10,11 @@
     },
     "HOW_IT_WORKS": {
       "TITLE": "So funktioniert's",
-      "DESCRIPTION": "Entdecke die einfachen Schritte, um eine neue Sprache in deinem eigenen Tempo zu meistern – mit unserer fortschrittsorientierten Lernphilosophie.",
+      "DESCRIPTION": "Entdecke die einfachen Schritte, um eine neue Sprache in deinem eigenen Tempo zu meistern mit unserer fortschrittsorientierten Lernphilosophie.",
       "FEATURES": {
         "CHOOSE_ANYWHERE": {
           "TITLE": "Lerne überall",
-          "DESCRIPTION": "Wähle aus über 5 Sprachen. Ob zu Hause oder unterwegs – dein Lernfortschritt bleibt auf all deinen Geräten synchronisiert."
+          "DESCRIPTION": "Wähle aus über 5 Sprachen. Ob zu Hause oder unterwegs dein Lernfortschritt bleibt auf all deinen Geräten synchronisiert."
         },
         "SMART_QUIZZES": {
           "TITLE": "Intelligente Quizze",
@@ -22,7 +22,7 @@
         },
         "TRACK_PROGRESS": {
           "TITLE": "Fortschritt verfolgen",
-          "DESCRIPTION": "Visuelle Daten-Dashboards zeigen dir in Echtzeit, wie dein Wortschatz wächst und sich dein Sprachniveau entwickelt. Kein Rätselraten mehr."
+          "DESCRIPTION": "Visuelle Daten zeigen dir in Echtzeit, wie dein Wortschatz wächst und sich dein Sprachniveau entwickelt. Kein Rätselraten mehr."
         }
       }
     },

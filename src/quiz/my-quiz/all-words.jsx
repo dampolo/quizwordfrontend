@@ -183,7 +183,7 @@ function AllWords() {
         )}
 
         <div className="pagination">
-          <span>Showing 4 of 1,240 words</span>
+          {/* <span>Showing 4 of 1,240 words</span> */}
 
           <div className="pages">
             <button

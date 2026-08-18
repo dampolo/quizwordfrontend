@@ -59,7 +59,7 @@ body {
   color: #f4f4f4;
   background-color: basic.$color-primary-indigo;
   border: solid 1px basic.$color-primary-indigo;
-  transition: all 0.2s ease-in-out;
+  transition: basic.$first-transition;
   outline: none;
   cursor: pointer;
   &:hover,

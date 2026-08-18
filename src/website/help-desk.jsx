@@ -6,7 +6,7 @@ function HelpDesk() {
     <main className="help-desk-main">
 
       <section className="help-desk">
-      <BackButton to="/" />
+      <BackButton to="/"  className="back-button" />
         <h1>Die häufigsten Fragen</h1>
         <div className="help-desk-list-content">
           <details>

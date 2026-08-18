@@ -137,10 +137,10 @@ function AllWords() {
           <div className="streak">Serie</div>
           <div className="actions">Aktionen</div>
         </div>
-        {words.length === 0 ? (
+        {words?.results?.length === 0 ? (
           <p className="no-words">Du hast hier keine Wörter.</p>
         ) : (
-          words.map((word) => (
+          words?.results?.map((word) => (
             <div className="list-row" key={word.id}>
               <div className="checkbox">
                 <input
@@ -184,7 +184,7 @@ function AllWords() {
         )}
 
         <div className="pagination">
-          <span>{wordCount.count} Wörter</span>
+          <span>{words?.count} Wörter</span>
 
           <div className="pages">
             <button

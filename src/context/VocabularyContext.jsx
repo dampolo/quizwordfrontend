@@ -15,7 +15,6 @@ export function VocabularyProvider({ children }) {
   const [languages, setLanguages] = useState([]);
 
   const [nativeLanguage, setNativeLanguage] = useState([]);
-  const [wordCount, setWordsCount] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [nextPage, setNextPage] = useState(null);
@@ -36,7 +35,9 @@ export function VocabularyProvider({ children }) {
       }
 
       const data = await response.json();
-      setWords(data.results);
+      console.log(data);
+      
+      setWords(data);
       setWordsCount(data);
       setNextPage(data.next);
       setPreviousPage(data.previous);
@@ -186,8 +187,7 @@ export function VocabularyProvider({ children }) {
       }
       const data = await response.json();
 
-      setWords(data.results);
-      setWordsCount(data);
+      setWords(data);
       setNextPage(data.next);
       setPreviousPage(data.previous);
       setLoading(false);
@@ -321,7 +321,6 @@ export function VocabularyProvider({ children }) {
         nativeLanguage,
         nextPage,
         previousPage,
-        wordCount,
         postLanguages,
         getConcepts,
         clearCategories,

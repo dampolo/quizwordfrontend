@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import PreLoader from "../components/PreLoader/PreLoader";
 import { useAuth } from "../context/useAuth";
 import "./website.scss";
@@ -5,6 +6,7 @@ import { Link, Navigate } from "react-router-dom";
 
 function Website() {
   const { loading, isAuthenticated } = useAuth();
+  const { t } = useTranslation();
 
   if (loading) {
     return (
@@ -27,20 +29,17 @@ function Website() {
             <div className="hero__badge">✦ Progress Focused Learning</div>
 
             <h1 className="hero__title">
-              Welcome on <span>Quiz Word</span>
+              {t("WEBSITE.HERO.TITLE")} <span>Quiz Word</span>
             </h1>
 
-            <p className="hero__description">
-              Auf dieser Plattform kannst du Sprachen lernen, wie und wo du
-              möchtest.
-            </p>
+            <p className="hero__description">{t("WEBSITE.HERO.SUBTITLE")}</p>
 
             <div className="hero__buttons">
               <Link
                 to="/create-account"
                 className="hero__button hero__button--primary"
               >
-                Registrieren
+                {t("WEBSITE.HERO.REGISTER")}
                 <span>→</span>
               </Link>
 
@@ -48,7 +47,7 @@ function Website() {
                 to="/login"
                 className="hero__button hero__button--secondary"
               >
-                Anmelden
+                {t("WEBSITE.HERO.LOGIN")}
               </Link>
             </div>
           </div>
@@ -82,12 +81,10 @@ function Website() {
         <div className="steps__container">
           {/* Heading */}
           <div className="steps__heading">
-            <h2 className="steps__title">So funktioniert's</h2>
+            <h2 className="steps__title">{t("WEBSITE.HOW_IT_WORKS.TITLE")}</h2>
 
             <p className="steps__subtitle">
-              Entdecke die einfachen Schritte, um eine neue Sprache in deinem
-              eigenen Tempo zu meistern – mit unserer fortschrittsorientierten
-              Lernphilosophie.
+              {t("WEBSITE.HOW_IT_WORKS.DESCRIPTION")}
             </p>
           </div>
 
@@ -99,11 +96,12 @@ function Website() {
                 <img width="24" height="24" src="./assets/world.svg" alt="" />
               </div>
 
-              <h3 className="steps__card-title">Choose Anywhere</h3>
+              <h3 className="steps__card-title">
+                {t("WEBSITE.HOW_IT_WORKS.FEATURES.CHOOSE_ANYWHERE.TITLE")}
+              </h3>
 
               <p className="steps__card-text">
-                Select from over 5 languages. Whether at home or on the go,
-                your progress stays synchronized across all devices.
+                {t("WEBSITE.HOW_IT_WORKS.FEATURES.CHOOSE_ANYWHERE.DESCRIPTION")}
               </p>
             </div>
 
@@ -113,11 +111,12 @@ function Website() {
                 <img src="./assets/progress.svg" alt="" />
               </div>
 
-              <h3 className="steps__card-title">Smart Quizzes</h3>
+              <h3 className="steps__card-title">
+                {t("WEBSITE.HOW_IT_WORKS.FEATURES.SMART_QUIZZES.TITLE")}
+              </h3>
 
               <p className="steps__card-text">
-                Our AI adapts to your learning speed, generating personalized
-                word quizzes that challenge you just enough.
+                {t("WEBSITE.HOW_IT_WORKS.FEATURES.SMART_QUIZZES.DESCRIPTION")}
               </p>
             </div>
 
@@ -127,11 +126,12 @@ function Website() {
                 <img src="./assets/progress.svg" alt="" />
               </div>
 
-              <h3 className="steps__card-title">Track Progress</h3>
+              <h3 className="steps__card-title">
+                {t("WEBSITE.HOW_IT_WORKS.FEATURES.TRACK_PROGRESS.TITLE")}
+              </h3>
 
               <p className="steps__card-text">
-                Visual data dashboards show your vocabulary growth and fluency
-                levels in real-time. No more guessing.
+                {t("WEBSITE.HOW_IT_WORKS.FEATURES.TRACK_PROGRESS.DESCRIPTION")}
               </p>
             </div>
           </div>
@@ -162,19 +162,18 @@ function Website() {
 
           {/* Right Side */}
           <div className="workflow__content">
-            <h2 className="workflow__title">How does it work</h2>
+            <h2 className="workflow__title">
+              {t("WEBSITE.HOW_TO_USE_IT.TITLE")}
+            </h2>
 
             {/* Step 1 */}
             <div className="workflow__step">
               <div className="workflow__number">1</div>
 
               <div className="workflow__text">
-                <h3>Pick Your Words</h3>
+                <h3>{t("WEBSITE.HOW_TO_USE_IT.PICK_YOUR_WORDS.TITLE")}</h3>
 
-                <p>
-                  Choose words from your personal list. Our placement quiz makes
-                  sure you start exactly at the right level for you.
-                </p>
+                <p>{t("WEBSITE.HOW_TO_USE_IT.PICK_YOUR_WORDS.DESCRIPTION")}</p>
               </div>
             </div>
 
@@ -183,12 +182,9 @@ function Website() {
               <div className="workflow__number">2</div>
 
               <div className="workflow__text">
-                <h3>Create Your Quiz</h3>
+                <h3>{t("WEBSITE.HOW_TO_USE_IT.CREATE_YOUR_QUIZ.TITLE")}</h3>
 
-                <p>
-                  Click the button to generate your quiz instantly. You can
-                  start right away or create another quiz anytime.
-                </p>
+                <p>{t("WEBSITE.HOW_TO_USE_IT.CREATE_YOUR_QUIZ.DESCRIPTION")}</p>
               </div>
             </div>
 
@@ -197,12 +193,10 @@ function Website() {
               <div className="workflow__number">3</div>
 
               <div className="workflow__text">
-                <h3>Unlock Your Quiz</h3>
+                <h3>{t("WEBSITE.HOW_TO_USE_IT.UNLOCK_YOUR_QUIZ.TITLE")}</h3>
 
-                <p>
-                  Go through your quiz as often as you like and practice at your
-                  own pace.
-                </p>
+                <p>{t("WEBSITE.HOW_TO_USE_IT.UNLOCK_YOUR_QUIZ.DESCRIPTION")}</p>
+
               </div>
             </div>
           </div>
@@ -215,15 +209,14 @@ function Website() {
           <div className="journey__shape">🎓</div>
 
           {/* Content */}
-          <h2 className="journey__title">Start Your Journey Today</h2>
+          <h2 className="journey__title">{t("WEBSITE.CTA.TITLE")}</h2>
 
           <p className="journey__text">
-            Join thousands of learners who are already breaking language
-            barriers with QuizWord.
+            {t("WEBSITE.CTA.DESCRIPTION")}
           </p>
 
           <Link to="/create-account" className="journey__button">
-            Create Free Account
+            {t("WEBSITE.CTA.BUTTON")}
           </Link>
         </div>
       </section>

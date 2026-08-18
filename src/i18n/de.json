@@ -21,8 +21,8 @@
           "DESCRIPTION": "Unsere KI passt sich deinem Lerntempo an und erstellt personalisierte Vokabelquizze, die dich genau im richtigen Maß herausfordern."
         },
         "TRACK_PROGRESS": {
-          "TITLE": "Track Progress",
-          "DESCRIPTION": "Visual data dashboards show your vocabulary growth and fluency levels in real time. No more guessing."
+          "TITLE": "Fortschritt verfolgen",
+          "DESCRIPTION": "Visuelle Daten-Dashboards zeigen dir in Echtzeit, wie dein Wortschatz wächst und sich dein Sprachniveau entwickelt. Kein Rätselraten mehr."
         }
       }
     },
@@ -38,12 +38,12 @@
       },
       "UNLOCK_YOUR_QUIZ": {
         "TITLE": "Starte dein Quiz",
-        "DESCRIPTION": "Wiederhole dein Quiz so oft du möchtest und übe in deinem eigenen Tempo."
+        "DESCRIPTION": "Wiederhole dein Quiz so oft, wie du möchtest und übe in deinem eigenen Tempo."
       }
     },
     "CTA": {
       "TITLE": "Starte noch heute deine Lernreise",
-      "DESCRIPTION": "Schließe dich Tausenden von Lernenden an, die mit QuizWord bereits Sprachbarrieren überwinden.",
+      "DESCRIPTION": "Schließe dich Tausenden von Lernenden an, die mit Quiz Word bereits Sprachbarrieren überwinden.",
       "BUTTON": "Kostenloses Konto erstellen"
     }
   },

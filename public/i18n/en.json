@@ -60,7 +60,8 @@
   },
   "WEBSITE": {
     "HERO": {
-      "TITLE": "Progress-Focused Learning",
+      "BADGE": "Progress-Focused Learning",
+      "TITLE": "Welcome on",
       "SUBTITLE": "Learn languages the way you want, wherever you want.",
       "DESCRIPTION": "Master any language with cognitive clarity and scientifically backed methods.",
       "REGISTER": "Register",

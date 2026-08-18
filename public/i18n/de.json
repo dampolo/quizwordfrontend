@@ -60,7 +60,8 @@
   },
   "WEBSITE": {
     "HERO": {
-      "TITLE": "Fortschrittsorientiertes Lernen",
+      "BADGE": "Fortschrittsorientiertes Lernen",
+      "TITLE": "Willkomen auf",
       "SUBTITLE": "Auf dieser Plattform kannst du Sprachen lernen, wie und wo du möchtest.",
       "DESCRIPTION": "Meistere jede Sprache mit klaren Lernstrukturen und wissenschaftlich fundierten Methoden.",
       "REGISTER": "Registrieren",

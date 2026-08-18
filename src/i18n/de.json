@@ -105,5 +105,12 @@
     "VOCABULARY_DETAILS": "Vokabeldetails",
     "DETAILS_HINT_1": "Klicke auf,",
     "DETAILS_HINT_2": " um die Details anzuzeigen."
+  },
+  "FOOTER": {
+    "DESCRIPTION": "Fortschritt durch Sprachen",
+    "IMPRINT": "Impressum",
+    "PRIVACY_POLICY": "Datenschutzerklärung",
+    "FAQ": "FAQ",
+    "CONTACT": "Kontakt"
   }
 }

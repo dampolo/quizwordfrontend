@@ -1,9 +1,11 @@
+import { useTranslation } from "react-i18next";
 import "./footer.scss";
 
 import { Link } from "react-router-dom";
 
 function Footer() {
     const currentDate = new Date().getFullYear();
+      const { t } = useTranslation();
   return (
     <footer className="footer">
       <div className="footer__container">
@@ -12,28 +14,31 @@ function Footer() {
           <h2 className="footer__logo">QuizWord</h2>
 
           <p className="footer__copyright">
-            © { currentDate } QuizWord. Empowering progress through language.
+            © { currentDate } Quiz Word. {" "}
+            {t("FOOTER.DESCRIPTION")}
+
           </p>
         </div>
 
         {/* Center Links */}
-        <div className="footer__links">
+        <nav className="footer__links">
           <Link to="/imprint" className="footer__link" target="blank">
-            Impressum
+            {t("FOOTER.IMPRINT")}
           </Link>
 
           <Link href="/privacy-policy" className="footer__link" target="blank">
-            Datenschutzerklärung
+            {t("FOOTER.PRIVACY_POLICY")}
           </Link>
 
           <Link to="/help-desk" className="footer__link">
-            FAQ
+            {t("FOOTER.FAQ")}
+            
           </Link>
 
           <Link href="#" className="footer__link">
-            Contact Us
+            {t("FOOTER.CONTACT")}
           </Link>
-        </div>
+        </nav>
 
         {/* Right Icons */}
         <div className="footer__socials">

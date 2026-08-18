@@ -105,5 +105,12 @@
     "VOCABULARY_DETAILS": "Vocabulary Details",
     "DETAILS_HINT_1": "Click on",
     "DETAILS_HINT_2": " to see the details."
+  },
+  "FOOTER": {
+    "DESCRIPTION": "Empowering progress through language.",
+    "IMPRINT": "Legal Notice",
+    "PRIVACY_POLICY": "Privacy Policy",
+    "FAQ": "FAQ",
+    "CONTACT": "Contact Us"
   }
 }

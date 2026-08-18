@@ -57,5 +57,52 @@
     "VOCABULARY_DETAILS": "Vocabulary Details",
     "DETAILS_HINT_1": "Click on",
     "DETAILS_HINT_2": " to see the details."
+  },
+  "WEBSITE": {
+    "HERO": {
+      "TITLE": "Progress-Focused Learning",
+      "SUBTITLE": "Learn languages the way you want, wherever you want.",
+      "DESCRIPTION": "Master any language with cognitive clarity and scientifically backed methods.",
+      "REGISTER": "Register",
+      "LOGIN": "Log In"
+    },
+    "HOW_IT_WORKS": {
+      "TITLE": "How It Works",
+      "DESCRIPTION": "Discover the intuitive steps to mastering a new language at your own pace with our progress-first philosophy.",
+      "FEATURES": {
+        "CHOOSE_ANYWHERE": {
+          "TITLE": "Learn Anywhere",
+          "DESCRIPTION": "Choose from over 5 languages. Whether at home or on the go, your progress stays synchronized across all your devices."
+        },
+        "SMART_QUIZZES": {
+          "TITLE": "Smart Quizzes",
+          "DESCRIPTION": "Our AI adapts to your learning speed, generating personalized vocabulary quizzes that challenge you just enough."
+        },
+        "TRACK_PROGRESS": {
+          "TITLE": "Fortschritt verfolgen",
+          "DESCRIPTION": "Visuelle Daten-Dashboards zeigen dir in Echtzeit, wie dein Wortschatz wächst und sich dein Sprachniveau entwickelt. Kein Rätselraten mehr."
+        }
+      }
+    },
+    "HOW_TO_USE_IT": {
+      "TITLE": "How It Works",
+      "PICK_YOUR_WORDS": {
+        "TITLE": "Pick Your Words",
+        "DESCRIPTION": "Choose words from your personal list. Our placement quiz makes sure you start at exactly the right level for you."
+      },
+      "CREATE_YOUR_QUIZ": {
+        "TITLE": "Create Your Quiz",
+        "DESCRIPTION": "Click the button to generate your quiz instantly. You can start right away or create another quiz anytime."
+      },
+      "UNLOCK_YOUR_QUIZ": {
+        "TITLE": "Start Your Quiz",
+        "DESCRIPTION": "Go through your quiz as often as you like and practice at your own pace."
+      }
+    },
+    "CTA": {
+      "TITLE": "Start Your Journey Today",
+      "DESCRIPTION": "Join thousands of learners who are already breaking language barriers with QuizWord.",
+      "BUTTON": "Create Free Account"
+    }
   }
 }

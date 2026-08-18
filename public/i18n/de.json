@@ -57,5 +57,52 @@
     "VOCABULARY_DETAILS": "Vokabeldetails",
     "DETAILS_HINT_1": "Klicke auf,",
     "DETAILS_HINT_2": " um die Details anzuzeigen."
+  },
+  "WEBSITE": {
+    "HERO": {
+      "TITLE": "Fortschrittsorientiertes Lernen",
+      "SUBTITLE": "Auf dieser Plattform kannst du Sprachen lernen, wie und wo du möchtest.",
+      "DESCRIPTION": "Meistere jede Sprache mit klaren Lernstrukturen und wissenschaftlich fundierten Methoden.",
+      "REGISTER": "Registrieren",
+      "LOGIN": "Anmelden"
+    },
+    "HOW_IT_WORKS": {
+      "TITLE": "So funktioniert's",
+      "DESCRIPTION": "Entdecke die einfachen Schritte, um eine neue Sprache in deinem eigenen Tempo zu meistern – mit unserer fortschrittsorientierten Lernphilosophie.",
+      "FEATURES": {
+        "CHOOSE_ANYWHERE": {
+          "TITLE": "Lerne überall",
+          "DESCRIPTION": "Wähle aus über 5 Sprachen. Ob zu Hause oder unterwegs – dein Lernfortschritt bleibt auf all deinen Geräten synchronisiert."
+        },
+        "SMART_QUIZZES": {
+          "TITLE": "Intelligente Quizze",
+          "DESCRIPTION": "Unsere KI passt sich deinem Lerntempo an und erstellt personalisierte Vokabelquizze, die dich genau im richtigen Maß herausfordern."
+        },
+        "TRACK_PROGRESS": {
+          "TITLE": "Track Progress",
+          "DESCRIPTION": "Visual data dashboards show your vocabulary growth and fluency levels in real time. No more guessing."
+        }
+      }
+    },
+    "HOW_TO_USE_IT": {
+      "TITLE": "Wie kannst du es benutzen",
+      "PICK_YOUR_WORDS": {
+        "TITLE": "Wähle deine Wörter",
+        "DESCRIPTION": "Wähle Wörter aus deiner persönlichen Liste. Unser Einstufungsquiz stellt sicher, dass du genau auf dem richtigen Niveau für dich startest."
+      },
+      "CREATE_YOUR_QUIZ": {
+        "TITLE": "Erstelle dein Quiz",
+        "DESCRIPTION": "Klicke auf den Button, um dein Quiz sofort zu erstellen. Du kannst direkt loslegen oder jederzeit ein weiteres Quiz erstellen."
+      },
+      "UNLOCK_YOUR_QUIZ": {
+        "TITLE": "Starte dein Quiz",
+        "DESCRIPTION": "Wiederhole dein Quiz so oft du möchtest und übe in deinem eigenen Tempo."
+      }
+    },
+    "CTA": {
+      "TITLE": "Starte noch heute deine Lernreise",
+      "DESCRIPTION": "Schließe dich Tausenden von Lernenden an, die mit QuizWord bereits Sprachbarrieren überwinden.",
+      "BUTTON": "Kostenloses Konto erstellen"
+    }
   }
 }

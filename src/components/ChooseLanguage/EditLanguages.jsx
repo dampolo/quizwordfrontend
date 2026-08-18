@@ -73,7 +73,7 @@ function EditLanguages() {
   return (
     <>
       <section className="main-content-customer choose-languages">
-        <BackButton className="arrow-profile" to="/my-quiz/all-words/" />
+        <BackButton className="arrow-profile" to="/my-quiz/profile/" />
 
         <LanguageForm
           languages={languages}

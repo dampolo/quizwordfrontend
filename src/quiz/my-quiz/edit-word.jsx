@@ -20,14 +20,13 @@ export default function EditWord() {
     categories,
     getFiltredCategories,
     loading,
-    languages,
     nativeLanguage,
     userLanguages,
     clearCategories,
   } = useVocabulary();
 
   const { openDialog } = useDialog();
-   
+
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const languageId = searchParams.get("language");
@@ -61,18 +60,17 @@ export default function EditWord() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(formData);
     try {
       await updateWord(Number(id), formData);
 
-      toast.success("Word updated successfully!");
-      navigate("/my-quiz/all-words/");
+      toast.success(`Wort "${formData.translations[1].word}" wurde geändert!`);
+      navigate(
+        `/my-quiz/all-words?language=${formData.translations[1].language}`,
+      );
     } catch (err) {
       console.error(err);
 
-      const message =
-        err.language ||
-        "Failed to update the word.";
+      const message = err.language || "Failed to update the word.";
 
       toast.error(message);
     }
@@ -139,7 +137,10 @@ export default function EditWord() {
   async function deleteCurrentWord() {
     try {
       await deleteWord(Number(targetWord));
-      navigate("/my-quiz/all-words/");
+      toast.success(`Wort "${formData.translations[1].word}" wurde gelöscht!`);
+      navigate(
+        `/my-quiz/all-words?language=${formData.translations[1].language}`,
+      );
     } catch (err) {
       console.error(err);
     }
@@ -430,7 +431,10 @@ export default function EditWord() {
             <img width={24} height={24} src="/assets/trash.svg" alt="trash" />
           </button>
 
-          <Link to="/my-quiz/all-words" className="main-quiz-button-cancel">
+          <Link
+            to={`/my-quiz/all-words?language=${formData.translations[1].language}`}
+            className="main-quiz-button-cancel"
+          >
             Cancel
           </Link>
           <button type="submit" className="save-btn">

@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import BackButton from "../../components/BackButton/BackButton";
 import PreLoader from "../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
+import useDialog from "../../context/DialogContext/useDialgo";
 
 export default function AddNewWord() {
   const {
@@ -13,13 +14,12 @@ export default function AddNewWord() {
     createConcept,
     getFiltredCategories,
     clearCategories,
-    languages,
     nativeLanguage,
-    userLanguages
+    userLanguages,
   } = useVocabulary();
 
   const navigate = useNavigate();
-
+  const { openDialog } = useDialog();
   const [moreSource, setMoreSource] = useState(false);
   const [moreTarget, setMoreTarget] = useState(false);
 
@@ -43,43 +43,68 @@ export default function AddNewWord() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    try {
-      await createConcept(formData);
-      toast.success(`Wort "${formData.translations[1].word}" wurde hinzugefügt!`);
-      navigate(`/my-quiz/all-words?language=${formData.translations[1].language}`);
 
-      // Reset form
-      setFormData({
-        category: "",
-        translations: [
-          {
-            language: "",
-            word: "",
-            tip: "",
-            sentence: "",
-          },
-          {
-            language: "",
-            word: "",
-            tip: "",
-            sentence: "",
-          },
-        ],
-      });
+    try {
+      const data = await createConcept(formData);
+
+      // Confirmation needed
+      if (data.requires_confirmation) {
+        openDialog({
+          title: "Weitere Bedeutung hinzufügen?",
+          description: "Für dieses Wort existiert bereits eine Übersetzung.",
+          confirmText: "Hinzufügen",
+          cancelText: "Abbrechen",
+          confirmButtonClass: "main-quiz-button",
+          cancelButtonClass: "main-quiz-button-cancel",
+
+          onConfirm: createNewConcept,
+        });
+
+        return;
+      }
+
+      // Word already exists
+      if (data.info?.length > 0) {
+        toast.info(data.info[0]);
+        return;
+      }
+
+      // Successfully created
+      toast.success(
+        `Wort "${formData.translations[1].word}" wurde hinzugefügt!`,
+      );
+
+      navigate(
+        `/my-quiz/all-words?language=${formData.translations[1].language}`,
+      );
     } catch (err) {
       const message =
-        err.response?.email?.[0] ||
-        err.response?.password?.[0] ||
-        err.response?.detail?.[0] ||
-        "Error";
+        err.response?.translations?.[0] || err.response?.detail?.[0] || "Error";
 
       toast.error(message);
     }
   }
 
-  console.log("formData: ", formData);
-  console.log("Data1: ", formData.translations[0]);
-  console.log("Data2: ", formData.translations[1]);
+  async function createNewConcept() {
+    try {
+      const newFormData = {
+        ...formData,
+        allow_new_meaning: true,
+      };
+
+      await createConcept(newFormData);
+
+      toast.success(
+        `Wort "${formData.translations[1].word}" wurde hinzugefügt!`,
+      );
+
+      navigate(
+        `/my-quiz/all-words?language=${formData.translations[1].language}`,
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   function handleChange(index, e) {
     const { name, value } = e.target;
@@ -355,9 +380,7 @@ export default function AddNewWord() {
                 autoComplete="tip"
               />
 
-              <label htmlFor="target_sentence">
-                Beispielsatz (Optional)
-              </label>
+              <label htmlFor="target_sentence">Beispielsatz (Optional)</label>
               <textarea
                 name="sentence"
                 value={formData.translations[1].sentence}

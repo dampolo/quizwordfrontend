@@ -58,24 +58,24 @@ export function VocabularyProvider({ children }) {
     return await response.json();
   }
 
-async function getUserLanguages() {
-  const response = await fetch(`${api}user-languages/`, {
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  async function getUserLanguages() {
+    const response = await fetch(`${api}user-languages/`, {
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  const data = await response.json();
+    const data = await response.json();
 
-  if (!response.ok) {
-    throw new Error("Failed to load languages.");
+    if (!response.ok) {
+      throw new Error("Failed to load languages.");
+    }
+
+    setUserLanguages(data.learning_languages);
+
+    return data;
   }
-
-  setUserLanguages(data.learning_languages);
-
-  return data;
-}
 
   async function getLanguages() {
     const response = await fetch(`${api}languages/`, {
@@ -184,7 +184,6 @@ async function getUserLanguages() {
       }
       const data = await response.json();
 
-
       setWords(data.results);
       setNextPage(data.next);
       setPreviousPage(data.previous);
@@ -204,9 +203,15 @@ async function getUserLanguages() {
       body: JSON.stringify(conceptData),
     });
 
-    const newWord = await response.json();
+    const data = await response.json();
 
-    return newWord;
+    if (!response.ok) {
+      const error = new Error("Failed to create concept");
+      error.response = data;
+      throw error;
+    }
+
+    return data;
   }
 
   async function createCategory(categoryData) {
@@ -277,9 +282,10 @@ async function getUserLanguages() {
 
         if (!userData.languages_active) {
           navigate("/my-quiz/choose-languages");
-        }
-        else {
-          navigate(`/my-quiz/all-words?language=${userData.learning_languages[0].id}`)
+        } else {
+          navigate(
+            `/my-quiz/all-words?language=${userData.learning_languages[0].id}`,
+          );
         }
 
         setLanguages(languages);
@@ -296,7 +302,6 @@ async function getUserLanguages() {
 
     loadData();
   }, []);
-
 
   function clearCategories() {
     setCategories([]);

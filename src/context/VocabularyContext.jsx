@@ -38,7 +38,6 @@ export function VocabularyProvider({ children }) {
       console.log(data);
       
       setWords(data);
-      setWordsCount(data);
       setNextPage(data.next);
       setPreviousPage(data.previous);
       setLoading(false);

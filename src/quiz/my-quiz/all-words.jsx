@@ -17,7 +17,6 @@ function AllWords() {
     nextPage,
     previousPage,
     getConcepts,
-    wordCount,
   } = useVocabulary();
   const [searchParams, setSearchParams] = useSearchParams();
 

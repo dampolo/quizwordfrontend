@@ -96,14 +96,14 @@ function PlayQuiz() {
 
         <p className="quiz-card__subtitle">Übersetzte das Word:</p>
         <div className={`hide-hint ${hint ? "show-hint" : ""}`}>
-          {quiz?.[currentQuestion].translations[0].tip === "" ? (
+          {quiz?.[currentQuestion].translations[1].tip === "" ? (
           <p className="hint-text">
             Du hast kein Tipp hinterlegt.
           </p>
 
           ) : (
             <p className="hint-text">
-              {quiz?.[currentQuestion].translations[0].tip}
+              {quiz?.[currentQuestion].translations[1].tip}
             </p>
           )
           }

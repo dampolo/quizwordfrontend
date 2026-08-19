@@ -34,9 +34,7 @@ export function VocabularyProvider({ children }) {
         throw new Error("Failed to load words.");
       }
 
-      const data = await response.json();
-      console.log(data);
-      
+      const data = await response.json();      
       setWords(data);
       setNextPage(data.next);
       setPreviousPage(data.previous);
@@ -124,7 +122,6 @@ export function VocabularyProvider({ children }) {
       }
 
       const data = await response.json();
-      console.log("Response:", data);
       setCategories(data);
       setLoading(false);
     } catch (error) {
@@ -144,7 +141,6 @@ export function VocabularyProvider({ children }) {
         throw new Error("Failed to load words.");
       }
       const data = await response.json();
-      console.log("Categories:", data);
       setCategories(data);
       setLoading(false);
     } catch (error) {

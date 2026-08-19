@@ -48,7 +48,7 @@ function LanguageForm({
 
       <button
         className="main-quiz-button"
-        disabled={!nativeLanguage || learningLanguages.length < 2}
+        disabled={!nativeLanguage || learningLanguages.length < 1}
       >
         {buttonText}
       </button>

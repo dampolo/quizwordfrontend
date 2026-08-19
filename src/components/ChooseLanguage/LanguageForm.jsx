@@ -7,11 +7,11 @@ function LanguageForm({
   onNativeChange,
   onLearningChange,
   onSubmit,
-  buttonText
+  buttonText,
 }) {
   return (
     <form onSubmit={onSubmit}>
-      <h1 className="form-title">Wähle deine Sprachen</h1>      
+      <h1 className="form-title">Wähle deine Sprachen</h1>
       <div className="input-container">
         <p className="description languages">Wähle deine Muttersprache:</p>
 
@@ -29,9 +29,7 @@ function LanguageForm({
       </div>
 
       <div className="input-container">
-        <p className="description">
-          Wähle Sprachen die du lernen möchtest:
-        </p>
+        <p className="description">Wähle Sprachen die du lernen möchtest:</p>
 
         {languages.map((language) => (
           <label key={language.id} className="checkbox-option">
@@ -47,8 +45,9 @@ function LanguageForm({
       </div>
 
       <button
+        type="submit"
         className="main-quiz-button"
-        disabled={!nativeLanguage || learningLanguages.length < 1}
+        disabled={!(nativeLanguage && learningLanguages.length >= 1)}
       >
         {buttonText}
       </button>

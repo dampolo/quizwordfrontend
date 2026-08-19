@@ -72,7 +72,7 @@ function EditCategory() {
     try {
       await deleteCategory(Number(id));
       toast.success(
-        `Kategorie wurde "${formData.category_name}" gelöscht!`,
+        `Kategorie "${formData.category_name}" wurde gelöscht!`,
       );
       navigate(
         `/my-quiz/vocabulary-categories/?language=${formData.language_id}`,
@@ -92,7 +92,7 @@ function EditCategory() {
 
   return (
     <section className="add-category-card">
-      <BackButton to="/my-quiz/vocabulary-categories/" />
+      <BackButton to={`/my-quiz/vocabulary-categories/?language=${formData.language_id}`} />
       <div className="form-header">
         <div className="header-icon">✚</div>
 
@@ -157,7 +157,7 @@ function EditCategory() {
           <Link
             type="button"
             className="main-quiz-button-cancel"
-            to="/my-quiz/vocabulary-categories"
+            to={`/my-quiz/vocabulary-categories/?language=${formData.language_id}`}
           >
             Abbrechen
           </Link>

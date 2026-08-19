@@ -98,7 +98,7 @@ export default function VocabularyCategories() {
           categories.map((cat) => (
             <article className={`card ${cat.wide ? "wide" : ""}`} key={cat.id}>
               <div className="card-actions">
-                <Link to={`/my-quiz/${cat.id}/edit-category`}>
+                <Link to={`/my-quiz/vocabulary-categories/${cat.id}/edit-category?language=${language}`}>
                   <img src="/assets/edit.svg" alt="edit" />
                 </Link>
               </div>

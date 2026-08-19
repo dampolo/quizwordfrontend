@@ -80,12 +80,9 @@ function App() {
                 <Route path="all-words" element={<AllWords />} />
                 <Route path=":id/edit-word" element={<EditWord />} />
                 <Route path="add-new-word" element={<AddNewWord />} />
-                <Route
-                  path="vocabulary-categories"
-                  element={<VocabularyCategories />}
-                />
+                <Route path="vocabulary-categories" element={<VocabularyCategories />} />
                 <Route path="add-new-category" element={<AddNewCategory />} />
-                <Route path=":id/edit-category" element={<EditCategory />} />
+                <Route path="vocabulary-categories/:id/edit-category" element={<EditCategory />} />
                 {/* Quizzes */}
                 <Route path="all-quizzes" element={<AllQuizzes />} />
                 <Route path="add-new-quiz" element={<AddNewQuiz />} />

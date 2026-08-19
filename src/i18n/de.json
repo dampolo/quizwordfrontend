@@ -57,10 +57,16 @@
     "TITLE": "Vokabelkategorien",
     "DESCRIPTION": "Organisiere deinen Lernfortschritt nach Thema und Schwierigkeitsgrad."
   },
-  "ADD_NEW_CATEGORY": {
+  "ADD_NEW_CATEGORY_BUTTON": {
     "TITLE_1": "Kategorie",
     "TITLE_2": "Neue Kategorie hinzufügen",
     "DESCRIPTION": "Erstelle eine individuelle Lernliste"
+  },
+    "ADD_NEW_CATEGORY": {
+    "TITLE": "Neue Kategorie hinzufügen",
+    "DESCRIPTION": "Organisiere deine Vokabeln nach Themen oder Bereichen.",
+    "CATEGORY_NAME": "Kategoriename",
+    "CATEGORY_HINT": "Kurze, aussagekräftige Namen eignen sich am besten für die Navigation."
   },
   "YOUR_VOCABULARY": {
     "TITLE": "Deine Vokabeln",

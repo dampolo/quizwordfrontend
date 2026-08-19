@@ -20,7 +20,7 @@
           "TITLE": "Smart Quizzes",
           "DESCRIPTION": "Our AI adapts to your learning speed, generating personalized vocabulary quizzes that challenge you just enough."
         },
-         "TRACK_PROGRESS": {
+        "TRACK_PROGRESS": {
           "TITLE": "Track Progress",
           "DESCRIPTION": "Visual data dashboards show your vocabulary growth and fluency levels in real time. No more guessing."
         }
@@ -57,10 +57,16 @@
     "TITLE": "Vocabulary Categories",
     "DESCRIPTION": "Organize your learning journey by topic and difficulty."
   },
-  "ADD_NEW_CATEGORY": {
+  "ADD_NEW_CATEGORY_BUTTON": {
     "TITLE_1": "Category",
     "TITLE_2": "Add New Category",
     "DESCRIPTION": "Create a custom study list"
+  },
+  "ADD_NEW_CATEGORY": {
+    "TITLE": "Add New Category",
+    "DESCRIPTION": "Organize your vocabulary by topics or themes.",
+    "CATEGORY_NAME": "Category Name",
+    "CATEGORY_HINT": "Short, descriptive names work best for navigation."
   },
   "YOUR_VOCABULARY": {
     "TITLE": "Your Vocabulary",

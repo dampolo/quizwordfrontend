@@ -31,7 +31,7 @@ function AddNewCategory() {
 
     try {
       await createCategory(formData);
-      toast.success(`Kategorie wurde "${formData.name}" hinzugefügt!`);
+      toast.success(`Kategorie wurde "${formData.category_name}" hinzugefügt!`);
       navigate(`/my-quiz/vocabulary-categories/?language=${formData.language_id}`);
       setFormData({ language_id: "", category_name: "" });
     } catch (err) {

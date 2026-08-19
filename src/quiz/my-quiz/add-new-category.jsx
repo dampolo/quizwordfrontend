@@ -5,12 +5,14 @@ import { useState } from "react";
 import BackButton from "../../components/BackButton/BackButton";
 import PreLoader from "../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 
 function AddNewCategory() {
   const { createCategory, loading, userLanguages } = useVocabulary();
   const navigate = useNavigate();
-  
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState({
     language_id: "",
     category_name: "",
@@ -58,15 +60,15 @@ function AddNewCategory() {
         <div className="header-icon">✚</div>
 
         <div>
-          <h2>Add New Category</h2>
-          <p>Organize your vocabulary by topics or themes.</p>
+          <h2>{t("ADD_NEW_CATEGORY.TITLE")}</h2>
+          <p>{t("ADD_NEW_CATEGORY.DESCRIPTION")}</p>
         </div>
       </div>
 
       <form className="category-form" onSubmit={handleSubmit}>
         <div className="form-group category-group">
           <label htmlFor="language_id">
-            Sprache <span>*</span>
+            {t("ADD_NEW_CATEGORY.LANGUAGE")} <span>*</span>
           </label>
 
           <select
@@ -82,7 +84,7 @@ function AddNewCategory() {
             ))}
           </select>
         </div>
-        <label htmlFor="categoryName">Category Name</label>
+        <label htmlFor="categoryName">{t("ADD_NEW_CATEGORY.CATEGORY_NAME")}</label>
         <div className="input-wrap">
           <input
             id="categoryName"
@@ -96,7 +98,7 @@ function AddNewCategory() {
           <span className="input-icon">⌘</span>
         </div>
 
-        <small>Short, descriptive names work best for navigation.</small>
+        <small>{t("ADD_NEW_CATEGORY.CATEGORY_HINT")}</small>
 
         {/* <div className="color-section">
           <h4>Selected Color Theme</h4>
@@ -115,7 +117,7 @@ function AddNewCategory() {
             className="main-quiz-button-cancel"
             to="/my-quiz/vocabulary-categories"
           >
-            Cancel
+            {t("BUTTONS.CANCEL")}
           </Link>
 
           <button
@@ -123,13 +125,7 @@ function AddNewCategory() {
             className="main-quiz-button save-btn"
             disabled={formData.category_name.trim().length < 3}
           >
-            <img
-              width={24}
-              height={24}
-              src="/assets/save-word-icon.svg"
-              alt=""
-            />
-            Save
+            {t("BUTTONS.SAVE")}
           </button>
         </div>
       </form>

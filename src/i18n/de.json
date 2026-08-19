@@ -64,6 +64,7 @@
   },
     "ADD_NEW_CATEGORY": {
     "TITLE": "Neue Kategorie hinzufügen",
+    "LANGUAGE":"Sprache",
     "DESCRIPTION": "Organisiere deine Vokabeln nach Themen oder Bereichen.",
     "CATEGORY_NAME": "Kategoriename",
     "CATEGORY_HINT": "Kurze, aussagekräftige Namen eignen sich am besten für die Navigation."
@@ -118,5 +119,9 @@
     "PRIVACY_POLICY": "Datenschutzerklärung",
     "FAQ": "FAQ",
     "CONTACT": "Kontakt"
+  },
+  "BUTTONS": {
+    "CANCEL": "Abbrechen",
+    "SAVE": "Speichern"
   }
 }

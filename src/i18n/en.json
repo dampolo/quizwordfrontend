@@ -64,6 +64,7 @@
   },
   "ADD_NEW_CATEGORY": {
     "TITLE": "Add New Category",
+    "LANGUAGE":"Language",
     "DESCRIPTION": "Organize your vocabulary by topics or themes.",
     "CATEGORY_NAME": "Category Name",
     "CATEGORY_HINT": "Short, descriptive names work best for navigation."
@@ -118,5 +119,9 @@
     "PRIVACY_POLICY": "Privacy Policy",
     "FAQ": "FAQ",
     "CONTACT": "Contact Us"
+  },
+    "BUTTONS": {
+    "CANCEL": "Cancel",
+    "SAVE": "Save"
   }
 }

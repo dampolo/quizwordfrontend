@@ -7,7 +7,7 @@ import PreLoader from "../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
 
 function AddNewCategory() {
-  const { createCategory, languages, loading } = useVocabulary();
+  const { createCategory, languages, loading, userLanguages } = useVocabulary();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -71,7 +71,7 @@ function AddNewCategory() {
             onChange={handleChange}
             required
           >
-            {languages.map((lang) => (
+            {userLanguages.map((lang) => (
               <option key={lang.id} value={lang.id}>
                 {lang.language_name}
               </option>
@@ -94,7 +94,7 @@ function AddNewCategory() {
 
         <small>Short, descriptive names work best for navigation.</small>
 
-        <div className="color-section">
+        {/* <div className="color-section">
           <h4>Selected Color Theme</h4>
 
           <div className="color-options">
@@ -103,7 +103,7 @@ function AddNewCategory() {
             <button type="button" className="color-option orange" />
             <button type="button" className="color-option pink" />
           </div>
-        </div>
+        </div> */}
 
         <div className="form-actions">
           <Link

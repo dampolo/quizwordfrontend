@@ -35,7 +35,10 @@ function AddNewCategory() {
       navigate(`/my-quiz/vocabulary-categories/?language=${formData.language_id}`);
       setFormData({ language_id: "", category_name: "" });
     } catch (err) {
-      console.error(err);
+      const message =
+        err.response?.translations?.[0] || err.response?.detail?.[0] || "Error";
+
+      toast.error(message);
     }
   }
 

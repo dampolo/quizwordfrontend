@@ -256,7 +256,7 @@ export default function AddNewWord() {
                     value={formData.translations[0].word}
                     onChange={(e) => handleChange(0, e)}
                     placeholder="e.g. Resilience"
-                    autoComplete="name"
+                    autoComplete="word"
                     required
                   />
                 </div>
@@ -342,7 +342,7 @@ export default function AddNewWord() {
                     value={formData.translations[1].word || ""}
                     onChange={(e) => handleChange(1, e)}
                     placeholder="e.g. Resiliencia"
-                    autoComplete="name"
+                    autoComplete="word"
                     required
                   />
                 </div>

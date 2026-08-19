@@ -120,6 +120,12 @@
     "FAQ": "FAQ",
     "CONTACT": "Kontakt"
   },
+  "HEADER": {
+    "HOW_IT_WORKS": "So funktioniert's",
+    "HOW_TO_USE_IT": "Benutzung",
+    "SUCCESS": "Bewertungen",
+    "PRICE": "Preis"
+  },
   "BUTTONS": {
     "CANCEL": "Abbrechen",
     "SAVE": "Speichern"

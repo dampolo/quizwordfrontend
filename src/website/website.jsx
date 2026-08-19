@@ -140,7 +140,7 @@ function Website() {
 
       {/* HOW DOES IT WORK */}
 
-      <section className="workflow">
+      <section className="workflow" id="how-to-use-it">
         <div className="workflow__container">
           {/* Left Side */}
           <div className="workflow__video">

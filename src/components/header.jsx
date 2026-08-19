@@ -3,9 +3,11 @@ import "./header.scss";
 import { useState } from "react";
 import Logo from "./logo";
 import { HashLink } from "react-router-hash-link";
+import { useTranslation } from "react-i18next";
 
 function Header() {
   const [active, setActive] = useState("");
+  const { t } = useTranslation();
 
   return (
     <header className="navbar">
@@ -26,19 +28,19 @@ function Header() {
             }
             onClick={() => setActive("how-it-works")}
           >
-            How it works
+            {t("HEADER.HOW_IT_WORKS")}
           </HashLink>
 
-          <HashLink
-            href="/#features"
+          <HashLink smooth
+            to="/#how-to-use-it"
             className={
-              active === "features"
+              active === "how-to-use-it"
                 ? "navbar__link navbar__link--active"
                 : "navbar__link"
             }
-            onClick={() => setActive("features")}
+            onClick={() => setActive("how-to-use-it")}
           >
-            Features
+            {t("HEADER.HOW_TO_USE_IT")}
           </HashLink>
 
           <HashLink
@@ -50,7 +52,8 @@ function Header() {
             }
             onClick={() => setActive("success-stories")}
           >
-            Success Stories
+            {t("HEADER.SUCCESS")}
+            
           </HashLink>
           <Link
             to="/price"
@@ -61,7 +64,7 @@ function Header() {
             }
             onClick={() => setActive("price")}
           >
-            Preise
+            {t("HEADER.PRICE")}
           </Link>
         </nav>
 

@@ -101,9 +101,6 @@ export default function VocabularyCategories() {
                 <Link to={`/my-quiz/${cat.id}/edit-category`}>
                   <img src="/assets/edit.svg" alt="edit" />
                 </Link>
-                <button>
-                  <img src="/assets/trash.svg" alt="delete" />
-                </button>
               </div>
 
               <h3>{cat.category_name}</h3>

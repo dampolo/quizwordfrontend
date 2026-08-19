@@ -272,6 +272,13 @@ export function VocabularyProvider({ children }) {
     });
   }
 
+  async function deleteCategory(id) {
+    await fetch(`${api}categories/${id}/`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+  }
+
   useEffect(() => {
     async function loadData() {
       setLoading(true);
@@ -330,6 +337,7 @@ export function VocabularyProvider({ children }) {
         createConcept,
         updateWord,
         updateCategory,
+        deleteCategory,
         deleteWord,
         getCategory,
         getCategories,

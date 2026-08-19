@@ -6,10 +6,11 @@ import BackButton from "../../components/BackButton/BackButton";
 import PreLoader from "../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
 
-function AddNewCategory() {
-  const { createCategory, languages, loading, userLanguages } = useVocabulary();
-  const navigate = useNavigate();
 
+function AddNewCategory() {
+  const { createCategory, loading, userLanguages } = useVocabulary();
+  const navigate = useNavigate();
+  
   const [formData, setFormData] = useState({
     language_id: "",
     category_name: "",
@@ -30,9 +31,9 @@ function AddNewCategory() {
 
     try {
       await createCategory(formData);
-      setFormData({ language_id: "", name: "" });
-      toast.success("Category added successfully!");
-      navigate("/my-quiz/vocabulary-categories/");
+      toast.success(`Kategorie wurde "${formData.name}" hinzugefügt!`);
+      navigate(`/my-quiz/vocabulary-categories/?language=${formData.language_id}`);
+      setFormData({ language_id: "", category_name: "" });
     } catch (err) {
       console.error(err);
     }

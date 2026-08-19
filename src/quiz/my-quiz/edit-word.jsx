@@ -124,7 +124,7 @@ export default function EditWord() {
   function handleDelete() {
     openDialog({
       title: "Löschen?",
-      description: "Bist du sicher?.",
+      description: "Bist du sicher?",
       confirmText: "Löschen",
       cancelText: "Abbrechen",
       confirmButtonClass: "main-quiz-button",

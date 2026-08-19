@@ -5,12 +5,13 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import BackButton from "../../components/BackButton/BackButton";
 import PreLoader from "../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
-
+import useDialog from "../../context/DialogContext/useDialgo";
 
 function EditCategory() {
-  const { getCategory, updateCategory, languages, loading } = useVocabulary();
+  const { getCategory, updateCategory, languages, loading, deleteCategory } = useVocabulary();
   const { id } = useParams();
   const navigate = useNavigate();
+  const { openDialog } = useDialog();
 
   const [formData, setFormData] = useState({
     language_id: "",
@@ -21,8 +22,12 @@ function EditCategory() {
     e.preventDefault();
     try {
       await updateCategory(Number(id), formData);
-      toast.success(`Category updated "${formData.category_name}" successfully!`);
-      navigate(`/my-quiz/vocabulary-categories/?language=${formData.language_id}`);
+      toast.success(
+        `Kategorie "${formData.category_name}" wurde geändert!`,
+      );
+      navigate(
+        `/my-quiz/vocabulary-categories/?language=${formData.language_id}`,
+      );
     } catch (err) {
       console.error(err);
     }
@@ -41,8 +46,6 @@ function EditCategory() {
     async function loadCategry() {
       try {
         const category = await getCategory(id);
-        console.log(category);
-        
         setFormData(category);
       } catch (err) {
         console.error(err);
@@ -51,6 +54,33 @@ function EditCategory() {
 
     loadCategry();
   }, [id]);
+
+    function handleDelete() {
+    openDialog({
+      title: "Löschen?",
+      description: "Bist du sicher?",
+      confirmText: "Löschen",
+      cancelText: "Abbrechen",
+      confirmButtonClass: "main-quiz-button",
+      cancelButtonClass: "main-quiz-button-cancel",
+
+      onConfirm: deleteCurrentCategory,
+    });
+  }
+
+   async function deleteCurrentCategory() {
+    try {
+      await deleteCategory(Number(id));
+      toast.success(
+        `Kategorie wurde "${formData.category_name}" gelöscht!`,
+      );
+      navigate(
+        `/my-quiz/vocabulary-categories/?language=${formData.language_id}`,
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   if (loading) {
     return (
@@ -62,7 +92,7 @@ function EditCategory() {
 
   return (
     <section className="add-category-card">
-            <BackButton to="/my-quiz/vocabulary-categories/" />
+      <BackButton to="/my-quiz/vocabulary-categories/" />
       <div className="form-header">
         <div className="header-icon">✚</div>
 
@@ -91,7 +121,7 @@ function EditCategory() {
             ))}
           </select>
         </div>
-        
+
         <label htmlFor="categoryName">Category Name</label>
 
         <div className="input-wrap">
@@ -109,7 +139,7 @@ function EditCategory() {
 
         <small>Short, descriptive names work best for navigation.</small>
 
-        <div className="color-section">
+        {/* <div className="color-section">
           <h4>Selected Color Theme</h4>
 
           <div className="color-options">
@@ -118,15 +148,18 @@ function EditCategory() {
             <button type="button" className="color-option orange" />
             <button type="button" className="color-option pink" />
           </div>
-        </div>
+        </div> */}
 
         <div className="form-actions">
+          <button type="button" onClick={handleDelete}>
+            <img src="/assets/trash.svg" alt="delete" />
+          </button>
           <Link
             type="button"
             className="main-quiz-button-cancel"
             to="/my-quiz/vocabulary-categories"
           >
-            Cancel
+            Abbrechen
           </Link>
 
           <button
@@ -134,13 +167,7 @@ function EditCategory() {
             className="main-quiz-button save-btn"
             disabled={formData.category_name.trim().length < 3}
           >
-            <img
-              width={24}
-              height={24}
-              src="/assets/save-word-icon.svg"
-              alt=""
-            />
-            Save
+            Speichern
           </button>
         </div>
       </form>

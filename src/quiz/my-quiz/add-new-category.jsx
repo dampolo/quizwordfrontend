@@ -77,6 +77,7 @@ function AddNewCategory() {
             onChange={handleChange}
             required
           >
+            <option value="">Wähle Sprache</option>
             {userLanguages.map((lang) => (
               <option key={lang.id} value={lang.id}>
                 {lang.language_name}

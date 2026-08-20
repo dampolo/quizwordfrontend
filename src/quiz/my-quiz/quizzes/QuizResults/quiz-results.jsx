@@ -34,19 +34,19 @@ function QuizResults() {
               </div>
 
               <div className="column">
-                <span className="label">SOURCE WORD</span>
+                <span className="label">WORT</span>
                 <h4>{item.source_word}</h4>
               </div>
 
               <div className="column">
-                <span className="label">YOUR ANSWER</span>
+                <span className="label">ANTWORT</span>
                 <p className={!item.is_correct ? "incorrect" : ""}>
                   {item.user_answer}
                 </p>
               </div>
 
               <div className="column">
-                <span className="label">CORRECT MEANING</span>
+                <span className="label">Bedeutung</span>
                 <p className="correct">{item.correct_answer}</p>
               </div>
             </div>

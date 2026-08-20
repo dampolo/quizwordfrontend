@@ -136,5 +136,10 @@
     "BUTTONS": {
     "CANCEL": "Cancel",
     "SAVE": "Save"
+  },
+  "QUIZ_RESULTS": {
+    "WORD": "WORD",
+    "ANSWER": "ANSWER",
+    "MEANING": "MEANING"
   }
 }

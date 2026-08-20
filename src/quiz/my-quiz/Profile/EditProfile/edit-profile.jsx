@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./edit-profile.scss";
 import { useAuth } from "../../../../context/useAuth";
@@ -77,6 +77,7 @@ function InfoRow({
 function EditProfile() {
   const { profile, updateProfile } = useAuth();
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     id: "",
@@ -132,6 +133,9 @@ function EditProfile() {
       setErrors({});
       await updateProfile(form);
       toast.success("Dein Profil wurde aktualisiert!");
+      navigate(
+        `/my-quiz/profile`,
+      );
     } catch (error) {
       if (error.response?.data) {
         toast.error("Verusche noch einmal!");

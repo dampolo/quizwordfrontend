@@ -13,7 +13,6 @@ export function AuthProvider({ children }) {
   const [profile, setProfile] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("");
 
-
   const checkAuth = async () => {
     setLoading(true);
 
@@ -39,6 +38,8 @@ export function AuthProvider({ children }) {
   };
 
   async function getProfile() {
+    setLoading(true);
+
     try {
       const response = await fetch(`${api}profile-customer/`, {
         credentials: "include",
@@ -71,7 +72,7 @@ export function AuthProvider({ children }) {
         body: JSON.stringify({ email, password }),
       });
 
-       const data = await response.json();
+      const data = await response.json();
 
       if (!response.ok) {
         const error = new Error("Account creation failed");

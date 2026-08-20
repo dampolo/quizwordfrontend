@@ -96,10 +96,6 @@ function AllQuizWords() {
           </p>
         </div>
 
-        <Link className="main-quiz-button add-btn" to="/my-quiz/add-new-word">
-          + Add New Word
-        </Link>
-
         <Link
           className="main-quiz-button add-btn"
           

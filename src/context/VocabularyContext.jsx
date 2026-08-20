@@ -45,17 +45,23 @@ export function VocabularyProvider({ children }) {
   }
 
   async function getCategory(id) {
-    const response = await fetch(`${api}categories/${id}`, {
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    setLoading(true);
 
-    if (!response.ok) {
-      throw new Error("Failed to load catgories.");
+    try {
+      const response = await fetch(`${api}categories/${id}/`, {
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error("Failed to load category.");
+      }
+
+      return data;
+    } finally {
+      setLoading(false);
     }
-    return await response.json();
   }
 
   async function getUserLanguages() {

@@ -93,7 +93,7 @@ function AddNewCategory() {
             value={formData.category_name}
             onChange={handleChange}
             type="text"
-            autocomplete="off"
+            autoComplete="off"
             placeholder="e.g., Business Travel"
           />
           <span className="input-icon">⌘</span>

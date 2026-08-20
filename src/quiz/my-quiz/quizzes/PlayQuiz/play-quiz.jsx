@@ -86,7 +86,7 @@ function PlayQuiz() {
           className="quiz-card__cancel"
           to={`/my-quiz/${id}/all-quiz-words`}
         >
-          <img width={40} height={40} src="/assets/xbox.svg" alt="Close" />
+          <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
         </Link>
         <div className="quiz-card__header">
           <h1 className="quiz-card__title">

@@ -25,9 +25,6 @@ export function VocabularyProvider({ children }) {
     try {
       const response = await fetch(`${api}concepts/?page=${page}`, {
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
 
       if (!response.ok) {
@@ -38,9 +35,10 @@ export function VocabularyProvider({ children }) {
       setWords(data);
       setNextPage(data.next);
       setPreviousPage(data.previous);
-      setLoading(false);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -173,6 +171,8 @@ export function VocabularyProvider({ children }) {
   }
 
   async function getFiltredConcepts(id, page = 1) {
+    setLoading(true);
+
     try {
       const response = await fetch(
         `${api}concepts/?language=${id}&page=${page}`,
@@ -191,9 +191,10 @@ export function VocabularyProvider({ children }) {
       setWords(data);
       setNextPage(data.next);
       setPreviousPage(data.previous);
-      setLoading(false);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   }
 

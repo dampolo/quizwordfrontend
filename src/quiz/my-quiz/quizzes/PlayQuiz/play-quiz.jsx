@@ -11,7 +11,7 @@ function PlayQuiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const navigate = useNavigate();
 
-  const [hint, setHint] = useState(false)
+  const [hint, setHint] = useState(false);
 
   const [formData, setFormData] = useState({
     answer: "",
@@ -20,7 +20,6 @@ function PlayQuiz() {
   const [answers, setAnswers] = useState([]);
 
   function handleAnswer(e) {
-    
     const { name, value } = e.target;
 
     setFormData((prev) => ({
@@ -29,7 +28,7 @@ function PlayQuiz() {
     }));
   }
   async function adjustCurrentQuestion() {
-    setHint(false)
+    setHint(false);
     const updatedAnswers = [
       ...answers,
       {
@@ -95,21 +94,19 @@ function PlayQuiz() {
         </div>
 
         <p className="quiz-card__subtitle">Übersetzte das Word:</p>
-        
-        <div className={`hide-hint ${hint ? "show-hint" : ""}`}>
-          {quiz?.[currentQuestion].translations[1].tip === "" ? (
-          <p className="hint-text">
-            Du hast kein Tipp hinterlegt.
-          </p>
 
-          ) : (
-            <p className="hint-text">
-              {quiz?.[currentQuestion].translations[1].tip}
-            </p>
-          )
-          }
-
+        <div className="hint-container">
+          <div className={`hide-hint ${hint ? "show-hint" : ""}`}>
+            {quiz?.[currentQuestion].translations[1].tip === "" ? (
+              <p className="hint-text">Du hast kein Tipp hinterlegt.</p>
+            ) : (
+              <p className="hint-text">
+                {quiz?.[currentQuestion].translations[1].tip}
+              </p>
+            )}
           </div>
+        
+        </div>
 
         <form className="quiz-card__form">
           <label htmlFor="translation" className="quiz-card__label">
@@ -126,7 +123,13 @@ function PlayQuiz() {
               className="quiz-card__input"
               autoComplete="off"
             />
-            <button type="button" className="quiz-card__help" aria-label="Help" onClick={() => setHint((prev) => !prev)} title="Klick um hinweis zu sehen" >
+            <button
+              type="button"
+              className="quiz-card__help"
+              aria-label="Help"
+              onClick={() => setHint((prev) => !prev)}
+              title="Klick um hinweis zu sehen"
+            >
               ?
             </button>
           </div>

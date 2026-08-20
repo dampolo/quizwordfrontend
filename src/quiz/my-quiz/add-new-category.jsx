@@ -124,7 +124,7 @@ function AddNewCategory() {
           <button
             type="submit"
             className="main-quiz-button save-btn"
-            disabled={formData.category_name.trim().length < 3}
+            disabled={!(formData.category_name.trim().length >= 3 && !!formData.language_id)}
           >
             {t("BUTTONS.SAVE")}
           </button>

@@ -9,7 +9,7 @@ import useDialog from "../../context/DialogContext/useDialgo";
 import { useTranslation } from "react-i18next";
 
 function EditCategory() {
-  const { getCategory, updateCategory, languages, loading, deleteCategory } =
+  const { getCategory, updateCategory, userLanguages, loading, deleteCategory } =
     useVocabulary();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -98,15 +98,15 @@ function EditCategory() {
         <div className="header-icon">✚</div>
 
         <div>
-          <h2>{t("ADD_NEW_CATEGORY.TITLE")}</h2>
-          <p>{t("ADD_NEW_CATEGORY.DESCRIPTION")}</p>
+          <h2>Edit Kategorie</h2>
+          <p>{t("EDIT_CATEGORY.DESCRIPTION")}</p>
         </div>
       </div>
 
       <form className="category-form" onSubmit={handleSubmit}>
         <div className="form-group category-group">
           <label>
-            {t("ADD_NEW_CATEGORY.LANGUAGE")} <span>*</span>
+            {t("EDIT_CATEGORY.LANGUAGE")} <span>*</span>
           </label>
 
           <select
@@ -115,7 +115,8 @@ function EditCategory() {
             onChange={handleChange}
             required
           >
-            {languages.map((lang) => (
+            <option value="">Wähle Sprache</option>
+            {userLanguages.map((lang) => (
               <option key={lang.id} value={lang.id}>
                 {lang.language_name}
               </option>
@@ -123,7 +124,7 @@ function EditCategory() {
           </select>
         </div>
 
-        <label htmlFor="categoryName">{t("ADD_NEW_CATEGORY.CATEGORY_NAME")}</label>
+        <label htmlFor="categoryName">{t("EDIT_CATEGORY.CATEGORY_NAME")}</label>
 
         <div className="input-wrap">
           <input
@@ -138,7 +139,7 @@ function EditCategory() {
           <span className="input-icon">⌘</span>
         </div>
 
-        <small>{t("ADD_NEW_CATEGORY.CATEGORY_HINT")}</small>
+        <small>{t("EDIT_CATEGORY.CATEGORY_HINT")}</small>
 
         {/* <div className="color-section">
           <h4>Selected Color Theme</h4>
@@ -166,7 +167,7 @@ function EditCategory() {
           <button
             type="submit"
             className="main-quiz-button save-btn"
-            disabled={formData.category_name.trim().length < 3}
+             disabled={!(formData.category_name.trim().length >= 3 && !!formData.language_id)}
           >
             {t("BUTTONS.SAVE")}
           </button>

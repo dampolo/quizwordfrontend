@@ -51,11 +51,12 @@ $bg: #f7f8fd;
   .category-form {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
 
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 0.3rem;
 
       &.category-group {
         max-width: 340px;
@@ -87,7 +88,9 @@ $bg: #f7f8fd;
     }
 
     .input-wrap {
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
 
       input {
         width: 100%;

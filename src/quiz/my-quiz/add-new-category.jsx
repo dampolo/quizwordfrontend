@@ -83,8 +83,8 @@ function AddNewCategory() {
             ))}
           </select>
         </div>
-        <label htmlFor="categoryName">{t("ADD_NEW_CATEGORY.CATEGORY_NAME")}</label>
         <div className="input-wrap">
+        <label htmlFor="categoryName">{t("ADD_NEW_CATEGORY.CATEGORY_NAME")}</label>
           <input
             id="categoryName"
             name="category_name"
@@ -94,7 +94,6 @@ function AddNewCategory() {
             autoComplete="off"
             placeholder="e.g., Business Travel"
           />
-          <span className="input-icon">⌘</span>
         </div>
 
         <small>{t("ADD_NEW_CATEGORY.CATEGORY_HINT")}</small>

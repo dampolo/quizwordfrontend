@@ -63,7 +63,7 @@
     "DESCRIPTION": "Erstelle eine individuelle Lernliste"
   },
     "ADD_NEW_CATEGORY": {
-    "TITLE": "Neue Kategorie hinzufügen",
+    "TITLE": "Kategorie hinzufügen",
     "LANGUAGE":"Sprache",
     "DESCRIPTION": "Organisiere deine Vokabeln nach Themen oder Bereichen.",
     "CATEGORY_NAME": "Kategoriename:",

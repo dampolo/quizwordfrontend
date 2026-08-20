@@ -5,7 +5,6 @@ import BackButton from "../../../../components/BackButton/BackButton";
 function QuizResults() {
   const { id } = useParams();
   const { state } = useLocation();
-  console.log(state);
 
   const details = state?.results || [];
 

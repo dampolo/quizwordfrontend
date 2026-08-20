@@ -25,10 +25,6 @@ function LearnQuiz() {
       try {
         const quizData = await getQuizWords(id);
         setQuiz(quizData.concepts);
-
-        console.log("quizData.concepts: ", quizData.concepts[0].translations[0]);
-        console.log("quizData.concepts: ", quizData.concepts[0].translations[1]);
-        
       } catch (error) {
         console.error(error);
       }

@@ -19,7 +19,7 @@
 
   &__header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-start;
     gap: 1rem;
   }
@@ -184,5 +184,11 @@
     &__input {
       padding-right: 1.5rem;
     }
+  }
+
+  .show-hint {
+    left: 10%;
+    right: 10%;
+    font-size: 0.9rem;
   }
 }

@@ -22,7 +22,7 @@ function QuizResults() {
         <div className="table">
           {details.map((item) => (
             <div
-              key={item.id}
+              key={item.word_id}
               className={`table-row ${!item.is_correct ? "wrong" : ""}`}
             >
               <div className="status">
@@ -35,7 +35,7 @@ function QuizResults() {
 
               <div className="column">
                 <span className="label">SOURCE WORD</span>
-                <h4>{item.correct_answer}</h4>
+                <h4>{item.source_word}</h4>
               </div>
 
               <div className="column">

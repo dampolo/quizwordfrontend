@@ -19,9 +19,7 @@ function AddNewCategory() {
   });
 
   function handleChange(e) {
-    const { name, value } = e.target;
-    console.log(formData);
-    
+    const { name, value } = e.target;    
     setFormData((prev) => ({
       ...prev,
       [name]: value,

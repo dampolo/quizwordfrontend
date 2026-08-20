@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
-import "./play-quiz.scss";
 import { useEffect, useState } from "react";
 import useQuiz from "../../../../context/useQuiz";
 import { Link } from "react-router-dom";
+import "./play-quiz.scss";
 
 function PlayQuiz() {
   const { getQuizWords, postQuizAnswers } = useQuiz();
@@ -95,6 +95,7 @@ function PlayQuiz() {
         </div>
 
         <p className="quiz-card__subtitle">Übersetzte das Word:</p>
+        
         <div className={`hide-hint ${hint ? "show-hint" : ""}`}>
           {quiz?.[currentQuestion].translations[1].tip === "" ? (
           <p className="hint-text">
@@ -109,6 +110,7 @@ function PlayQuiz() {
           }
 
           </div>
+
         <form className="quiz-card__form">
           <label htmlFor="translation" className="quiz-card__label">
             Your Translation

@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import "./../PlayQuiz/play-quiz.scss";
+import "./learn-quiz.scss";
 import { useEffect, useState } from "react";
 import useQuiz from "../../../../context/useQuiz";
 import { Link } from "react-router-dom";

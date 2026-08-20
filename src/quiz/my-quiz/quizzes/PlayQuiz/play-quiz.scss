@@ -4,7 +4,7 @@
   position: relative;
   width: 100%;
   max-width: 760px;
-  margin: 2rem auto;
+  margin: 1rem;
   padding: 3rem;
   background: #fff;
   border: 1px solid #e8e8f4;
@@ -74,7 +74,7 @@
   }
 
   &__subtitle {
-    margin: 1.5rem 0 3rem;
+    margin: 0 0 3rem;
     text-align: center;
 
     font-size: 1.2rem;
@@ -101,7 +101,7 @@
 
   &__line {
     height: 1px;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.2);
     width: 200px;
   }
 
@@ -144,6 +144,8 @@
   display: none;
 }
 
+
+
 .show-hint {
   display: flex;
   justify-content: center;
@@ -151,13 +153,12 @@
   position: absolute;
   z-index: 2;
   background-color: rgba(0, 0, 0, 0.39);
-  top: 50%;
+  top: 46%;
   left: 30%;
   right: 30%;
-  bottom: 50%;
+  bottom: 48%;
   border-radius: basic.$border-radius;
   .hint-text {
-    background-color: rgba(0, 0, 0, 0.39);
     border-radius: basic.$border-radius;
     padding-inline: 1rem;
   }
@@ -187,8 +188,6 @@
   }
 
   .show-hint {
-    left: 10%;
-    right: 10%;
     font-size: 0.9rem;
   }
 }

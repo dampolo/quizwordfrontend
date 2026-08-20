@@ -34,7 +34,7 @@ export function VocabularyProvider({ children }) {
         throw new Error("Failed to load words.");
       }
 
-      const data = await response.json();      
+      const data = await response.json();
       setWords(data);
       setNextPage(data.next);
       setPreviousPage(data.previous);
@@ -287,10 +287,6 @@ export function VocabularyProvider({ children }) {
 
         if (!userData.languages_active) {
           navigate("/my-quiz/choose-languages");
-        } else {
-          navigate(
-            `/my-quiz/all-words?language=${userData.learning_languages[0].id}`,
-          );
         }
 
         setLanguages(languages);

@@ -47,7 +47,6 @@ function AllQuizWords() {
     try {
       const data = await getAttemptDetails(id);
       setDetails(data.answers);
-      console.log(data.answers);
     } catch (err) {
       console.log(err);
     }
@@ -63,9 +62,6 @@ function AllQuizWords() {
         
         ]);
         setQuiz(quizData);
-
-        console.log("quizData: ", quizData);
-
         setAttempts(attemptsData);
       } catch (err) {
         console.error(err);
@@ -145,9 +141,9 @@ function AllQuizWords() {
               <span>Days</span>
             </div>
 
-            <button to={`/my-quiz/${concept.id}/edit-word`} className="actions">
+            <Link to={`/my-quiz/${concept.id}/edit-word?target-word=${concept.translations[1].id}&language=${concept.translations[1].language}`} className="actions">
               ✏️
-            </button>
+            </Link>
           </div>
         ))}
       </div>

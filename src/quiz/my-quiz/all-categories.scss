@@ -114,6 +114,9 @@ $bg: #f7f8fd;
 
     .card {
       position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       padding: 22px;
       min-height: 150px;
       width: 300px;
@@ -126,12 +129,14 @@ $bg: #f7f8fd;
       }
 
       .card-actions {
-        position: absolute;
-        top: 18px;
-        right: 18px;
         display: flex;
         gap: 16px;
         color: $muted;
+        .edit {
+          position: absolute;
+          top: 18px;
+          right: 18px;
+        }
       }
 
       .icon {

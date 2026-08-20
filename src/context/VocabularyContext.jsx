@@ -105,10 +105,10 @@ export function VocabularyProvider({ children }) {
     return await response.json();
   }
 
-  async function getCategories(id) {
+  async function getCategories() {
     setLoading(true);
     try {
-      const response = await fetch(`${api}categories/?target_language=${id}`, {
+      const response = await fetch(`${api}categories/`, {
         credentials: "include",
       });
 
@@ -117,14 +117,17 @@ export function VocabularyProvider({ children }) {
       }
 
       const data = await response.json();
-      setCategories(data);
-      setLoading(false);
+      setCategories(data);      
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   }
 
   async function getFiltredCategories(id) {
+    setLoading(true);
+
     try {
       const response = await fetch(`${api}categories/?target_language=${id}`, {
         credentials: "include",
@@ -137,6 +140,8 @@ export function VocabularyProvider({ children }) {
       setLoading(false);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   }
 

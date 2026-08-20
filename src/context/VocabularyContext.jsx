@@ -65,9 +65,6 @@ export function VocabularyProvider({ children }) {
   async function getUserLanguages() {
     const response = await fetch(`${api}user-languages/`, {
       credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
     });
 
     const data = await response.json();
@@ -84,9 +81,6 @@ export function VocabularyProvider({ children }) {
   async function getLanguages() {
     const response = await fetch(`${api}languages/`, {
       credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
     });
 
     if (!response.ok) {
@@ -116,9 +110,6 @@ export function VocabularyProvider({ children }) {
     try {
       const response = await fetch(`${api}categories/?target_language=${id}`, {
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
 
       if (!response.ok) {
@@ -137,9 +128,6 @@ export function VocabularyProvider({ children }) {
     try {
       const response = await fetch(`${api}categories/?target_language=${id}`, {
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
       if (!response.ok) {
         throw new Error("Failed to load words.");
@@ -157,9 +145,6 @@ export function VocabularyProvider({ children }) {
       `${api}concepts/${id}/?language=${languageId}`,
       {
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
       },
     );
 
@@ -178,9 +163,6 @@ export function VocabularyProvider({ children }) {
         `${api}concepts/?language=${id}&page=${page}`,
         {
           credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
         },
       );
       if (!response.ok) {

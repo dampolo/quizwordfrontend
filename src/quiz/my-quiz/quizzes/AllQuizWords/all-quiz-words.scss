@@ -65,10 +65,10 @@
   display: grid;
   grid-template-columns:
     90px
-    200px
-    160px
-    140px;
-  align-items: center;
+    2fr
+    1fr
+    1fr;
+  text-align: center;
 }
 
 .status {

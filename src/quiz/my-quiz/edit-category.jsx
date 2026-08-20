@@ -6,12 +6,15 @@ import BackButton from "../../components/BackButton/BackButton";
 import PreLoader from "../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
 import useDialog from "../../context/DialogContext/useDialgo";
+import { useTranslation } from "react-i18next";
 
 function EditCategory() {
-  const { getCategory, updateCategory, languages, loading, deleteCategory } = useVocabulary();
+  const { getCategory, updateCategory, languages, loading, deleteCategory } =
+    useVocabulary();
   const { id } = useParams();
   const navigate = useNavigate();
   const { openDialog } = useDialog();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     language_id: "",
@@ -22,9 +25,7 @@ function EditCategory() {
     e.preventDefault();
     try {
       await updateCategory(Number(id), formData);
-      toast.success(
-        `Kategorie "${formData.category_name}" wurde geändert!`,
-      );
+      toast.success(`Kategorie "${formData.category_name}" wurde geändert!`);
       navigate(
         `/my-quiz/vocabulary-categories/?language=${formData.language_id}`,
       );
@@ -55,7 +56,7 @@ function EditCategory() {
     loadCategry();
   }, [id]);
 
-    function handleDelete() {
+  function handleDelete() {
     openDialog({
       title: "Löschen?",
       description: "Bist du sicher?",
@@ -68,12 +69,10 @@ function EditCategory() {
     });
   }
 
-   async function deleteCurrentCategory() {
+  async function deleteCurrentCategory() {
     try {
       await deleteCategory(Number(id));
-      toast.success(
-        `Kategorie "${formData.category_name}" wurde gelöscht!`,
-      );
+      toast.success(`Kategorie "${formData.category_name}" wurde gelöscht!`);
       navigate(
         `/my-quiz/vocabulary-categories/?language=${formData.language_id}`,
       );
@@ -92,20 +91,22 @@ function EditCategory() {
 
   return (
     <section className="add-category-card">
-      <BackButton to={`/my-quiz/vocabulary-categories/?language=${formData.language_id}`} />
+      <BackButton
+        to={`/my-quiz/vocabulary-categories/?language=${formData.language_id}`}
+      />
       <div className="form-header">
         <div className="header-icon">✚</div>
 
         <div>
-          <h2>Edit Category</h2>
-          <p>Organize your vocabulary by topics or themes.</p>
+          <h2>{t("ADD_NEW_CATEGORY.TITLE")}</h2>
+          <p>{t("ADD_NEW_CATEGORY.DESCRIPTION")}</p>
         </div>
       </div>
 
       <form className="category-form" onSubmit={handleSubmit}>
         <div className="form-group category-group">
           <label>
-            Sprache <span>*</span>
+            {t("ADD_NEW_CATEGORY.LANGUAGE")} <span>*</span>
           </label>
 
           <select
@@ -122,7 +123,7 @@ function EditCategory() {
           </select>
         </div>
 
-        <label htmlFor="categoryName">Category Name</label>
+        <label htmlFor="categoryName">{t("ADD_NEW_CATEGORY.CATEGORY_NAME")}</label>
 
         <div className="input-wrap">
           <input
@@ -137,7 +138,7 @@ function EditCategory() {
           <span className="input-icon">⌘</span>
         </div>
 
-        <small>Short, descriptive names work best for navigation.</small>
+        <small>{t("ADD_NEW_CATEGORY.CATEGORY_HINT")}</small>
 
         {/* <div className="color-section">
           <h4>Selected Color Theme</h4>
@@ -159,7 +160,7 @@ function EditCategory() {
             className="main-quiz-button-cancel"
             to={`/my-quiz/vocabulary-categories/?language=${formData.language_id}`}
           >
-            Abbrechen
+            {t("BUTTONS.CANCEL")}
           </Link>
 
           <button
@@ -167,7 +168,7 @@ function EditCategory() {
             className="main-quiz-button save-btn"
             disabled={formData.category_name.trim().length < 3}
           >
-            Speichern
+            {t("BUTTONS.SAVE")}
           </button>
         </div>
       </form>

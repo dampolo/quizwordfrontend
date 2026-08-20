@@ -151,7 +151,7 @@ function AllWords() {
                 />
               </div>
 
-              <div className="rank">#{word.target_rank}</div>
+              <div className="rank">#{word.translations[1].rank}</div>
 
               <div className="word">
                 <h3>{word.translations[0].word}</h3>

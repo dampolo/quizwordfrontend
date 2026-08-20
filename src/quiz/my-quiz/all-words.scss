@@ -324,6 +324,16 @@
     padding: 1.2rem 0.5rem;
   }
 
+  .list-head-attempt,
+  .list-row-attempt {
+    display: grid;
+    grid-template-columns:
+      80px
+      2fr
+      1fr;
+    align-items: center;
+    padding: 1.2rem 0.5rem;
+  }
   .cards {
     grid-template-columns: 1fr;
   }

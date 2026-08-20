@@ -114,11 +114,11 @@ function AllQuizWords() {
 
       <div className="word-list-attempt">
         <div className="list-head-attempt">
-          <div>Rang</div>
-          <div>Wort & Übersetzung</div>
-          <div>Kategorie</div>
-          <div>Serie</div>
-          <div>Aktionen</div>
+          <div className="rank">Rang</div>
+          <div className="word">Wort & Übersetzung</div>
+          <div className="category">Kategorie</div>
+          <div className="streak">Serie</div>
+          <div className="actions">Aktionen</div>
         </div>
 
         {quiz?.concepts.map((concept) => (
@@ -131,7 +131,7 @@ function AllQuizWords() {
               <p>{concept.translations[1].word}</p>
             </div>
 
-            <div>
+            <div className="category">
               <span
                 className={`badge ${concept.translations[1].category_name}`}
               >

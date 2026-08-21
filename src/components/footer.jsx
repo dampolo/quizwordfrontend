@@ -26,7 +26,7 @@ function Footer() {
             {t("FOOTER.IMPRINT")}
           </Link>
 
-          <Link href="/privacy-policy" className="footer__link" target="blank">
+          <Link to="/privacy-policy" className="footer__link" target="blank">
             {t("FOOTER.PRIVACY_POLICY")}
           </Link>
 

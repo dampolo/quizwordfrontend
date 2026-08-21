@@ -30,8 +30,8 @@ function Imprint() {
             Telefon: +49 176 99492988
             <br />
             E-Mail:{" "}
-            <a href="mailto:damianpoloczek@gmail.com">
-              damianpoloczek@gmail.com
+            <a href="mailto:support@quiz-word.com">
+              support@quiz-word.com
             </a>
           </p>
 

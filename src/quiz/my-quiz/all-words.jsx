@@ -22,7 +22,7 @@ function AllWords() {
 
   const [selectedWordIds, setSelectedWordIds] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { createQuiz } = useQuiz();
+  const { createQuiz, getLastQuiz } = useQuiz();
   const [currentPage, setCurrentPage] = useState(1);
 
   const language = searchParams.get("language");
@@ -63,6 +63,18 @@ function AllWords() {
   function selectLanguage(languageId) {
     setSelectedWordIds([]);
     setSearchParams({ language: languageId });
+  }
+
+  async function playLastQuiz() {
+    try {
+      const response = await getLastQuiz()
+      navigate(`/my-quiz/${response.quiz_id}/play-quiz?language=${response?.target_language}`)
+    } catch (error) {      
+       const message =
+        error.response?.detail || "Error";
+
+      toast.error(message);
+    }
   }
 
   useEffect(() => {
@@ -222,12 +234,11 @@ function AllWords() {
           <h3>Mastery Level</h3>
           <p>You've reached B2 fluency level in Vocabulary.</p>
         </div>
+         <div className="card review">
+          <h3>Quiz</h3>
+          <p>Fange das letzte Quiz an.</p>
 
-        <div className="card review">
-          <h3>Flashcard Review</h3>
-          <p>Ready to test your memory on recent additions?</p>
-
-          <button>Start Review Session</button>
+          <button onClick={playLastQuiz}>Start Last Quiz</button>
         </div>
       </div>
       <FormDialog

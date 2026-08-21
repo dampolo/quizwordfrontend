@@ -46,7 +46,6 @@ export function QuizProvider({ children }) {
         throw new Error("Failed to load words.");
       }
       const data = await response.json();
-      console.log("Quizzes:", data);
       setQuizzes(data);
 
       setLoading(false);
@@ -94,16 +93,37 @@ export function QuizProvider({ children }) {
     try {
       const response = await fetch(`${api}quizzes/${id}`, {
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error("Failed to load words.");
+        const error = new Error("Failed to get quiz");
+        error.response = data;
+        throw error;
       }
 
+      return data;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function getLastQuiz() {
+    setLoading(true);
+
+    try {
+      const response = await fetch(`${api}last-quiz/`, {
+        credentials: "include",
+      });
+      
       const data = await response.json();
+      
+      if (!response.ok) {
+        const error = new Error("Failed to get last quiz");
+        error.response = data;
+        throw error;
+      }
 
       return data;
     } finally {
@@ -128,9 +148,6 @@ export function QuizProvider({ children }) {
     try {
       const response = await fetch(`${api}attempts/?quiz_id=${id}`, {
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
 
       if (!response.ok) {
@@ -151,9 +168,6 @@ export function QuizProvider({ children }) {
     try {
       const response = await fetch(`${api}attempts/${id}`, {
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
 
       if (!response.ok) {
@@ -177,6 +191,7 @@ export function QuizProvider({ children }) {
         deleteQuiz,
         getQuizWords,
         getQuizzes,
+        getLastQuiz,
         getFiltredQuizzes,
         getAttemptQuizScore,
         getAttemptDetails,

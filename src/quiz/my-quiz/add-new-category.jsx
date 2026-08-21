@@ -37,7 +37,7 @@ function AddNewCategory() {
       setFormData({ language_id: "", category_name: "" });
     } catch (err) {
       const message =
-        err.response?.translations?.[0] || err.response?.detail?.[0] || "Error";
+        err.response?.detail?.[0] || "Error";
 
       toast.error(message);
     }

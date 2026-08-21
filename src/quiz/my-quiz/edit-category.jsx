@@ -54,7 +54,10 @@ function EditCategory() {
         const category = await getCategory(id);
         setFormData(category);
       } catch (err) {
-        console.error(err);
+        const message =
+        err.response?.translations?.[0] || err.response?.detail?.[0] || "Error";
+
+      toast.error(message);
       }
     }
 

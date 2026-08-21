@@ -5,6 +5,7 @@ import "./ChooseLanguages.scss";
 import useVocabulary from "../../context/useVocabulary";
 import LanguageForm from "./LanguageForm";
 import BackButton from "../BackButton/BackButton";
+import { toast } from "react-toastify";
 
 function EditLanguages() {
   const {
@@ -62,11 +63,16 @@ function EditLanguages() {
     try {
       await postLanguages(payload);
 
+      toast.success(`Die Sprachen wurde geändert!`);
       navigate(
         `/my-quiz/all-words?language=${learningLanguages[0]}`
       );
+      getUserLanguages()
     } catch (err) {
-      console.error(err);
+      const message =
+        err.response?.translations?.[0] || err.response?.detail?.[0] || "Error";
+
+      toast.error(message);
     }
   }
 

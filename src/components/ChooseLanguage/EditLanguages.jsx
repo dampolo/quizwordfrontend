@@ -63,7 +63,7 @@ function EditLanguages() {
     try {
       await postLanguages(payload);
 
-      toast.success(`Die Sprachen wurde geändert!`);
+      toast.success(`Die Sprachen wurde geändert !`);
       navigate(
         `/my-quiz/all-words?language=${learningLanguages[0]}`
       );

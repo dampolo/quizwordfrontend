@@ -32,6 +32,14 @@ $bg: #f7f8fd;
       border-radius: 12px;
       font-size: 24px;
       font-weight: bold;
+      svg {
+        width: 19px;
+        height: 19px;
+
+        path {
+          fill: basic.$color-primary-indigo;
+        }
+      }
     }
 
     h2 {
@@ -44,7 +52,7 @@ $bg: #f7f8fd;
     p {
       margin-top: 4px;
       color: $muted;
-      font-size: .95rem;
+      font-size: 0.95rem;
     }
   }
 
@@ -80,8 +88,6 @@ $bg: #f7f8fd;
       }
     }
 
-
-
     label {
       font-weight: 600;
       color: $text;
@@ -100,7 +106,7 @@ $bg: #f7f8fd;
         border-radius: 12px;
         font-size: 16px;
         outline: none;
-        transition: .25s;
+        transition: 0.25s;
 
         &::placeholder {
           color: #98a2b3;
@@ -108,7 +114,7 @@ $bg: #f7f8fd;
 
         &:focus {
           border-color: basic.$color-primary-indigo;
-        //   box-shadow: 0 0 0 3px rgba($color-primary-indigo, .12);
+          //   box-shadow: 0 0 0 3px rgba($color-primary-indigo, .12);
         }
       }
 
@@ -124,7 +130,7 @@ $bg: #f7f8fd;
 
     small {
       color: $muted;
-      font-size: .85rem;
+      font-size: 0.85rem;
       font-style: italic;
     }
 
@@ -147,7 +153,7 @@ $bg: #f7f8fd;
           border-radius: 50%;
           border: none;
           cursor: pointer;
-          transition: .2s;
+          transition: 0.2s;
           position: relative;
 
           &:hover {
@@ -155,8 +161,9 @@ $bg: #f7f8fd;
           }
 
           &.active {
-            box-shadow: 0 0 0 3px #fff,
-                        0 0 0 5px basic.$color-primary-indigo;
+            box-shadow:
+              0 0 0 3px #fff,
+              0 0 0 5px basic.$color-primary-indigo;
           }
 
           &.purple {
@@ -186,24 +193,24 @@ $bg: #f7f8fd;
       display: flex;
       justify-content: flex-end;
       gap: 18px;
-    
-    .cancel-btn {
+
+      .cancel-btn {
         min-width: 140px;
         font-size: 16px;
         font-weight: 600;
-        transition: .25s;
+        transition: 0.25s;
         height: 50px;
         background: transparent;
         color: basic.$color-primary-indigo;
 
         &:hover {
-          background: rgba(basic.$color-primary-indigo, .06);
+          background: rgba(basic.$color-primary-indigo, 0.06);
         }
       }
 
       .save-btn {
         margin: initial;
-        box-shadow: 0 8px 18px rgba(basic.$color-primary-indigo, .25);
+        box-shadow: 0 8px 18px rgba(basic.$color-primary-indigo, 0.25);
       }
     }
   }

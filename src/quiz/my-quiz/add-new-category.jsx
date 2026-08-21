@@ -94,9 +94,9 @@ function AddNewCategory() {
             autoComplete="off"
             placeholder="e.g., Business Travel"
           />
+        <small>{t("ADD_NEW_CATEGORY.CATEGORY_HINT")}</small>
         </div>
 
-        <small>{t("ADD_NEW_CATEGORY.CATEGORY_HINT")}</small>
 
         {/* <div className="color-section">
           <h4>Selected Color Theme</h4>

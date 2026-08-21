@@ -22,8 +22,8 @@ $bg: #f7f8fd;
     margin-bottom: 36px;
 
     .header-icon {
-      width: 52px;
-      height: 52px;
+      min-width: 52px;
+      min-height: 52px;
       display: flex;
       align-items: center;
       justify-content: center;

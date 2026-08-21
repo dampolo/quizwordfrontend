@@ -7,7 +7,6 @@ import PreLoader from "../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
-
 function AddNewCategory() {
   const { createCategory, loading, userLanguages } = useVocabulary();
   const navigate = useNavigate();
@@ -19,7 +18,7 @@ function AddNewCategory() {
   });
 
   function handleChange(e) {
-    const { name, value } = e.target;    
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -32,7 +31,9 @@ function AddNewCategory() {
     try {
       await createCategory(formData);
       toast.success(`Kategorie wurde "${formData.category_name}" hinzugefügt!`);
-      navigate(`/my-quiz/vocabulary-categories/?language=${formData.language_id}`);
+      navigate(
+        `/my-quiz/vocabulary-categories/?language=${formData.language_id}`,
+      );
       setFormData({ language_id: "", category_name: "" });
     } catch (err) {
       const message =
@@ -84,7 +85,9 @@ function AddNewCategory() {
           </select>
         </div>
         <div className="input-wrap">
-        <label htmlFor="categoryName">{t("ADD_NEW_CATEGORY.CATEGORY_NAME")}</label>
+          <label htmlFor="categoryName">
+            {t("ADD_NEW_CATEGORY.CATEGORY_NAME")}
+          </label>
           <input
             id="categoryName"
             name="category_name"
@@ -94,9 +97,8 @@ function AddNewCategory() {
             autoComplete="off"
             placeholder="e.g., Business Travel"
           />
-        <small>{t("ADD_NEW_CATEGORY.CATEGORY_HINT")}</small>
+          <small>{t("ADD_NEW_CATEGORY.CATEGORY_HINT")}</small>
         </div>
-
 
         {/* <div className="color-section">
           <h4>Selected Color Theme</h4>
@@ -121,7 +123,12 @@ function AddNewCategory() {
           <button
             type="submit"
             className="main-quiz-button save-btn"
-            disabled={!(formData.category_name.trim().length >= 3 && !!formData.language_id)}
+            disabled={
+              !(
+                formData.category_name.trim().length >= 3 &&
+                !!formData.language_id
+              )
+            }
           >
             {t("BUTTONS.SAVE")}
           </button>

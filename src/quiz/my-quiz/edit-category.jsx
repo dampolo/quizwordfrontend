@@ -157,7 +157,6 @@ function EditCategory() {
             autoComplete="off"
             required
           />
-          <span className="input-icon">⌘</span>
           <small>{t("EDIT_CATEGORY.CATEGORY_HINT")}</small>
         </div>
 

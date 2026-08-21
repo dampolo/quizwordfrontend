@@ -216,9 +216,15 @@ export function VocabularyProvider({ children }) {
       body: JSON.stringify(categoryData),
     });
 
-    const newCategory = await response.json();
+    const data = await response.json();
 
-    return newCategory;
+    if (!response.ok) {
+      const error = new Error("Failed to create concept");
+      error.response = data;
+      throw error;
+    }
+
+    return data;
   }
 
   async function updateWord(id, wordData) {

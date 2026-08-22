@@ -137,6 +137,13 @@ function Quizzes() {
               >
                 <img src="/assets/edit.svg" alt="edit" />
               </button>
+                  <div className="action-button">
+
+                <img width={50} height={50} src="/assets/learn-quiz.svg" alt="" />
+                <img width={50} height={50} src="/assets/play-quiz.svg" alt="" />
+                <img width={50} height={50} src="/assets/look-quiz.svg" alt="" />
+                  </div>
+
               <div className="vocab-card__footer">
                 <Link
                   to={`/my-quiz/${quiz.quiz_id}/all-quiz-words`}

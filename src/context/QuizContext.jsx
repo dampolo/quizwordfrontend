@@ -75,6 +75,27 @@ export function QuizProvider({ children }) {
     return data;
   }
 
+  async function putQuiz(payload, quizId) {
+    const response = await fetch(`${api}quizzes/${quizId}/`, {
+      method: "PUT",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      const error = new Error("Failed to create concept");
+      error.response = data;
+      throw error;
+    }
+
+    return data;
+  }
+
   async function postQuizAnswers(id, payload) {
     const response = await fetch(`${api}quiz-answers/${id}/submit/`, {
       method: "POST",
@@ -194,6 +215,7 @@ export function QuizProvider({ children }) {
       value={{
         loading,
         quizzes,
+        putQuiz,
         createQuiz,
         deleteQuiz,
         getQuizWords,

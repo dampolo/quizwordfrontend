@@ -1,4 +1,4 @@
-import { useState, forwardRef } from "react";
+import { useState, forwardRef, useEffect } from "react";
 import Slide from "@mui/material/Slide";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -13,9 +13,24 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function FormDialog({ open, onClose, onSubmit, selectedWordsCount, message }) {
+function FormDialog({
+  open,
+  onClose,
+  onSubmit,
+  selectedWordsCount,
+  message,
+  quizName: initialQuizName,
+  dialogTitle,
+  dialogDescription,
+}) {
   const { t } = useTranslation();
   const [quizName, setQuizName] = useState("");
+
+  useEffect(() => {
+    if (open) {
+      setQuizName(initialQuizName ?? "");
+    }
+  }, [open, initialQuizName]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -53,12 +68,20 @@ function FormDialog({ open, onClose, onSubmit, selectedWordsCount, message }) {
         transition: Transition,
       }}
     >
-      <DialogTitle>Erstelle dein Quiz</DialogTitle>
+      <DialogTitle>
+        {
+          dialogTitle ? dialogTitle : "Edit dein Quiz"
+        }
+
+        
+      </DialogTitle>
 
       <DialogContent>
         <DialogContentText>
-          Du hast {selectedWordsCount} Wörter gewählt. Gib einen Namen für dein
-          Quiz ein.
+          {dialogDescription
+            ? dialogDescription
+            : `Du hast ${selectedWordsCount} Wörter gewählt. Gib einen Namen für dein
+            Quiz ein.`}
         </DialogContentText>
 
         <form id="create-quiz-form" onSubmit={handleSubmit}>

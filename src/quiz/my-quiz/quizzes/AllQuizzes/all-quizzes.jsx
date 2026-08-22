@@ -1,16 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./all-quizzes.scss";
 import { Link, useSearchParams } from "react-router-dom";
 import useQuiz from "../../../../context/useQuiz";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
 import useVocabulary from "../../../../context/useVocabulary";
+import FormDialog from "../../../../components/FormDialog/FormDialog";
+import { toast } from "react-toastify";
 
 function Quizzes() {
-  const { getFiltredQuizzes, quizzes, getQuizzes } = useQuiz();
+  const { getFiltredQuizzes, quizzes, getQuizzes, putQuiz } = useQuiz();
   const { userLanguages } = useVocabulary();
   const [searchParams, setSearchParams] = useSearchParams();
   const language = searchParams.get("language");
   const active = language ? Number(language) : null;
+  const [message, setMessage] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedQuiz, setSelectedQuiz] = useState(null);
+  const [dialogTitle, setDialogTitle] = useState("");
+  const [dialogDescription, setDialogDescription] = useState("");
+
+
 
   function selectLanguage(languageId) {
     if (languageId === null) {
@@ -18,6 +27,12 @@ function Quizzes() {
     } else {
       setSearchParams({ language: languageId });
     }
+  }
+
+  function openDialog() {
+    setDialogTitle("Edit Quiz")
+    setDialogDescription("Du kannst Name des Quizzes ändern: ")
+    setDialogOpen(true);
   }
 
   useEffect(() => {
@@ -34,6 +49,23 @@ function Quizzes() {
         <PreLoader />
       </div>
     );
+  }
+
+  async function handleEditQuiz(quizName) {
+    const payload = {
+      quiz_name: quizName,
+    };
+
+    try {
+      await putQuiz(payload, selectedQuiz?.quiz_id);
+      toast.success(`Quiz "${quizName}" wurde geändert!`);
+      setDialogOpen(false);
+      getFiltredQuizzes(language);
+    } catch (error) {
+      const message = error.response?.detail[0] || "Error";
+      setMessage(message);
+      toast.error(message);
+    }
   }
 
   return (
@@ -92,14 +124,19 @@ function Quizzes() {
         {quizzes.length === 0 ? (
           <p className="no-quiz">Du hast hier kein Quiz erstellt.</p>
         ) : (
-          
           quizzes.map((quiz) => (
             <article className="vocab-card" key={quiz.quiz_id}>
               <h3>{quiz.quiz_name}</h3>
-              <button className="edit"
-                >
-                  <img src="/assets/edit.svg" alt="edit" />
-                </button>
+              <button
+                type="button"
+                className="edit"
+                onClick={() => {
+                  setSelectedQuiz(quiz);;
+                  openDialog();
+                }}
+              >
+                <img src="/assets/edit.svg" alt="edit" />
+              </button>
               <div className="vocab-card__footer">
                 <Link
                   to={`/my-quiz/${quiz.quiz_id}/all-quiz-words`}
@@ -108,7 +145,7 @@ function Quizzes() {
                   <span>▦</span>
                   <strong>{quiz.concepts_count} Words</strong>
                 </Link>
-  
+
                 <div className="vocab-card__updated">
                   <span>Erstellt:</span>
                   <strong>
@@ -122,9 +159,7 @@ function Quizzes() {
               </div>
             </article>
           ))
-        )
-
-        }
+        )}
 
         {/* Quiz END */}
 
@@ -136,6 +171,15 @@ function Quizzes() {
           </small>
         </Link> */}
       </div>
+      <FormDialog
+         quizName={selectedQuiz?.quiz_name}
+         dialogTitle={dialogTitle}
+         dialogDescription={dialogDescription}
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        message={message}
+        onSubmit={handleEditQuiz}
+      />
     </section>
   );
 }

@@ -1,5 +1,3 @@
-import * as React from "react";
-import "./../../all-words.scss";
 import useQuiz from "../../../../context/useQuiz";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";

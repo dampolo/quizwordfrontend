@@ -7,25 +7,35 @@ function HelpDesk() {
       <section className="help-desk">
         <BackButton to="/" className="back-button" />
         <h1>Die häufigsten Fragen</h1>
-        
-        <div className="help-desk-list-content">
-          <details>
-            <summary class="help-desk-button collapsible">
-              Was kostet der Quiz Word?
-            </summary>
-            <div class="help-desk-list-content">
-              Der Quiz word is komplett kostenlos.
-            </div>
-          </details>
-        </div>
 
         <div className="help-desk-list-content">
           <details>
             <summary class="help-desk-button collapsible">
-              Für wen ist der Quiz Word?
+              Was ist Quiz Word?
             </summary>
             <div class="help-desk-list-content">
-              Der Quiz Word wurde erstellt für alle Menschen die gerne Sprachen lernen.
+              Quiz Word ist deine persönliche Vokabeldatenbank, in der du alle
+              Wörter speichern kannst, die du lernen möchtest. Aus diesen
+              Wörtern kannst du beliebig viele Quizze erstellen.
+            </div>
+          </details>
+
+          <details>
+            <summary class="help-desk-button collapsible">
+              Was kostet Quiz Word?
+            </summary>
+            <div class="help-desk-list-content">
+              Quiz Word is komplett kostenlos.
+            </div>
+          </details>
+
+          <details>
+            <summary class="help-desk-button collapsible">
+              Für wen ist Quiz Word?
+            </summary>
+            <div class="help-desk-list-content">
+              Quiz Word wurde erstellt für alle Menschen die gerne Sprachen
+              lernen.
             </div>
           </details>
         </div>

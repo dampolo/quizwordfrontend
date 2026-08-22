@@ -25,9 +25,9 @@
 
 details {
   position: relative;
-  padding: 10px;
+  padding: .625rem;
   interpolate-size: allow-keywords;
-  max-width: 1000px;
+  max-width: 62.5rem;
   width: 100%;
 }
 
@@ -68,14 +68,6 @@ details::-webkit-details-marker {
 
 summary:hover {
   scale: 1.02;
-}
-
-details {
-  position: relative;
-  padding: 10px;
-  interpolate-size: allow-keywords;
-  max-width: 1000px;
-  width: 100%;
 }
 
 details::details-content {

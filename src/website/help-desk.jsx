@@ -13,7 +13,7 @@ function HelpDesk() {
             <summary class="help-desk-button collapsible">
               Was ist Quiz Word?
             </summary>
-            <div class="help-desk-list-content">
+            <div className="help-desk-list-content">
               Quiz Word ist deine persönliche Vokabeldatenbank, in der du alle
               Wörter speichern kannst, die du lernen möchtest. Aus diesen
               Wörtern kannst du beliebig viele Quizze erstellen.
@@ -21,19 +21,19 @@ function HelpDesk() {
           </details>
 
           <details>
-            <summary class="help-desk-button collapsible">
+            <summary className="help-desk-button collapsible">
               Was kostet Quiz Word?
             </summary>
-            <div class="help-desk-list-content">
+            <div className="help-desk-list-content">
               Quiz Word is komplett kostenlos.
             </div>
           </details>
 
           <details>
-            <summary class="help-desk-button collapsible">
+            <summary className="help-desk-button collapsible">
               Für wen ist Quiz Word?
             </summary>
-            <div class="help-desk-list-content">
+            <div className="help-desk-list-content">
               Quiz Word wurde erstellt für alle Menschen die gerne Sprachen
               lernen.
             </div>

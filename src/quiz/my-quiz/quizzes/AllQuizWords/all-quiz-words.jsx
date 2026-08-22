@@ -23,6 +23,7 @@ function AllQuizWords() {
   const [attempts, setAttempts] = useState([]);
   const [quiz, setQuiz] = useState(null);
   const [details, setDetails] = useState([]);
+  const [selectedAttempt, setSelectedAttempt] = useState(null);
 
   async function deleteCurrentQuiz() {
     try {
@@ -47,6 +48,7 @@ function AllQuizWords() {
     try {
       const data = await getAttemptDetails(id);
       setDetails(data.answers);
+      setSelectedAttempt(data);
     } catch (err) {
       console.log(err);
     }
@@ -56,10 +58,8 @@ function AllQuizWords() {
     async function loadData() {
       try {
         const [quizData, attemptsData] = await Promise.all([
-
           getQuizWords(id),
           getAttemptQuizScore(id),
-        
         ]);
         setQuiz(quizData);
         setAttempts(attemptsData);
@@ -94,7 +94,6 @@ function AllQuizWords() {
 
         <Link
           className="main-quiz-button add-btn"
-          
           to={`/my-quiz/${id}/learn-quiz?language=${quiz?.target_language}`}
         >
           Lernen
@@ -141,7 +140,10 @@ function AllQuizWords() {
               <span>Days</span>
             </div>
 
-            <Link to={`/my-quiz/${concept.id}/edit-word?target-word=${concept.translations[1].id}&language=${concept.translations[1].language}`} className="actions">
+            <Link
+              to={`/my-quiz/${concept.id}/edit-word?target-word=${concept.translations[1].id}&language=${concept.translations[1].language}`}
+              className="actions"
+            >
               ✏️
             </Link>
           </div>
@@ -170,7 +172,7 @@ function AllQuizWords() {
 
               {/* to={`/my-quiz/${word.id}/edit-word`} */}
               <div>
-                {new Date(attempt.finished_at).toLocaleDateString("de-DE", {
+                {new Date(attempt.finished_at).toLocaleString("de-DE", {
                   day: "2-digit",
                   month: "2-digit",
                   year: "numeric",
@@ -218,6 +220,17 @@ function AllQuizWords() {
       <div className="vocabulary-card">
         <div className="card-header">
           <h3>Vocabulary details</h3>
+          {selectedAttempt && (
+            <span>
+              {new Date(selectedAttempt.started_at).toLocaleString("de-DE", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </span>
+          )}
           <span className="badge">{details.length} Words Total</span>
         </div>
 

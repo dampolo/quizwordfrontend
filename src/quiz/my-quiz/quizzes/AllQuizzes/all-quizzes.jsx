@@ -96,7 +96,10 @@ function Quizzes() {
           quizzes.map((quiz) => (
             <article className="vocab-card" key={quiz.quiz_id}>
               <h3>{quiz.quiz_name}</h3>
-  
+              <button className="edit"
+                >
+                  <img src="/assets/edit.svg" alt="edit" />
+                </button>
               <div className="vocab-card__footer">
                 <Link
                   to={`/my-quiz/${quiz.quiz_id}/all-quiz-words`}

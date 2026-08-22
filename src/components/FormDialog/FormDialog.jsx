@@ -70,7 +70,7 @@ function FormDialog({
     >
       <DialogTitle>
         {
-          dialogTitle ? dialogTitle : "Edit dein Quiz"
+          dialogTitle ? dialogTitle : "Erstelle dein Quiz"
         }
 
         

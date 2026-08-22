@@ -7,6 +7,7 @@ import useQuiz from "../../context/useQuiz";
 import PreLoader from "../../components/PreLoader/PreLoader";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 function AllWords() {
   const {
@@ -30,6 +31,7 @@ function AllWords() {
   const language = searchParams.get("language");
   const active = language ? Number(language) : null;
   const navigate = useNavigate();
+      const { t } = useTranslation();
 
   function handleCheckboxChange(id, checked) {
     setSelectedWordIds((prev) => {

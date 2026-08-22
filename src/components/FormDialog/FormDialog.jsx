@@ -7,12 +7,14 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useTranslation } from "react-i18next";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 function FormDialog({ open, onClose, onSubmit, selectedWordsCount, message }) {
+  const { t } = useTranslation();
   const [quizName, setQuizName] = useState("");
 
   function handleSubmit(event) {
@@ -55,7 +57,8 @@ function FormDialog({ open, onClose, onSubmit, selectedWordsCount, message }) {
 
       <DialogContent>
         <DialogContentText>
-          Du hast {selectedWordsCount} Wörter gewählt. Gib einen Namen für dein Quiz ein.
+          Du hast {selectedWordsCount} Wörter gewählt. Gib einen Namen für dein
+          Quiz ein.
         </DialogContentText>
 
         <form id="create-quiz-form" onSubmit={handleSubmit}>
@@ -71,18 +74,16 @@ function FormDialog({ open, onClose, onSubmit, selectedWordsCount, message }) {
             variant="standard"
           />
         </form>
-        <div className="warn-txt" >
-        {message}
-        </div>
-
+        <div className="warn-txt">{message}</div>
       </DialogContent>
 
-      <DialogActions 
-      sx={{
-        alignSelf: "self-end",
-    }}
-        >
+      <DialogActions
+        sx={{
+          alignSelf: "self-end",
+        }}
+      >
         <Button
+          disableRipple
           onClick={handleClose}
           sx={{
             display: "flex",
@@ -105,10 +106,11 @@ function FormDialog({ open, onClose, onSubmit, selectedWordsCount, message }) {
             },
           }}
         >
-          Cancel
+          {t("BUTTONS.CANCEL")}
         </Button>
 
         <Button
+          disableRipple
           type="submit"
           disabled={quizName.length < 3}
           form="create-quiz-form"
@@ -130,7 +132,6 @@ function FormDialog({ open, onClose, onSubmit, selectedWordsCount, message }) {
             border: "1px solid #3f2bdc",
             transition: "all 0.2s ease-in-out",
             outline: "none",
-            cursor: "pointer",
 
             "&:hover, &:focus-visible": {
               border: "1px solid #3f2bdc",
@@ -139,7 +140,7 @@ function FormDialog({ open, onClose, onSubmit, selectedWordsCount, message }) {
             },
           }}
         >
-          Create
+          {t("BUTTONS.SAVE")}
         </Button>
       </DialogActions>
     </Dialog>

@@ -6,6 +6,7 @@ import BackButton from "../../components/BackButton/BackButton";
 import PreLoader from "../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
 import useDialog from "../../context/DialogContext/useDialgo";
+import { useTranslation } from "react-i18next";
 
 export default function AddNewWord() {
   const {
@@ -22,6 +23,8 @@ export default function AddNewWord() {
   const { openDialog } = useDialog();
   const [moreSource, setMoreSource] = useState(false);
   const [moreTarget, setMoreTarget] = useState(false);
+
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     category: "",
@@ -428,10 +431,10 @@ export default function AddNewWord() {
             to="/my-quiz/all-words"
             className="main-quiz-button-cancel cancel-btn"
           >
-            Cancel
+            {t("BUTTONS.CANCEL")}
           </Link>
           <button type="submit" className="main-quiz-button save-btn">
-            Speichern
+            {t("BUTTONS.SAVE")}
           </button>
         </div>
       </form>

@@ -64,8 +64,15 @@ export function QuizProvider({ children }) {
       body: JSON.stringify(quizData),
     });
 
-    const newQuiz = await response.json();
-    return newQuiz;
+    const data = await response.json();
+
+    if (!response.ok) {
+      const error = new Error("Failed to create concept");
+      error.response = data;
+      throw error;
+    }
+
+    return data;
   }
 
   async function postQuizAnswers(id, payload) {
@@ -116,9 +123,9 @@ export function QuizProvider({ children }) {
       const response = await fetch(`${api}last-quiz/`, {
         credentials: "include",
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
         const error = new Error("Failed to get last quiz");
         error.response = data;

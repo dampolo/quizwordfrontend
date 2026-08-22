@@ -24,6 +24,8 @@ function AllWords() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { createQuiz, getLastQuiz } = useQuiz();
   const [currentPage, setCurrentPage] = useState(1);
+  const [message, setMessage] = useState("");
+
 
   const language = searchParams.get("language");
   const active = language ? Number(language) : null;
@@ -56,7 +58,9 @@ function AllWords() {
       setSelectedWordIds([]);
       navigate(`/my-quiz/all-words/?language=${language}`);
     } catch (error) {
-      console.error("Failed to create quiz:", error);
+      const message = error.response?.detail[0] || "Error";
+      setMessage(message)
+      toast.error(message);
     }
   }
 
@@ -67,11 +71,12 @@ function AllWords() {
 
   async function playLastQuiz() {
     try {
-      const response = await getLastQuiz()
-      navigate(`/my-quiz/${response.quiz_id}/play-quiz?language=${response?.target_language}`)
-    } catch (error) {      
-       const message =
-        error.response?.detail || "Error";
+      const response = await getLastQuiz();
+      navigate(
+        `/my-quiz/${response.quiz_id}/play-quiz?language=${response?.target_language}`,
+      );
+    } catch (error) {
+      const message = error.response?.detail || "Error";
 
       toast.error(message);
     }
@@ -234,7 +239,7 @@ function AllWords() {
           <h3>Mastery Level</h3>
           <p>You've reached B2 fluency level in Vocabulary.</p>
         </div>
-         <div className="card review">
+        <div className="card review">
           <h3>Quiz</h3>
           <p>Fange das letzte Quiz an.</p>
 
@@ -245,6 +250,7 @@ function AllWords() {
         open={dialogOpen}
         selectedWordsCount={selectedWordIds.length}
         onClose={() => setDialogOpen(false)}
+        message={message}
         onSubmit={handleCreateQuiz}
       />
     </div>

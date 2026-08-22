@@ -12,7 +12,7 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function FormDialog({ open, onClose, onSubmit, selectedWordsCount }) {
+function FormDialog({ open, onClose, onSubmit, selectedWordsCount, message }) {
   const [quizName, setQuizName] = useState("");
 
   function handleSubmit(event) {
@@ -71,6 +71,10 @@ function FormDialog({ open, onClose, onSubmit, selectedWordsCount }) {
             variant="standard"
           />
         </form>
+        <div className="warn-txt" >
+        {message}
+        </div>
+
       </DialogContent>
 
       <DialogActions 

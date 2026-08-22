@@ -109,7 +109,7 @@ function Quizzes() {
                 <div className="vocab-card__updated">
                   <span>Erstellt:</span>
                   <strong>
-                    {new Date(quiz.updated_at).toLocaleDateString("de-DE", {
+                    {new Date(quiz.created_at).toLocaleDateString("de-DE", {
                       day: "2-digit",
                       month: "2-digit",
                       year: "numeric",

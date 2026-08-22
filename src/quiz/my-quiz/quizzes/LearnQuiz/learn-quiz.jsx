@@ -36,7 +36,6 @@ function LearnQuiz() {
     <section className="play-quiz">
       <div className="quiz-card learn-card">
         <Link
-          to
           className="quiz-card__cancel"
           to={`/my-quiz/${id}/all-quiz-words`}
         >

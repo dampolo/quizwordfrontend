@@ -24,6 +24,7 @@ function AllQuizWords() {
   const [quiz, setQuiz] = useState(null);
   const [details, setDetails] = useState([]);
   const [selectedAttempt, setSelectedAttempt] = useState(null);
+  const [vocabularyDetails, setVocabularyDetails] = useState(false);
 
   async function deleteCurrentQuiz() {
     try {
@@ -48,6 +49,8 @@ function AllQuizWords() {
     try {
       const data = await getAttemptDetails(id);
       setDetails(data.answers);
+      setVocabularyDetails(true);
+
       setSelectedAttempt(data);
     } catch (err) {
       console.log(err);
@@ -217,63 +220,79 @@ function AllQuizWords() {
       </div>
 
       {/* DEATAILS */}
-      <div className="vocabulary-card">
-        <div className="card-header">
-          <h3>Vocabulary details</h3>
-          {selectedAttempt && (
-            <span>
-              {new Date(selectedAttempt.started_at).toLocaleString("de-DE", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </span>
-          )}
-          <span className="badge">{details.length} Words Total</span>
+      <section
+        className={`vocabulary-details ${
+          vocabularyDetails ? "show-vocabulary-details" : ""
+        }`}
+      >
+        <div className="vocabulary-card">
+          <div className="card-header">
+            <h3>Vocabulary details</h3>
+            {selectedAttempt && (
+              <span>
+                {new Date(selectedAttempt.started_at).toLocaleString("de-DE", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </span>
+            )}
+            <span className="badge">{details.length} Words Total</span>
+          </div>
+
+          <div className="table">
+            <button
+              type="button"
+              onClick={() => setVocabularyDetails(false)}
+              className="quiz-card__cancel"
+            >
+              <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
+            </button>
+            {attempts.length === 0 ? (
+              <p>Du hast bis jetzt keine Quize gemacht.</p>
+            ) : details.length === 0 ? (
+              <p>"Klicke auf 🔍, um die Details anzuzeigen."</p>
+            ) : (
+              details.map((item) => (
+                <div
+                  key={item.id}
+                  className={`table-row ${!item.is_correct ? "wrong" : ""}`}
+                >
+                  <div className="status">
+                    <span
+                      className={
+                        item.is_correct ? "icon success" : "icon error"
+                      }
+                    >
+                      {item.is_correct ? "✓" : "✕"}
+                    </span>
+                  </div>
+
+                  <div className="column">
+                    <span className="label">SOURCE WORD</span>
+                    <h4>{item.correct_answer}</h4>
+                  </div>
+
+                  <div className="column">
+                    <span className="label">YOUR ANSWER</span>
+                    <p className={!item.is_correct ? "incorrect" : ""}>
+                      {item.user_answer}
+                    </p>
+                  </div>
+
+                  <div className="column">
+                    <span className="label">CORRECT MEANING</span>
+                    <p className="correct">{item.correct_answer}</p>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
+      </section>
 
-        <div className="table">
-          {attempts.length === 0 ? (
-            <p>Du hast bis jetzt keine Quize gemacht.</p>
-          ) : details.length === 0 ? (
-            <p>"Klicke auf 🔍, um die Details anzuzeigen."</p>
-          ) : (
-            details.map((item) => (
-              <div
-                key={item.id}
-                className={`table-row ${!item.is_correct ? "wrong" : ""}`}
-              >
-                <div className="status">
-                  <span
-                    className={item.is_correct ? "icon success" : "icon error"}
-                  >
-                    {item.is_correct ? "✓" : "✕"}
-                  </span>
-                </div>
-
-                <div className="column">
-                  <span className="label">SOURCE WORD</span>
-                  <h4>{item.correct_answer}</h4>
-                </div>
-
-                <div className="column">
-                  <span className="label">YOUR ANSWER</span>
-                  <p className={!item.is_correct ? "incorrect" : ""}>
-                    {item.user_answer}
-                  </p>
-                </div>
-
-                <div className="column">
-                  <span className="label">CORRECT MEANING</span>
-                  <p className="correct">{item.correct_answer}</p>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-      </div>
       {/* DETAILS ENDE */}
 
       <button>

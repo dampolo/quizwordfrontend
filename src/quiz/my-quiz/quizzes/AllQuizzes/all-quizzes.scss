@@ -85,9 +85,9 @@ $bg: #f7f8fd;
       }
 
       &__footer {
-        margin-top: 74px;
-        padding-top: 16px;
-        border-top: 1px solid #eef0f5;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: .0625rem solid #eef0f5;
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
@@ -154,6 +154,13 @@ $bg: #f7f8fd;
       }
     }
   }
+}
+
+.action-button {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 4rem;
 }
 
 /* VocabularyCard.scss */

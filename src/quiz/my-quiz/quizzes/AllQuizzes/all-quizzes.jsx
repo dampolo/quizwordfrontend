@@ -19,8 +19,6 @@ function Quizzes() {
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogDescription, setDialogDescription] = useState("");
 
-
-
   function selectLanguage(languageId) {
     if (languageId === null) {
       setSearchParams({});
@@ -30,8 +28,8 @@ function Quizzes() {
   }
 
   function openDialog() {
-    setDialogTitle("Edit Quiz")
-    setDialogDescription("Du kannst Name des Quizzes ändern: ")
+    setDialogTitle("Edit Quiz");
+    setDialogDescription("Du kannst Name des Quizzes ändern: ");
     setDialogOpen(true);
   }
 
@@ -131,22 +129,48 @@ function Quizzes() {
                 type="button"
                 className="edit"
                 onClick={() => {
-                  setSelectedQuiz(quiz);;
+                  setSelectedQuiz(quiz);
                   openDialog();
                 }}
               >
                 <img src="/assets/edit.svg" alt="edit" />
               </button>
-                  <div className="action-button">
 
-                <img width={50} height={50} src="/assets/learn-quiz.svg" alt="" />
-                <img width={50} height={50} src="/assets/play-quiz.svg" alt="" />
-                <img width={50} height={50} src="/assets/look-quiz.svg" alt="" />
-                  </div>
+              <div className="action-button">
+                <Link
+                  to={`/my-quiz/${quiz.quiz_id}/learn-quiz?language=${quiz?.target_language}`}
+                >
+                  <img
+                    width={40}
+                    height={40}
+                    src="/assets/learn-quiz.svg"
+                    alt="learn"
+                  />
+                </Link>
+                <Link
+                  to={`/my-quiz/${quiz.quiz_id}/play-quiz?language=${quiz?.target_language}`}
+                >
+                  <img
+                    width={40}
+                    height={40}
+                    src="/assets/play-quiz.svg"
+                    alt="play"
+                  />
+                </Link>
+
+                <Link to={`/my-quiz/${quiz.quiz_id}/all-quiz-words?language=${quiz?.target_language}`}>
+                  <img
+                    width={40}
+                    height={40}
+                    src="/assets/look-quiz.svg"
+                    alt="look"
+                  />
+                </Link>
+              </div>
 
               <div className="vocab-card__footer">
                 <Link
-                  to={`/my-quiz/${quiz.quiz_id}/all-quiz-words`}
+                  to={`/my-quiz/${quiz.quiz_id}/all-quiz-words?language=${quiz?.target_language}`}
                   className="vocab-card__meta"
                 >
                   <span>▦</span>
@@ -179,9 +203,9 @@ function Quizzes() {
         </Link> */}
       </div>
       <FormDialog
-         quizName={selectedQuiz?.quiz_name}
-         dialogTitle={dialogTitle}
-         dialogDescription={dialogDescription}
+        quizName={selectedQuiz?.quiz_name}
+        dialogTitle={dialogTitle}
+        dialogDescription={dialogDescription}
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
         message={message}

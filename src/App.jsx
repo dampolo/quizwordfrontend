@@ -37,6 +37,7 @@ import EditLanguages from "./components/ChooseLanguage/EditLanguages";
 import ResetPassword from "./quiz/auth/reset-password";
 import Settings from "./quiz/my-quiz/Settings/settings";
 import ChangeEmail from "./quiz/my-quiz/Profile/ChangeEmail/change-email";
+import ChangePassword from "./quiz/my-quiz/Profile/ChangePassword/change-password";
 
 function App() {
   return (
@@ -78,6 +79,7 @@ function App() {
                 <Route path="profile" element={<Profile />} />
                 <Route path="edit-profile" element={<EditProfile />} />
                 <Route path="change-email" element={<ChangeEmail />} />
+                <Route path="change-password" element={<ChangePassword />} />
 
                 {/* Vocabulary */}
                 <Route path="all-words" element={<AllWords />} />

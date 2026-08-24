@@ -90,7 +90,7 @@ function Profile() {
         <h2>Passwort ändern:</h2>
       <div className="profile-user__card">
         <InfoRow label="Passwort:" value={profile.password} type="password"/>
-        <EditButton to="/my-quiz/change-email" className="edit-button" />
+        <EditButton to="/my-quiz/change-password" className="edit-button" />
       </div>
 
       <h2>Deine Sprachen</h2>

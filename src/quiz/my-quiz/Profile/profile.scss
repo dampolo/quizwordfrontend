@@ -5,6 +5,9 @@
   justify-content: center;
   flex-direction: column;
   padding: 2rem;
+  h2 {
+    margin-top: 1rem;
+  }
 
   &__single {
     display: flex;

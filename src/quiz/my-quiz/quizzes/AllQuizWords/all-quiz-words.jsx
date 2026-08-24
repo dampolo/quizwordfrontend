@@ -93,19 +93,21 @@ function AllQuizWords() {
           </p>
         </div>
 
-        <Link
-          className="main-quiz-button add-btn"
-          to={`/my-quiz/${id}/learn-quiz?language=${quiz?.target_language}`}
-        >
-          Lernen
-        </Link>
+        <div className="action-button">
+          <Link
+            className="main-quiz-button all-quiz-add-btn"
+            to={`/my-quiz/${id}/learn-quiz?language=${quiz?.target_language}`}
+          >
+            Lernen
+          </Link>
 
-        <Link
-          className="main-quiz-button add-btn"
-          to={`/my-quiz/${id}/play-quiz?language=${quiz?.target_language}`}
-        >
-          Spiel
-        </Link>
+          <Link
+            className="main-quiz-button all-quiz-add-btn"
+            to={`/my-quiz/${id}/play-quiz?language=${quiz?.target_language}`}
+          >
+            Spiel
+          </Link>
+        </div>
       </div>
 
       <div className="word-list-attempt">

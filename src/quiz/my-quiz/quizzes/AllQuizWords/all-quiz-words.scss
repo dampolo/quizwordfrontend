@@ -8,8 +8,8 @@
   max-width: 50rem;
   margin: 1.25rem;
   background: #fff;
-  border: .0625rem solid #dbe3ef;
-  border-radius: .625rem;
+  border: 0.0625rem solid #dbe3ef;
+  border-radius: 0.625rem;
   overflow: hidden;
 }
 
@@ -84,7 +84,6 @@
   display: none;
 }
 
-
 .show-vocabulary-details {
   position: fixed;
   display: flex;
@@ -97,4 +96,13 @@
   left: 0;
   right: 0;
   background-color: rgba(52, 33, 214, 0.4);
+}
+
+.action-button {
+  gap: 1rem;
+  .main-quiz-button {
+    &.all-quiz-add-btn {
+      margin: 0;
+    }
+  }
 }

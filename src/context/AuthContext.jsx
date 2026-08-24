@@ -269,8 +269,6 @@ export function AuthProvider({ children }) {
         throw error;
       }
 
-      await checkAuth();
-
       return data;
     } catch (error) {
       console.error("Email change failed:", error);
@@ -278,6 +276,32 @@ export function AuthProvider({ children }) {
     } finally {
       setLoading(false);
     }
+  }
+
+  async function patchChangeUsername(formData) {
+    try {
+      const response = await fetch(`${api}change-username/`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const error = new Error("Username change failed");
+        error.response = data;
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Username change failed:", error);
+      throw error;
+    } 
   }
 
   useEffect(() => {
@@ -300,6 +324,7 @@ export function AuthProvider({ children }) {
         profile,
         isMenuOpen,
         confirmationMessage,
+        patchChangeUsername,
         postChangeEmail,
         postChangePassword,
         resetPassword,

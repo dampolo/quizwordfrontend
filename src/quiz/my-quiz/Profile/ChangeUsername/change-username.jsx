@@ -5,14 +5,15 @@ import { toast } from "react-toastify";
 import "./change-username.scss";
 import { useAuth } from "../../../../context/useAuth";
 import BackButton from "../../../../components/BackButton/BackButton";
+import PreLoader from "../../../../components/PreLoader/PreLoader";
 
 function ChangeUsername() {
-  const initialValues = { username: ""};
+  const initialValues = { username: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const { postChangeEmail, loading, setConfirmationMessage, logout } =
-    useAuth();
+  const { patchChangeUsername } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,9 +21,12 @@ function ChangeUsername() {
   };
 
   async function changeUsername(e) {
+    setLoading(true);
+
     e.preventDefault();
 
     const errors = validate(formValues);
+
     setFormErrors(errors);
 
     if (Object.keys(errors).length > 0) {
@@ -34,33 +38,27 @@ function ChangeUsername() {
     };
 
     try {
-      await postChangeEmail(payload);
-      setConfirmationMessage("Dein E-Mail wurde erfolgreich geändert.");
-      navigate("/confirmation");
-      await logout();
+      await patchChangeUsername(payload);
+      toast.success("Username wurde geändert!");
+
+      navigate("/my-quiz/profile");
     } catch (err) {
-      const message =
-        err.response?.new_email?.[0] ||
-        err.response?.password?.[0] ||
-        err.response?.detail?.[0] ||
-        "Login Fehler";
+      const message = err.response?.username?.[0] || "Username Fehler";
 
       toast.error(message);
-      setFormErrors({
-        message: message,
-      });
+      setFormErrors({ username: message });
     }
+    setLoading(false);
   }
 
   const validate = (values) => {
     const errors = {};
 
-    const regexUsername = /^\S{5,10}$/;
-
+    const regexUsername = /^\S{4,10}$/;
     if (!values.username || !regexUsername.test(values.username)) {
-      errors.username = "Mindestens 5, maximal 10 Zeichen und keine Leerzeichen.";
+      errors.username =
+        "Mindestens 4, maximal 10 Zeichen und keine Leerzeichen.";
     }
-
 
     return errors;
   };
@@ -74,18 +72,17 @@ function ChangeUsername() {
       </div>
 
       <p className="description">
-        Gib die neue E-Mail-Adresse ein, die du ab jetzt für die Anmeldung
-        verwenden möchtest.
+        Hier kannst einen neuen Benutzernamen eingeben.
       </p>
 
-      <form onSubmit={changeUsername}>
+      <form onSubmit={changeUsername} noValidate>
         <div className="input-container">
-          <label htmlFor="username">Deine neue E-Mail-Adresse</label>
+          <label htmlFor="username">Dein neuer Benutzername</label>
           <input
             className="input-field"
-            type="username"
+            type="text"
             name="username"
-            placeholder="beispielname@email.com"
+            placeholder="username"
             autoComplete="username"
             value={formValues.username}
             onChange={handleChange}
@@ -101,13 +98,17 @@ function ChangeUsername() {
             />
           </div>
 
-          <div className="warn-txt">{formErrors.email}</div>
+          <div className="warn-txt">{formErrors.username}</div>
         </div>
 
         {loading ? <PreLoader /> : <></>}
 
         <div className="btn-container">
-          <button className="main-quiz-button" type="submit" disabled={formValues.username.length <= 4}>
+          <button
+            className="main-quiz-button"
+            type="submit"
+            disabled={formValues.username.length <= 4}
+          >
             Ändern
           </button>
         </div>

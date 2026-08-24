@@ -7,7 +7,7 @@
 .footer {
   width: 100%;
   padding: 40px 0;
-  background: #F9FAFB;
+  background: #f9fafb;
   border-top: 1px solid basic.$color-border;
 
   &__container {
@@ -65,7 +65,7 @@
     &:hover {
       color: basic.$color-primary-indigo;
       text-decoration: underline;
-      text-underline-offset: .5rem;
+      text-underline-offset: 0.5rem;
     }
   }
 
@@ -99,7 +99,6 @@
   }
 }
 
-
 // ========================================
 // Responsive
 // ========================================
@@ -117,23 +116,24 @@
   }
 }
 
-
 @media (max-width: 600px) {
-  .footer {
-    height: calc(100% - 1.875rem);
-    padding: 1.875rem 0 4.5rem 0;
+  .main-customer {
+    +.footer {
+      height: calc(100% - 1.875rem);
+      padding: 1.875rem 0 4.5rem 0;
 
-    &__container {
-      padding: 0 20px;
-    }
+      &__container {
+        padding: 0 20px;
+      }
 
-    &__links {
-      gap: 20px;
-    }
+      &__links {
+        gap: 20px;
+      }
 
-    &__social {
-      width: 38px;
-      height: 38px;
+      &__social {
+        width: 38px;
+        height: 38px;
+      }
     }
   }
 }

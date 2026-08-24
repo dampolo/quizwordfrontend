@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useQuiz from "../../../../context/useQuiz";
 import { Link } from "react-router-dom";
@@ -10,8 +10,10 @@ function PlayQuiz() {
   const [quiz, setQuiz] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const navigate = useNavigate();
-
+  const [searchParams] = useSearchParams();
   const [hint, setHint] = useState(false);
+  const redirect = searchParams.get("redirect") === "true";
+  const language = searchParams.get("language");
 
   const [formData, setFormData] = useState({
     answer: "",
@@ -77,15 +79,23 @@ function PlayQuiz() {
     loadData();
   }, [id]);
 
+    function cancel() {
+    if (redirect) {
+      navigate(`/my-quiz/all-quizzes?language=${language}`);
+    } else {
+      navigate(`/my-quiz/${id}/all-quiz-words`);
+    }
+  }
+
   return (
     <section className="play-quiz">
       <div className="quiz-card">
-        <Link
+        <button type="button" onClick={cancel}
           className="quiz-card__cancel"
           to={`/my-quiz/${id}/all-quiz-words`}
         >
           <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
-        </Link>
+        </button>
         <div className="quiz-card__header">
           <h1 className="quiz-card__title">
             {quiz?.[currentQuestion].translations[0].word}
@@ -104,7 +114,6 @@ function PlayQuiz() {
               </p>
             )}
           </div>
-        
         </div>
 
         <form className="quiz-card__form">

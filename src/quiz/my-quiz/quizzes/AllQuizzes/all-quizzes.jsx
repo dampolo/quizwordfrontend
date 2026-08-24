@@ -147,7 +147,7 @@ function Quizzes() {
                   />
                 </Link>
                 <Link
-                  to={`/my-quiz/${quiz.quiz_id}/play-quiz?language=${quiz?.target_language}`}
+                  to={`/my-quiz/${quiz.quiz_id}/play-quiz?language=${quiz?.target_language}&redirect=true`}
                 >
                   <img
                     width={40}

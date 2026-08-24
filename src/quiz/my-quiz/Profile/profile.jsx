@@ -77,7 +77,7 @@ function Profile() {
         <EditButton to="/my-quiz/edit-profile" className="edit-button" />
       </div>
 
-      <h2>Änderung des E-Mails:</h2>
+      <h2>E-Mail-Adresse ändern:</h2>
       <div className="profile-user__card">
         <InfoRow label="Email:" value={profile.email} />
         <EditButton to="/my-quiz/change-email" className="edit-button" />

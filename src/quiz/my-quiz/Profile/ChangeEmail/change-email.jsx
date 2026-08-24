@@ -78,7 +78,7 @@ function ChangeEmail() {
       <BackButton className="arrow-profile" to="/my-quiz/profile/" />
 
       <div className="form-title">
-        <h1 className="form-title-name">Änderung deines E-Mails</h1>
+        <h1 className="form-title-name">E-Mail-Adresse ändern</h1>
       </div>
 
       <p className="description">

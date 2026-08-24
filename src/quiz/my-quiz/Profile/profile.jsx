@@ -6,10 +6,14 @@ import EditButton from "../../../components/EditButton/EditButon";
 import BackButton from "../../../components/BackButton/BackButton";
 import PreLoader from "../../../components/PreLoader/PreLoader";
 
-const InfoRow = ({ label, value }) => {
+const InfoRow = ({ label, value, type }) => {
   const renderValue = () => {
     if (typeof value === "boolean") {
       return value ? "✅" : "❌";
+    }
+
+    if(type === "password" ) {
+      return "*".repeat(10)
     }
 
     return value || "-";
@@ -79,7 +83,13 @@ function Profile() {
 
       <h2>E-Mail-Adresse ändern:</h2>
       <div className="profile-user__card">
-        <InfoRow label="Email:" value={profile.email} />
+        <InfoRow label="E-Mail:" value={profile.email} />
+        <EditButton to="/my-quiz/change-email" className="edit-button" />
+      </div>
+
+        <h2>Passwort ändern:</h2>
+      <div className="profile-user__card">
+        <InfoRow label="Passwort:" value={profile.password} type="password"/>
         <EditButton to="/my-quiz/change-email" className="edit-button" />
       </div>
 

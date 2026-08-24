@@ -11,12 +11,12 @@ function ChangeEmail() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const { login, loading } = useAuth();
+  const { postChangeEmail, loading } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
+    setFormValues({ ...formValues, [name]: value });    
   };
 
   async function changeEmail(e) {
@@ -29,15 +29,21 @@ function ChangeEmail() {
       return;
     }
 
+    const payload = {
+      new_email: formValues.new_email,
+      password: formValues.password,
+
+    }
+
     try {
-      const success = await login(formValues.email, formValues.password);
+      const success = await postChangeEmail(payload);
 
       if (success) {
-        navigate("/my-quiz/all-words");
+        navigate(`/login`);
       }
     } catch (err) {
       const message =
-        err.response?.email?.[0] ||
+        err.response?.new_email?.[0] ||
         err.response?.password?.[0] ||
         err.response?.detail?.[0] ||
         "Login Fehler";
@@ -57,7 +63,7 @@ function ChangeEmail() {
     const regexPassword =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%+\-/*?&])[A-Za-z\d@$!%+\-/*?&]{10,}$/;
 
-    if (!values.email || !regexEmail.test(values.email)) {
+    if (!values.new_email || !regexEmail.test(values.new_email)) {
       errors.email = "Dein E-Mail ist unvollständig/inkorrekt.";
     }
 
@@ -83,14 +89,14 @@ function ChangeEmail() {
 
       <form onSubmit={changeEmail}>
         <div className="input-container">
-          <label htmlFor="email">E-Mail-Adresse</label>
+          <label htmlFor="new_email">Deine neue E-Mail-Adresse</label>
           <input
             className="input-field"
-            type="email"
-            name="email"
+            type="new_email"
+            name="new_email"
             placeholder="beispielname@email.com"
-            autoComplete="email"
-            value={formValues.email}
+            autoComplete="new_email"
+            value={formValues.new_email}
             onChange={handleChange}
           />
 

@@ -219,6 +219,38 @@ export function AuthProvider({ children }) {
     return data;
   }
 
+  async function postChangeEmail(formData) {
+    setLoading(true);
+
+    try {
+      const response = await fetch(`${api}change-email/`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const error = new Error("Email change failed");
+        error.response = data;
+        throw error;
+      }
+
+      await checkAuth();
+
+      return data;
+    } catch (error) {
+      console.error("Email change failed:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     const init = async () => {
       const authenticated = await checkAuth();
@@ -239,6 +271,7 @@ export function AuthProvider({ children }) {
         profile,
         isMenuOpen,
         confirmationMessage,
+        postChangeEmail,
         resetPassword,
         forgotPassword,
         setConfirmationMessage,

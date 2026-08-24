@@ -18,8 +18,9 @@ function LearnQuiz() {
     const isLastWord = currentQuestion === quiz.length - 1;
     if (isLastWord) {
       navigate(`/my-quiz/${id}/all-quiz-words`);
+      return
     }
-    setCurrentQuestion(currentQuestion + 1);
+    setCurrentQuestion((prev) => prev + 1);
   }
 
   useEffect(() => {

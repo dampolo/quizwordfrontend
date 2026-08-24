@@ -11,7 +11,7 @@ function ChangeEmail() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const { postChangeEmail, loading } = useAuth();
+  const { postChangeEmail, loading, setConfirmationMessage, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -36,11 +36,10 @@ function ChangeEmail() {
     }
 
     try {
-      const success = await postChangeEmail(payload);
-
-      if (success) {
-        navigate(`/login`);
-      }
+      await postChangeEmail(payload);
+      setConfirmationMessage("Dein E-Mail wurde erfolgreich geändert.");
+      navigate("/confirmation");
+      await logout()
     } catch (err) {
       const message =
         err.response?.new_email?.[0] ||

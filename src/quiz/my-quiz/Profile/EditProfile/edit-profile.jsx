@@ -85,7 +85,6 @@ function EditProfile() {
     username: "",
     first_name: "",
     last_name: "",
-    email: "",
     phone: "",
     street: "",
     street_number: "",

@@ -32,7 +32,6 @@ function Quizzes() {
     setDialogDescription("Du kannst Name des Quizzes ändern: ");
     setDialogOpen(true);
   }
-
   useEffect(() => {
     if (language) {
       getFiltredQuizzes(language);
@@ -138,7 +137,7 @@ function Quizzes() {
 
               <div className="action-button">
                 <Link
-                  to={`/my-quiz/${quiz.quiz_id}/learn-quiz?language=${quiz?.target_language}`}
+                  to={`/my-quiz/${quiz.quiz_id}/learn-quiz?language=${quiz?.target_language}&redirect=true`}
                 >
                   <img
                     width={40}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import "./ChooseLanguages.scss";
 import useVocabulary from "../../context/useVocabulary";
@@ -8,14 +8,12 @@ import BackButton from "../BackButton/BackButton";
 import { toast } from "react-toastify";
 
 function EditLanguages() {
-  const {
-    languages,
-    getUserLanguages,
-    postLanguages,
-  } = useVocabulary();
+  const { languages, getUserLanguages, postLanguages } = useVocabulary();
 
   const navigate = useNavigate();
 
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get("redirect") === "true";
   const [nativeLanguage, setNativeLanguage] = useState("");
   const [learningLanguages, setLearningLanguages] = useState([]);
 
@@ -27,7 +25,7 @@ function EditLanguages() {
         setNativeLanguage(data.native_language.id);
 
         setLearningLanguages(
-          data.learning_languages.map((language) => language.id)
+          data.learning_languages.map((language) => language.id),
         );
       } catch (err) {
         console.error(err);
@@ -40,16 +38,12 @@ function EditLanguages() {
   function handleNativeLanguageChange(id) {
     setNativeLanguage(id);
 
-    setLearningLanguages((prev) =>
-      prev.filter((lang) => lang !== id)
-    );
+    setLearningLanguages((prev) => prev.filter((lang) => lang !== id));
   }
 
   function handleCheckboxChange(id) {
     setLearningLanguages((prev) =>
-      prev.includes(id)
-        ? prev.filter((lang) => lang !== id)
-        : [...prev, id]
+      prev.includes(id) ? prev.filter((lang) => lang !== id) : [...prev, id],
     );
   }
 
@@ -64,10 +58,12 @@ function EditLanguages() {
       await postLanguages(payload);
 
       toast.success(`Die Sprachen wurde geändert !`);
-      navigate(
-        `/my-quiz/all-words?language=${learningLanguages[0]}`
-      );
-      getUserLanguages()
+      if (redirect) {
+        navigate("/my-quiz/profile/");
+      } else {
+        navigate(`/my-quiz/all-words?language=${learningLanguages[0]}`);
+      }
+      getUserLanguages();
     } catch (err) {
       const message =
         err.response?.translations?.[0] || err.response?.detail?.[0] || "Error";

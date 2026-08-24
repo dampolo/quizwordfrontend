@@ -102,7 +102,7 @@ function Profile() {
             ))}
           </ul>
         </div>
-        <EditButton to="/my-quiz/edit-languages" className="edit-button" />
+        <EditButton to={`/my-quiz/edit-languages?redirect=true`} className="edit-button" />
       </div>
     </div>
   );

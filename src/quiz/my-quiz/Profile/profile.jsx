@@ -46,8 +46,6 @@ function Profile() {
         <BackButton to="/my-quiz/all-words/" />
         <InfoRow label="Customer Number:" value={profile.customer_number} />
 
-        <InfoRow label="User name:" value={profile.username} />
-
         <InfoRow label="Title:" value={profile.title} />
 
         <InfoRow label="First Name:" value={profile.first_name} />
@@ -79,6 +77,12 @@ function Profile() {
           }
         />
         <EditButton to="/my-quiz/edit-profile" className="edit-button" />
+      </div>
+
+      <h2>Username ändern:</h2>
+      <div className="profile-user__card">
+        <InfoRow label="Username:" value={profile.username} />
+        <EditButton to="/my-quiz/change-username" className="edit-button" />
       </div>
 
       <h2>E-Mail-Adresse ändern:</h2>

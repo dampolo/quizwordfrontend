@@ -4,8 +4,28 @@ import "./footer.scss";
 import { Link } from "react-router-dom";
 
 function Footer() {
-    const currentDate = new Date().getFullYear();
-      const { t } = useTranslation();
+  const currentDate = new Date().getFullYear();
+  const { t } = useTranslation();
+
+  async function handleShare() {
+    const shareData = {
+      title: "Quiz Word",
+      text: "Schau dir Quiz Word an!",
+      url: "https://quiz-word.com",
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(shareData.url);
+        alert("Link wurde kopiert!");
+      }
+    } catch (error) {
+      console.error("Sharing failed:", error);
+    }
+  }
+
   return (
     <footer className="footer">
       <div className="footer__container">
@@ -14,9 +34,7 @@ function Footer() {
           <h2 className="footer__logo">QuizWord</h2>
 
           <p className="footer__copyright">
-            © { currentDate } Quiz Word. {" "}
-            {t("FOOTER.DESCRIPTION")}
-
+            © {currentDate} Quiz Word. {t("FOOTER.DESCRIPTION")}
           </p>
         </div>
 
@@ -32,7 +50,6 @@ function Footer() {
 
           <Link to="/help-desk" className="footer__link">
             {t("FOOTER.FAQ")}
-            
           </Link>
 
           <Link href="#" className="footer__link">
@@ -42,9 +59,13 @@ function Footer() {
 
         {/* Right Icons */}
         <div className="footer__socials">
-          <a href="#" className="footer__social">
-            <img width="24" height="24" src="/assets/share.svg" alt="Share"/>
-          </a>
+          <button
+            type="button"
+            onClick={handleShare}
+            className="footer__social"
+          >
+            <img width="24" height="24" src="/assets/share.svg" alt="Share" />
+          </button>
 
           <a href="#" className="footer__social">
             <img width="24" height="24" src="/assets/mail.svg" alt="E-Mail" />

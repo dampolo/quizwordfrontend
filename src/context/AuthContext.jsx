@@ -219,6 +219,35 @@ export function AuthProvider({ children }) {
     return data;
   }
 
+  async function postChangePassword(payload) {
+    setLoading(true);
+
+    try {
+      const response = await fetch(`${api}change-password/`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const error = new Error("Changed password failed");
+        error.response = data;
+        throw error;
+      }
+      return data;
+    } catch (error) {
+      console.error("Email change failed:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  }
+
   async function postChangeEmail(formData) {
     setLoading(true);
 
@@ -272,6 +301,7 @@ export function AuthProvider({ children }) {
         isMenuOpen,
         confirmationMessage,
         postChangeEmail,
+        postChangePassword,
         resetPassword,
         forgotPassword,
         setConfirmationMessage,

@@ -40,6 +40,11 @@
     margin: initial;
   }
 
+  .create-quiz-small {
+    margin: 0;
+    padding: 0;
+  }
+
   .add-btn {
     height: 48px;
     padding: 0 24px;
@@ -311,7 +316,7 @@
   }
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 81.25rem) {
   .list-head,
   .list-row {
     display: grid;
@@ -350,5 +355,18 @@
 
   .vocabulary {
     padding: 1rem 0.5rem;
+  }
+}
+
+@media (max-width: 46rem) {
+  .main-quiz-button {
+    &.create-quiz-small {
+      position: fixed;
+      bottom: 4.1rem;
+      right: 0.5rem;
+      max-width: 2rem;
+      padding: 0;
+      margin: 0;
+    }
   }
 }

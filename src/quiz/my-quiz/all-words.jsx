@@ -248,6 +248,13 @@ function AllWords() {
           <button onClick={playLastQuiz}>Start Last Quiz</button>
         </div>
       </div>
+      <button
+            type="submit"
+            onClick={openDialog}
+            className="main-quiz-button create-quiz-small"
+            disabled={selectedWordIds.length < 3}
+          >+
+          </button>
       <FormDialog
         open={dialogOpen}
         selectedWordsCount={selectedWordIds.length}

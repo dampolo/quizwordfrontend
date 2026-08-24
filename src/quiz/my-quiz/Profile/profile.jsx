@@ -80,7 +80,7 @@ function Profile() {
       <h2>Änderung des E-Mails:</h2>
       <div className="profile-user__card">
         <InfoRow label="Email:" value={profile.email} />
-        <EditButton to="/my-quiz/edit-languages" className="edit-button" />
+        <EditButton to="/my-quiz/change-email" className="edit-button" />
       </div>
 
       <h2>Deine Sprachen</h2>

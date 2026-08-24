@@ -36,6 +36,7 @@ import HelpDesk from "./website/help-desk";
 import EditLanguages from "./components/ChooseLanguage/EditLanguages";
 import ResetPassword from "./quiz/auth/reset-password";
 import Settings from "./quiz/my-quiz/Settings/settings";
+import ChangeEmail from "./quiz/my-quiz/Profile/ChangeEmail/change-email";
 
 function App() {
   return (
@@ -76,6 +77,8 @@ function App() {
                 {/* Profile */}
                 <Route path="profile" element={<Profile />} />
                 <Route path="edit-profile" element={<EditProfile />} />
+                <Route path="change-email" element={<ChangeEmail />} />
+
                 {/* Vocabulary */}
                 <Route path="all-words" element={<AllWords />} />
                 <Route path=":id/edit-word" element={<EditWord />} />

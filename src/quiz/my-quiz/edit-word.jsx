@@ -339,7 +339,7 @@ export default function EditWord() {
                     value={formData.translations[1].word || ""}
                     onChange={(e) => handleChange(1, e)}
                     placeholder="e.g. Resiliencia"
-                    autocomplete="off"
+                    autoComplete="off"
                     required
                   />
                 </div>

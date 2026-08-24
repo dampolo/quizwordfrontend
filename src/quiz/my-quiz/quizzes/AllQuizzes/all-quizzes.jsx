@@ -136,7 +136,7 @@ function Quizzes() {
               </button>
 
               <div className="action-button">
-                <Link
+                <Link className="action-button__icon"
                   to={`/my-quiz/${quiz.quiz_id}/learn-quiz?language=${quiz?.target_language}&redirect=true`}
                 >
                   <img
@@ -146,7 +146,7 @@ function Quizzes() {
                     alt="learn"
                   />
                 </Link>
-                <Link
+                <Link className="action-button__icon"
                   to={`/my-quiz/${quiz.quiz_id}/play-quiz?language=${quiz?.target_language}&redirect=true`}
                 >
                   <img
@@ -157,7 +157,9 @@ function Quizzes() {
                   />
                 </Link>
 
-                <Link to={`/my-quiz/${quiz.quiz_id}/all-quiz-words?language=${quiz?.target_language}`}>
+                <Link 
+                className="action-button__icon"
+                to={`/my-quiz/${quiz.quiz_id}/all-quiz-words?language=${quiz?.target_language}`}>
                   <img
                     width={40}
                     height={40}

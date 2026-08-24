@@ -53,9 +53,9 @@ $bg: #f7f8fd;
 
   .category {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 300px);
-    gap: 20px;
-    margin-bottom: 32px;
+    grid-template-columns: repeat(auto-fit,  minmax(12.5rem, 18.75rem));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
     .no-quiz {
       padding: 1rem;
       text-align: center;
@@ -63,10 +63,10 @@ $bg: #f7f8fd;
     }
     .vocab-card {
       position: relative;
-      min-height: 200px;
-      padding: 18px;
-      border: 1px solid #d8d6e8;
-      border-radius: 10px;
+      min-height: 12.5rem;
+      padding: 1rem;
+      border: .0625rem solid #d8d6e8;
+      border-radius: .625rem;
       background: #fff;
       box-shadow: 0 1px 2px rgba(20, 20, 40, 0.04);
       color: #07152f;
@@ -161,6 +161,9 @@ $bg: #f7f8fd;
   justify-content: space-around;
   align-items: center;
   height: 4rem;
+  &__icon {
+    margin: 0;
+  }
 }
 
 /* VocabularyCard.scss */

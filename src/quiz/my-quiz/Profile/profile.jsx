@@ -24,9 +24,8 @@ const InfoRow = ({ label, value }) => {
 };
 
 function Profile() {
-  const { profile} = useAuth();
+  const { profile } = useAuth();
   const { userLanguages, nativeLanguage } = useVocabulary();
-
 
   if (!profile) {
     return (
@@ -50,8 +49,6 @@ function Profile() {
         <InfoRow label="First Name:" value={profile.first_name} />
 
         <InfoRow label="Last Name:" value={profile.last_name} />
-
-        <InfoRow label="Email:" value={profile.email} />
 
         <InfoRow label="Phone:" value={profile.phone} />
 
@@ -79,6 +76,13 @@ function Profile() {
         />
         <EditButton to="/my-quiz/edit-profile" className="edit-button" />
       </div>
+
+      <h2>Änderung des E-Mails:</h2>
+      <div className="profile-user__card">
+        <InfoRow label="Email:" value={profile.email} />
+        <EditButton to="/my-quiz/edit-languages" className="edit-button" />
+      </div>
+
       <h2>Deine Sprachen</h2>
       <div className="profile-user__card">
         <div className="profile-user__row">

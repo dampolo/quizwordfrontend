@@ -104,7 +104,6 @@ function EditProfile() {
         username: profile.username,
         first_name: profile.first_name || "",
         last_name: profile.last_name || "",
-        email: profile.email || "",
         phone: profile.phone || "",
         street: profile.street || "",
         street_number: profile.street_number || "",
@@ -191,15 +190,6 @@ function EditProfile() {
           label="Last Name:"
           name="last_name"
           value={form.last_name}
-          onChange={handleChange}
-        />
-
-        <InfoRow
-          label="Email:"
-          name="email"
-          type="email"
-          value={form.email}
-          required
           onChange={handleChange}
         />
 

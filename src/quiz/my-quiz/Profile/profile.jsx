@@ -5,6 +5,7 @@ import "./profile.scss";
 import EditButton from "../../../components/EditButton/EditButon";
 import BackButton from "../../../components/BackButton/BackButton";
 import PreLoader from "../../../components/PreLoader/PreLoader";
+import { useEffect } from "react";
 
 const InfoRow = ({ label, value, type }) => {
   const renderValue = () => {
@@ -28,8 +29,12 @@ const InfoRow = ({ label, value, type }) => {
 };
 
 function Profile() {
-  const { profile } = useAuth();
+  const { profile, getProfile } = useAuth();
   const { userLanguages, nativeLanguage } = useVocabulary();
+
+  useEffect(() => {
+    getProfile();
+  },[])
 
   if (!profile) {
     return (

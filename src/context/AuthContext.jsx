@@ -38,8 +38,6 @@ export function AuthProvider({ children }) {
   }
 
   async function getProfile() {
-    setLoading(true);
-
     try {
       const response = await fetch(`${api}profile-customer/`, {
         credentials: "include",
@@ -53,11 +51,11 @@ export function AuthProvider({ children }) {
       }
 
       const data = await response.json();
+	  debugger
       setProfile(data);
-      setLoading(false);
     } catch (error) {
       console.error(error);
-    }
+    } 
   }
 
   async function login(email, password) {

@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
 import PreLoader from "../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
 
 import "./login-quiz.scss";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 function LoginQuiz() {
   const initialValues = { email: "", password: "" };
@@ -66,8 +67,10 @@ function LoginQuiz() {
     return errors;
   };
 
+
   return (
     <main>
+      <PageTitle title="Login" />
       <section className="main-content-customer">
         <div className="form-title">
           <h1 className="form-title-name">Anmeldung</h1>

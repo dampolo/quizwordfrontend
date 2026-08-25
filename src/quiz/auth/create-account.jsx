@@ -4,6 +4,7 @@ import { useAuth } from "../../context/useAuth";
 import BackButton from "../../components/BackButton/BackButton";
 import PreLoader from "../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 function CreateAccount() {
   const initialValues = {
@@ -122,6 +123,7 @@ function CreateAccount() {
 
   return (
     <main>
+      <PageTitle title="Konto restellen" />
       <section className="main-content-customer">
         <BackButton to="/login" />
 

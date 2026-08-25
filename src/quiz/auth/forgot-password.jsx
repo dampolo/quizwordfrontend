@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import BackButton from "../../components/BackButton/BackButton";
 import { useAuth } from "../../context/useAuth";
 import PreLoader from "../../components/PreLoader/PreLoader";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 function ForgotPassword() {
   const { forgotPassword, setConfirmationMessage, loading } = useAuth();
@@ -57,6 +58,7 @@ function ForgotPassword() {
 
   return (
     <main>
+      <PageTitle title="Passwort vergessen" />
       <section className="main-content-customer">
         <BackButton to="/login" />
 

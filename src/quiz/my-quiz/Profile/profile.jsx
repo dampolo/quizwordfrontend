@@ -107,7 +107,7 @@ function Profile() {
         <div className="profile-user__row">
           <span className="profile-user__label">Deine Muttersprache:</span>
           <span className="profile-user__value">
-            {nativeLanguage.language_name}
+            {nativeLanguage?.language_name}
           </span>
         </div>
 

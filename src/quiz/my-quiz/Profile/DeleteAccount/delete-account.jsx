@@ -5,14 +5,15 @@ import { toast } from "react-toastify";
 import "./delete-account.scss";
 import { useAuth } from "../../../../context/useAuth";
 import BackButton from "../../../../components/BackButton/BackButton";
+import PreLoader from "../../../../components/PreLoader/PreLoader";
 
 function DeleteAccount() {
   const initialValues = { password: "" };
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const { postChangeEmail, loading, setConfirmationMessage, logout } =
-    useAuth();
+  const { setConfirmationMessage, deleteAccount } = useAuth();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -20,13 +21,15 @@ function DeleteAccount() {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  async function changeEmail(e) {
+  async function handleDeleteAccount(e) {
     e.preventDefault();
+    setLoading(true);
 
     const errors = validate(formValues);
     setFormErrors(errors);
 
     if (Object.keys(errors).length > 0) {
+      setLoading(false);
       return;
     }
 
@@ -35,22 +38,20 @@ function DeleteAccount() {
     };
 
     try {
-      await postChangeEmail(payload);
-      setConfirmationMessage("Dein E-Mail wurde erfolgreich geändert.");
+      await deleteAccount(payload);
+      setConfirmationMessage("Dein Konto wurde erfolgreich gelöscht.");
       navigate("/confirmation");
-      await logout();
     } catch (err) {
       const message =
-        err.response?.new_email?.[0] ||
-        err.response?.password?.[0] ||
-        err.response?.detail?.[0] ||
-        "Login Fehler";
+        err.password?.[0] ||
+        err.detail?.[0]
 
       toast.error(message);
       setFormErrors({
         message: message,
       });
     }
+    setLoading(false);
   }
 
   const validate = (values) => {
@@ -81,7 +82,7 @@ function DeleteAccount() {
         Diese Aktion kann nicht rückgängig gemacht werden.
       </p>
 
-      <form onSubmit={changeEmail}>
+      <form onSubmit={handleDeleteAccount}>
         <div className="input-container">
           <label htmlFor="password">Passwort</label>
           <input
@@ -121,7 +122,7 @@ function DeleteAccount() {
           </div>
 
           <div className="warn-txt warn-txt-hight">
-            {formErrors.password || formErrors.message}
+            {formErrors.password}
           </div>
         </div>
 

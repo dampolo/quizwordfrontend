@@ -54,7 +54,7 @@ export function AuthProvider({ children }) {
       setProfile(data);
     } catch (error) {
       console.error(error);
-    } 
+    }
   }
 
   async function login(email, password) {
@@ -301,6 +301,24 @@ export function AuthProvider({ children }) {
     }
   }
 
+  async function deleteAccount(password) {
+    const response = await fetch(`${api}delete-account/`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(password),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw data;
+    }
+    return data;
+  }
+
   useEffect(() => {
     const init = async () => {
       const authenticated = await checkAuth();
@@ -321,6 +339,7 @@ export function AuthProvider({ children }) {
         profile,
         isMenuOpen,
         confirmationMessage,
+        deleteAccount,
         patchChangeUsername,
         postChangeEmail,
         postChangePassword,

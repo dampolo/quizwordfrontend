@@ -16,8 +16,11 @@ function LearnQuiz() {
 
   function adjustCurrentQuestion() {
     const isLastWord = currentQuestion === quiz.length - 1;
-    if (isLastWord) {
-      navigate(`/my-quiz/${id}/all-quiz-words`);
+    if (isLastWord && redirect) {
+      navigate(`/my-quiz/all-quizzes?language=${language}`);
+      return
+    } else if (isLastWord) {
+      navigate(`/my-quiz/${id}/all-quiz-words?language=${language}`);
       return
     }
     setCurrentQuestion((prev) => prev + 1);
@@ -39,7 +42,7 @@ function LearnQuiz() {
     if (redirect) {
       navigate(`/my-quiz/all-quizzes?language=${language}`);
     } else {
-      navigate(`/my-quiz/${id}/all-quiz-words`);
+      navigate(`/my-quiz/${id}/all-quiz-words?language=${language}`);
     }
   }
 

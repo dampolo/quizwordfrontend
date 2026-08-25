@@ -13,8 +13,8 @@ const InfoRow = ({ label, value, type }) => {
       return value ? "✅" : "❌";
     }
 
-    if(type === "password" ) {
-      return "*".repeat(10)
+    if (type === "password") {
+      return "*".repeat(10);
     }
 
     return value || "-";
@@ -34,7 +34,7 @@ function Profile() {
 
   useEffect(() => {
     getProfile();
-  },[])
+  }, []);
 
   if (!profile) {
     return (
@@ -96,9 +96,9 @@ function Profile() {
         <EditButton to="/my-quiz/change-email" className="edit-button" />
       </div>
 
-        <h2>Passwort ändern:</h2>
+      <h2>Passwort ändern:</h2>
       <div className="profile-user__card">
-        <InfoRow label="Passwort:" value={profile.password} type="password"/>
+        <InfoRow label="Passwort:" value={profile.password} type="password" />
         <EditButton to="/my-quiz/change-password" className="edit-button" />
       </div>
 
@@ -121,7 +121,23 @@ function Profile() {
             ))}
           </ul>
         </div>
-        <EditButton to={`/my-quiz/edit-languages?redirect=true`} className="edit-button" />
+        <EditButton
+          to={`/my-quiz/edit-languages?redirect=true`}
+          className="edit-button"
+        />
+      </div>
+
+      <h2>Lösche dein Konto:</h2>
+      <div className="profile-user__card">
+        <p>
+          Wenn du dein Konto löschst, werden alle deine Wörter, Quizze,
+          Kategorien entfernt. Diese Aktion kann nicht rückgängig gemacht
+          werden.
+        </p>
+        <Link to="/my-quiz/delete-account" className="main-quiz-button delete-btn">
+          {" "}
+          Lösche dein Konto
+        </Link>
       </div>
     </div>
   );

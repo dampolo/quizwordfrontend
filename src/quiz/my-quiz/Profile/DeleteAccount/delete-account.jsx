@@ -5,28 +5,25 @@ import { toast } from "react-toastify";
 import "./delete-account.scss";
 import { useAuth } from "../../../../context/useAuth";
 import BackButton from "../../../../components/BackButton/BackButton";
-import PreLoader from "../../../../components/PreLoader/PreLoader";
 
 function DeleteAccount() {
-  const initialValues = { username: "" };
+  const initialValues = { password: "" };
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const { patchChangeUsername } = useAuth();
+  const { postChangeEmail, loading, setConfirmationMessage, logout } =
+    useAuth();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
 
-  async function changeUsername(e) {
-    setLoading(true);
-
+  async function changeEmail(e) {
     e.preventDefault();
 
     const errors = validate(formValues);
-
     setFormErrors(errors);
 
     if (Object.keys(errors).length > 0) {
@@ -34,82 +31,109 @@ function DeleteAccount() {
     }
 
     const payload = {
-      username: formValues.username,
+      password: formValues.password,
     };
 
     try {
-      await patchChangeUsername(payload);
-      toast.success("Username wurde geändert!");
-
-      navigate("/my-quiz/profile");
+      await postChangeEmail(payload);
+      setConfirmationMessage("Dein E-Mail wurde erfolgreich geändert.");
+      navigate("/confirmation");
+      await logout();
     } catch (err) {
-      const message = err.response?.username?.[0] || "Username Fehler";
+      const message =
+        err.response?.new_email?.[0] ||
+        err.response?.password?.[0] ||
+        err.response?.detail?.[0] ||
+        "Login Fehler";
 
       toast.error(message);
-      setFormErrors({ username: message });
+      setFormErrors({
+        message: message,
+      });
     }
-    setLoading(false);
   }
 
-  function validate(values) {
+  const validate = (values) => {
     const errors = {};
 
-    const regexUsername = /^\S{4,10}$/;
-    if (!values.username || !regexUsername.test(values.username)) {
-      errors.username =
-        "Mindestens 4, maximal 10 Zeichen und keine Leerzeichen.";
+    const regexPassword =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%+\-/*?&])[A-Za-z\d@$!%+\-/*?&]{10,}$/;
+
+    if (!values.password || !regexPassword.test(values.password)) {
+      errors.password = "Dein Passwort ist nicht korrekt.";
     }
 
     return errors;
   };
 
   return (
-    <section className="change-username">
+    <section className="delete-account">
       <BackButton className="arrow-profile" to="/my-quiz/profile/" />
 
       <div className="form-title">
-        <h1 className="form-title-name">Username ändern</h1>
+        <h1 className="form-title-name">Lösche dein Konto</h1>
       </div>
 
       <p className="description">
-        Hier kannst einen neuen Benutzernamen eingeben.
+        Um dein Konto zu löschen, gib bitte dein Password ein.
+      </p>
+      <p className="description">
+        Diese Aktion kann nicht rückgängig gemacht werden.
       </p>
 
-      <form onSubmit={changeUsername} noValidate>
+      <form onSubmit={changeEmail}>
         <div className="input-container">
-          <label htmlFor="username">Dein neuer Benutzername</label>
+          <label htmlFor="password">Passwort</label>
           <input
+            autoComplete="current-password"
             className="input-field"
-            type="text"
-            name="username"
-            placeholder="username"
-            autoComplete="username"
-            value={formValues.username}
+            type={isPasswordVisible ? "text" : "password"}
+            name="password"
+            placeholder="Passwort"
+            value={formValues.password}
             onChange={handleChange}
           />
 
+          <button
+            type="button"
+            className="eye-button"
+            onClick={() => setIsPasswordVisible((prev) => !prev)}
+          >
+            <img
+              width={24}
+              height={24}
+              className="pwd-eye"
+              src={
+                isPasswordVisible ? "/assets/eye.svg" : "/assets/eye-off.svg"
+              }
+              alt={isPasswordVisible ? "verstecken" : "zeigen"}
+            />
+          </button>
+
           <div className="input-icon">
             <img
-              width="24"
-              height="24"
+              width={24}
+              height={24}
               aria-hidden="true"
-              src="/assets/username.svg"
+              src="/assets/pwd-lock-icon-input-field.svg"
               alt=""
             />
           </div>
 
-          <div className="warn-txt">{formErrors.username}</div>
+          <div className="warn-txt warn-txt-hight">
+            {formErrors.password || formErrors.message}
+          </div>
         </div>
 
         {loading ? <PreLoader /> : <></>}
 
         <div className="btn-container">
           <button
-            className="main-quiz-button"
             type="submit"
-            disabled={formValues.username.length <= 4}
+            className="main-quiz-button"
+            disabled={loading}
           >
-            Ändern
+            Löschen
           </button>
         </div>
       </form>

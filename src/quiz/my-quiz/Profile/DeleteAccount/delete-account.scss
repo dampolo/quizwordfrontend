@@ -262,6 +262,18 @@
     .back-button {
       visibility: visible;
     }
+    .main-quiz-button {
+      margin: 1rem 0 0 0;
+      &.delete-btn {
+        max-width: fit-content;
+      }
+      &:hover,
+      &:focus-visible {
+        border: solid 1px red;
+        background-color: basic.$color-background-main;
+        color: red;
+      }
+    }
   }
 }
 

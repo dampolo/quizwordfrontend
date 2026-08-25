@@ -39,6 +39,7 @@ import Settings from "./quiz/my-quiz/Settings/settings";
 import ChangeEmail from "./quiz/my-quiz/Profile/ChangeEmail/change-email";
 import ChangePassword from "./quiz/my-quiz/Profile/ChangePassword/change-password";
 import ChangeUsername from "./quiz/my-quiz/Profile/ChangeUsername/change-username";
+import DeleteAccount from "./quiz/my-quiz/Profile/DeleteAccount/delete-account";
 
 function App() {
   return (
@@ -82,6 +83,7 @@ function App() {
                 <Route path="change-email" element={<ChangeEmail />} />
                 <Route path="change-password" element={<ChangePassword />} />
                 <Route path="change-username" element={<ChangeUsername />} />
+                <Route path="delete-account" element={<DeleteAccount />} />
 
 
                 {/* Vocabulary */}

@@ -15,7 +15,7 @@ function ChangeUsername() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
+  function handleChange(e) {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
@@ -51,7 +51,7 @@ function ChangeUsername() {
     setLoading(false);
   }
 
-  const validate = (values) => {
+  function validate(values) {
     const errors = {};
 
     const regexUsername = /^\S{4,10}$/;

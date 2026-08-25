@@ -51,7 +51,6 @@ export function AuthProvider({ children }) {
       }
 
       const data = await response.json();
-	  debugger
       setProfile(data);
     } catch (error) {
       console.error(error);

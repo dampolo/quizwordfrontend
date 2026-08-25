@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
   const [profile, setProfile] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("");
 
-  const checkAuth = async () => {
+  async function checkAuth() {
     setLoading(true);
 
     try {
@@ -35,7 +35,7 @@ export function AuthProvider({ children }) {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   async function getProfile() {
     setLoading(true);
@@ -60,7 +60,7 @@ export function AuthProvider({ children }) {
     }
   }
 
-  const login = async (email, password) => {
+  async function login(email, password) {
     setLoading(true);
     try {
       const response = await fetch(`${api}token/`, {
@@ -83,7 +83,7 @@ export function AuthProvider({ children }) {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   async function createAccount(formData) {
     setLoading(true);
@@ -141,7 +141,7 @@ export function AuthProvider({ children }) {
     });
 
     setUser(null);
-  };
+  }
 
   async function verifyEmail(uidb64, token) {
     setLoading(true);
@@ -301,7 +301,7 @@ export function AuthProvider({ children }) {
     } catch (error) {
       console.error("Username change failed:", error);
       throw error;
-    } 
+    }
   }
 
   useEffect(() => {

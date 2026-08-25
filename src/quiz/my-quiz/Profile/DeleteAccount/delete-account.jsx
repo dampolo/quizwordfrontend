@@ -130,7 +130,7 @@ function DeleteAccount() {
         <div className="btn-container">
           <button
             type="submit"
-            className="main-quiz-button"
+            className="main-quiz-button delete-btn"
             disabled={loading}
           >
             Löschen

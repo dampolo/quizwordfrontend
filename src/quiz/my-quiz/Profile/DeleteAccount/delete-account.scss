@@ -32,7 +32,8 @@
   }
   .description {
     text-align: center;
-    margin-bottom: 1.875rem;
+    margin-bottom: 0;
+
     .new-user-link {
       color: basic.$color-primary-indigo;
       border: 0.125rem dotted transparent;
@@ -48,6 +49,9 @@
         border: 0.125rem dotted basic.$color-primary-indigo;
         outline: basic.$color-primary-indigo;
       }
+    }
+    &:last-of-type {
+      margin-bottom: 1.875rem;
     }
   }
   form {

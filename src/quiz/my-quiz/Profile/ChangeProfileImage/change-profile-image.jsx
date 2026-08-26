@@ -11,7 +11,7 @@ function ChangeProfileImage() {
   const initialValues = { image: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const { profile, updateProfileImage } = useAuth();
+  const { profile, updateProfileImage, setProfile } = useAuth();
   const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -37,6 +37,11 @@ function ChangeProfileImage() {
     setFormErrors({});
     setSelectedImage(file);
     setPreview(URL.createObjectURL(file));
+  }
+
+  function handleDelete() {
+    setSelectedImage(null);
+    setPreview(null);
   }
 
   async function handleSubmit(e) {
@@ -116,7 +121,21 @@ function ChangeProfileImage() {
             </label>
           </div>
           {selectedImage && (
-            <span className="file-name">{selectedImage.name}</span>
+            <>
+              <span className="file-name">{selectedImage.name}</span>
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="delete-button"
+              >
+                <img
+                  width={24}
+                  height={24}
+                  src="/assets/trash.svg"
+                  alt="trash"
+                />
+              </button>
+            </>
           )}
 
           <div className="warn-txt warn-txt-hight">{formErrors.image}</div>

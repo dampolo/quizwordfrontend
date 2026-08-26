@@ -268,17 +268,42 @@
     }
     .main-quiz-button {
       margin: 1rem 0 0 0;
-      &.delete-btn {
+      &.save-btn {
         max-width: fit-content;
-      }
-      &:hover,
-      &:focus-visible {
-        border: solid 1px red;
-        background-color: basic.$color-background-main;
-        color: red;
       }
     }
   }
+}
+
+.main-quiz-button {
+  &.choose-btn {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    margin-top: 1rem;
+  }
+  .file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+
+    &:focus-visible + .file-input-label {
+      outline: 0.125rem solid #4f46e5;
+      outline-offset: 0.1875rem;
+    }
+  }
+  .file-input-label {
+    cursor: pointer;
+  }
+}
+
+.file-name {
+  overflow: hidden;
+  color: #555;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (max-width: 31.25rem) {

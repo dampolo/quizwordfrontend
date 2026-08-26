@@ -51,7 +51,7 @@ function ChangeProfileImage() {
     const payload = new FormData();
     payload.append("image", selectedImage);
     console.log("Payload: ", payload);
-    
+
     setLoading(true);
     try {
       await updateProfileImage(payload);
@@ -93,20 +93,31 @@ function ChangeProfileImage() {
       <p className="description">Du kannst hier dein Foto hinzüfugen.</p>
       <form onSubmit={handleSubmit}>
         <div className="input-container">
-          <label htmlFor="password">Foto</label>
+          <label htmlFor="image">Foto</label>
           <img
             width={100}
             height={100}
             src={preview || profile?.image || "/assets/profile.svg"}
             alt="Vorschau des Profilbildes"
           />
-          <input
-            name="image"
-            type="file"
-            value={formValues.image}
-            accept="image/png, image/jpeg, image/webp"
-            onChange={handleImageChange}
-          />
+
+          <div className="main-quiz-button choose-btn">
+            <input
+              id="image"
+              name="image"
+              className="file-input"
+              type="file"
+              accept="image/png, image/jpeg, image/webp"
+              onChange={handleImageChange}
+            />
+
+            <label htmlFor="image" className="file-input-label">
+              Wählen
+            </label>
+          </div>
+          {selectedImage && (
+            <span className="file-name">{selectedImage.name}</span>
+          )}
 
           <div className="warn-txt warn-txt-hight">{formErrors.image}</div>
         </div>
@@ -116,7 +127,7 @@ function ChangeProfileImage() {
         <div className="btn-container">
           <button
             type="submit"
-            className="main-quiz-button delete-btn"
+            className="main-quiz-button save-btn"
             disabled={!selectedImage}
           >
             Foto speichern

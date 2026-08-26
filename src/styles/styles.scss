@@ -164,6 +164,19 @@ main {
   background-color: rgba(52, 33, 214, 0.4);
 }
 
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    border: 0 !important;
+    padding: 0 !important;
+    white-space: nowrap !important;
+    clip-path: inset(100%) !important;
+    clip: rect(0 0 0 0) !important;
+    overflow: hidden !important;
+}
+
 @media (max-width: 48rem) {
   .action-buttons {
     justify-content: space-between;

@@ -49,8 +49,14 @@ function ChangeProfileImage() {
       setPreview(null);
 
       toast.success("Das Profilbild wurde gelöscht.");
-    } catch (error) {
-      toast.error("Das Profilbild konnte nicht gelöscht werden.");
+    } catch (err) {
+      const message =
+        err.image?.[0] ||
+        err.detail?.[0] ||
+        err.detail ||
+        "Das Profilbild konnte nicht geändert werden.";
+
+      toast.error(message);
     }
   }
 

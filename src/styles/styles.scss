@@ -177,6 +177,11 @@ main {
     overflow: hidden !important;
 }
 
+.avatar {
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
 @media (max-width: 48rem) {
   .action-buttons {
     justify-content: space-between;

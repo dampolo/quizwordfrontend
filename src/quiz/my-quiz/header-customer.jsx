@@ -3,10 +3,12 @@ import Logo from "../../components/logo";
 import DialogCustomer from "./dialog-customer";
 
 import "./header-customer.scss";
+import { useAuth } from "../../context/useAuth";
 
 function HeaderCustomer() {
   const [isProfileVisible, setIsProfileVisible] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { profile } = useAuth();
 
   function showDialog() {
     setIsProfileVisible(true);
@@ -38,8 +40,8 @@ function HeaderCustomer() {
         <img
           width={40}
           height={40}
-          className="profile-img"
-          src="/assets/profile.svg"
+          className="profile-img avatar"
+          src={profile?.image || "/assets/profile.svg"}
           alt="Profile"
         />
       </button>

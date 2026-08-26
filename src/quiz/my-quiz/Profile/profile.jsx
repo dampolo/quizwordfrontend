@@ -84,25 +84,25 @@ function Profile() {
         <EditButton to="/my-quiz/edit-profile" className="edit-button" />
       </div>
 
-      <h2>Username ändern:</h2>
+      <h2 className="features-title">Username ändern:</h2>
       <div className="profile-user__card">
         <InfoRow label="Username:" value={profile.username} />
         <EditButton to="/my-quiz/change-username" className="edit-button" />
       </div>
 
-      <h2>E-Mail-Adresse ändern:</h2>
+      <h2 className="features-title">E-Mail-Adresse ändern:</h2>
       <div className="profile-user__card">
         <InfoRow label="E-Mail:" value={profile.email} />
         <EditButton to="/my-quiz/change-email" className="edit-button" />
       </div>
 
-      <h2>Passwort ändern:</h2>
+      <h2 className="features-title">Passwort ändern:</h2>
       <div className="profile-user__card">
         <InfoRow label="Passwort:" value={profile.password} type="password" />
         <EditButton to="/my-quiz/change-password" className="edit-button" />
       </div>
 
-      <h2>Deine Sprachen</h2>
+      <h2 className="features-title">Deine Sprachen</h2>
       <div className="profile-user__card">
         <div className="profile-user__row">
           <span className="profile-user__label">Deine Muttersprache:</span>
@@ -127,7 +127,7 @@ function Profile() {
         />
       </div>
 
-      <h2>Lösche dein Konto:</h2>
+      <h2 className="features-title">Lösche dein Konto:</h2>
       <div className="profile-user__card">
         <p>
           Wenn du dein Konto löschst, werden alle deine Wörter, Quizze,

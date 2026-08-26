@@ -5,8 +5,12 @@
   justify-content: center;
   flex-direction: column;
   padding: 2rem;
-  h2 {
+  .title {
+    font-size: 1.8rem;
+  }
+  .features-title {
     margin-top: 1rem;
+    font-size: 1.25rem;
   }
 
   &__single {

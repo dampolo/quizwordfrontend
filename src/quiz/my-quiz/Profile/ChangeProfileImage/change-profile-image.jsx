@@ -97,7 +97,7 @@ function ChangeProfileImage() {
           <img
             width={100}
             height={100}
-            src={profile?.image || preview || "/assets/profile.svg"}
+            src={preview || profile?.image || "/assets/profile.svg"}
             alt="Vorschau des Profilbildes"
           />
           <input

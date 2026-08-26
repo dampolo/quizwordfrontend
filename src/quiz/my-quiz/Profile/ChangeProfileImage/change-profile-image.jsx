@@ -11,10 +11,11 @@ function ChangeProfileImage() {
   const initialValues = { image: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const { profile, updateProfileImage, setProfile } = useAuth();
+  const { profile, updateProfile } = useAuth();
   const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [imageDeleted, setImageDeleted] = useState(false);
   const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
 
   function handleImageChange(event) {
@@ -37,11 +38,20 @@ function ChangeProfileImage() {
     setFormErrors({});
     setSelectedImage(file);
     setPreview(URL.createObjectURL(file));
+    setImageDeleted(false);
   }
 
-  function handleDelete() {
-    setSelectedImage(null);
-    setPreview(null);
+  async function handleDelete() {
+    try {
+      await updateProfile({ image: null });
+
+      setSelectedImage(null);
+      setPreview(null);
+
+      toast.success("Das Profilbild wurde gelöscht.");
+    } catch (error) {
+      toast.error("Das Profilbild konnte nicht gelöscht werden.");
+    }
   }
 
   async function handleSubmit(e) {
@@ -55,11 +65,10 @@ function ChangeProfileImage() {
 
     const payload = new FormData();
     payload.append("image", selectedImage);
-    console.log("Payload: ", payload);
 
     setLoading(true);
     try {
-      await updateProfileImage(payload);
+      await updateProfile(payload);
       toast.success("Das Profilbild wurde geändert.");
     } catch (err) {
       const message =
@@ -78,9 +87,7 @@ function ChangeProfileImage() {
   function validate(image) {
     const errors = {};
 
-    if (!image) {
-      errors.image = "Bitte wähle ein Bild aus.";
-    } else if (image.size > MAX_FILE_SIZE) {
+    if (image && image.size > MAX_FILE_SIZE) {
       errors.image = "Das Bild darf maximal 2 MB groß sein.";
     }
 
@@ -99,10 +106,15 @@ function ChangeProfileImage() {
       <form onSubmit={handleSubmit}>
         <div className="input-container">
           <label htmlFor="image">Foto</label>
-          <img className="avatar"
+          <img
+            className="avatar"
             width={100}
             height={100}
-            src={preview || profile?.image || "/assets/profile.svg"}
+            src={
+              preview ||
+              (!imageDeleted && profile?.image) ||
+              "/assets/profile.svg"
+            }
             alt="Vorschau des Profilbildes"
           />
 
@@ -123,21 +135,16 @@ function ChangeProfileImage() {
           {selectedImage && (
             <>
               <span className="file-name">{selectedImage.name}</span>
-              <button
-                type="button"
-                onClick={handleDelete}
-                className="delete-button"
-              >
-                <img
-                  width={24}
-                  height={24}
-                  src="/assets/trash.svg"
-                  alt="trash"
-                />
-              </button>
             </>
           )}
 
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="delete-button"
+          >
+            <img width={24} height={24} src="/assets/trash.svg" alt="trash" />
+          </button>
           <div className="warn-txt warn-txt-hight">{formErrors.image}</div>
         </div>
 
@@ -147,7 +154,7 @@ function ChangeProfileImage() {
           <button
             type="submit"
             className="main-quiz-button save-btn"
-            disabled={!selectedImage}
+            disabled={!selectedImage && !imageDeleted}
           >
             Foto speichern
           </button>

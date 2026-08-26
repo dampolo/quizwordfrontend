@@ -53,7 +53,6 @@ export function AuthProvider({ children }) {
       const data = await response.json();
       setProfile(data);
       console.log("Profile: ", data);
-      
     } catch (error) {
       console.error(error);
     }
@@ -111,34 +110,15 @@ export function AuthProvider({ children }) {
   }
 
   async function updateProfile(payload) {
+        const isFormData = payload instanceof FormData;
+
     const response = await fetch(`${api}profile-customer/`, {
       method: "PATCH",
       credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
+      headers: isFormData ? undefined : { "Content-Type": "application/json" },
+      body: isFormData ? payload : JSON.stringify(payload),
     });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      const error = new Error("Profile update failed");
-      error.response = { data };
-      console.log(data);
-      throw error;
-    }
-
-    setProfile(data);
-    return data;
-  }
-
-    async function updateProfileImage(payload) {
-    const response = await fetch(`${api}profile-customer/`, {
-      method: "PATCH",
-      credentials: "include",
-      body: payload,
-    });
+    
 
     const data = await response.json();
 
@@ -361,7 +341,6 @@ export function AuthProvider({ children }) {
         profile,
         isMenuOpen,
         confirmationMessage,
-        updateProfileImage,
         deleteAccount,
         patchChangeUsername,
         postChangeEmail,

@@ -67,14 +67,9 @@
       justify-content: center;
       align-items: center;
       width: 100%;
-      .input-icon {
-        position: absolute;
-        top: 2.375rem;
-        left: 0;
-        padding: 0 1.5625rem;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
+      .avatar {
+        border-radius: 50%;
+        object-fit: cover;
       }
 
       .warn-txt-hight {

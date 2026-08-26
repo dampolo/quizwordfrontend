@@ -99,7 +99,7 @@ function ChangeProfileImage() {
       <form onSubmit={handleSubmit}>
         <div className="input-container">
           <label htmlFor="image">Foto</label>
-          <img
+          <img className="avatar"
             width={100}
             height={100}
             src={preview || profile?.image || "/assets/profile.svg"}

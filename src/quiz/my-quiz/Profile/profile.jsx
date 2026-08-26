@@ -46,9 +46,19 @@ function Profile() {
 
   return (
     <div className="profile-user">
+      <BackButton to="/my-quiz/all-words/" />
       <h1 className="title">Profile</h1>
+
+      {/* IMAGE */}
+      <h2 className="features-title">Foto:</h2>
       <div className="profile-user__card">
-        <BackButton to="/my-quiz/all-words/" />
+        <img width={100} height={100} src={profile?.image || "/assets/profile.svg"} alt={`Profilbild von ${profile?.username || "Benutzer" }`} />
+        <EditButton to="/my-quiz/change-profile-image" className="edit-button" />
+      </div>
+      {/* IMAGE Ende */}
+
+      <h2 className="features-title">Deine Daten:</h2>
+      <div className="profile-user__card">
         <InfoRow label="Customer Number:" value={profile.customer_number} />
 
         <InfoRow label="Title:" value={profile.title} />
@@ -134,7 +144,10 @@ function Profile() {
           Kategorien entfernt. Diese Aktion kann nicht rückgängig gemacht
           werden.
         </p>
-        <Link to="/my-quiz/delete-account" className="main-quiz-button delete-btn">
+        <Link
+          to="/my-quiz/delete-account"
+          className="main-quiz-button delete-btn"
+        >
           {" "}
           Lösche dein Konto
         </Link>

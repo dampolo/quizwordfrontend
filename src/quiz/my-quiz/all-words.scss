@@ -28,6 +28,14 @@
   }
 }
 
+.main-quiz-button {
+  &.create-quiz-small {
+    display: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
 .create-buttons {
   display: flex;
   flex-direction: row;
@@ -39,12 +47,6 @@
     max-width: fit-content;
     margin: initial;
   }
-
-  .create-quiz-small {
-    margin: 0;
-    padding: 0;
-  }
-
   .add-btn {
     height: 48px;
     padding: 0 24px;
@@ -361,6 +363,7 @@
 @media (max-width: 46rem) {
   .main-quiz-button {
     &.create-quiz-small {
+      display: flex;
       position: fixed;
       bottom: 4.1rem;
       right: 0.5rem;

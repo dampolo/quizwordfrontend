@@ -11,7 +11,7 @@ function ChangeProfileImage() {
   const initialValues = { image: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const { updateProfileImage } = useAuth();
+  const { profile, updateProfileImage } = useAuth();
   const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -97,7 +97,7 @@ function ChangeProfileImage() {
           <img
             width={100}
             height={100}
-            src={preview || "/assets/profile.svg"}
+            src={profile?.image || preview || "/assets/profile.svg"}
             alt="Vorschau des Profilbildes"
           />
           <input

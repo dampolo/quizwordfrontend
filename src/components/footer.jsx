@@ -64,11 +64,11 @@ function Footer() {
             onClick={handleShare}
             className="footer__social"
           >
-            <img width="24" height="24" src="/assets/share.svg" alt="Share" />
+            <img width={24} height={24} src="/assets/share.svg" alt="Share" />
           </button>
 
           <a href="#" className="footer__social">
-            <img width="24" height="24" src="/assets/mail.svg" alt="E-Mail" />
+            <img width={24} height={24} src="/assets/mail.svg" alt="E-Mail" />
           </a>
         </div>
       </div>

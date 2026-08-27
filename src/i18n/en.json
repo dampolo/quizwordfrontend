@@ -64,14 +64,14 @@
   },
   "ADD_NEW_CATEGORY": {
     "TITLE": "Add New Category",
-    "LANGUAGE":"Language",
+    "LANGUAGE": "Language",
     "DESCRIPTION": "Organize your vocabulary by topics or themes.",
     "CATEGORY_NAME": "Category Name: ",
     "CATEGORY_HINT": "Short, descriptive names work best for navigation."
   },
   "EDIT_CATEGORY": {
     "TITLE": "Edit Category",
-    "LANGUAGE":"Language",
+    "LANGUAGE": "Language",
     "DESCRIPTION": "Organize your vocabulary by topics or themes.",
     "CATEGORY_NAME": "Category Name: ",
     "CATEGORY_HINT": "Short, descriptive names work best for navigation."
@@ -133,7 +133,7 @@
     "SUCCESS": "success-stories",
     "PRICE": "Price"
   },
-    "BUTTONS": {
+  "BUTTONS": {
     "CANCEL": "Cancel",
     "SAVE": "Save"
   },
@@ -141,5 +141,23 @@
     "WORD": "WORD",
     "ANSWER": "ANSWER",
     "MEANING": "MEANING"
+  },
+  "CONTACT": {
+    "TITLE": "Contact",
+    "TITLE_H3": "Would you like to discuss something?",
+    "DESCRIPTION_1": "Do you need a new feature in Quiz Word?",
+    "DESCRIPTION_2": "Please send us a message. I’ll be happy to help bring your ideas to life.",
+    "DESCRIPTION_3": "Contact us!",
+    "FORM_NAME": "Your name",
+    "FORM_NAME_REQUIED": "Your name is required.",
+    "FORM_E_MAIL": "Your email",
+    "FORM_E_MAIL_REQUIED": "Your email is required.",
+    "FORM_MESSAGE": "Your message",
+    "FORM_MESSAGE_REQUIED": "Your message is empty.",
+    "PRIVACY_1": "I've read the",
+    "PRIVACY_2": "privacy policy",
+    "PRIVACY_3": "and agree to the processing of my data as outlined.",
+    "PRIVACY_POLICY": "<h3>Privacy Policy</h3><h4>Welcome to my website</h4><p>Protecting your personal data is important to me. This privacy policy describes how I collect, use, and protect your data.</p><h4>Contact Form</h4><p>If you use the contact form on my website, the data you provide (name, email address, and message) will be used solely for the purpose of contacting you. This data will not be shared with third parties.</p><h4>Use of Data</h4><p>The collected data is used exclusively for the following purposes:</p><ul><li>Contacting you and responding to your inquiries.</li><li>Registering and using the project pages.</li></ul><h4>Project Pages</h4><h5>Join Project</h5><p>This is a task manager modeled after a Kanban board. There is an option for registration, login, and guest access. This data is used only for demonstration purposes to view the project.</p><h5>El Pollo Loco</h5><p>A game developed in JavaScript. No registration is required here.</p><h4>Data Sharing</h4><p>Your personal data will not be shared with third parties unless required by law.</p><h4>Note on German Law</h4><p>This privacy policy refers to the legal provisions of the German Data Protection Act (GDPR).</p><p>If you have any questions or concerns about data protection, you can contact me via email at <a href='mailto:contact@damianpoloczek.com'>contact&#64;damianpoloczek.com</a>.</p>",
+    "CHECKBOX": "Please accept the privacy policy."
   }
 }

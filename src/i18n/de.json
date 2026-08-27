@@ -141,5 +141,22 @@
     "WORD": "WORT",
     "ANSWER": "ANTWORT",
     "MEANING": "Bedeutung"
+  },
+  "CONTACT": {
+    "TITLE": "Kontakt",
+    "TITLE_H3": "Möchtes du etwas ansprechen?",
+    "DESCRIPTION_1": "Brauchst du einen neunen Features in Quiz Word?",
+    "DESCRIPTION_2": "Schreibe uns bitte eine Nachricht, ich helfe gerne, deine Ideen umzusetzen.",
+    "DESCRIPTION_3": "Kontaktieren Sie uns!",
+    "FORM_NAME": "Dein Name",
+    "FORM_NAME_REQUIED": "Dein Name ist erforderlich.",
+    "FORM_E_MAIL": "Dein E-Mail",
+    "FORM_E_MAIL_REQUIED": "Dein E-Mail ist erforderlich.",
+    "FORM_MESSAGE": "Deine Nachricht",
+    "FORM_MESSAGE_REQUIED": "Deine Nachricht ist leer.",
+    "PRIVACY_1": "Ich habe die",
+    "PRIVACY_2": "Datenschutzrichtlinie",
+    "PRIVACY_3": "gelesen und stimme der Verarbeitung meiner Daten wie beschrieben zu.",
+    "CHECKBOX": "Bitte akzeptiere die Datenschutzerklärung."
   }
 }

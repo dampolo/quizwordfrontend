@@ -6,6 +6,7 @@ import "./all-quiz-words.scss";
 import useDialog from "../../../../context/DialogContext/useDialgo";
 import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
+import { toast } from "react-toastify";
 
 function AllQuizWords() {
   const {
@@ -27,6 +28,7 @@ function AllQuizWords() {
   async function deleteCurrentQuiz() {
     try {
       await deleteQuiz(id);
+      toast.success(`Quiz "${quiz?.quiz_name}" wurde entfernt!`);
       navigate("/my-quiz/all-quizzes/");
     } catch (error) {
       console.error(error);

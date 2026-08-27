@@ -41,6 +41,7 @@ import ChangePassword from "./quiz/my-quiz/Profile/ChangePassword/change-passwor
 import ChangeUsername from "./quiz/my-quiz/Profile/ChangeUsername/change-username";
 import DeleteAccount from "./quiz/my-quiz/Profile/DeleteAccount/delete-account";
 import ChangeProfileImage from "./quiz/my-quiz/Profile/ChangeProfileImage/change-profile-image";
+import Contact from "./website/Contact/contact";
 
 function App() {
   return (
@@ -51,6 +52,8 @@ function App() {
           <Route path="/" element={<Website />} />
           <Route path="/login" element={<Login />} />
           <Route path="/imprint" element={<Imprint />} />
+          <Route path="/contact" element={<Contact />} />
+
           <Route path="/price" element={<Price />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/help-desk" element={<HelpDesk />} />
@@ -58,55 +61,66 @@ function App() {
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/confirmation" element={<Confirmation />} />
-          <Route path="/verify-email/:uidb64/:token" element={<Confirmation />} />
-          <Route path="/reset-password/:uid/:token" element={<ResetPassword />} />
-
+          <Route
+            path="/verify-email/:uidb64/:token"
+            element={<Confirmation />}
+          />
+          <Route
+            path="/reset-password/:uid/:token"
+            element={<ResetPassword />}
+          />
         </Route>
 
         {/* Protected */}
         <Route element={<ProtectedRoute />}>
-            <Route
-              element={
-                <VocabularyProvider>
-                  <QuizProvider>
-                    <DialogProvider>
-                      <Outlet />
-                    </DialogProvider>
-                  </QuizProvider>
-                </VocabularyProvider>
-              }
-            >
-                {/* Mmy Quiz */}
-                <Route path="/my-quiz" element={<MyQuiz />}>
-                {/* Profile */}
-                <Route path="profile" element={<Profile />} />
-                <Route path="edit-profile" element={<EditProfile />} />
-                <Route path="change-email" element={<ChangeEmail />} />
-                <Route path="change-password" element={<ChangePassword />} />
-                <Route path="change-username" element={<ChangeUsername />} />
-                <Route path="delete-account" element={<DeleteAccount />} />
-                <Route path="change-profile-image" element={<ChangeProfileImage />} />
+          <Route
+            element={
+              <VocabularyProvider>
+                <QuizProvider>
+                  <DialogProvider>
+                    <Outlet />
+                  </DialogProvider>
+                </QuizProvider>
+              </VocabularyProvider>
+            }
+          >
+            {/* Mmy Quiz */}
+            <Route path="/my-quiz" element={<MyQuiz />}>
+              {/* Profile */}
+              <Route path="profile" element={<Profile />} />
+              <Route path="edit-profile" element={<EditProfile />} />
+              <Route path="change-email" element={<ChangeEmail />} />
+              <Route path="change-password" element={<ChangePassword />} />
+              <Route path="change-username" element={<ChangeUsername />} />
+              <Route path="delete-account" element={<DeleteAccount />} />
+              <Route
+                path="change-profile-image"
+                element={<ChangeProfileImage />}
+              />
 
-
-                {/* Vocabulary */}
-                <Route path="all-words" element={<AllWords />} />
-                <Route path=":id/edit-word" element={<EditWord />} />
-                <Route path="add-new-word" element={<AddNewWord />} />
-                <Route path="vocabulary-categories" element={<VocabularyCategories />} />
-                <Route path="add-new-category" element={<AddNewCategory />} />
-                <Route path="vocabulary-categories/:id/edit-category" element={<EditCategory />} />
-                {/* Quizzes */}
-                <Route path="all-quizzes" element={<AllQuizzes />} />
-                <Route path="add-new-quiz" element={<AddNewQuiz />} />
-                <Route path=":id/all-quiz-words" element={<AllQuizWords />} />
-                <Route path=":id/play-quiz" element={<PlayQuiz />} />
-                <Route path=":id/learn-quiz" element={<LearnQuiz />} />
-                <Route path=":id/quiz-results" element={<QuizResults />} />
-                <Route path="choose-languages" element={<ChooseLanguages />} />
-                <Route path="edit-languages" element={<EditLanguages />} />
-                <Route path="settings" element={<Settings />} />
-
-
+              {/* Vocabulary */}
+              <Route path="all-words" element={<AllWords />} />
+              <Route path=":id/edit-word" element={<EditWord />} />
+              <Route path="add-new-word" element={<AddNewWord />} />
+              <Route
+                path="vocabulary-categories"
+                element={<VocabularyCategories />}
+              />
+              <Route path="add-new-category" element={<AddNewCategory />} />
+              <Route
+                path="vocabulary-categories/:id/edit-category"
+                element={<EditCategory />}
+              />
+              {/* Quizzes */}
+              <Route path="all-quizzes" element={<AllQuizzes />} />
+              <Route path="add-new-quiz" element={<AddNewQuiz />} />
+              <Route path=":id/all-quiz-words" element={<AllQuizWords />} />
+              <Route path=":id/play-quiz" element={<PlayQuiz />} />
+              <Route path=":id/learn-quiz" element={<LearnQuiz />} />
+              <Route path=":id/quiz-results" element={<QuizResults />} />
+              <Route path="choose-languages" element={<ChooseLanguages />} />
+              <Route path="edit-languages" element={<EditLanguages />} />
+              <Route path="settings" element={<Settings />} />
             </Route>
           </Route>
         </Route>

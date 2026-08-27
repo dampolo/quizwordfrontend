@@ -52,7 +52,7 @@ function Footer() {
             {t("FOOTER.FAQ")}
           </Link>
 
-          <Link href="#" className="footer__link">
+          <Link to="/contact" className="footer__link">
             {t("FOOTER.CONTACT")}
           </Link>
         </nav>

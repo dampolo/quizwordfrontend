@@ -321,6 +321,26 @@ export function AuthProvider({ children }) {
     return data;
   }
 
+  async function postSupport(payload) {
+
+    const response = await fetch(`${api}support/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload)
+    })
+
+    const data = await response.json();
+    if(!response.ok) {
+      const error = new Error("Nachricht konnte nicht gesendet werden.")
+      error.response = {data}
+      throw error
+      
+    }
+    return data
+  }
+
   useEffect(() => {
     const init = async () => {
       const authenticated = await checkAuth();
@@ -341,6 +361,7 @@ export function AuthProvider({ children }) {
         profile,
         isMenuOpen,
         confirmationMessage,
+        postSupport,
         deleteAccount,
         patchChangeUsername,
         postChangeEmail,

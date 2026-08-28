@@ -4,8 +4,10 @@ import { useTranslation } from "react-i18next";
 import BackButton from "../../components/BackButton/BackButton";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import "./contact.scss";
+import { useAuth } from "../../context/useAuth";
 
 function Contact() {
+  const { postSupport } = useAuth();
   const { t } = useTranslation();
 
   const [contactData, setContactData] = useState({
@@ -49,7 +51,7 @@ function Contact() {
     }));
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     setTouched({
@@ -63,10 +65,16 @@ function Contact() {
     if (!isFormValid || !checkboxState) {
       return;
     }
-
-    console.log(contactData);
-
-    // Send contactData to your backend here.
+    debugger
+    try {
+      const response = await postSupport(contactData);
+      console.log(response.message);
+      
+  
+      // Send contactData to your backend here.
+    } catch (error) {
+      console.error(error.response?.data);
+    }
   }
 
 

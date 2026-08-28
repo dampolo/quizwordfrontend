@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import BackButton from "../../components/BackButton/BackButton";
 import PageTitle from "../../components/PageTitle/PageTitle";
@@ -7,8 +7,9 @@ import "./contact.scss";
 import { useAuth } from "../../context/useAuth";
 
 function Contact() {
-  const { postSupport } = useAuth();
+  const { postSupport, setConfirmationMessage } = useAuth();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [contactData, setContactData] = useState({
     name: "",
@@ -62,29 +63,29 @@ function Contact() {
 
     setCheckboxChecked(true);
 
-    if (!isFormValid || !checkboxState) {
-      return;
-    }
-    debugger
-    try {
-      const response = await postSupport(contactData);
-      console.log(response.message);
-      
-  
-      // Send contactData to your backend here.
-    } catch (error) {
-      console.error(error.response?.data);
-    }
+    setConfirmationMessage("Danke für deine Nachricht!");
+    navigate("/confirmation?redirect=true");
+
+    // if (!isFormValid || !checkboxState) {
+    //   return;
+    // }
+    // try {
+    //   const response = await postSupport(contactData);
+    //   console.log(response.message);
+
+    //   setConfirmationMessage("Danke für deine Nachricht!");
+    //   navigate("/confirmation");
+
+    // } catch (error) {
+    //   console.error(error.response?.data);
+    // }
   }
-
-
 
   return (
     <main>
       <PageTitle title="Kontakt" />
       <BackButton to="/" className="back-button" />
       <section className="main-contact">
-
         <div className="title">
           <h1>{t("CONTACT.TITLE")}</h1>
         </div>
@@ -181,7 +182,6 @@ function Contact() {
                 {t("CONTACT.FORM_MESSAGE_REQUIED")}
               </span>
             )}
-
           </div>
 
           <div className="checkbox-container">

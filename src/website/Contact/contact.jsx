@@ -5,6 +5,7 @@ import BackButton from "../../components/BackButton/BackButton";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import "./contact.scss";
 import { useAuth } from "../../context/useAuth";
+import { toast } from "react-toastify";
 
 function Contact() {
   const { postSupport, setConfirmationMessage } = useAuth();
@@ -30,7 +31,9 @@ function Contact() {
 
   const isNameValid = contactData.name.trim().length >= 3;
   const isEmailValid = emailRegex.test(contactData.email);
-  const isMessageValid = contactData.message.trim().length >= 4;
+  const isMessageValid =
+    contactData.message.trim().length >= 4 &&
+    contactData.message.trim().length <= 20;
 
   const isFormValid = isNameValid && isEmailValid && isMessageValid;
 
@@ -66,19 +69,18 @@ function Contact() {
     setConfirmationMessage("Danke für deine Nachricht!");
     navigate("/confirmation?redirect=true");
 
-    // if (!isFormValid || !checkboxState) {
-    //   return;
-    // }
-    // try {
-    //   const response = await postSupport(contactData);
-    //   console.log(response.message);
-
-    //   setConfirmationMessage("Danke für deine Nachricht!");
-    //   navigate("/confirmation");
-
-    // } catch (error) {
-    //   console.error(error.response?.data);
-    // }
+    if (!isFormValid || !checkboxState) {
+      return;
+    }
+    try {
+      await postSupport(contactData);
+      setConfirmationMessage("Danke für deine Nachricht!");
+      navigate("/confirmation");
+    } catch (error) {
+      const message = error.response?.data;
+      console.error(error.response?.data);
+      toast.error(message);
+    }
   }
 
   return (
@@ -170,6 +172,7 @@ function Contact() {
               onChange={handleChange}
               onBlur={handleBlur}
               minLength={4}
+              maxLength={5000}
               placeholder=""
               id="message"
               name="message"

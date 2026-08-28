@@ -21,6 +21,10 @@ main {
       display: flex;
       flex-direction: column;
       width: 100%;
+      h2 {
+        line-height: 1;
+        margin-bottom: 1rem;
+      }
     }
     form {
       width: 100%;

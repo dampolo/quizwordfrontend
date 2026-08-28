@@ -12,8 +12,8 @@ main {
     flex-direction: column;
     justify-content: center;
     overflow: hidden;
-    max-width: 70rem;
-    width: 100%;
+    // max-width: 70rem;
+    // width: 100%;
     background-color: basic.$color-background-main;
     border-radius: 1.25rem;
     padding: 2.5rem;
@@ -160,6 +160,15 @@ main {
           padding-block: 0.3125rem;
         }
       }
+    }
+  }
+}
+
+@media (max-width: 31.25rem) {
+  main {
+    .main-contact {
+      padding: 1rem;
+      margin: 0.5rem;
     }
   }
 }

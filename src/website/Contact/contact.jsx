@@ -65,17 +65,14 @@ function Contact() {
     });
 
     setCheckboxChecked(true);
-
-    setConfirmationMessage("Danke für deine Nachricht!");
-    navigate("/confirmation?redirect=true");
-
+    
     if (!isFormValid || !checkboxState) {
       return;
     }
     try {
       await postSupport(contactData);
       setConfirmationMessage("Danke für deine Nachricht!");
-      navigate("/confirmation");
+      navigate("/confirmation?redirect=true");
     } catch (error) {
       const message = error.response?.data;
       console.error(error.response?.data);

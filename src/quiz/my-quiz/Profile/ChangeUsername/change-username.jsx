@@ -18,7 +18,7 @@ function ChangeUsername() {
   function handleChange(e) {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-  };
+  }
 
   async function changeUsername(e) {
     setLoading(true);
@@ -30,6 +30,7 @@ function ChangeUsername() {
     setFormErrors(errors);
 
     if (Object.keys(errors).length > 0) {
+      setLoading(false);
       return;
     }
 
@@ -61,7 +62,7 @@ function ChangeUsername() {
     }
 
     return errors;
-  };
+  }
 
   return (
     <section className="change-username">

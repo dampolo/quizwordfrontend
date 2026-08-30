@@ -108,7 +108,9 @@ function ChangeUsername() {
           <button
             className="main-quiz-button"
             type="submit"
-            disabled={formValues.username.length <= 4}
+            disabled={
+              formValues.username.length < 4 || formValues.username.length > 10 || /\s/.test(formValues.username)
+            }
           >
             Ändern
           </button>

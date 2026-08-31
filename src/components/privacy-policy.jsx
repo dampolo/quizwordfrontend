@@ -148,7 +148,7 @@ function PrivacyPolicy() {
           <p>
             Telefon: 004917699492988
             <br />
-            E-Mail: damianpoloczek@gmail.com
+            E-Mail: support@quiz-word.com
           </p>
           <p>
             Verantwortliche Stelle ist die nat&uuml;rliche oder juristische

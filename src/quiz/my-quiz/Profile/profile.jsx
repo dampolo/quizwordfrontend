@@ -52,7 +52,7 @@ function Profile() {
       {/* IMAGE */}
       <h2 className="features-title">Foto:</h2>
       <div className="profile-user__card">
-        <img width={100} height={100} src={profile?.image || "/assets/profile.svg"} alt={`Profilbild von ${profile?.username || "Benutzer" }`} />
+        <img className="profile-user__avatar" width={100} height={100} src={profile?.image || "/assets/profile.svg"} alt={`Profilbild von ${profile?.username || "Benutzer" }`} />
         <EditButton to="/my-quiz/change-profile-image" className="edit-button" />
       </div>
       {/* IMAGE Ende */}

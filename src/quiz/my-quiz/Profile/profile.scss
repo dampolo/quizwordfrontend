@@ -12,7 +12,10 @@
     margin-top: 1rem;
     font-size: 1.25rem;
   }
-
+  &__avatar {
+    object-fit: cover;
+    border-radius: 50%;
+  }
   &__single {
     display: flex;
     flex-direction: column;

@@ -117,7 +117,7 @@ export function VocabularyProvider({ children }) {
       }
 
       const data = await response.json();
-      setCategories(data);      
+      setCategories(data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -285,13 +285,22 @@ export function VocabularyProvider({ children }) {
           getLanguages(),
         ]);
 
-        if (!userData.languages_active) {
-          navigate("/my-quiz/choose-languages");
-        }
-
         setLanguages(languages);
         setNativeLanguage(userData.native_language);
         setUserLanguages(userData.learning_languages);
+
+        if (!userData.languages_active) {
+          navigate("/my-quiz/choose-languages", {
+            replace: true,
+          });
+          return;
+        }
+
+        const languageId = userData.learning_languages?.[0]?.id;
+
+        navigate(`/my-quiz/all-words?language=${languageId}`, {
+          replace: true,
+        });
 
         await getConcepts();
       } catch (error) {

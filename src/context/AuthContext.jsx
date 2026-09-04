@@ -43,7 +43,10 @@ export function AuthProvider({ children }) {
 
       const user = await response.json();
       setUser(user);
+
+      // Avatar must be loaded after log in that why getProfile() 
       getProfile()
+      
       return true;
     } catch {
       setUser(null);

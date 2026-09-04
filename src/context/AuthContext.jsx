@@ -71,7 +71,6 @@ export function AuthProvider({ children }) {
 
       const data = await response.json();
       setProfile(data);
-      console.log("Profile: ", data);
     } catch (error) {
       console.error(error);
     }

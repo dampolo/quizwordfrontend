@@ -17,9 +17,25 @@ export function AuthProvider({ children }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${api}me/`, {
+      let response = await fetch(`${api}me/`, {
         credentials: "include",
       });
+
+      if (response.status === 401) {
+        const refreshResponse = await fetch(`${api}token/refresh/`, {
+          method: "POST",
+          credentials: "include",
+        });
+
+        if (!refreshResponse.ok) {
+          setUser(null);
+          return false;
+        }
+
+        response = await fetch(`${api}me/`, {
+          credentials: "include",
+        });
+      }
 
       if (!response.ok) {
         throw new Error("Not authenticated");
@@ -27,6 +43,7 @@ export function AuthProvider({ children }) {
 
       const user = await response.json();
       setUser(user);
+      getProfile()
       return true;
     } catch {
       setUser(null);
@@ -109,7 +126,7 @@ export function AuthProvider({ children }) {
   }
 
   async function updateProfile(payload) {
-        const isFormData = payload instanceof FormData;
+    const isFormData = payload instanceof FormData;
 
     const response = await fetch(`${api}profile-customer/`, {
       method: "PATCH",
@@ -117,7 +134,6 @@ export function AuthProvider({ children }) {
       headers: isFormData ? undefined : { "Content-Type": "application/json" },
       body: isFormData ? payload : JSON.stringify(payload),
     });
-    
 
     const data = await response.json();
 
@@ -321,23 +337,21 @@ export function AuthProvider({ children }) {
   }
 
   async function postSupport(payload) {
-
     const response = await fetch(`${api}support/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload)
-    })
+      body: JSON.stringify(payload),
+    });
 
     const data = await response.json();
-    if(!response.ok) {
-      const error = new Error("Nachricht konnte nicht gesendet werden.")
-      error.response = {data}
-      throw error
-      
+    if (!response.ok) {
+      const error = new Error("Nachricht konnte nicht gesendet werden.");
+      error.response = { data };
+      throw error;
     }
-    return data
+    return data;
   }
 
   useEffect(() => {

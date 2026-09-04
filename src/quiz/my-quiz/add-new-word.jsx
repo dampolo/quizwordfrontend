@@ -82,8 +82,7 @@ export default function AddNewWord() {
       );
     } catch (err) {
       const message =
-        err.response?.translations?.[0] || err.response?.detail?.[0] || "Error";
-
+        err.response?.translations?.[0] || err.response?.detail || "Error";
       toast.error(message);
     }
   }

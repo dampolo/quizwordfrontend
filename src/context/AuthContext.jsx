@@ -26,7 +26,6 @@ export function AuthProvider({ children }) {
       }
 
       const user = await response.json();
-
       setUser(user);
       return true;
     } catch {

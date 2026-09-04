@@ -142,7 +142,6 @@ export function AuthProvider({ children }) {
     if (!response.ok) {
       const error = new Error("Profile update failed");
       error.response = { data };
-      console.log(data);
       throw error;
     }
 
@@ -174,8 +173,6 @@ export function AuthProvider({ children }) {
       }
 
       const data = await response.json();
-      console.log("verifyEmail: ", verifyEmail);
-
       return data;
     } catch (error) {
       console.error(error);
@@ -199,13 +196,9 @@ export function AuthProvider({ children }) {
     if (!response.ok) {
       const error = new Error("Changed password failed");
       error.response = { data };
-      console.log(data);
       throw error;
     }
-
     setLoading(false);
-    console.log("forgotPassword: ", data);
-
     return data;
   }
 
@@ -225,13 +218,10 @@ export function AuthProvider({ children }) {
     if (!response.ok) {
       const error = new Error("Changed password failed");
       error.response = { data };
-      console.log(data);
       throw error;
     }
 
     setLoading(false);
-    console.log("resetPassword: ", data);
-
     return data;
   }
 

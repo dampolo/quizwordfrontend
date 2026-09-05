@@ -226,8 +226,6 @@ export function AuthProvider({ children }) {
   }
 
   async function postChangePassword(payload) {
-    setLoading(true);
-
     try {
       const response = await fetch(`${api}change-password/`, {
         method: "POST",
@@ -249,8 +247,6 @@ export function AuthProvider({ children }) {
     } catch (error) {
       console.error("Email change failed:", error);
       throw error;
-    } finally {
-      setLoading(false);
     }
   }
 

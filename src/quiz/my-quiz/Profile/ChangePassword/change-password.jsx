@@ -8,14 +8,18 @@ import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
 
 function ChangePassword() {
-  const { postChangePassword, setConfirmationMessage, loading } = useAuth();
+  const { postChangePassword, setConfirmationMessage } = useAuth();
 
   const initialValues = {
-    password: "",
-    repeated_password: "",
+    old_password: "",
+    new_password: "",
+    repeated_new_password: "",
   };
   const [touched, setTouched] = useState({});
   const [formValues, setFormValues] = useState(initialValues);
+  const [isPasswordOldVisible, togglePasswordVisibilityOld] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const [isPasswordTopVisible, togglePasswordVisibilityTop] = useState(false);
   const [isPasswordBottomVisible, togglePasswordVisibilityBottom] =
     useState(false);
@@ -24,10 +28,10 @@ function ChangePassword() {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%+\-/*?&])[A-Za-z\d@$!%+\-/*?&]{10,}$/;
 
   const isFormValid =
-    formValues.password &&
-    formValues.repeated_password &&
-    regexPassword.test(formValues.password) &&
-    regexPassword.test(formValues.repeated_password);
+    formValues.new_password &&
+    formValues.repeated_new_password &&
+    regexPassword.test(formValues.new_password) &&
+    regexPassword.test(formValues.repeated_new_password);
 
   const navigate = useNavigate();
   function handleBlur(e) {
@@ -50,15 +54,15 @@ function ChangePassword() {
   function handleChange(e) {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-    console.log(formValues);
   }
 
   async function submit(e) {
     e.preventDefault();
-
+    setLoading(true);
     const payload = {
-      password: formValues.password,
-      repeated_password: formValues.repeated_password,
+      old_password: formValues.old_password,
+      new_password: formValues.new_password,
+      repeated_new_password: formValues.repeated_new_password,
     };
     try {
       const data = await postChangePassword(payload);
@@ -69,26 +73,30 @@ function ChangePassword() {
       setFormValues(initialValues);
     } catch (error) {
       const message =
-        error.response?.repeated_password?.[0] || "Fehler bei der Änderung";
+        error.response?.repeated_new_password?.[0] || "Fehler bei der Änderung";
 
       toast.error(message);
       setFormErrors({
         message: message,
       });
+      setLoading(false);
+
+    } finally {
+      setLoading(false);
     }
   }
 
   function validateInput(values, touched) {
     const errors = {};
 
-    if (touched.password && !regexPassword.test(values.password)) {
-      errors.password =
+    if (touched.new_password && !regexPassword.test(values.new_password)) {
+      errors.new_password =
         "Mindestens 10 Zeichen erforderlich: ein Klein- u. ein Großbuchstabe, eine Zahl und ein Sonderzeichen.";
     }
 
     if (
-      touched.repeated_password &&
-      values.password !== values.repeated_password
+      touched.repeated_new_password &&
+      values.new_password !== values.repeated_new_password
     ) {
       errors.notMatch = "Passwörter stimmen nicht überein.";
     }
@@ -106,18 +114,62 @@ function ChangePassword() {
 
       <form onSubmit={submit}>
         <div className="input-container">
-          <label htmlFor="password">Passwort</label>
+          <label htmlFor="old_password">Altes Passwort</label>
 
           <input
-            name="password"
-            id="password"
+            name="old_password"
+            id="old_password"
+            className="input-field"
+            type={isPasswordOldVisible ? "text" : "password"}
+            placeholder="Neues Passwort"
+            value={formValues.old_password}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            autoComplete="old_password"
+          />
+
+          <button
+            type="button"
+            className="eye-button"
+            onClick={() => togglePasswordVisibilityOld((prev) => !prev)}
+          >
+            <img
+              width={24}
+              height={24}
+              className="pwd-eye"
+              src={
+                isPasswordOldVisible ? "/assets/eye.svg" : "/assets/eye-off.svg"
+              }
+              alt={isPasswordOldVisible ? "verstecken" : "zeigen"}
+            />
+          </button>
+
+          <div className="input-icon">
+            <img
+              width={24}
+              height={24}
+              aria-hidden="true"
+              src="/assets/pwd-lock-icon-input-field.svg"
+              alt=""
+            />
+          </div>
+
+          <div className="warn-txt">{formErrors.old_password}</div>
+        </div>
+
+        <div className="input-container">
+          <label htmlFor="new_password">Neues Passwort</label>
+
+          <input
+            name="new_password"
+            id="new_password"
             className="input-field"
             type={isPasswordTopVisible ? "text" : "password"}
             placeholder="Neues Passwort"
-            value={formValues.password}
+            value={formValues.new_password}
             onChange={handleChange}
             onBlur={handleBlur}
-            autoComplete="password"
+            autoComplete="new_password"
           />
 
           <button
@@ -146,22 +198,24 @@ function ChangePassword() {
             />
           </div>
 
-          <div className="warn-txt">{formErrors.password}</div>
+          <div className="warn-txt">{formErrors.new_password}</div>
         </div>
 
         <div className="input-container">
-          <label htmlFor="repeated_password">Wiederhole dein Passwort</label>
+          <label htmlFor="repeated_new_password">
+            Wiederhole neues Passwort
+          </label>
 
           <input
-            name="repeated_password"
-            id="repeated_password"
+            name="repeated_new_password"
+            id="repeated_new_password"
             className="input-field"
             type={isPasswordBottomVisible ? "text" : "password"}
             placeholder="Wiederhole neues Passwort"
-            value={formValues.repeated_password}
+            value={formValues.repeated_new_password}
             onChange={handleChange}
             onBlur={handleBlur}
-            autoComplete="repeated_password"
+            autoComplete="repeated_new_password"
           />
 
           <button

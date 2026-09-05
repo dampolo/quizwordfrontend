@@ -8,7 +8,7 @@ import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
 
 function ChangePassword() {
-  const { postChangePassword, setConfirmationMessage } = useAuth();
+  const { postChangePassword, setConfirmationMessage, logout } = useAuth();
 
   const initialValues = {
     old_password: "",
@@ -69,7 +69,8 @@ function ChangePassword() {
 
       setConfirmationMessage("Dein Password wurde erfolgreich geändert.");
       toast.success(data.detail);
-      navigate("/confirmation");
+      logout()
+      navigate("/confirmation?redirect=true");
       setFormValues(initialValues);
     } catch (error) {
       const message =

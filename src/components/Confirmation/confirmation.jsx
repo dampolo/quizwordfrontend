@@ -28,7 +28,9 @@ function Confirmation() {
   return (
     <main>
       <section className="main-content-customer">
-        <BackButton to={redirect ? "/" : "login"} />
+        { !redirect ?
+          <BackButton to={"/login"} /> : <></>
+        }
 
         <div className="form-title">
           <h1 className="form-title-name">Bestätigung</h1>
@@ -37,7 +39,7 @@ function Confirmation() {
         <div className="description">
           <p>{confirmationMessage}</p>
 
-          {redirect ? (
+          {!redirect ? (
             <><Link className="new-user-link confirmation" to="/">
               Quiz Word
             </Link></>

@@ -29,7 +29,7 @@ function ForgotPassword() {
     try {
       await forgotPassword(formValues);
       setConfirmationMessage("Du kannst jetzt dein E-Mail prüfen.");
-      navigate("/confirmation");
+      navigate("/confirmation?redirect=true");
       setFormValues(initialValues);
     } catch (error) {
       console.error(error);

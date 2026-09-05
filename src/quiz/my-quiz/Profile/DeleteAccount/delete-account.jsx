@@ -12,7 +12,7 @@ function DeleteAccount() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const { setConfirmationMessage, deleteAccount } = useAuth();
+  const { setConfirmationMessage, deleteAccount, logout } = useAuth();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -40,6 +40,7 @@ function DeleteAccount() {
     try {
       await deleteAccount(payload);
       setConfirmationMessage("Dein Konto wurde erfolgreich gelöscht.");
+      logout();
       navigate("/confirmation");
     } catch (err) {
       const message =

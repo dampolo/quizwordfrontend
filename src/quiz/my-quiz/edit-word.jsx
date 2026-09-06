@@ -117,8 +117,6 @@ export default function EditWord() {
           : translation,
       ),
     }));
-
-    console.log(formData);
   }
 
   function handleDelete() {

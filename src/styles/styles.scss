@@ -131,7 +131,7 @@ button[type="submit"]:disabled {
 main {
   display: flex;
   flex-direction: column;
-  margin: 0 0.0625rem 0.0625rem 0.0625rem;
+  // margin: 0 0.0625rem 0.0625rem 0.0625rem;
   min-height: calc(100vh - 177px);
   color: basic.$color-heading;
   background-color: basic.$color-surface-container;

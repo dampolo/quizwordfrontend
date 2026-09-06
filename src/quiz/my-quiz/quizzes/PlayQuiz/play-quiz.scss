@@ -33,6 +33,15 @@
     font-weight: 700;
   }
 
+  &__title-learn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
   &__help {
     width: 26px;
     height: 26px;
@@ -100,6 +109,7 @@
   }
 
   &__line {
+    transform: translateY(1rem);
     height: 1px;
     background-color: rgba(0, 0, 0, 0.2);
     width: 200px;
@@ -112,10 +122,21 @@
 
   &__answer-wrapper {
     width: fit-content;
-    transform: translateY(-13px);
+    transform: translateY(1rem);
     background: #fff;
     padding-inline: 0.3125rem;
   }
+
+  &__answer-wrapper-learn {
+    width: fit-content;
+    transform: translateY(-1rem);
+    background: #fff;
+    color: basic.$color-primary-indigo;
+    font-size: 3rem;
+    line-height: 1;
+    padding-inline: 0.3125rem;
+  }
+
   &__input {
     width: 100%;
     padding: 1.35rem 1.5rem;

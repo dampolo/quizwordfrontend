@@ -53,14 +53,14 @@ function LearnQuiz() {
           <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
         </button>
         <div className="quiz-card__header">
-          <h1 className="quiz-card__title">
+          <h1 className="quiz-card__title-learn">
             {quiz?.[currentQuestion].translations[0].word}
           </h1>
         </div>
         <div className="quiz-card__form">
           <span className="quiz-card__line"></span>
 
-          <span className="quiz-card__answer-wrapper">
+          <span className="quiz-card__answer-wrapper-learn">
             {quiz?.[currentQuestion].translations[1].word}
           </span>
 

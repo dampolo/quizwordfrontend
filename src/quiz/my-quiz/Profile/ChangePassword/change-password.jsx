@@ -69,7 +69,7 @@ function ChangePassword() {
 
       setConfirmationMessage("Dein Password wurde erfolgreich geändert.");
       toast.success(data.detail);
-      logout()
+      logout();
       navigate("/confirmation?redirect=true");
       setFormValues(initialValues);
     } catch (error) {

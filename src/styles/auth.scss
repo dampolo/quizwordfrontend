@@ -1,6 +1,6 @@
 @use "./basic.scss";
 
-main {
+.main-auth {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -289,7 +289,7 @@ main .main-content-customer .btn-container .back-button {
 }
 
 @media (max-width: 31.25rem) {
-  main {
+  .main-auth {
     margin: 0.5rem;
     .main-content-customer {
       padding: 0.5rem;

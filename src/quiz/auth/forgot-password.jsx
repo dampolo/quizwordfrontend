@@ -57,7 +57,7 @@ function ForgotPassword() {
   }
 
   return (
-    <main>
+    <main className="main-auth">
       <PageTitle title="Passwort vergessen" />
       <section className="main-content-customer">
         <BackButton to="/login" />

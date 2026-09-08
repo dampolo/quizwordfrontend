@@ -122,7 +122,7 @@ function CreateAccount() {
   }
 
   return (
-    <main>
+    <main className="main-auth">
       <PageTitle title="Konto restellen" />
       <section className="main-content-customer">
         <BackButton to="/login" />

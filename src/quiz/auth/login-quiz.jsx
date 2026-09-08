@@ -69,7 +69,7 @@ function LoginQuiz() {
 
 
   return (
-    <main>
+    <main className="main-auth">
       <PageTitle title="Login" />
       <section className="main-content-customer">
         <div className="form-title">

@@ -87,7 +87,7 @@ function ResetPassword() {
   }
 
   return (
-    <main>
+    <main className="main-auth">
       <PageTitle title="Passwort zurücksetzen" />
       <section className="main-content-customer">
         <Link className="arrow-back" to="/kurse/login">

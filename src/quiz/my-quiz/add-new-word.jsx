@@ -93,7 +93,7 @@ export default function AddNewWord() {
         ...formData,
         allow_new_meaning: true,
       };
-
+      debugger
       await createConcept(newFormData);
 
       toast.success(
@@ -114,7 +114,6 @@ export default function AddNewWord() {
     if (name === "language") {
       setFormData((prev) => ({
         ...prev,
-        category: "",
         translations: prev.translations.map((translation, i) =>
           i === index ? { ...translation, language: value } : translation,
         ),
@@ -139,7 +138,6 @@ export default function AddNewWord() {
 
     setFormData((prev) => ({
       ...prev,
-      category: "",
       translations: prev.translations.map((translation, i) =>
         i === index
           ? {
@@ -149,6 +147,7 @@ export default function AddNewWord() {
           : translation,
       ),
     }));
+    
   }
 
   useEffect(() => {

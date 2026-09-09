@@ -91,14 +91,6 @@ function AllWords() {
     }
   }, [language, currentPage]);
 
-  if (loading) {
-    return (
-      <div className="show-container ">
-        <PreLoader />
-      </div>
-    );
-  }
-
   return (
     <div className="vocabulary">
       <div className="vocabulary__header">
@@ -154,7 +146,11 @@ function AllWords() {
           <div className="streak">Serie</div>
           <div className="actions">Aktionen</div>
         </div>
-        {words?.results?.length === 0 ? (
+        {loading ? (
+          <div className="show-container ">
+            <PreLoader />
+          </div>
+        ) : words?.results?.length === 0 ? (
           <p className="no-words">Du hast hier keine Wörter.</p>
         ) : (
           words?.results?.map((word) => (

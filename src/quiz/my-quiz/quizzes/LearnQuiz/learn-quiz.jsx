@@ -16,7 +16,7 @@ function LearnQuiz() {
 
 
   // You can learn in the infinity loop.
-  // I leave the code commented out code and wait for user feedback.
+  // I leave the code commented out and wait for user feedback.
   function adjustCurrentQuestion() {
     const isLastWord = currentQuestion === quiz.length - 1;
     if (isLastWord && redirect) {

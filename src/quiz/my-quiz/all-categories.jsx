@@ -32,13 +32,6 @@ export default function VocabularyCategories() {
     }
   }, [language]);
 
-  if (loading) {
-    return (
-      <div className="show-container ">
-        <PreLoader />
-      </div>
-    );
-  }
 
   return (
     <section className="vocab-page">
@@ -90,14 +83,19 @@ export default function VocabularyCategories() {
         ))}
       </ul>
       <section className="category">
-        {categories.length === 0 ? (
+        {loading ? (
+          <div className="show-container ">
+            <PreLoader />
+          </div>
+        ) : categories.length === 0 ? (
           <p className="no-category">Du hast hier keine Kategorie erstellt.</p>
         ) : (
           categories.map((cat) => (
             <article className={`card ${cat.wide ? "wide" : ""}`} key={cat.id}>
               <div className="card-actions">
                 <h3>{cat.category_name}</h3>
-                <Link className="edit"
+                <Link
+                  className="edit"
                   to={`/my-quiz/vocabulary-categories/${cat.id}/edit-category?language=${language}`}
                 >
                   <img src="/assets/edit.svg" alt="edit" />

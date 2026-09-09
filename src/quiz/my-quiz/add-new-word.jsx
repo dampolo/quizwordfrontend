@@ -65,8 +65,8 @@ export default function AddNewWord() {
 
         return;
       }
-
-      // Word already exists
+      
+      // Word already exists commt der Toast
       if (data.info?.length > 0) {
         toast.info(data.info[0]);
         return;
@@ -93,7 +93,6 @@ export default function AddNewWord() {
         ...formData,
         allow_new_meaning: true,
       };
-      debugger
       await createConcept(newFormData);
 
       toast.success(

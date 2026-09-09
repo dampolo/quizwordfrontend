@@ -121,6 +121,10 @@ button[type="submit"]:disabled {
 }
 
 .show-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   opacity: 1;
   visibility: visible;
   z-index: 1000;

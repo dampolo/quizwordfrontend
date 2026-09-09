@@ -40,14 +40,6 @@ function Quizzes() {
     }
   }, [language]);
 
-  if (!quizzes) {
-    return (
-      <div className="show-container">
-        <PreLoader />
-      </div>
-    );
-  }
-
   async function handleEditQuiz(quizName) {
     const payload = {
       quiz_name: quizName,
@@ -118,7 +110,11 @@ function Quizzes() {
 
       {/* Quiz */}
       <div className="category">
-        {quizzes.length === 0 ? (
+        {!quizzes ? (
+          <div className="show-container">
+            <PreLoader />
+          </div>
+        ) : quizzes.length === 0 ? (
           <p className="no-quiz">Du hast hier kein Quiz erstellt.</p>
         ) : (
           quizzes.map((quiz) => (
@@ -136,7 +132,8 @@ function Quizzes() {
               </button>
 
               <div className="action-button">
-                <Link className="action-button__icon"
+                <Link
+                  className="action-button__icon"
                   to={`/my-quiz/${quiz.quiz_id}/learn-quiz?language=${quiz?.target_language}&redirect=true`}
                 >
                   <img
@@ -146,7 +143,8 @@ function Quizzes() {
                     alt="learn"
                   />
                 </Link>
-                <Link className="action-button__icon"
+                <Link
+                  className="action-button__icon"
                   to={`/my-quiz/${quiz.quiz_id}/play-quiz?language=${quiz?.target_language}&redirect=true`}
                 >
                   <img
@@ -157,9 +155,10 @@ function Quizzes() {
                   />
                 </Link>
 
-                <Link 
-                className="action-button__icon"
-                to={`/my-quiz/${quiz.quiz_id}/all-quiz-words?language=${quiz?.target_language}`}>
+                <Link
+                  className="action-button__icon"
+                  to={`/my-quiz/${quiz.quiz_id}/all-quiz-words?language=${quiz?.target_language}`}
+                >
                   <img
                     width={40}
                     height={40}

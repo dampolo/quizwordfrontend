@@ -15,7 +15,7 @@ function LearnQuiz() {
   const language = searchParams.get("language");
 
 
-  // You can learn in the inifinity loop.
+  // You can learn in the infinity loop.
   // I leave the code commented out code and wait for user feedback.
   function adjustCurrentQuestion() {
     const isLastWord = currentQuestion === quiz.length - 1;

@@ -59,7 +59,7 @@ function AllWords() {
       setSelectedWordIds([]);
       navigate(`/my-quiz/all-words/?language=${language}`);
     } catch (error) {
-      const message = error.response?.detail[0] || "Error";
+      const message = error.response?.detail || "Error";
       setMessage(message);
       toast.error(message);
     }

@@ -84,7 +84,7 @@ function AllQuizWords() {
 
   return (
     <div className="vocabulary">
-      <BackButton to="/my-quiz/all-quizzes/" />
+      <BackButton to={`/my-quiz/all-quizzes?language=${quiz?.target_language}`} />
 
       <div className="vocabulary__header">
         <div>

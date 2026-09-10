@@ -26,7 +26,7 @@ function Confirmation() {
   }, [uidb64, token]);
 
   return (
-    <main>
+    <main className="main-auth">
       <section className="main-content-customer">
         { !redirect ?
           <BackButton to={"/login"} /> : <></>

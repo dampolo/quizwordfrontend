@@ -48,8 +48,8 @@ function ChooseLanguages() {
   }
 
   return (
-    <main>
-      <section className="main-content-customer choose-languages">
+    <section className="main-auth">
+      <div className="main-content-customer choose-languages">
         <LanguageForm
           languages={languages}
           nativeLanguage={nativeLanguage}
@@ -59,8 +59,8 @@ function ChooseLanguages() {
           onSubmit={handleSubmit}
           buttonText="Bestätigen"
         />
-      </section>
-    </main>
+      </div>
+    </section>
   );
 }
 

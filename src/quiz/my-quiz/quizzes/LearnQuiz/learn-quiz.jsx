@@ -14,19 +14,18 @@ function LearnQuiz() {
   const redirect = searchParams.get("redirect") === "true";
   const language = searchParams.get("language");
 
-
   // You can learn in the infinity loop.
   // I leave the code commented out and wait for user feedback.
   function adjustCurrentQuestion() {
     const isLastWord = currentQuestion === quiz.length - 1;
     if (isLastWord && redirect) {
-      setCurrentQuestion(0)
+      setCurrentQuestion(0);
       // navigate(`/my-quiz/all-quizzes?language=${language}`);
-      return
+      return;
     } else if (isLastWord) {
-      setCurrentQuestion(0)
+      setCurrentQuestion(0);
       // navigate(`/my-quiz/${id}/all-quiz-words?language=${language}`);
-      return
+      return;
     }
     setCurrentQuestion((prev) => prev + 1);
   }

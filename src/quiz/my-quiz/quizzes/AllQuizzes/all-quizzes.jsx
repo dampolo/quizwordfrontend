@@ -170,7 +170,7 @@ function Quizzes() {
                 {/* Flip Card */}
                 <Link
                   className="action-button__icon"
-                  to={`/my-quiz/${quiz.quiz_id}/flip-card-quiz?language=${quiz?.target_language}`}
+                  to={`/my-quiz/${quiz.quiz_id}/flip-card-quiz?language=${quiz?.target_language}&redirect=true`}
                 >
                   <img
                     width={40}

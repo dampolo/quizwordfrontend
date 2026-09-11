@@ -42,6 +42,7 @@ import ChangeUsername from "./quiz/my-quiz/Profile/ChangeUsername/change-usernam
 import DeleteAccount from "./quiz/my-quiz/Profile/DeleteAccount/delete-account";
 import ChangeProfileImage from "./quiz/my-quiz/Profile/ChangeProfileImage/change-profile-image";
 import Contact from "./website/Contact/contact";
+import FlipCardQuiz from "./quiz/my-quiz/quizzes/FlipCardQuiz/flip-card-quiz";
 
 function App() {
   return (
@@ -116,6 +117,7 @@ function App() {
               <Route path="add-new-quiz" element={<AddNewQuiz />} />
               <Route path=":id/all-quiz-words" element={<AllQuizWords />} />
               <Route path=":id/play-quiz" element={<PlayQuiz />} />
+              <Route path=":id/flip-card-quiz" element={<FlipCardQuiz />} />
               <Route path=":id/learn-quiz" element={<LearnQuiz />} />
               <Route path=":id/quiz-results" element={<QuizResults />} />
               <Route path="choose-languages" element={<ChooseLanguages />} />

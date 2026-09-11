@@ -166,6 +166,21 @@ function Quizzes() {
                     alt="look"
                   />
                 </Link>
+
+                {/* Flip Card */}
+                <Link
+                  className="action-button__icon"
+                  to={`/my-quiz/${quiz.quiz_id}/flip-card-quiz?language=${quiz?.target_language}`}
+                >
+                  <img
+                    width={40}
+                    height={40}
+                    src="/assets/flip-card.svg"
+                    alt="look"
+                  />
+                </Link>
+                {/* Flip Card end*/}
+              
               </div>
 
               <div className="vocab-card__footer">

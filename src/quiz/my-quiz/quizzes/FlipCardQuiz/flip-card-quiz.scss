@@ -4,14 +4,53 @@
 .buttons-flip {
     display: flex;
     gap: 1rem;
+
     .turn-around {
         display: flex;
         justify-content: center;
         align-items: center;
         margin-top: 1rem;
+
         img {
             min-width: 3rem;
             min-height: 3rem;
         }
     }
+}
+
+.play-quiz {
+    perspective: 760px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+    transition: transform 0.9s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.flip-card-front,
+.flip-card-back {
+    width: 100%;
+    max-width: 760px;
+    padding: 3rem;
+    background: #fff;
+    border: 1px solid #e8e8f4;
+    border-radius: 28px;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+    height: fit-content;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+
+.flip-card-back {
+    transform: rotateY(180deg);
+}
+
+.flip-card-inner.flipped {
+    transform: rotateY(180deg);
 }

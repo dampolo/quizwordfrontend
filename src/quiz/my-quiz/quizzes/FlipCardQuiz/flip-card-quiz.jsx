@@ -1,5 +1,5 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import "./../LearnQuiz/learn-quiz.scss";
+import "./flip-card-quiz.scss";
 import { useEffect, useState } from "react";
 import useQuiz from "../../../../context/useQuiz";
 
@@ -66,14 +66,19 @@ function FlipCardQuiz() {
           <span className="quiz-card__answer-wrapper-learn">
             {quiz?.[currentQuestion].translations[1].word}
           </span>
+          <div className="buttons-flip">
+            <button
+              type="button"
+              className="main-quiz-button quiz-button"
+              onClick={adjustCurrentQuestion}
+            >
+              <span>Weiter</span>
+            </button>
 
-          <button
-            type="button"
-            className="main-quiz-button quiz-button"
-            onClick={adjustCurrentQuestion}
-          >
-            <span>Weiter</span>
-          </button>
+            <button type="button" className="turn-around">
+              <img width={48} height={48} src="/assets/turn-around.svg" alt="turn around"/>
+            </button>
+          </div>
         </div>
       </div>
     </section>

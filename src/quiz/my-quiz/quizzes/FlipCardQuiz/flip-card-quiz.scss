@@ -1,2 +1,17 @@
 @use "./../../../../styles/basic.scss";
 @use "./../PlayQuiz/play-quiz.scss";
+
+.buttons-flip {
+    display: flex;
+    gap: 1rem;
+    .turn-around {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+        img {
+            min-width: 3rem;
+            min-height: 3rem;
+        }
+    }
+}

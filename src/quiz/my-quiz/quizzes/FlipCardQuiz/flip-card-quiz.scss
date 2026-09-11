@@ -26,9 +26,9 @@
     position: relative;
     width: 100%;
     max-width: 760px;
-    transition: transform 0.9s;
+    transition: transform 0.6s;
     transform-style: preserve-3d;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 1rem;
 }
 
 .flip-card-front,
@@ -44,13 +44,14 @@
     position: absolute;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    transform: translateY(-150px);
 }
 
 
 .flip-card-back {
-    transform: rotateY(180deg);
+    transform: rotateY(180deg) translateY(-150px);
 }
 
 .flip-card-inner.flipped {
-    transform: rotateY(180deg);
+    transform: rotateY(180deg) !important;
 }

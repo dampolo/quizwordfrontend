@@ -13,6 +13,7 @@ function FlipCardQuiz() {
   const redirect = searchParams.get("redirect") === "true";
   const language = searchParams.get("language");
   const [isFlipped, setIsFlipped] = useState(false);
+
   // You can learn in the infinity loop.
   // I leave the code commented out and wait for user feedback.
   function adjustCurrentQuestion() {
@@ -64,7 +65,7 @@ function FlipCardQuiz() {
           </button>
 
           <div className="quiz-card__header">
-            <h1 className="quiz-card__title-learn">
+            <h1 className="quiz-card__title-learn flip-title">
               {quiz?.[currentQuestion].translations[0].word}
             </h1>
           </div>

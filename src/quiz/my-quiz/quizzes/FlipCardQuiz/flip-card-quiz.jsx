@@ -108,9 +108,9 @@ function FlipCardQuiz() {
           <div className="quiz-card__form">
             <span className="quiz-card__line"></span>
 
-            <span className="quiz-card__answer-wrapper-learn">
+            <h1 className="quiz-card__answer-wrapper-learn flip-title">
               {quiz?.[currentQuestion].translations[1].word}
-            </span>
+            </h1>
 
             {/* Buttons */}
             <div className="buttons-flip">

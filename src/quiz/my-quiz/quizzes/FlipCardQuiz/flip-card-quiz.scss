@@ -119,6 +119,8 @@
     font-size: 3rem;
     line-height: 1;
     padding-inline: 0.3125rem;
+    word-break: break-word;
+    hyphens: auto;
   }
 }
 
@@ -173,6 +175,13 @@
     transition: transform 0.4s;
     transform-style: preserve-3d;
     margin: 1rem;
+}
+
+.flip-title  {
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 0;
+    line-height: 1;
 }
 
 .flip-card-front,

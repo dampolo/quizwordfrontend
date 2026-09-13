@@ -67,15 +67,15 @@ function LearnQuiz() {
           <span className="quiz-card__answer-wrapper-learn">
             {quiz?.[currentQuestion].translations[1].word}
           </span>
-
-          <button
-            type="button"
-            className="main-quiz-button quiz-button"
-            onClick={adjustCurrentQuestion}
-          >
-            <span>Weiter</span>
-          </button>
         </div>
+
+        <button
+          type="button"
+          className="main-quiz-button"
+          onClick={adjustCurrentQuestion}
+        >
+          <span>Weiter</span>
+        </button>
       </div>
     </section>
   );

@@ -17,7 +17,7 @@ function FlipCardQuiz() {
   // You can learn in the infinity loop.
   // I leave the code commented out and wait for user feedback.
   function adjustCurrentQuestion() {
-    setIsFlipped(false)
+    setIsFlipped(false);
     const isLastWord = currentQuestion === quiz.length - 1;
     if (isLastWord && redirect) {
       setCurrentQuestion(0);
@@ -52,7 +52,7 @@ function FlipCardQuiz() {
   }
 
   function toggleFlipped() {
-    setIsFlipped((prev) => !prev)
+    setIsFlipped((prev) => !prev);
   }
 
   return (
@@ -75,7 +75,7 @@ function FlipCardQuiz() {
             <div className="buttons-flip">
               <button
                 type="button"
-                className="main-quiz-button quiz-button"
+                className="flip-card-button"
                 onClick={adjustCurrentQuestion}
               >
                 <span>Weiter</span>
@@ -105,38 +105,40 @@ function FlipCardQuiz() {
             <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
           </button>
 
+			{/* translation */}
           <div className="quiz-card__form">
             <span className="quiz-card__line"></span>
 
             <h1 className="quiz-card__answer-wrapper-learn flip-title">
               {quiz?.[currentQuestion].translations[1].word}
             </h1>
-
-            {/* Buttons */}
-            <div className="buttons-flip">
-              <button
-                type="button"
-                className="main-quiz-button quiz-button"
-                onClick={adjustCurrentQuestion}
-              >
-                <span>Weiter</span>
-              </button>
-
-              <button
-                type="button"
-                className="turn-around"
-                onClick={toggleFlipped}
-              >
-                <img
-                  width={48}
-                  height={48}
-                  src="/assets/turn-around.svg"
-                  alt="turn around"
-                />
-              </button>
-            </div>
-            {/* Buttons ENDE */}
           </div>
+
+
+          {/* Buttons */}
+          <div className="buttons-flip">
+            <button
+              type="button"
+              className="flip-card-button"
+              onClick={adjustCurrentQuestion}
+            >
+              <span>Weiter</span>
+            </button>
+
+            <button
+              type="button"
+              className="turn-around"
+              onClick={toggleFlipped}
+            >
+              <img
+                width={48}
+                height={48}
+                src="/assets/turn-around.svg"
+                alt="turn around"
+              />
+            </button>
+          </div>
+          {/* Buttons ENDE */}
         </div>
         {/* Back ENDE */}
       </div>

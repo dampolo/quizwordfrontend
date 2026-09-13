@@ -143,7 +143,7 @@ function PlayQuiz() {
           </div>
           <button
             type="button"
-            className="main-quiz-button quiz-button"
+            className="main-quiz-button play-button"
             onClick={adjustCurrentQuestion}
             disabled={formData.answer.length <= 2}
           >

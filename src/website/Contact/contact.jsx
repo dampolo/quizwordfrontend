@@ -83,7 +83,6 @@ function Contact() {
     };
 
     try {
-      debugger
       await postSupport(payload);
       setConfirmationMessage("Danke für deine Nachricht!");
       navigate("/confirmation?redirect=false");

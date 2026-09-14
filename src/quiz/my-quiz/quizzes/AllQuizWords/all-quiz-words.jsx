@@ -84,7 +84,9 @@ function AllQuizWords() {
 
   return (
     <div className="vocabulary">
-      <BackButton to={`/my-quiz/all-quizzes?language=${quiz?.target_language}`} />
+      <BackButton
+        to={`/my-quiz/all-quizzes?language=${quiz?.target_language}`}
+      />
 
       <div className="vocabulary__header">
         <div>
@@ -100,7 +102,7 @@ function AllQuizWords() {
             className="main-quiz-button all-quiz-add-btn"
             to={`/my-quiz/${id}/learn-quiz?language=${quiz?.target_language}`}
           >
-            Lernen
+            Learn
           </Link>
 
           <Link
@@ -108,6 +110,12 @@ function AllQuizWords() {
             to={`/my-quiz/${id}/play-quiz?language=${quiz?.target_language}`}
           >
             Spiel
+          </Link>
+          <Link
+            className="main-quiz-button all-quiz-add-btn"
+            to={`/my-quiz/${id}/flip-card-quiz?language=${quiz?.target_language}`}
+          >
+            Karteikarten
           </Link>
         </div>
       </div>

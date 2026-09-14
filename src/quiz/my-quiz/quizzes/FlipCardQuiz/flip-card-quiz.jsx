@@ -36,24 +36,16 @@ function FlipCardQuiz() {
     if (isLastWord) {
       setCurrentQuestion(0);
       return;
+    } else {
+      setCurrentQuestion((prev) => prev + 1);
     }
-
-    setCurrentQuestion((prev) => prev + 1);
   }
 
   function handleTransitionEnd(event) {
     if (event.propertyName !== "transform") return;
     if (!changeQuestion) return;
-
     setChangeQuestion(false);
-
-    const isLastWord = currentQuestion === quiz.length - 1;
-
-    if (isLastWord) {
-      setCurrentQuestion(0);
-    } else {
-      setCurrentQuestion((prev) => prev + 1);
-    }
+    changeCurrentQuestion()
   }
 
 

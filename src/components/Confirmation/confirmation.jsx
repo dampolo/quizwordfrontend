@@ -29,7 +29,7 @@ function Confirmation() {
     <main className="main-auth">
       <section className="main-content-customer">
         { !redirect ?
-          <BackButton to={"/login"} /> : <></>
+           <></> : <BackButton to={"/login"} />
         }
 
         <div className="form-title">

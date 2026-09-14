@@ -6,11 +6,14 @@ import PageTitle from "../../components/PageTitle/PageTitle";
 import "./contact.scss";
 import { useAuth } from "../../context/useAuth";
 import { toast } from "react-toastify";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function Contact() {
+  const VITE_RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
   const { postSupport, setConfirmationMessage } = useAuth();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [captchaToken, setCaptchaToken] = useState(null);
 
   const [contactData, setContactData] = useState({
     name: "",
@@ -55,6 +58,10 @@ function Contact() {
     }));
   }
 
+  function handleCaptcha(token) {
+    setCaptchaToken(token);
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -65,14 +72,21 @@ function Contact() {
     });
 
     setCheckboxChecked(true);
-    
+
     if (!isFormValid || !checkboxState) {
       return;
     }
+
+    const payload = {
+      ...contactData,
+      captcha_token: captchaToken,
+    };
+
     try {
-      await postSupport(contactData);
+      debugger
+      await postSupport(payload);
       setConfirmationMessage("Danke für deine Nachricht!");
-      navigate("/confirmation?redirect=true");
+      navigate("/confirmation?redirect=false");
     } catch (error) {
       const message = error.response?.data;
       console.error(error.response?.data);
@@ -207,6 +221,11 @@ function Contact() {
               )}
             </div>
           </div>
+
+          <ReCAPTCHA
+            sitekey={VITE_RECAPTCHA_SITE_KEY}
+            onChange={handleCaptcha}
+          />
 
           <button
             type="submit"

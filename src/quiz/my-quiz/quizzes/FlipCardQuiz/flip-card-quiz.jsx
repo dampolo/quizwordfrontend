@@ -56,8 +56,6 @@ function FlipCardQuiz() {
     async function loadData() {
       try {
         const quizData = await getQuizWords(id);
-        console.log(quizData);
-
         setQuiz(quizData.concepts);
       } catch (error) {
         console.error(error);

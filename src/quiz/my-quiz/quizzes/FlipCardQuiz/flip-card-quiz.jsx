@@ -13,23 +13,49 @@ function FlipCardQuiz() {
   const redirect = searchParams.get("redirect") === "true";
   const language = searchParams.get("language");
   const [isFlipped, setIsFlipped] = useState(false);
+  const [changeQuestion, setChangeQuestion] = useState(false);
 
-  // You can learn in the infinity loop.
-  // I leave the code commented out and wait for user feedback.
+  function toggleFlipped() {
+    setIsFlipped((prev) => !prev);
+  }
+
   function adjustCurrentQuestion() {
-    setIsFlipped(false);
+    if (isFlipped) {
+      // Back side → flip to front first.
+      setChangeQuestion(true);
+      setIsFlipped(false);
+    } else {
+      // Already front → no transition will happen.
+      changeCurrentQuestion();
+    }
+  }
+
+  function changeCurrentQuestion() {
     const isLastWord = currentQuestion === quiz.length - 1;
-    if (isLastWord && redirect) {
+
+    if (isLastWord) {
       setCurrentQuestion(0);
-      // navigate(`/my-quiz/all-quizzes?language=${language}`);
-      return;
-    } else if (isLastWord) {
-      setCurrentQuestion(0);
-      // navigate(`/my-quiz/${id}/all-quiz-words?language=${language}`);
       return;
     }
+
     setCurrentQuestion((prev) => prev + 1);
   }
+
+  function handleTransitionEnd(event) {
+    if (event.propertyName !== "transform") return;
+    if (!changeQuestion) return;
+
+    setChangeQuestion(false);
+
+    const isLastWord = currentQuestion === quiz.length - 1;
+
+    if (isLastWord) {
+      setCurrentQuestion(0);
+    } else {
+      setCurrentQuestion((prev) => prev + 1);
+    }
+  }
+
 
   useEffect(() => {
     async function loadData() {
@@ -51,14 +77,13 @@ function FlipCardQuiz() {
     }
   }
 
-  function toggleFlipped() {
-    setIsFlipped((prev) => !prev);
-  }
-
   return (
     <section className="play-quiz">
       {/* Front */}
-      <div className={`flip-card-inner ${isFlipped ? "flipped" : ""}`}>
+      <div
+        className={`flip-card-inner ${isFlipped ? "flipped" : ""}`}
+        onTransitionEnd={handleTransitionEnd}
+      >
         <div className="flip-card-front">
           <button type="button" className="quiz-card__cancel" onClick={cancel}>
             <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
@@ -105,7 +130,7 @@ function FlipCardQuiz() {
             <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
           </button>
 
-			{/* translation */}
+          {/* translation */}
           <div className="quiz-card__form">
             <span className="quiz-card__line"></span>
 
@@ -113,7 +138,6 @@ function FlipCardQuiz() {
               {quiz?.[currentQuestion].translations[1].word}
             </h1>
           </div>
-
 
           {/* Buttons */}
           <div className="buttons-flip">

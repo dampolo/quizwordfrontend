@@ -8,6 +8,11 @@
   width: 100%;
   max-width: 1100px;
   margin: 20px auto;
+
+  .add-btn {
+    margin: 0;
+    margin-right: 1.25rem;;
+  }
 }
 
 .table-row {
@@ -83,13 +88,16 @@
       background: #fff7f7;
     }
   }
+
   .column {
     .label {
       font-size: 8px;
     }
+
     h4 {
       font-size: 1rem;
     }
+
     .answer,
     .correct {
       font-size: 1rem;

@@ -281,19 +281,19 @@ function AllQuizWords() {
                   </div>
 
                   <div className="column">
-                    <span className="label">WORT</span>
+                    <span className="label">Wort</span>
                     <h4>{item.correct_answer}</h4>
                   </div>
 
                   <div className="column">
-                    <span className="label">ANTWORT</span>
+                    <span className="label">Antwort</span>
                     <p className={!item.is_correct ? "incorrect" : ""}>
                       {item.user_answer}
                     </p>
                   </div>
 
                   <div className="column">
-                    <span className="label">Bedeutung</span>
+                    <span className="label">Richtig</span>
                     <p className="correct">{item.correct_answer}</p>
                   </div>
                 </div>

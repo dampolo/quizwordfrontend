@@ -1,5 +1,5 @@
 import { useLocation, useParams, Link } from "react-router-dom";
-import "./quiz-results.scss"
+import "./quiz-results.scss";
 import BackButton from "../../../../components/BackButton/BackButton";
 
 function QuizResults() {
@@ -10,9 +10,8 @@ function QuizResults() {
 
   return (
     <section className="results">
-        <BackButton to={`/my-quiz/${id}/all-quiz-words/`} />
+      <BackButton to={`/my-quiz/${id}/all-quiz-words/`} />
       <div className="vocabulary-card">
-
         <div className="card-header">
           <h3>Deine Ergebnise</h3>
           <span className="badge">{details.length} Wörter</span>
@@ -33,31 +32,39 @@ function QuizResults() {
               </div>
 
               <div className="column">
-                <span className="label">WORT</span>
+                <span className="label">Wort</span>
                 <h4>{item.source_word}</h4>
               </div>
 
               <div className="column">
-                <span className="label">ANTWORT</span>
+                <span className="label">Antwort</span>
                 <p className={!item.is_correct ? "incorrect" : ""}>
                   {item.user_answer}
                 </p>
               </div>
 
               <div className="column">
-                <span className="label">Bedeutung</span>
+                <span className="label">Richtig</span>
                 <p className="correct">{item.correct_answer}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
+      <div className="action-buttons">
+        <Link
+          className="main-quiz-button-cancel cancel-btn"
+          to={`/my-quiz/${id}/all-quiz-words/`}
+        >
+          Zurück
+        </Link>
         <Link
           className="main-quiz-button add-btn"
           to={`/my-quiz/${id}/play-quiz`}
         >
           Wiederholen
         </Link>
+      </div>
     </section>
   );
 }

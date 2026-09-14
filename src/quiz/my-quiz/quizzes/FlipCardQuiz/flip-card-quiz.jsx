@@ -56,6 +56,8 @@ function FlipCardQuiz() {
     async function loadData() {
       try {
         const quizData = await getQuizWords(id);
+        console.log(quizData);
+
         setQuiz(quizData.concepts);
       } catch (error) {
         console.error(error);
@@ -80,6 +82,11 @@ function FlipCardQuiz() {
         onTransitionEnd={handleTransitionEnd}
       >
         <div className="flip-card-front">
+          <span className="languages">
+            {quiz?.[currentQuestion].translations[0].language_name} →{" "}
+            {quiz?.[currentQuestion].translations[1].language_name}
+          </span>
+
           <button type="button" className="quiz-card__cancel" onClick={cancel}>
             <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
           </button>
@@ -121,6 +128,10 @@ function FlipCardQuiz() {
 
         {/* Back */}
         <div className="flip-card-back">
+          <span className="languages">
+            {quiz?.[currentQuestion].translations[1].language_name}
+          </span>
+
           <button type="button" className="quiz-card__cancel" onClick={cancel}>
             <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
           </button>

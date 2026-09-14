@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import useApi from "./ApiContext";
+import { apiFetch } from "../services/apiFetch";
 
 const QuizContext = createContext();
 
@@ -14,8 +15,7 @@ export function QuizProvider({ children }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${api}quizzes/`, {
-        credentials: "include",
+      const response = await apiFetch(`${api}quizzes/`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -36,8 +36,7 @@ export function QuizProvider({ children }) {
 
   async function getFiltredQuizzes(id) {
     try {
-      const response = await fetch(`${api}quizzes/?target_language=${id}`, {
-        credentials: "include",
+      const response = await apiFetch(`${api}quizzes/?target_language=${id}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -55,9 +54,8 @@ export function QuizProvider({ children }) {
   }
 
   async function createQuiz(quizData) {
-    const response = await fetch(`${api}quizzes/`, {
+    const response = await apiFetch(`${api}quizzes/`, {
       method: "POST",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -76,9 +74,8 @@ export function QuizProvider({ children }) {
   }
 
   async function putQuiz(payload, quizId) {
-    const response = await fetch(`${api}quizzes/${quizId}/`, {
+    const response = await apiFetch(`${api}quizzes/${quizId}/`, {
       method: "PUT",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -97,9 +94,8 @@ export function QuizProvider({ children }) {
   }
 
   async function postQuizAnswers(id, payload) {
-    const response = await fetch(`${api}quiz-answers/${id}/submit/`, {
+    const response = await apiFetch(`${api}quiz-answers/${id}/submit/`, {
       method: "POST",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -119,9 +115,7 @@ export function QuizProvider({ children }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${api}quizzes/${id}`, {
-        credentials: "include",
-      });
+      const response = await apiFetch(`${api}quizzes/${id}`);
 
       const data = await response.json();
 
@@ -141,9 +135,7 @@ export function QuizProvider({ children }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${api}last-quiz/`, {
-        credentials: "include",
-      });
+      const response = await apiFetch(`${api}last-quiz/`);
 
       const data = await response.json();
 
@@ -160,9 +152,8 @@ export function QuizProvider({ children }) {
   }
 
   async function deleteQuiz(id) {
-    const response = await fetch(`${api}quizzes/${id}/`, {
+    const response = await apiFetch(`${api}quizzes/${id}/`, {
       method: "DELETE",
-      credentials: "include",
     });
 
     if (!response.ok) {
@@ -174,9 +165,7 @@ export function QuizProvider({ children }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${api}attempts/?quiz_id=${id}`, {
-        credentials: "include",
-      });
+      const response = await apiFetch(`${api}attempts/?quiz_id=${id}`);
 
       if (!response.ok) {
         throw new Error("Failed to load words.");
@@ -194,9 +183,7 @@ export function QuizProvider({ children }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${api}attempts/${id}`, {
-        credentials: "include",
-      });
+      const response = await apiFetch(`${api}attempts/${id}`);
 
       if (!response.ok) {
         throw new Error("Failed to load words.");

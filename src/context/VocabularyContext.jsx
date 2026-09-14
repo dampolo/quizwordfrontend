@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import useApi from "./ApiContext";
 import { useNavigate } from "react-router-dom";
+import { apiFetch } from "../services/apiFetch";
 
 const VocabularyContext = createContext();
 
@@ -23,7 +24,7 @@ export function VocabularyProvider({ children }) {
   async function getConcepts(page = 1) {
     setLoading(true);
     try {
-      const response = await fetch(`${api}concepts/?page=${page}`, {
+      const response = await apiFetch(`${api}concepts/?page=${page}`, {
         credentials: "include",
       });
 
@@ -46,7 +47,7 @@ export function VocabularyProvider({ children }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${api}categories/${id}/`, {
+      const response = await apiFetch(`${api}categories/${id}/`, {
         credentials: "include",
       });
 
@@ -63,7 +64,7 @@ export function VocabularyProvider({ children }) {
   }
 
   async function getUserLanguages() {
-    const response = await fetch(`${api}user-languages/`, {
+    const response = await apiFetch(`${api}user-languages/`, {
       credentials: "include",
     });
 
@@ -79,7 +80,7 @@ export function VocabularyProvider({ children }) {
   }
 
   async function getLanguages() {
-    const response = await fetch(`${api}languages/`, {
+    const response = await apiFetch(`${api}languages/`, {
       credentials: "include",
     });
 
@@ -90,7 +91,7 @@ export function VocabularyProvider({ children }) {
   }
 
   async function postLanguages(payload) {
-    const response = await fetch(`${api}user-languages/`, {
+    const response = await apiFetch(`${api}user-languages/`, {
       method: "PATCH",
       credentials: "include",
       headers: {
@@ -108,7 +109,7 @@ export function VocabularyProvider({ children }) {
   async function getCategories() {
     setLoading(true);
     try {
-      const response = await fetch(`${api}categories/`, {
+      const response = await apiFetch(`${api}categories/`, {
         credentials: "include",
       });
 
@@ -129,7 +130,7 @@ export function VocabularyProvider({ children }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${api}categories/?target_language=${id}`, {
+      const response = await apiFetch(`${api}categories/?target_language=${id}`, {
         credentials: "include",
       });
       if (!response.ok) {
@@ -146,7 +147,7 @@ export function VocabularyProvider({ children }) {
   }
 
   async function getConcept(id, languageId) {
-    const response = await fetch(
+    const response = await apiFetch(
       `${api}concepts/${id}/?language=${languageId}`,
       {
         credentials: "include",
@@ -164,7 +165,7 @@ export function VocabularyProvider({ children }) {
     setLoading(true);
 
     try {
-      const response = await fetch(
+      const response = await apiFetch(
         `${api}concepts/?language=${id}&page=${page}`,
         {
           credentials: "include",
@@ -186,9 +187,8 @@ export function VocabularyProvider({ children }) {
   }
 
   async function createConcept(conceptData) {
-    const response = await fetch(`${api}concepts/`, {
+    const response = await apiFetch(`${api}concepts/`, {
       method: "POST",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -207,9 +207,8 @@ export function VocabularyProvider({ children }) {
   }
 
   async function createCategory(categoryData) {
-    const response = await fetch(`${api}categories/`, {
+    const response = await apiFetch(`${api}categories/`, {
       method: "POST",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -228,9 +227,8 @@ export function VocabularyProvider({ children }) {
   }
 
   async function updateWord(id, wordData) {
-    const response = await fetch(`${api}concepts/${id}/`, {
+    const response = await apiFetch(`${api}concepts/${id}/`, {
       method: "PATCH",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -247,9 +245,8 @@ export function VocabularyProvider({ children }) {
   }
 
   async function updateCategory(id, categoryData) {
-    const response = await fetch(`${api}categories/${id}/`, {
+    const response = await apiFetch(`${api}categories/${id}/`, {
       method: "PUT",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -262,16 +259,14 @@ export function VocabularyProvider({ children }) {
   }
 
   async function deleteWord(id) {
-    await fetch(`${api}words/${id}/`, {
+    await apiFetch(`${api}words/${id}/`, {
       method: "DELETE",
-      credentials: "include",
     });
   }
 
   async function deleteCategory(id) {
-    await fetch(`${api}categories/${id}/`, {
+    await apiFetch(`${api}categories/${id}/`, {
       method: "DELETE",
-      credentials: "include",
     });
   }
 

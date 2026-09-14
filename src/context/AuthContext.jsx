@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import useApi from "./ApiContext";
+import { apiFetch } from "../services/apiFetch";
 
 const AuthContext = createContext();
 
@@ -58,8 +59,7 @@ export function AuthProvider({ children }) {
 
   async function getProfile() {
     try {
-      const response = await fetch(`${api}profile-customer/`, {
-        credentials: "include",
+      const response = await apiFetch(`${api}profile-customer/`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -130,7 +130,7 @@ export function AuthProvider({ children }) {
   async function updateProfile(payload) {
     const isFormData = payload instanceof FormData;
 
-    const response = await fetch(`${api}profile-customer/`, {
+    const response = await apiFetch(`${api}profile-customer/`, {
       method: "PATCH",
       credentials: "include",
       headers: isFormData ? undefined : { "Content-Type": "application/json" },

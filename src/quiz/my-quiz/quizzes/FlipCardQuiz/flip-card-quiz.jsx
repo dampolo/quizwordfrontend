@@ -19,18 +19,19 @@ function FlipCardQuiz() {
     setIsFlipped((prev) => !prev);
   }
 
-  function adjustCurrentQuestion() {
+  function adjustCurrentQuestion(e) {
     if (isFlipped) {
       // Back side → flip to front first.
       setChangeQuestion(true);
       setIsFlipped(false);
+      return;
     } else {
       // Already front → no transition will happen.
-      changeCurrentQuestion();
+      changeCurrentQuestion(e);
     }
   }
 
-  function changeCurrentQuestion() {
+  function changeCurrentQuestion(e) {
     const isLastWord = currentQuestion === quiz.length - 1;
 
     if (isLastWord) {
@@ -41,13 +42,15 @@ function FlipCardQuiz() {
     }
   }
 
+  // When the card has finished flipping,
+  // check whether we are supposed to change the question.
+  // If yes, go to the next question.
   function handleTransitionEnd(event) {
     if (event.propertyName !== "transform") return;
     if (!changeQuestion) return;
     setChangeQuestion(false);
-    changeCurrentQuestion()
+    changeCurrentQuestion();
   }
-
 
   useEffect(() => {
     async function loadData() {

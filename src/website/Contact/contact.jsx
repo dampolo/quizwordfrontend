@@ -36,7 +36,7 @@ function Contact() {
   const isEmailValid = emailRegex.test(contactData.email);
   const isMessageValid =
     contactData.message.trim().length >= 4 &&
-    contactData.message.trim().length <= 20;
+    contactData.message.trim().length <= 5000;
 
   const isFormValid = isNameValid && isEmailValid && isMessageValid;
 
@@ -75,6 +75,11 @@ function Contact() {
 
     if (!isFormValid || !checkboxState) {
       return;
+    }
+
+    if (captchaToken === null) {
+      toast.error("Bestätige bitte Captcha")
+      return
     }
 
     const payload = {

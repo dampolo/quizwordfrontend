@@ -126,30 +126,6 @@
     }
 }
 
-.hide-hint {
-    display: none;
-}
-
-.hint-container {
-    display: flex;
-    justify-content: center;
-    height: 1.5rem;
-}
-
-.show-hint {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: fit-content;
-    background-color: rgba(0, 0, 0, 0.39);
-    border-radius: basic.$border-radius;
-
-    .hint-text {
-        border-radius: basic.$border-radius;
-        padding-inline: 1rem;
-    }
-}
-
 .buttons-flip {
     display: flex;
     justify-content: center;

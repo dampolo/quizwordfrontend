@@ -65,7 +65,7 @@ export default function AddNewWord() {
 
         return;
       }
-      
+
       // Word already exists commt der Toast
       if (data.info?.length > 0) {
         toast.info(data.info[0]);
@@ -146,7 +146,6 @@ export default function AddNewWord() {
           : translation,
       ),
     }));
-    
   }
 
   useEffect(() => {

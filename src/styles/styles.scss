@@ -38,8 +38,7 @@ body {
     background: #3421d6;
     color: #fff;
     margin: 0;
-    padding: 17px 32px;
-    box-shadow: 0 8px 18px rgba(52, 33, 214, 0.22);
+    padding: 0.75rem 1.5625rem;
   }
 }
 
@@ -51,7 +50,7 @@ body {
   max-width: 10.375rem;
   width: 100%;
   font-weight: 700;
-  font-size: 1.125rem;
+  font-size: 1rem;
   gap: 0.625rem;
   padding: 0.75rem 1.5625rem;
   margin: auto;
@@ -74,15 +73,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 140px;
-  font-size: 16px;
+  min-width: 8.75rem;
+  font-size: 1rem;
   font-weight: 600;
   transition: 0.25s;
-  height: 50px;
+  height: 3.125rem;
   background: transparent;
   color: basic.$color-primary-indigo;
   border-radius: basic.$border-radius;
-  border: 1px solid #dfe3ef;
+  border: .0625rem solid #dfe3ef;
   outline: none;
   &:hover,
   &:focus-visible {

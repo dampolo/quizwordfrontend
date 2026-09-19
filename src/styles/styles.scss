@@ -60,7 +60,6 @@ body {
   border: solid 1px basic.$color-primary-indigo;
   transition: basic.$first-transition;
   outline: none;
-  cursor: pointer;
   &:hover,
   &:focus-visible {
     border: solid 1px basic.$color-primary-indigo;

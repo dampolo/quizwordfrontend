@@ -69,11 +69,7 @@ function FormDialog({
       }}
     >
       <DialogTitle>
-        {
-          dialogTitle ? dialogTitle : "Erstelle dein Quiz"
-        }
-
-        
+        {dialogTitle ? dialogTitle : "Erstelle dein Quiz"}
       </DialogTitle>
 
       <DialogContent>
@@ -122,7 +118,7 @@ function FormDialog({
             borderRadius: "0.625rem",
             border: "1px solid #dfe3ef",
             transition: "all 0.2s ease-in-out",
-            
+
             "&:hover, &:focus-visible": {
               background: "rgba(91, 92, 226, 0.06)",
               border: "1px solid #5B5CE2",

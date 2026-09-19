@@ -112,3 +112,9 @@
     }
   }
 }
+
+@media (max-width: 43.75rem) {
+  .vocabulary__header .action-button {
+    justify-content: start;
+  }
+}

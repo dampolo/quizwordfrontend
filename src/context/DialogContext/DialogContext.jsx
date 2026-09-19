@@ -64,6 +64,7 @@ export function DialogProvider({ children }) {
 
         <DialogActions>
           <Button
+            disableRipple
             onClick={closeDialog}
             sx={{
               display: "flex",

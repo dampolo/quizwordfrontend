@@ -55,6 +55,7 @@ function FormDialog({
       open={open}
       onClose={handleClose}
       fullWidth
+	  keepMounted
       slotProps={{
         paper: {
           sx: {

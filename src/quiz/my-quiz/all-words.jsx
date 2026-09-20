@@ -23,7 +23,7 @@ function AllWords() {
 
   const [selectedWordIds, setSelectedWordIds] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { createQuiz, getLastQuiz } = useQuiz();
+  const { createQuiz, getLastQuiz, getLastFlipCard } = useQuiz();
   const [currentPage, setCurrentPage] = useState(1);
   const [message, setMessage] = useState("");
 
@@ -75,6 +75,19 @@ function AllWords() {
       const response = await getLastQuiz();
       navigate(
         `/my-quiz/${response.quiz_id}/play-quiz?language=${response?.target_language}`,
+      );
+    } catch (error) {
+      const message = error.response?.detail || "Error";
+
+      toast.error(message);
+    }
+  }
+
+  async function playLastFlipCard() {
+    try {
+      const response = await getLastFlipCard();
+      navigate(
+        `/my-quiz/${response.quiz_id}/flip-card-quiz?language=${response?.target_language}`,
       );
     } catch (error) {
       const message = error.response?.detail || "Error";
@@ -233,15 +246,21 @@ function AllWords() {
         </div>
 
         <div className="card mastery">
-          <h3>Mastery Level</h3>
-          <p>You've reached B2 fluency level in Vocabulary.</p>
+          <h3>Karteikarten</h3>
+          <p>Fange die letzten Karteikarten an.</p>
+          <button onClick={playLastFlipCard}>Start</button>
         </div>
+
+        {/* Start last quiz */}
         <div className="card review">
           <h3>Quiz</h3>
           <p>Fange das letzte Quiz an.</p>
 
-          <button onClick={playLastQuiz}>Start Last Quiz</button>
+          <button onClick={playLastQuiz}>Start</button>
         </div>
+
+        {/* Start last quiz ENDE*/}
+
       </div>
       <button
         type="submit"

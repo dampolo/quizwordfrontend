@@ -111,11 +111,12 @@ export function QuizProvider({ children }) {
     return data;
   }
 
-  async function getQuizWords(id) {
+  async function getQuizWords(id, isFlipcard = false) {
     setLoading(true);
-
     try {
-      const response = await apiFetch(`${api}quizzes/${id}`);
+      const response = await apiFetch(
+        `${api}quizzes/${id}?is_flipcard=${isFlipcard}`,
+      );
 
       const data = await response.json();
 
@@ -136,6 +137,26 @@ export function QuizProvider({ children }) {
 
     try {
       const response = await apiFetch(`${api}last-quiz/`);
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const error = new Error("Failed to get last quiz");
+        error.response = data;
+        throw error;
+      }
+
+      return data;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+    async function getLastFlipCard() {
+    setLoading(true);
+
+    try {
+      const response = await apiFetch(`${api}last-flipcard-quiz/`);
 
       const data = await response.json();
 
@@ -208,6 +229,7 @@ export function QuizProvider({ children }) {
         getQuizWords,
         getQuizzes,
         getLastQuiz,
+        getLastFlipCard,
         getFiltredQuizzes,
         getAttemptQuizScore,
         getAttemptDetails,

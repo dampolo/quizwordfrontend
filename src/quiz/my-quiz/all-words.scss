@@ -319,6 +319,26 @@
   }
 }
 
+.mastery {
+  background: #edf4ff;
+
+  p {
+    color: #666;
+  }
+
+  button {
+    margin-top: 1rem;
+    width: 100%;
+    border: none;
+    color: white;
+    background: #4338ca;
+    padding: 0.9rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
 @media (max-width: 81.25rem) {
   .list-head,
   .list-row {

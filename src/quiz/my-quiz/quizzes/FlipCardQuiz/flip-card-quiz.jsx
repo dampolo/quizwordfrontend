@@ -54,8 +54,9 @@ function FlipCardQuiz() {
 
   useEffect(() => {
     async function loadData() {
+      const isFlipcard = true
       try {
-        const quizData = await getQuizWords(id);
+        const quizData = await getQuizWords(id, isFlipcard);
         setQuiz(quizData.concepts);
       } catch (error) {
         console.error(error);

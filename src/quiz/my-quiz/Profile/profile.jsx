@@ -33,7 +33,9 @@ function Profile() {
   const { userLanguages, nativeLanguage } = useVocabulary();
 
   useEffect(() => {
+    
     getProfile();
+    console.log(profile);
   }, []);
 
   if (!profile) {

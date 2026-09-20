@@ -13,7 +13,7 @@ function LanguageForm({
     <form onSubmit={onSubmit}>
       <h1 className="form-title">Wähle deine Sprachen</h1>
       <div className="input-container">
-        <p className="description languages">Wähle deine Muttersprache:</p>
+        <p className="description">Wähle deine Muttersprache:</p>
 
         {languages.map((language) => (
           <label key={language.id} className="radio-option">

@@ -73,8 +73,8 @@ function EditLanguages() {
   }
 
   return (
-    <>
-      <section className="main-content-customer choose-languages">
+    <section className="main-auth">
+      <div className="main-content-customer choose-languages">
         <BackButton className="arrow-profile" to="/my-quiz/profile/" />
 
         <LanguageForm
@@ -86,8 +86,8 @@ function EditLanguages() {
           onSubmit={handleSubmit}
           buttonText="Speichern"
         />
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 

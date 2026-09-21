@@ -314,7 +314,10 @@ $bg: #f7f8fd;
     }
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 56.25rem) {
+    .vocab-page {
+      padding: 1rem 0.5rem;
+    }
     .stats,
     .grid {
       grid-template-columns: repeat(2, 1fr);
@@ -329,7 +332,7 @@ $bg: #f7f8fd;
     }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 37.5rem) {
     padding: 20px;
 
     .topbar,

@@ -211,19 +211,16 @@
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  max-width: 10.375rem;
-  width: 100%;
+  width: 3rem;
+  height: 3rem;
   font-weight: 700;
   font-size: 1.125rem;
   gap: 0.625rem;
-  padding: 0.75rem 1.5625rem;
   border-radius: 0.625rem;
-  color: #f4f4f4;
   background-color: #3f2bdc;
   border: solid 1px #3f2bdc;
   transition: all 200ms ease-in-out;
   outline: none;
-  cursor: pointer;
 }
 
 @media (max-width: 43.75rem) {

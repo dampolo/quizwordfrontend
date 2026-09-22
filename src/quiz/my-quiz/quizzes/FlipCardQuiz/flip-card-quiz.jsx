@@ -13,31 +13,46 @@ function FlipCardQuiz() {
   const redirect = searchParams.get("redirect") === "true";
   const language = searchParams.get("language");
   const [isFlipped, setIsFlipped] = useState(false);
-  const [changeQuestion, setChangeQuestion] = useState(false);
 
   function toggleFlipped() {
     setIsFlipped((prev) => !prev);
   }
 
-  function adjustCurrentQuestion(e) {
+  const [pendingDirection, setPendingDirection] = useState(null);
+
+  function adjustCurrentQuestion(direction) {
     if (isFlipped) {
-      // Back side → flip to front first.
-      setChangeQuestion(true);
+      // Flip to the front first and remember the direction.
+      setPendingDirection(direction);
       setIsFlipped(false);
       return;
+    }
+
+    // The card is already showing its front.
+    if (direction === "previous") {
+      showPreviousQuestion();
     } else {
-      // Already front → no transition will happen.
-      changeCurrentQuestion(e);
+      showNextQuestion();
     }
   }
 
-  function changeCurrentQuestion() {
+  function showNextQuestion() {
     const isLastWord = currentQuestion === quiz.length - 1;
+
     if (isLastWord) {
       setCurrentQuestion(0);
-      return;
     } else {
       setCurrentQuestion((prev) => prev + 1);
+    }
+  }
+
+  function showPreviousQuestion() {
+    const isFirstWord = currentQuestion === 0;
+
+    if (isFirstWord) {
+      setCurrentQuestion(quiz.length - 1);
+    } else {
+      setCurrentQuestion((prev) => prev - 1);
     }
   }
 
@@ -45,12 +60,17 @@ function FlipCardQuiz() {
   // check whether we are supposed to change the question.
   // If yes, go to the next question.
   function handleTransitionEnd(event) {
-    if (event.propertyName !== "transform") return;
+    if (event.propertyName !== "transform" || !pendingDirection) {
+      return;
+    }
 
-    if (!changeQuestion) return;
+    if (pendingDirection === "previous") {
+      showPreviousQuestion();
+    } else {
+      showNextQuestion();
+    }
 
-    setChangeQuestion(false);
-    changeCurrentQuestion();
+    setPendingDirection(null);
   }
 
   useEffect(() => {
@@ -103,11 +123,44 @@ function FlipCardQuiz() {
               <button
                 type="button"
                 className="flip-card-button"
-                onClick={adjustCurrentQuestion}
+                onClick={() => adjustCurrentQuestion("previous")}
               >
-                <span>Weiter</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width={32}
+                  height={32}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#ffff"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
               </button>
 
+              <button
+                type="button"
+                className="flip-card-button"
+                onClick={() => adjustCurrentQuestion("next")}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width={32}
+                  height={32}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#ffff"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
               <button
                 type="button"
                 className="turn-around"
@@ -150,9 +203,43 @@ function FlipCardQuiz() {
             <button
               type="button"
               className="flip-card-button"
-              onClick={adjustCurrentQuestion}
+              onClick={() => adjustCurrentQuestion("previous")}
             >
-              <span>Weiter</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={32}
+                height={32}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#ffff"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              className="flip-card-button"
+              onClick={() => adjustCurrentQuestion("next")}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={32}
+                height={32}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#ffff"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
             </button>
 
             <button

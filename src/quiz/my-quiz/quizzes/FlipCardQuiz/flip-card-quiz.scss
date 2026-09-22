@@ -155,7 +155,7 @@
   transform-style: preserve-3d;
   margin: 1rem;
   perspective: 760px;
-  transition: transform 500ms ease-in-out;
+  transition: transform 400ms linear;
 }
 
 .flip-title {

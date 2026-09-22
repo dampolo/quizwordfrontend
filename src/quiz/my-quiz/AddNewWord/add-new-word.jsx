@@ -1,11 +1,11 @@
-// import "./add-new-word.scss";
-import useVocabulary from "../../context/useVocabulary";
+import "./add-new-word.scss";
+import useVocabulary from "../../../context/useVocabulary";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import BackButton from "../../components/BackButton/BackButton";
-import PreLoader from "../../components/PreLoader/PreLoader";
+import BackButton from "../../../components/BackButton/BackButton";
+import PreLoader from "../../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
-import useDialog from "../../context/DialogContext/useDialgo";
+import useDialog from "../../../context/DialogContext/useDialog";
 import { useTranslation } from "react-i18next";
 
 export default function AddNewWord() {

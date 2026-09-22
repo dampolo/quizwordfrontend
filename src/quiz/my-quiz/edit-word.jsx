@@ -7,7 +7,7 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import useDialog from "../../context/DialogContext/useDialgo";
+import useDialog from "../../context/DialogContext/useDialog";
 import BackButton from "../../components/BackButton/BackButton";
 import { toast } from "react-toastify";
 import PreLoader from "../../components/PreLoader/PreLoader";

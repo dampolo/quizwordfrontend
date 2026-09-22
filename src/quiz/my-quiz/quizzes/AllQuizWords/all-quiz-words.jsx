@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import "./all-quiz-words.scss";
-import useDialog from "../../../../context/DialogContext/useDialgo";
+import useDialog from "../../../../context/DialogContext/useDialog";
 import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";

@@ -1,5 +1,5 @@
 import "./edit-word.scss";
-import useVocabulary from "../../context/useVocabulary";
+import useVocabulary from "../../../context/useVocabulary";
 import { useEffect, useState } from "react";
 import {
   Link,
@@ -7,10 +7,10 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import useDialog from "../../context/DialogContext/useDialog";
-import BackButton from "../../components/BackButton/BackButton";
+import useDialog from "../../../context/DialogContext/useDialog";
+import BackButton from "../../../components/BackButton/BackButton";
 import { toast } from "react-toastify";
-import PreLoader from "../../components/PreLoader/PreLoader";
+import PreLoader from "../../../components/PreLoader/PreLoader";
 
 export default function EditWord() {
   const {

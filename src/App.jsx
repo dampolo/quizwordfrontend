@@ -13,7 +13,7 @@ import { VocabularyProvider } from "./context/VocabularyContext";
 import { QuizProvider } from "./context/QuizContext";
 import { DialogProvider } from "./context/DialogContext/DialogContext";
 import { Outlet } from "react-router-dom";
-import EditWord from "./quiz/my-quiz/edit-word";
+import EditWord from "./quiz/my-quiz/EditWord/edit-word";
 import AddNewWord from "./quiz/my-quiz/AddNewWord/add-new-word";
 import VocabularyCategories from "./quiz/my-quiz/all-categories";
 import AddNewCategory from "./quiz/my-quiz/AddNewCategory/add-new-category";

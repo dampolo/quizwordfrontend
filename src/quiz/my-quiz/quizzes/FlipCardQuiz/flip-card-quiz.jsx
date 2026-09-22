@@ -31,9 +31,8 @@ function FlipCardQuiz() {
     }
   }
 
-  function changeCurrentQuestion(e) {
+  function changeCurrentQuestion() {
     const isLastWord = currentQuestion === quiz.length - 1;
-
     if (isLastWord) {
       setCurrentQuestion(0);
       return;
@@ -47,14 +46,16 @@ function FlipCardQuiz() {
   // If yes, go to the next question.
   function handleTransitionEnd(event) {
     if (event.propertyName !== "transform") return;
+
     if (!changeQuestion) return;
+
     setChangeQuestion(false);
     changeCurrentQuestion();
   }
 
   useEffect(() => {
     async function loadData() {
-      const isFlipcard = true
+      const isFlipcard = true;
       try {
         const quizData = await getQuizWords(id, isFlipcard);
         setQuiz(quizData.concepts);

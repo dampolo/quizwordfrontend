@@ -1,10 +1,10 @@
 import "./all-words.scss";
-import useVocabulary from "../../context/useVocabulary";
+import useVocabulary from "../../../context/useVocabulary";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import FormDialog from "../../components/FormDialog/FormDialog";
-import useQuiz from "../../context/useQuiz";
-import PreLoader from "../../components/PreLoader/PreLoader";
+import FormDialog from "../../../components/FormDialog/FormDialog";
+import useQuiz from "../../../context/useQuiz";
+import PreLoader from "../../../components/PreLoader/PreLoader";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";

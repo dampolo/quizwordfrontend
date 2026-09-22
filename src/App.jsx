@@ -7,7 +7,7 @@ import Website from "./website/website";
 import Login from "./quiz/auth/login-quiz";
 import Dashboard from "./quiz/my-quiz/dashboard";
 import MyQuiz from "./layouts/MyQuiz";
-import AllWords from "./quiz/my-quiz/all-words";
+import AllWords from "./quiz/my-quiz/AllWords/all-words";
 import ProtectedRoute from "./context/ProtectedRoute";
 import { VocabularyProvider } from "./context/VocabularyContext";
 import { QuizProvider } from "./context/QuizContext";

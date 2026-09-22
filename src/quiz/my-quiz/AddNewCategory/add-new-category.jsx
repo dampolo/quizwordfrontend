@@ -1,9 +1,9 @@
 import "./add-new-category.scss";
 import { Link, useNavigate } from "react-router-dom";
-import useVocabulary from "../../context/useVocabulary";
+import useVocabulary from "../../../context/useVocabulary";
 import { useState } from "react";
-import BackButton from "../../components/BackButton/BackButton";
-import PreLoader from "../../components/PreLoader/PreLoader";
+import BackButton from "../../../components/BackButton/BackButton";
+import PreLoader from "../../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 

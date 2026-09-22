@@ -1,4 +1,4 @@
-import "./../../add-new-category.scss";
+import "./../../AddNewCategory/add-new-category.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useQuiz from "../../../../context/useQuiz";

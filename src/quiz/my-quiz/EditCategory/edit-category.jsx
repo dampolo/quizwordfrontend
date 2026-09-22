@@ -1,11 +1,11 @@
 import "./edit-category.scss";
-import useVocabulary from "../../context/useVocabulary";
+import useVocabulary from "./../../../context/useVocabulary";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import BackButton from "../../components/BackButton/BackButton";
-import PreLoader from "../../components/PreLoader/PreLoader";
+import BackButton from "./../../../components/BackButton/BackButton";
+import PreLoader from "./../../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
-import useDialog from "../../context/DialogContext/useDialog";
+import useDialog from "./../../../context/DialogContext/useDialog";
 import { useTranslation } from "react-i18next";
 
 function EditCategory() {

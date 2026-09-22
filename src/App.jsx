@@ -17,7 +17,7 @@ import EditWord from "./quiz/my-quiz/EditWord/edit-word";
 import AddNewWord from "./quiz/my-quiz/AddNewWord/add-new-word";
 import VocabularyCategories from "./quiz/my-quiz/all-categories";
 import AddNewCategory from "./quiz/my-quiz/AddNewCategory/add-new-category";
-import EditCategory from "./quiz/my-quiz/edit-category";
+import EditCategory from "./quiz/my-quiz/EditCategory/edit-category";
 import AllQuizWords from "./quiz/my-quiz/quizzes/AllQuizWords/all-quiz-words";
 import { ToastContainer } from "react-toastify";
 import Profile from "./quiz/my-quiz/Profile/profile";

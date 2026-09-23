@@ -15,7 +15,7 @@ import { DialogProvider } from "./context/DialogContext/DialogContext";
 import { Outlet } from "react-router-dom";
 import EditWord from "./quiz/my-quiz/EditWord/edit-word";
 import AddNewWord from "./quiz/my-quiz/AddNewWord/add-new-word";
-import AllCategories from "./quiz/my-quiz/all-categories";
+import AllCategories from "./quiz/my-quiz/AllCategories/all-categories";
 import AddNewCategory from "./quiz/my-quiz/AddNewCategory/add-new-category";
 import EditCategory from "./quiz/my-quiz/EditCategory/edit-category";
 import AllQuizWords from "./quiz/my-quiz/quizzes/AllQuizWords/all-quiz-words";

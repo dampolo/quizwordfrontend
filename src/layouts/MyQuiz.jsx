@@ -1,8 +1,7 @@
 import { Outlet } from "react-router-dom";
-import Header from "../components/header";
 import Footer from "../components/Footer/footer";
 import "./PublicLayout.scss";
-import HeaderCustomer from "../quiz/my-quiz/header-customer";
+import HeaderCustomer from "../quiz/my-quiz/HeaderCustomer/header-customer";
 import NavbarCustomer from "../quiz/my-quiz/NavbarCustomer/navbar-customer";
 
 function MyQuiz() {

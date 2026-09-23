@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Logo from "../../components/logo";
-import DialogCustomer from "./dialog-customer";
+import Logo from "../../../components/logo";
+import DialogCustomer from "../dialog-customer";
 
 import "./header-customer.scss";
-import { useAuth } from "../../context/useAuth";
+import { useAuth } from "../../../context/useAuth";
 
 function HeaderCustomer() {
   const [isProfileVisible, setIsProfileVisible] = useState(false);

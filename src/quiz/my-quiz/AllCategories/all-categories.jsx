@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import useVocabulary from "../../context/useVocabulary";
+import useVocabulary from "../../../context/useVocabulary";
 import "./all-categories.scss";
 import { Link, useSearchParams } from "react-router-dom";
-import PreLoader from "../../components/PreLoader/PreLoader";
+import PreLoader from "../../../components/PreLoader/PreLoader";
 
 export default function AllCategories() {
   const {

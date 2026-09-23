@@ -20,7 +20,7 @@ import AddNewCategory from "./quiz/my-quiz/AddNewCategory/add-new-category";
 import EditCategory from "./quiz/my-quiz/EditCategory/edit-category";
 import AllQuizWords from "./quiz/my-quiz/quizzes/AllQuizWords/all-quiz-words";
 import { ToastContainer } from "react-toastify";
-import Profile from "./quiz/my-quiz/Profile/profile";
+import Profile from "./quiz/my-quiz/Profile/Profile/profile";
 import EditProfile from "./quiz/my-quiz/Profile/EditProfile/edit-profile";
 import Confirmation from "./components/Confirmation/confirmation";
 import ChooseLanguages from "./components/ChooseLanguage/ChooseLanguage";

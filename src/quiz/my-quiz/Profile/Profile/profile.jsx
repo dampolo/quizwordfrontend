@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../context/useAuth";
-import useVocabulary from "../../../context/useVocabulary";
+import { useAuth } from "../../../../context/useAuth";
+import useVocabulary from "../../../../context/useVocabulary";
 import "./profile.scss";
-import EditButton from "../../../components/EditButton/EditButon";
-import BackButton from "../../../components/BackButton/BackButton";
-import PreLoader from "../../../components/PreLoader/PreLoader";
+import EditButton from "../../../../components/EditButton/EditButon";
+import BackButton from "../../../../components/BackButton/BackButton";
+import PreLoader from "../../../../components/PreLoader/PreLoader";
 import { useEffect } from "react";
 
 const InfoRow = ({ label, value, type }) => {

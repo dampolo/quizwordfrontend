@@ -1,4 +1,4 @@
-import BackButton from "./BackButton/BackButton";
+import BackButton from "../BackButton/BackButton";
 import "./privacy-policy.scss";
 
 function PrivacyPolicy() {

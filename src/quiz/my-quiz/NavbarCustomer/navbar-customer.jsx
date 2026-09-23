@@ -8,8 +8,8 @@ function NavbarCustomer() {
   const firstLanguage = userLanguages[0]?.id;
 
   const categoriesUrl = firstLanguage
-    ? `/my-quiz/vocabulary-categories?language=${firstLanguage}`
-    : "/my-quiz/vocabulary-categories";
+    ? `/my-quiz/all-categories?language=${firstLanguage}`
+    : "/my-quiz/all-categories";
 
   const allWordsUrl = firstLanguage
     ? `/my-quiz/all-words?language=${firstLanguage}`

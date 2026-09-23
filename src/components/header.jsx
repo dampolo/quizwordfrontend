@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./header.scss";
 import { useState } from "react";
-import Logo from "./logo";
+import Logo from "./../components/Logo/logo";
 import { HashLink } from "react-router-hash-link";
 import { useTranslation } from "react-i18next";
 

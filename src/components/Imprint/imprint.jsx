@@ -1,4 +1,4 @@
-import BackButton from "./BackButton/BackButton";
+import BackButton from "../BackButton/BackButton";
 import "./imprint.scss";
 
 function Imprint() {

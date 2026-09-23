@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Logo from "../../../components/logo";
+import Logo from "../../../components/Logo/logo";
 import DialogCustomer from "../dialog-customer";
 
 import "./header-customer.scss";

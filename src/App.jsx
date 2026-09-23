@@ -29,7 +29,7 @@ import AllQuizzes from "./quiz/my-quiz/quizzes/AllQuizzes/all-quizzes";
 import PlayQuiz from "./quiz/my-quiz/quizzes/PlayQuiz/play-quiz";
 import QuizResults from "./quiz/my-quiz/quizzes/QuizResults/quiz-results";
 import LearnQuiz from "./quiz/my-quiz/quizzes/LearnQuiz/learn-quiz";
-import Imprint from "./components/imprint";
+import Imprint from "./components/Imprint/imprint";
 import PrivacyPolicy from "./components/privacy-policy";
 import Price from "./website/price";
 import HelpDesk from "./website/help-desk";

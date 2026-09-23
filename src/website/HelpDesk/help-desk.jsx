@@ -1,4 +1,4 @@
-import BackButton from "../components/BackButton/BackButton";
+import BackButton from "../../components/BackButton/BackButton";
 import "./help-desk.scss";
 
 function HelpDesk() {

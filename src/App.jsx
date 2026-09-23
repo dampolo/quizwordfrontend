@@ -31,7 +31,7 @@ import LearnQuiz from "./quiz/my-quiz/quizzes/LearnQuiz/learn-quiz";
 import Imprint from "./components/Imprint/imprint";
 import PrivacyPolicy from "./components/PrivacyPolicy/privacy-policy";
 import Price from "./website/Price/price";
-import HelpDesk from "./website/help-desk";
+import HelpDesk from "./website/HelpDesk/help-desk";
 import EditLanguages from "./components/ChooseLanguage/EditLanguages";
 import ResetPassword from "./quiz/auth/reset-password";
 import Settings from "./quiz/my-quiz/Settings/settings";

@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
-import PreLoader from "../components/PreLoader/PreLoader";
-import { useAuth } from "../context/useAuth";
+import PreLoader from "../../components/PreLoader/PreLoader";
+import { useAuth } from "../../context/useAuth";
 import "./website.scss";
 import { Link, Navigate } from "react-router-dom";
 

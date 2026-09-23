@@ -3,7 +3,7 @@ import LoginQuiz from "./quiz/auth/login-quiz";
 import CreateAccount from "./quiz/auth/create-account";
 import ForgotPassword from "./quiz/auth/forgot-password";
 import PublicLayout from "./layouts/PublicLayout";
-import Website from "./website/website";
+import Website from "./website/Website/website";
 import Login from "./quiz/auth/login-quiz";
 import MyQuiz from "./layouts/MyQuiz";
 import AllWords from "./quiz/my-quiz/AllWords/all-words";

@@ -30,7 +30,7 @@ import QuizResults from "./quiz/my-quiz/quizzes/QuizResults/quiz-results";
 import LearnQuiz from "./quiz/my-quiz/quizzes/LearnQuiz/learn-quiz";
 import Imprint from "./components/Imprint/imprint";
 import PrivacyPolicy from "./components/PrivacyPolicy/privacy-policy";
-import Price from "./website/price";
+import Price from "./website/Price/price";
 import HelpDesk from "./website/help-desk";
 import EditLanguages from "./components/ChooseLanguage/EditLanguages";
 import ResetPassword from "./quiz/auth/reset-password";

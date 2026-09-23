@@ -1,6 +1,6 @@
 import "./price.scss"
 
-function Price(params) {
+function Price() {
     return (
         <main className="main-price">
             <section className="price">

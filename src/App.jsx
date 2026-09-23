@@ -5,7 +5,6 @@ import ForgotPassword from "./quiz/auth/forgot-password";
 import PublicLayout from "./layouts/PublicLayout";
 import Website from "./website/website";
 import Login from "./quiz/auth/login-quiz";
-import Dashboard from "./quiz/my-quiz/dashboard";
 import MyQuiz from "./layouts/MyQuiz";
 import AllWords from "./quiz/my-quiz/AllWords/all-words";
 import ProtectedRoute from "./context/ProtectedRoute";

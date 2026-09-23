@@ -15,7 +15,7 @@ import { DialogProvider } from "./context/DialogContext/DialogContext";
 import { Outlet } from "react-router-dom";
 import EditWord from "./quiz/my-quiz/EditWord/edit-word";
 import AddNewWord from "./quiz/my-quiz/AddNewWord/add-new-word";
-import VocabularyCategories from "./quiz/my-quiz/all-categories";
+import AllCategories from "./quiz/my-quiz/all-categories";
 import AddNewCategory from "./quiz/my-quiz/AddNewCategory/add-new-category";
 import EditCategory from "./quiz/my-quiz/EditCategory/edit-category";
 import AllQuizWords from "./quiz/my-quiz/quizzes/AllQuizWords/all-quiz-words";
@@ -104,12 +104,12 @@ function App() {
               <Route path=":id/edit-word" element={<EditWord />} />
               <Route path="add-new-word" element={<AddNewWord />} />
               <Route
-                path="vocabulary-categories"
-                element={<VocabularyCategories />}
+                path="all-categories"
+                element={<AllCategories />}
               />
               <Route path="add-new-category" element={<AddNewCategory />} />
               <Route
-                path="vocabulary-categories/:id/edit-category"
+                path="all-categories/:id/edit-category"
                 element={<EditCategory />}
               />
               {/* Quizzes */}

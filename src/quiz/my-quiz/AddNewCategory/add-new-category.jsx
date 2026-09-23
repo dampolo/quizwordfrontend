@@ -32,7 +32,7 @@ function AddNewCategory() {
       await createCategory(formData);
       toast.success(`Kategorie wurde "${formData.category_name}" hinzugefügt!`);
       navigate(
-        `/my-quiz/vocabulary-categories/?language=${formData.language_id}`,
+        `/my-quiz/all-categories/?language=${formData.language_id}`,
       );
       setFormData({ language_id: "", category_name: "" });
     } catch (err) {
@@ -53,7 +53,7 @@ function AddNewCategory() {
 
   return (
     <div className="add-category-card">
-      <BackButton to="/my-quiz/vocabulary-categories/" />
+      <BackButton to="/my-quiz/all-categories/" />
 
       <div className="form-header">
         <div className="header-icon">✚</div>
@@ -115,7 +115,7 @@ function AddNewCategory() {
           <Link
             type="button"
             className="main-quiz-button-cancel"
-            to="/my-quiz/vocabulary-categories"
+            to="/my-quiz/all-categories"
           >
             {t("BUTTONS.CANCEL")}
           </Link>

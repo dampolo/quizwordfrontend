@@ -4,7 +4,7 @@ import "./all-categories.scss";
 import { Link, useSearchParams } from "react-router-dom";
 import PreLoader from "../../components/PreLoader/PreLoader";
 
-export default function VocabularyCategories() {
+export default function AllCategories() {
   const {
     categories,
     userLanguages,
@@ -96,7 +96,7 @@ export default function VocabularyCategories() {
                 <h3>{cat.category_name}</h3>
                 <Link
                   className="edit"
-                  to={`/my-quiz/vocabulary-categories/${cat.id}/edit-category?language=${language}`}
+                  to={`/my-quiz/all-categories/${cat.id}/edit-category?language=${language}`}
                 >
                   <img src="/assets/edit.svg" alt="edit" />
                 </Link>

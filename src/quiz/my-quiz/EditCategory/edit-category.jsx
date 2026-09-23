@@ -32,7 +32,7 @@ function EditCategory() {
       await updateCategory(Number(id), formData);
       toast.success(`Kategorie "${formData.category_name}" wurde geändert!`);
       navigate(
-        `/my-quiz/vocabulary-categories/?language=${formData.language_id}`,
+        `/my-quiz/all-categories/?language=${formData.language_id}`,
       );
     } catch (err) {
       console.error(err);
@@ -82,7 +82,7 @@ function EditCategory() {
       await deleteCategory(Number(id));
       toast.success(`Kategorie "${formData.category_name}" wurde gelöscht!`);
       navigate(
-        `/my-quiz/vocabulary-categories/?language=${formData.language_id}`,
+        `/my-quiz/all-categories/?language=${formData.language_id}`,
       );
     } catch (err) {
       console.error(err);
@@ -100,7 +100,7 @@ function EditCategory() {
   return (
     <section className="add-category-card">
       <BackButton
-        to={`/my-quiz/vocabulary-categories/?language=${formData.language_id}`}
+        to={`/my-quiz/all-categories/?language=${formData.language_id}`}
       />
       <div className="form-header">
         <div className="header-icon">
@@ -181,7 +181,7 @@ function EditCategory() {
           <Link
             type="button"
             className="main-quiz-button-cancel"
-            to={`/my-quiz/vocabulary-categories/?language=${formData.language_id}`}
+            to={`/my-quiz/all-categories/?language=${formData.language_id}`}
           >
             {t("BUTTONS.CANCEL")}
           </Link>

@@ -80,7 +80,7 @@ function AddNewQuiz() {
           <Link
             type="button"
             className="main-quiz-button-cancel"
-            to="/my-quiz/vocabulary-categories"
+            to="/my-quiz/all-categories"
           >
             Cancel
           </Link>

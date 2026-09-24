@@ -282,7 +282,7 @@
       }
     }
   }
-  .main-content {
+  :global(.main-content) {
     .btn-container {
       gap: 0.875rem;
       .login-btn,

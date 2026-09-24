@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import "./change-username.scss";
+import styles from "./change-username.module.scss";
 import { useAuth } from "../../../../context/useAuth";
 import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
@@ -65,22 +65,22 @@ function ChangeUsername() {
   }
 
   return (
-    <section className="change-username">
+    <section className={styles["change-username"]}>
       <BackButton className="arrow-profile" to="/my-quiz/profile/" />
 
-      <div className="form-title">
-        <h1 className="form-title-name">Username ändern</h1>
+      <div className={styles["form-title"]}>
+        <h1 className={styles["form-title-name"]}>Username ändern</h1>
       </div>
 
-      <p className="description">
+      <p className={styles["description"]}>
         Hier kannst einen neuen Benutzernamen eingeben.
       </p>
 
       <form onSubmit={changeUsername} noValidate>
-        <div className="input-container">
+        <div className={styles["input-container"]}>
           <label htmlFor="username">Dein neuer Benutzername</label>
           <input
-            className="input-field"
+            className={styles["input-field"]}
             type="text"
             name="username"
             placeholder="username"
@@ -89,7 +89,7 @@ function ChangeUsername() {
             onChange={handleChange}
           />
 
-          <div className="input-icon">
+          <div className={styles["input-icon"]}>
             <img
               width="24"
               height="24"
@@ -104,7 +104,7 @@ function ChangeUsername() {
 
         {loading ? <PreLoader /> : <></>}
 
-        <div className="btn-container">
+        <div className={styles["btn-container"]}>
           <button
             className="main-quiz-button"
             type="submit"

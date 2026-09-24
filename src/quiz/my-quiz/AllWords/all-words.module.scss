@@ -28,7 +28,7 @@
   }
 }
 
-.main-quiz-button {
+.vocabulary :global(.main-quiz-button) {
   &.create-quiz-small {
     display: none;
     margin: 0;
@@ -380,7 +380,7 @@
 }
 
 @media (max-width: 46rem) {
-  .main-quiz-button {
+  .vocabulary :global(.main-quiz-button) {
     &.create-quiz-small {
       display: flex;
       position: fixed;

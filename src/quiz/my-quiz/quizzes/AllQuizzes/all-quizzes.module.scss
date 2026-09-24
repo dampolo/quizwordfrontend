@@ -13,6 +13,7 @@ $bg: #f7f8fd;
   padding: 2rem;
   background: $bg;
   color: $text;
+  gap: 1rem;
 
   .topbar {
     display: flex;
@@ -20,8 +21,6 @@ $bg: #f7f8fd;
     align-items: center;
     width: 100%;
     gap: 20px;
-    margin-bottom: 28px;
-
     h1 {
       margin: 0;
       font-size: 2rem;

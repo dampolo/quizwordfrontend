@@ -1,5 +1,5 @@
 @use "./../../../../styles/basic.scss";
-@use "./../../AllWords/all-words.scss";
+@use "./../../AllWords/all-words.module.scss";
 @use "./../QuizResults/quiz-results.scss";
 
 // Shared list and result styles are scoped through this module.

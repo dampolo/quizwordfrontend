@@ -1,4 +1,4 @@
-import "./all-words.scss";
+import styles from "./all-words.module.scss";
 import useVocabulary from "../../../context/useVocabulary";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -105,8 +105,8 @@ function AllWords() {
   }, [language, currentPage]);
 
   return (
-    <div className="vocabulary">
-      <div className="vocabulary__header">
+    <div className={styles["vocabulary"]}>
+      <div className={styles["vocabulary__header"]}>
         <div>
           <h1>Deine Vokabeln</h1>
           <p>
@@ -116,32 +116,32 @@ function AllWords() {
           </p>
         </div>
 
-        <div className="create-buttons">
+        <div className={styles["create-buttons"]}>
           <button
             type="submit"
             onClick={openDialog}
-            className="main-quiz-button create-quiz"
+            className={`main-quiz-button ${styles["create-quiz"]}`}
             disabled={selectedWordIds.length < 3}
           >
             + Quiz
           </button>
 
-          <Link className="main-quiz-button add-btn" to="/my-quiz/add-new-word">
+          <Link className={`main-quiz-button ${styles["add-btn"]}`} to="/my-quiz/add-new-word">
             + Wort
           </Link>
         </div>
       </div>
 
-      <ul className="languages-list">
+      <ul className={styles["languages-list"]}>
         {userLanguages?.map((lang) => (
           <li
             className={
-              active === lang.id ? "language-single active" : "language-single"
+              `${styles["language-single"]} ${active === lang.id ? styles["active"] : ""}`
             }
             key={lang.id}
           >
             <button
-              className="language-button"
+              className={styles["language-button"]}
               onClick={() => selectLanguage(lang.id)}
             >
               {lang.language_name}
@@ -150,25 +150,25 @@ function AllWords() {
         ))}
       </ul>
 
-      <div className="word-list">
-        <div className="list-head">
-          <div className="check">+</div>
-          <div className="rank">Rang</div>
-          <div className="word">Wort & Übersetzung</div>
-          <div className="category">Kategorie</div>
-          <div className="streak">Serie</div>
-          <div className="actions">Aktionen</div>
+      <div className={styles["word-list"]}>
+        <div className={styles["list-head"]}>
+          <div className={styles["check"]}>+</div>
+          <div className={styles["rank"]}>Rang</div>
+          <div className={styles["word"]}>Wort & Übersetzung</div>
+          <div className={styles["category"]}>Kategorie</div>
+          <div className={styles["streak"]}>Serie</div>
+          <div className={styles["actions"]}>Aktionen</div>
         </div>
         {loading ? (
           <div className="show-container ">
             <PreLoader />
           </div>
         ) : words?.results?.length === 0 ? (
-          <p className="no-words">Du hast hier keine Wörter.</p>
+          <p className={styles["no-words"]}>Du hast hier keine Wörter.</p>
         ) : (
           words?.results?.map((word) => (
-            <div className="list-row" key={word.id}>
-              <div className="checkbox">
+            <div className={styles["list-row"]} key={word.id}>
+              <div className={styles["checkbox"]}>
                 <input
                   type="checkbox"
                   checked={selectedWordIds.includes(word.id)}
@@ -178,27 +178,27 @@ function AllWords() {
                 />
               </div>
 
-              <div className="rank">#{word.translations[1].rank}</div>
+              <div className={styles["rank"]}>#{word.translations[1].rank}</div>
 
-              <div className="word">
+              <div className={styles["word"]}>
                 <h3>{word.translations[0].word}</h3>
                 <span>»</span>
                 <p>{word.translations[1].word}</p>
               </div>
 
-              <div className="category">
-                <span className={`badge ${word.category_name}`}>
+              <div className={styles["category"]}>
+                <span className={`${styles["badge"]} ${styles[word.category_name] || ""}`}>
                   {word.translations[1].category_name}
                 </span>
               </div>
 
-              <div className="streak">
+              <div className={styles["streak"]}>
                 🔥
                 <strong>{word.streak}</strong>
                 <span>Days</span>
               </div>
 
-              <div className="actions">
+              <div className={styles["actions"]}>
                 <Link
                   to={`/my-quiz/${word.id}/edit-word?target-word=${word.translations[1].id}&language=${word.translations[1].language}`}
                 >
@@ -209,13 +209,13 @@ function AllWords() {
           ))
         )}
 
-        <div className="pagination">
+        <div className={styles["pagination"]}>
           <span>{words?.count} Wörter</span>
 
-          <div className="pages">
+          <div className={styles["pages"]}>
             <button
               type="button"
-              className="main-quiz-button btn-pagination"
+              className={`main-quiz-button ${styles["btn-pagination"]}`}
               disabled={!previousPage}
               onClick={() => setCurrentPage((prev) => prev - 1)}
             >
@@ -223,7 +223,7 @@ function AllWords() {
             </button>
             {currentPage}
             <button
-              className="main-quiz-button btn-pagination"
+              className={`main-quiz-button ${styles["btn-pagination"]}`}
               disabled={!nextPage}
               onClick={() => setCurrentPage((prev) => prev + 1)}
             >
@@ -233,26 +233,26 @@ function AllWords() {
         </div>
       </div>
 
-      <div className="cards">
-        <div className="card goal">
+      <div className={styles["cards"]}>
+        <div className={`${styles["card"]} goal`}>
           <h3>Today's Goal</h3>
           <p>Review 20 new words to keep your streak alive.</p>
 
-          <div className="progress">
-            <div className="progress-fill"></div>
+          <div className={styles["progress"]}>
+            <div className={styles["progress-fill"]}></div>
           </div>
 
           <small>12 / 20 Words • 60%</small>
         </div>
 
-        <div className="card mastery">
+        <div className={`${styles["card"]} ${styles["mastery"]}`}>
           <h3>Karteikarten</h3>
           <p>Fange die letzten Karteikarten an.</p>
           <button onClick={playLastFlipCard}>Start</button>
         </div>
 
         {/* Start last quiz */}
-        <div className="card review">
+        <div className={`${styles["card"]} ${styles["review"]}`}>
           <h3>Quiz</h3>
           <p>Fange das letzte Quiz an.</p>
 
@@ -265,7 +265,7 @@ function AllWords() {
       <button
         type="submit"
         onClick={openDialog}
-        className="main-quiz-button create-quiz-small"
+        className={`main-quiz-button ${styles["create-quiz-small"]}`}
         disabled={selectedWordIds.length < 3}
       >
         <svg

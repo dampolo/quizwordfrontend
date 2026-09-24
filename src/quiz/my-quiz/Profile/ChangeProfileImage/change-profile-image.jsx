@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import styles from "./change-profile-image.module.scss";
@@ -8,8 +7,6 @@ import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
 
 function ChangeProfileImage() {
-  const initialValues = { image: "" };
-  const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const { profile, updateProfile } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -108,7 +105,9 @@ function ChangeProfileImage() {
         <h1 className={styles["form-title-name"]}>Ändere deine Foto</h1>
       </div>
 
-      <p className={styles["description"]}>Du kannst hier dein Foto hinzüfugen.</p>
+      <p className={styles["description"]}>
+        Du kannst hier dein Foto hinzüfugen.
+      </p>
       <form onSubmit={handleSubmit}>
         <div className={styles["input-container"]}>
           <label htmlFor="image">Foto</label>
@@ -151,7 +150,9 @@ function ChangeProfileImage() {
           >
             <img width={24} height={24} src="/assets/trash.svg" alt="trash" />
           </button>
-          <div className={`warn-txt ${styles["warn-txt-hight"]}`}>{formErrors.image}</div>
+          <div className={`warn-txt ${styles["warn-txt-hight"]}`}>
+            {formErrors.image}
+          </div>
         </div>
 
         {loading ? <PreLoader /> : <></>}

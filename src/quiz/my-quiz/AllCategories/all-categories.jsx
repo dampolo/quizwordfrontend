@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import useVocabulary from "../../../context/useVocabulary";
-import "./all-categories.scss";
 import { Link, useSearchParams } from "react-router-dom";
 import PreLoader from "../../../components/PreLoader/PreLoader";
+
+import styles from "./all-categories.module.scss";
 
 export default function AllCategories() {
   const {
@@ -34,8 +35,8 @@ export default function AllCategories() {
 
 
   return (
-    <section className="vocab-page">
-      <header className="topbar">
+    <section className={styles["vocab-page"]}>
+      <header className={styles["topbar"]}>
         <div>
           <h1>Vokabelkategorien</h1>
           <p>
@@ -45,21 +46,21 @@ export default function AllCategories() {
         </div>
 
         <Link
-          className="main-quiz-button add-new-category-button"
+          className={`main-quiz-button ${styles["add-new-category-button"]}`}
           to="/my-quiz/add-new-category"
         >
           + Kategorie
         </Link>
       </header>
 
-      <ul className="languages-list">
+      <ul className={styles["languages-list"]}>
         <li
           className={
-            active === null ? "language-single active" : "language-single"
+            `${styles["language-single"]} ${active === null ? styles["active"] : ""}`
           }
         >
           <button
-            className="language-button"
+            className={styles["language-button"]}
             onClick={() => selectLanguage(null)}
           >
             Alle
@@ -69,12 +70,12 @@ export default function AllCategories() {
         {userLanguages.map((lang) => (
           <li
             className={
-              active === lang.id ? "language-single active" : "language-single"
+              `${styles["language-single"]} ${active === lang.id ? styles["active"] : ""}`
             }
             key={lang.id}
           >
             <button
-              className="language-button"
+              className={styles["language-button"]}
               onClick={() => selectLanguage(lang.id)}
             >
               {lang.language_name}
@@ -82,20 +83,20 @@ export default function AllCategories() {
           </li>
         ))}
       </ul>
-      <section className="category">
+      <section className={styles["category"]}>
         {loading ? (
-          <div className="show-container ">
+          <div className="show-container">
             <PreLoader />
           </div>
         ) : categories.length === 0 ? (
-          <p className="no-category">Du hast hier keine Kategorie erstellt.</p>
+          <p className={styles["no-category"]}>Du hast hier keine Kategorie erstellt.</p>
         ) : (
           categories.map((cat) => (
-            <article className={`card ${cat.wide ? "wide" : ""}`} key={cat.id}>
-              <div className="card-actions">
+            <article className={`${styles["card"]} ${cat.wide ? styles["wide"] : ""}`} key={cat.id}>
+              <div className={styles["card-actions"]}>
                 <h3>{cat.category_name}</h3>
                 <Link
-                  className="edit"
+                  className={styles["edit"]}
                   to={`/my-quiz/all-categories/${cat.id}/edit-category?language=${language}`}
                 >
                   <img src="/assets/edit.svg" alt="edit" />
@@ -107,7 +108,7 @@ export default function AllCategories() {
           ))
         )}
 
-        <Link className="add-card" to="/my-quiz/add-new-category">
+        <Link className={styles["add-card"]} to="/my-quiz/add-new-category">
           <span>⊕</span>
           <strong>Neue Kategorie hinzufügen</strong>
           <small>Erstelle eine individuelle Lernliste.</small>
@@ -119,7 +120,7 @@ export default function AllCategories() {
 
 function Stat({ icon, label, value }) {
   return (
-    <div className="stat">
+    <div className={styles["stat"]}>
       <span>{icon}</span>
       <div>
         <small>{label}</small>
@@ -131,7 +132,7 @@ function Stat({ icon, label, value }) {
 
 function Activity({ icon, title, meta, xp }) {
   return (
-    <div className="activity-row">
+    <div className={styles["activity-row"]}>
       <span>{icon}</span>
       <div>
         <strong>{title}</strong>

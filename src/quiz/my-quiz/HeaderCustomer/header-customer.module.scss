@@ -1,5 +1,22 @@
 @use "./../../../styles/basic.scss";
 
+.logo {
+  display: flex;
+  align-items: center;
+  outline: transparent;
+  &:focus-visible {
+    border: 2px dotted basic.$color-primary-indigo;
+    outline: basic.$color-primary-indigo;
+  }
+  img {
+    &:hover {
+      filter: drop-shadow(2px 4px 6px basic.$color-primary-indigo);
+    }
+  }
+}
+
+
+
 .header-customer {
   display: flex;
   margin: 0.0625rem 0.0625rem 0 0.0625rem;
@@ -37,7 +54,7 @@
   .header-customer {
     gap: 0;
   }
-  a {
+  .logo {
     margin-right: auto;
     display: flex;
   }

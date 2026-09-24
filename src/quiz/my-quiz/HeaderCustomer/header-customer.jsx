@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Logo from "../../../components/Logo/logo";
 
-import "./header-customer.scss";
+import styles from "./header-customer.module.scss";
 import { useAuth } from "../../../context/useAuth";
 import DialogCustomer from "../DialogCustomer/dialog-customer";
 
@@ -23,15 +23,15 @@ function HeaderCustomer() {
   }
 
   return (
-    <section className="header-customer">
-      <a href="/" className="logo">
+    <section className={styles["header-customer"]}>
+      <a href="/" className={styles["logo"]}>
         <Logo />
       </a>
 
       {/* <img
         width={45}
         height={45}
-        className="message"
+        className={styles["message"]}
         src="/assets/bell.svg"
         alt="Nachrichten"
       /> */}
@@ -40,7 +40,7 @@ function HeaderCustomer() {
         <img
           width={40}
           height={40}
-          className="profile-img avatar"
+          className={`${styles["profile-img"]} avatar`}
           src={profile?.image || "/assets/profile.svg"}
           alt="Profile"
         />
@@ -58,7 +58,7 @@ function HeaderCustomer() {
 
       <button
         onClick={openMenu}
-        className={`hamburger hamburger--collapse ${
+        className={`${styles["hamburger"]} hamburger hamburger--collapse ${
           isMenuOpen ? "is-active" : ""
         }`}
         type="button"

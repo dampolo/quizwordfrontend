@@ -1,4 +1,3 @@
-import "./edit-word.scss";
 import useVocabulary from "../../../context/useVocabulary";
 import { useEffect, useState } from "react";
 import {
@@ -332,7 +331,7 @@ export default function EditWord() {
             }`}
           >
             <div
-              className={`${styles["word-panel"]} ${styles.green} ${
+              className={`${styles["word-panel"]} ${styles["green"]} ${
                 moreTarget ? styles["add-more-option"] : ""
               }`}
             >

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import "./delete-account.scss";
+import styles from "./delete-account.module.scss";
 import { useAuth } from "../../../../context/useAuth";
 import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
@@ -69,26 +69,26 @@ function DeleteAccount() {
   };
 
   return (
-    <section className="delete-account">
+    <section className={styles["delete-account"]}>
       <BackButton className="arrow-profile" to="/my-quiz/profile/" />
 
-      <div className="form-title">
-        <h1 className="form-title-name">Lösche dein Konto</h1>
+      <div className={styles["form-title"]}>
+        <h1 className={styles["form-title-name"]}>Lösche dein Konto</h1>
       </div>
 
-      <p className="description">
+      <p className={styles["description"]}>
         Um dein Konto zu löschen, gib bitte dein Password ein.
       </p>
-      <p className="description">
+      <p className={styles["description"]}>
         Diese Aktion kann nicht rückgängig gemacht werden.
       </p>
 
       <form onSubmit={handleDeleteAccount}>
-        <div className="input-container">
+        <div className={styles["input-container"]}>
           <label htmlFor="password">Passwort</label>
           <input
             autoComplete="current-password"
-            className="input-field"
+            className={styles["input-field"]}
             type={isPasswordVisible ? "text" : "password"}
             name="password"
             placeholder="Passwort"
@@ -98,7 +98,7 @@ function DeleteAccount() {
 
           <button
             type="button"
-            className="eye-button"
+            className={styles["eye-button"]}
             onClick={() => setIsPasswordVisible((prev) => !prev)}
           >
             <img
@@ -112,7 +112,7 @@ function DeleteAccount() {
             />
           </button>
 
-          <div className="input-icon">
+          <div className={styles["input-icon"]}>
             <img
               width={24}
               height={24}
@@ -122,17 +122,17 @@ function DeleteAccount() {
             />
           </div>
 
-          <div className="warn-txt warn-txt-hight">
+          <div className={`warn-txt ${styles["warn-txt-hight"]}`}>
             {formErrors.password}
           </div>
         </div>
 
         {loading ? <PreLoader /> : <></>}
 
-        <div className="btn-container">
+        <div className={styles["btn-container"]}>
           <button
             type="submit"
-            className="main-quiz-button delete-btn"
+            className={`main-quiz-button ${styles["delete-btn"]}`}
             disabled={loading}
           >
             Löschen

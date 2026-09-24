@@ -1,4 +1,4 @@
-import "./add-new-category.scss";
+import styles from "./add-new-category.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import useVocabulary from "../../../context/useVocabulary";
 import { useState } from "react";
@@ -52,11 +52,11 @@ function AddNewCategory() {
   }
 
   return (
-    <div className="add-category-card">
+    <div className={styles["add-category-card"]}>
       <BackButton to="/my-quiz/all-categories/" />
 
-      <div className="form-header">
-        <div className="header-icon">✚</div>
+      <div className={styles["form-header"]}>
+        <div className={styles["header-icon"]}>✚</div>
 
         <div>
           <h2>{t("ADD_NEW_CATEGORY.TITLE")}</h2>
@@ -64,8 +64,8 @@ function AddNewCategory() {
         </div>
       </div>
 
-      <form className="category-form" onSubmit={handleSubmit}>
-        <div className="form-group category-group">
+      <form className={styles["category-form"]} onSubmit={handleSubmit}>
+        <div className={`${styles["form-group"]} ${styles["category-group"]}`}>
           <label htmlFor="language_id">
             {t("ADD_NEW_CATEGORY.LANGUAGE")} <span>*</span>
           </label>
@@ -84,7 +84,7 @@ function AddNewCategory() {
             ))}
           </select>
         </div>
-        <div className="input-wrap">
+        <div className={styles["input-wrap"]}>
           <label htmlFor="categoryName">
             {t("ADD_NEW_CATEGORY.CATEGORY_NAME")}
           </label>
@@ -100,18 +100,18 @@ function AddNewCategory() {
           <small>{t("ADD_NEW_CATEGORY.CATEGORY_HINT")}</small>
         </div>
 
-        {/* <div className="color-section">
+        {/* <div className={styles["color-section"]}>
           <h4>Selected Color Theme</h4>
 
-          <div className="color-options">
-            <button type="button" className="color-option active purple" />
-            <button type="button" className="color-option green" />
-            <button type="button" className="color-option orange" />
-            <button type="button" className="color-option pink" />
+          <div className={styles["color-options"]}>
+            <button type="button" className={`${styles["color-option"]} ${styles["active"]} ${styles["purple"]}`} />
+            <button type="button" className={`${styles["color-option"]} ${styles["green"]}`} />
+            <button type="button" className={`${styles["color-option"]} ${styles["orange"]}`} />
+            <button type="button" className={`${styles["color-option"]} ${styles["pink"]}`} />
           </div>
         </div> */}
 
-        <div className="form-actions">
+        <div className={styles["form-actions"]}>
           <Link
             type="button"
             className="main-quiz-button-cancel"
@@ -122,7 +122,7 @@ function AddNewCategory() {
 
           <button
             type="submit"
-            className="main-quiz-button save-btn"
+            className={`main-quiz-button ${styles["save-btn"]}`}
             disabled={
               !(
                 formData.category_name.trim().length >= 3 &&

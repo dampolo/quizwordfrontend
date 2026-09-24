@@ -1,4 +1,4 @@
-import "./edit-category.scss";
+import styles from "./edit-category.module.scss";
 import useVocabulary from "./../../../context/useVocabulary";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -98,12 +98,12 @@ function EditCategory() {
   }
 
   return (
-    <section className="add-category-card">
+    <section className={styles["add-category-card"]}>
       <BackButton
         to={`/my-quiz/all-categories/?language=${formData.language_id}`}
       />
-      <div className="form-header">
-        <div className="header-icon">
+      <div className={styles["form-header"]}>
+        <div className={styles["header-icon"]}>
           <svg
             _ngcontent-ng-c4017599241=""
             width="19"
@@ -126,8 +126,8 @@ function EditCategory() {
         </div>
       </div>
 
-      <form className="category-form" onSubmit={handleSubmit}>
-        <div className="form-group category-group">
+      <form className={styles["category-form"]} onSubmit={handleSubmit}>
+        <div className={`${styles["form-group"]} ${styles["category-group"]}`}>
           <label>
             {t("EDIT_CATEGORY.LANGUAGE")} <span>*</span>
           </label>
@@ -147,7 +147,7 @@ function EditCategory() {
           </select>
         </div>
 
-        <div className="input-wrap">
+        <div className={styles["input-wrap"]}>
           <label htmlFor="categoryName">
             {t("EDIT_CATEGORY.CATEGORY_NAME")}
           </label>
@@ -163,18 +163,18 @@ function EditCategory() {
           <small>{t("EDIT_CATEGORY.CATEGORY_HINT")}</small>
         </div>
 
-        {/* <div className="color-section">
+        {/* <div className={styles["color-section"]}>
           <h4>Selected Color Theme</h4>
 
-          <div className="color-options">
-            <button type="button" className="color-option active purple" />
-            <button type="button" className="color-option green" />
-            <button type="button" className="color-option orange" />
-            <button type="button" className="color-option pink" />
+          <div className={styles["color-options"]}>
+            <button type="button" className={`${styles["color-option"]} ${styles["active"]} ${styles["purple"]}`} />
+            <button type="button" className={`${styles["color-option"]} ${styles["green"]}`} />
+            <button type="button" className={`${styles["color-option"]} ${styles["orange"]}`} />
+            <button type="button" className={`${styles["color-option"]} ${styles["pink"]}`} />
           </div>
         </div> */}
 
-        <div className="form-actions">
+        <div className={styles["form-actions"]}>
           <button type="button" onClick={handleDelete}>
             <img src="/assets/trash.svg" alt="delete" />
           </button>
@@ -188,7 +188,7 @@ function EditCategory() {
 
           <button
             type="submit"
-            className="main-quiz-button save-btn"
+            className={`main-quiz-button ${styles["save-btn"]}`}
             disabled={
               !(
                 formData.category_name.trim().length >= 3 &&

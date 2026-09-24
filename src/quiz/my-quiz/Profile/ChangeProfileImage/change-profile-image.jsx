@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import "./change-profile-image.scss";
+import styles from "./change-profile-image.module.scss";
 import { useAuth } from "../../../../context/useAuth";
 import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
@@ -101,16 +101,16 @@ function ChangeProfileImage() {
   }
 
   return (
-    <section className="change-profile-image">
+    <section className={styles["change-profile-image"]}>
       <BackButton className="arrow-profile" to="/my-quiz/profile/" />
 
-      <div className="form-title">
-        <h1 className="form-title-name">Ändere deine Foto</h1>
+      <div className={styles["form-title"]}>
+        <h1 className={styles["form-title-name"]}>Ändere deine Foto</h1>
       </div>
 
-      <p className="description">Du kannst hier dein Foto hinzüfugen.</p>
+      <p className={styles["description"]}>Du kannst hier dein Foto hinzüfugen.</p>
       <form onSubmit={handleSubmit}>
-        <div className="input-container">
+        <div className={styles["input-container"]}>
           <label htmlFor="image">Foto</label>
           <img
             className="avatar"
@@ -124,23 +124,23 @@ function ChangeProfileImage() {
             alt="Vorschau des Profilbildes"
           />
 
-          <div className="main-quiz-button choose-btn">
+          <div className={`main-quiz-button ${styles["choose-btn"]}`}>
             <input
               id="image"
               name="image"
-              className="file-input"
+              className={styles["file-input"]}
               type="file"
               accept="image/png, image/jpeg, image/webp"
               onChange={handleImageChange}
             />
 
-            <label htmlFor="image" className="file-input-label">
+            <label htmlFor="image" className={styles["file-input-label"]}>
               Wählen
             </label>
           </div>
           {selectedImage && (
             <>
-              <span className="file-name">{selectedImage.name}</span>
+              <span className={styles["file-name"]}>{selectedImage.name}</span>
             </>
           )}
 
@@ -151,15 +151,15 @@ function ChangeProfileImage() {
           >
             <img width={24} height={24} src="/assets/trash.svg" alt="trash" />
           </button>
-          <div className="warn-txt warn-txt-hight">{formErrors.image}</div>
+          <div className={`warn-txt ${styles["warn-txt-hight"]}`}>{formErrors.image}</div>
         </div>
 
         {loading ? <PreLoader /> : <></>}
 
-        <div className="btn-container">
+        <div className={styles["btn-container"]}>
           <button
             type="submit"
-            className="main-quiz-button save-btn"
+            className={`main-quiz-button ${styles["save-btn"]}`}
             disabled={!selectedImage && !imageDeleted}
           >
             Foto speichern

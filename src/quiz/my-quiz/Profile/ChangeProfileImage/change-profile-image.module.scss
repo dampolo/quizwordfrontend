@@ -9,6 +9,7 @@
   overflow: hidden;
   max-width: 37.875rem;
   width: 100%;
+  height: fit-content;
   background-color: basic.$color-surface-container;
   border-radius: 1.25rem;
   padding: 2.5rem;
@@ -256,7 +257,7 @@
     .back-button {
       visibility: visible;
     }
-    .main-quiz-button {
+    :global(.main-quiz-button) {
       margin: 1rem 0 0 0;
       &.save-btn {
         max-width: fit-content;
@@ -265,7 +266,7 @@
   }
 }
 
-.main-quiz-button {
+:global(.main-quiz-button) {
   &.choose-btn {
     cursor: pointer;
     margin: 0;
@@ -313,7 +314,7 @@
       }
     }
   }
-  .main-content {
+  :global(.main-content) {
     .btn-container {
       gap: 0.875rem;
       .login-btn,

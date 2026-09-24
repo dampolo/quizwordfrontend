@@ -175,6 +175,7 @@ function FlipCardQuiz() {
               </button>
             </div>
             {/* Buttons ENDE */}
+            <span></span>
           </div>
         </div>
         {/* Front ENDE*/}
@@ -255,6 +256,7 @@ function FlipCardQuiz() {
               />
             </button>
           </div>
+          <span>{quiz?.[currentQuestion].translations[1].sentence}</span>
           {/* Buttons ENDE */}
         </div>
         {/* Back ENDE */}

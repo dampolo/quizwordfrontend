@@ -401,7 +401,7 @@ export default function EditWord() {
             <div className={styles["button-container"]}>
               {!moreTarget ? (
                 <button
-                  className={styles["button-container"]}
+                  className={styles["more-target-button"]}
                   type="button"
                   onClick={() => setMoreTarget((prev) => !prev)}
                 >

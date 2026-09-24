@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import "./change-password.scss";
+import styles from "./change-password.module.scss";
 import { useAuth } from "../../../../context/useAuth";
 import { toast } from "react-toastify";
 import BackButton from "../../../../components/BackButton/BackButton";
@@ -106,21 +106,21 @@ function ChangePassword() {
   }
 
   return (
-    <section className="change-password-customer">
+    <section className={styles["change-password-customer"]}>
       <BackButton className="arrow-profile" to="/my-quiz/profile/" />
 
-      <div className="form-title">
-        <h1 className="form-title-name">Passwort ändern</h1>
+      <div className={styles["form-title"]}>
+        <h1 className={styles["form-title-name"]}>Passwort ändern</h1>
       </div>
 
       <form onSubmit={submit}>
-        <div className="input-container">
+        <div className={styles["input-container"]}>
           <label htmlFor="old_password">Altes Passwort</label>
 
           <input
             name="old_password"
             id="old_password"
-            className="input-field"
+            className={styles["input-field"]}
             type={isPasswordOldVisible ? "text" : "password"}
             placeholder="Neues Passwort"
             value={formValues.old_password}
@@ -131,7 +131,7 @@ function ChangePassword() {
 
           <button
             type="button"
-            className="eye-button"
+            className={styles["eye-button"]}
             onClick={() => togglePasswordVisibilityOld((prev) => !prev)}
           >
             <img
@@ -145,7 +145,7 @@ function ChangePassword() {
             />
           </button>
 
-          <div className="input-icon">
+          <div className={styles["input-icon"]}>
             <img
               width={24}
               height={24}
@@ -158,13 +158,13 @@ function ChangePassword() {
           <div className="warn-txt">{formErrors.old_password}</div>
         </div>
 
-        <div className="input-container">
+        <div className={styles["input-container"]}>
           <label htmlFor="new_password">Neues Passwort</label>
 
           <input
             name="new_password"
             id="new_password"
-            className="input-field"
+            className={styles["input-field"]}
             type={isPasswordTopVisible ? "text" : "password"}
             placeholder="Neues Passwort"
             value={formValues.new_password}
@@ -175,7 +175,7 @@ function ChangePassword() {
 
           <button
             type="button"
-            className="eye-button"
+            className={styles["eye-button"]}
             onClick={() => togglePasswordVisibilityTop((prev) => !prev)}
           >
             <img
@@ -189,7 +189,7 @@ function ChangePassword() {
             />
           </button>
 
-          <div className="input-icon">
+          <div className={styles["input-icon"]}>
             <img
               width={24}
               height={24}
@@ -202,7 +202,7 @@ function ChangePassword() {
           <div className="warn-txt">{formErrors.new_password}</div>
         </div>
 
-        <div className="input-container">
+        <div className={styles["input-container"]}>
           <label htmlFor="repeated_new_password">
             Wiederhole neues Passwort
           </label>
@@ -210,7 +210,7 @@ function ChangePassword() {
           <input
             name="repeated_new_password"
             id="repeated_new_password"
-            className="input-field"
+            className={styles["input-field"]}
             type={isPasswordBottomVisible ? "text" : "password"}
             placeholder="Wiederhole neues Passwort"
             value={formValues.repeated_new_password}
@@ -221,7 +221,7 @@ function ChangePassword() {
 
           <button
             type="button"
-            className="eye-button"
+            className={styles["eye-button"]}
             onClick={() => togglePasswordVisibilityBottom((prev) => !prev)}
           >
             <img
@@ -237,7 +237,7 @@ function ChangePassword() {
             />
           </button>
 
-          <div className="input-icon">
+          <div className={styles["input-icon"]}>
             <img
               width={24}
               height={24}
@@ -252,7 +252,7 @@ function ChangePassword() {
 
         {loading ? <PreLoader /> : <></>}
 
-        <div className="btn-container">
+        <div className={styles["btn-container"]}>
           <button
             type="submit"
             className="main-quiz-button"

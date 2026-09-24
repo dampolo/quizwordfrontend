@@ -2,9 +2,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import "./change-email.scss";
+import styles from "./change-email.module.scss";
 import { useAuth } from "../../../../context/useAuth";
 import BackButton from "../../../../components/BackButton/BackButton";
+import PreLoader from "../../../../components/PreLoader/PreLoader";
 
 function ChangeEmail() {
   const initialValues = { email: "", password: "" };
@@ -74,23 +75,23 @@ function ChangeEmail() {
   };
 
   return (
-    <section className="change-email-customer">
+    <section className={styles["change-email-customer"]}>
       <BackButton className="arrow-profile" to="/my-quiz/profile/" />
 
-      <div className="form-title">
-        <h1 className="form-title-name">E-Mail-Adresse ändern</h1>
+      <div className={styles["form-title"]}>
+        <h1 className={styles["form-title-name"]}>E-Mail-Adresse ändern</h1>
       </div>
 
-      <p className="description">
+      <p className={styles["description"]}>
         Gib die neue E-Mail-Adresse ein, die du ab jetzt für die Anmeldung
         verwenden möchtest.
       </p>
 
       <form onSubmit={changeEmail}>
-        <div className="input-container">
+        <div className={styles["input-container"]}>
           <label htmlFor="new_email">Deine neue E-Mail-Adresse</label>
           <input
-            className="input-field"
+            className={styles["input-field"]}
             type="new_email"
             name="new_email"
             placeholder="beispielname@email.com"
@@ -99,7 +100,7 @@ function ChangeEmail() {
             onChange={handleChange}
           />
 
-          <div className="input-icon">
+          <div className={styles["input-icon"]}>
             <img
               width="24"
               height="24"
@@ -112,11 +113,11 @@ function ChangeEmail() {
           <div className="warn-txt">{formErrors.email}</div>
         </div>
 
-        <div className="input-container">
+        <div className={styles["input-container"]}>
           <label htmlFor="password">Passwort</label>
           <input
             autoComplete="current-password"
-            className="input-field"
+            className={styles["input-field"]}
             type={isPasswordVisible ? "text" : "password"}
             name="password"
             placeholder="Passwort"
@@ -126,7 +127,7 @@ function ChangeEmail() {
 
           <button
             type="button"
-            className="eye-button"
+            className={styles["eye-button"]}
             onClick={() => setIsPasswordVisible((prev) => !prev)}
           >
             <img
@@ -140,7 +141,7 @@ function ChangeEmail() {
             />
           </button>
 
-          <div className="input-icon">
+          <div className={styles["input-icon"]}>
             <img
               width={24}
               height={24}
@@ -150,14 +151,14 @@ function ChangeEmail() {
             />
           </div>
 
-          <div className="warn-txt warn-txt-hight">
+          <div className={`warn-txt ${styles["warn-txt-hight"]}`}>
             {formErrors.password || formErrors.message}
           </div>
         </div>
 
         {loading ? <PreLoader /> : <></>}
 
-        <div className="btn-container">
+        <div className={styles["btn-container"]}>
           <button className="main-quiz-button" type="submit" disabled={loading}>
             Ändern
           </button>

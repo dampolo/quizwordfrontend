@@ -9,6 +9,7 @@
   overflow: hidden;
   max-width: 37.875rem;
   width: 100%;
+  height: fit-content;
   background-color: basic.$color-surface-container;
   border-radius: 1.25rem;
   padding: 2.5rem;
@@ -282,7 +283,7 @@
       }
     }
   }
-  .main-content {
+  :global(.main-content) {
     .btn-container {
       gap: 0.875rem;
       .login-btn,

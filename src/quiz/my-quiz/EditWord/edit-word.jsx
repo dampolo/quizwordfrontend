@@ -10,7 +10,10 @@ import {
 import useDialog from "../../../context/DialogContext/useDialog";
 import BackButton from "../../../components/BackButton/BackButton";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 import PreLoader from "../../../components/PreLoader/PreLoader";
+
+import styles from "./../AddNewWord/add-new-word.module.scss";
 
 export default function EditWord() {
   const {
@@ -36,6 +39,8 @@ export default function EditWord() {
 
   const [moreSource, setMoreSource] = useState(false);
   const [moreTarget, setMoreTarget] = useState(false);
+
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     translations: [
@@ -193,25 +198,27 @@ export default function EditWord() {
 
   if (loading) {
     return (
-      <div className="show-container ">
+      <div className={styles["show-container"]}>
         <PreLoader />
       </div>
     );
   }
 
   return (
-    <main className="add-word-page">
+    <section className={styles["add-word-page"]}>
       <BackButton to={`/my-quiz/all-words?language=${languageId}`} />
-      <header className="page-header">
+      <header className={styles["page-header"]}>
         <div>
           <h1>Edit Dein Word</h1>
           <p>You can edit and adjust your word</p>
         </div>
       </header>
 
-      <form className="word-card" onSubmit={handleSubmit}>
+      <form className={styles["word-card"]} onSubmit={handleSubmit}>
         {categories.length > 0 && (
-          <div className="form-group category-group">
+          <div
+            className={`${styles["form-group"]} ${styles["category-group"]}`}
+          >
             <label htmlFor="category">
               Kategorie <span>*</span>
             </label>
@@ -220,7 +227,6 @@ export default function EditWord() {
               name="category_id"
               value={formData.translations[1].category_id}
               onChange={(e) => handleChange(1, e)}
-              required
             >
               <option value="">Wähle Kategorie</option>
               {categories.map((category) => (
@@ -233,18 +239,20 @@ export default function EditWord() {
         )}
 
         <hr />
-        <section className="word-grid">
+        <section className={styles["word-grid"]}>
           {/* Source Word */}
-          <div className={`word-parent ${moreSource ? "add-more-option" : ""}`}>
+          <div
+            className={`${styles["word-parent"]} ${moreSource ? styles["add-more-option"] : ""}`}
+          >
             <div
-              className={`word-panel ${moreSource ? "add-more-option" : ""}`}
+              className={`${styles["word-panel"]} ${moreSource ? styles["add-more-option"] : ""}`}
             >
-              <div className="panel-title">
+              <div className={styles["panel-title"]}>
                 <span></span>
                 <strong>SOURCE WORD</strong>
               </div>
-              <div className="source_word-contianer">
-                <div className="source_word-input">
+              <div className={styles["source_word-contianer"]}>
+                <div className={styles["source_word-input"]}>
                   <label htmlFor="source_word">
                     Term <span>*</span>
                   </label>
@@ -258,7 +266,7 @@ export default function EditWord() {
                   />
                 </div>
 
-                <div className="source_word-lang">
+                <div className={styles["source_word-lang"]}>
                   <label htmlFor="language">Lang:</label>
 
                   <select value={nativeLanguage?.id || ""} disabled>
@@ -275,7 +283,7 @@ export default function EditWord() {
 
               <label
                 htmlFor="source_tip"
-                className={`${moreSource ? "" : "source_tip"}`}
+                className={moreSource ? "" : styles["source_tip"]}
               >
                 Tip (Optional)
               </label>
@@ -297,10 +305,10 @@ export default function EditWord() {
                 placeholder="Her resilience after the setback was admirable."
               />
             </div>
-            <div className="button-container">
+            <div className={styles["button-container"]}>
               {!moreSource ? (
                 <button
-                  className="more-source-button"
+                  className={styles["more-source-button"]}
                   type="button"
                   onClick={() => setMoreSource((prev) => !prev)}
                 >
@@ -308,7 +316,7 @@ export default function EditWord() {
                 </button>
               ) : (
                 <button
-                  className="more-source-button"
+                  className={styles["more-source-button"]}
                   type="button"
                   onClick={() => setMoreSource((prev) => !prev)}
                 >
@@ -318,16 +326,22 @@ export default function EditWord() {
             </div>
           </div>
           {/* Target Word */}
-          <div className={`word-parent ${moreTarget ? "add-more-option" : ""}`}>
+          <div
+            className={`${styles["word-parent"]} ${
+              moreTarget ? styles["add-more-option"] : ""
+            }`}
+          >
             <div
-              className={`word-panel green ${moreTarget ? "add-more-option" : ""}`}
+              className={`${styles["word-panel"]} ${styles.green} ${
+                moreTarget ? styles["add-more-option"] : ""
+              }`}
             >
-              <div className="panel-title">
+              <div className={styles["panel-title"]}>
                 <span></span>
                 <strong>TARGET WORD</strong>
               </div>
-              <div className="target_word-contianer">
-                <div className="target_word-input">
+              <div className={styles["target_word-contianer"]}>
+                <div className={styles["target_word-input"]}>
                   <label htmlFor="target_word">
                     Translation <span>*</span>
                   </label>
@@ -341,7 +355,7 @@ export default function EditWord() {
                     required
                   />
                 </div>
-                <div className="target_word-lang">
+                <div className={styles["target_word-lang"]}>
                   <label htmlFor="language">Lang:</label>
 
                   <select
@@ -362,7 +376,7 @@ export default function EditWord() {
 
               <label
                 htmlFor="target_tip"
-                className={`${moreTarget ? "" : "target_tip"}`}
+                className={moreTarget ? "" : styles["target_tip"]}
               >
                 Tip (Optional)
               </label>
@@ -385,10 +399,10 @@ export default function EditWord() {
                 placeholder="Su resiliencia tras el revés fue admirable."
               />
             </div>
-            <div className="button-container">
+            <div className={styles["button-container"]}>
               {!moreTarget ? (
                 <button
-                  className="more-target-button"
+                  className={styles["button-container"]}
                   type="button"
                   onClick={() => setMoreTarget((prev) => !prev)}
                 >
@@ -396,7 +410,7 @@ export default function EditWord() {
                 </button>
               ) : (
                 <button
-                  className="more-target-button"
+                  className={styles["more-target-button"]}
                   type="button"
                   onClick={() => setMoreTarget((prev) => !prev)}
                 >
@@ -407,7 +421,7 @@ export default function EditWord() {
           </div>
         </section>
 
-        <div className="pro-tip">
+        <div className={styles["pro-tip"]}>
           <span>💡</span>
           <div>
             <strong>Pro Tip</strong>
@@ -420,26 +434,29 @@ export default function EditWord() {
 
         <hr />
 
-        <div className="action-buttons">
+        <div className={styles["action-buttons"]}>
           <button
             type="button"
             onClick={handleDelete}
-            className="delete-button"
+            className={styles["delete-button"]}
           >
             <img width={24} height={24} src="/assets/trash.svg" alt="trash" />
           </button>
 
           <Link
             to={`/my-quiz/all-words?language=${formData.translations[1].language}`}
-            className="main-quiz-button-cancel"
+            className={`${styles["main-quiz-button-cancel"]} ${styles["cancel-btn"]}`}
           >
-            Cancel
+            {t("BUTTONS.CANCEL")}
           </Link>
-          <button type="submit" className="save-btn">
-            Update Word
+          <button
+            type="submit"
+            className={`${styles["main-quiz-button"]} ${styles["save-btn"]}`}
+          >
+            {t("BUTTONS.CHANGE")}
           </button>
         </div>
       </form>
-    </main>
+    </section>
   );
 }

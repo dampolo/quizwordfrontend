@@ -1,4 +1,3 @@
-import "./add-new-word.scss";
 import useVocabulary from "../../../context/useVocabulary";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -194,7 +193,6 @@ export default function AddNewWord() {
       </header>
 
       <form className={styles["word-card"]} onSubmit={handleSubmit}>
-
         {categories.length > 0 && (
           <div
             className={`${styles["form-group"]} ${styles["category-group"]}`}
@@ -332,6 +330,7 @@ export default function AddNewWord() {
                     Begriff <span>*</span>
                   </label>
                   <input
+                    type="text"
                     name="word"
                     value={formData.translations[1].word || ""}
                     onChange={(e) => handleChange(1, e)}

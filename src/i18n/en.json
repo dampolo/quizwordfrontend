@@ -135,7 +135,8 @@
   },
   "BUTTONS": {
     "CANCEL": "Cancel",
-    "SAVE": "Save"
+    "SAVE": "Save",
+    "CHANGE": "Change"
   },
   "QUIZ_RESULTS": {
     "WORD": "WORD",

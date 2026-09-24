@@ -1,5 +1,5 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import "./flip-card-quiz.scss";
+import styles from "./flip-card-quiz.module.scss";
 import { useEffect, useState } from "react";
 import useQuiz from "../../../../context/useQuiz";
 
@@ -95,34 +95,34 @@ function FlipCardQuiz() {
   }
 
   return (
-    <section className="play-quiz">
+    <section className={`play-quiz ${styles["play-quiz"]}`}>
       {/* Front */}
       <div
-        className={`flip-card-inner ${isFlipped ? "flipped" : ""}`}
+        className={`${styles["flip-card-inner"]} ${isFlipped ? styles["flipped"] : ""}`}
         onTransitionEnd={handleTransitionEnd}
       >
-        <div className="flip-card-front">
-          <span className="languages">
+        <div className={styles["flip-card-front"]}>
+          <span className={styles["languages"]}>
             {quiz?.[currentQuestion].translations[0].language_name} →{" "}
             {quiz?.[currentQuestion].translations[1].language_name}
           </span>
 
-          <button type="button" className="quiz-card__cancel" onClick={cancel}>
+          <button type="button" className={styles["quiz-card__cancel"]} onClick={cancel}>
             <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
           </button>
 
-          <div className="quiz-card__header">
-            <h1 className="quiz-card__title-learn flip-title">
+          <div className={styles["quiz-card__header"]}>
+            <h1 className={`${styles["quiz-card__title-learn"]} ${styles["flip-title"]}`}>
               {quiz?.[currentQuestion].translations[0].word}
             </h1>
           </div>
 
-          <div className="quiz-card__form">
+          <div className={styles["quiz-card__form"]}>
             {/* Buttons */}
-            <div className="buttons-flip">
+            <div className={styles["buttons-flip"]}>
               <button
                 type="button"
-                className="flip-card-button"
+                className={styles["flip-card-button"]}
                 onClick={() => adjustCurrentQuestion("previous")}
               >
                 <svg
@@ -143,7 +143,7 @@ function FlipCardQuiz() {
 
               <button
                 type="button"
-                className="flip-card-button"
+                className={styles["flip-card-button"]}
                 onClick={() => adjustCurrentQuestion("next")}
               >
                 <svg
@@ -163,7 +163,7 @@ function FlipCardQuiz() {
               </button>
               <button
                 type="button"
-                className="turn-around"
+                className={styles["turn-around"]}
                 onClick={toggleFlipped}
               >
                 <img
@@ -180,29 +180,29 @@ function FlipCardQuiz() {
         {/* Front ENDE*/}
 
         {/* Back */}
-        <div className="flip-card-back">
-          <span className="languages">
+        <div className={styles["flip-card-back"]}>
+          <span className={styles["languages"]}>
             {quiz?.[currentQuestion].translations[1].language_name}
           </span>
 
-          <button type="button" className="quiz-card__cancel" onClick={cancel}>
+          <button type="button" className={styles["quiz-card__cancel"]} onClick={cancel}>
             <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
           </button>
 
           {/* translation */}
-          <div className="quiz-card__form">
-            <span className="quiz-card__line"></span>
+          <div className={styles["quiz-card__form"]}>
+            <span className={styles["quiz-card__line"]}></span>
 
-            <h1 className="quiz-card__answer-wrapper-learn flip-title">
+            <h1 className={`${styles["quiz-card__answer-wrapper-learn"]} ${styles["flip-title"]}`}>
               {quiz?.[currentQuestion].translations[1].word}
             </h1>
           </div>
 
           {/* Buttons */}
-          <div className="buttons-flip">
+          <div className={styles["buttons-flip"]}>
             <button
               type="button"
-              className="flip-card-button"
+              className={styles["flip-card-button"]}
               onClick={() => adjustCurrentQuestion("previous")}
             >
               <svg
@@ -223,7 +223,7 @@ function FlipCardQuiz() {
 
             <button
               type="button"
-              className="flip-card-button"
+              className={styles["flip-card-button"]}
               onClick={() => adjustCurrentQuestion("next")}
             >
               <svg
@@ -244,7 +244,7 @@ function FlipCardQuiz() {
 
             <button
               type="button"
-              className="turn-around"
+              className={styles["turn-around"]}
               onClick={toggleFlipped}
             >
               <img

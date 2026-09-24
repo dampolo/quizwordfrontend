@@ -2,7 +2,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useQuiz from "../../../../context/useQuiz";
 import { Link } from "react-router-dom";
-import "./play-quiz.scss";
+import styles from "./play-quiz.module.scss";
 
 function PlayQuiz() {
   const { getQuizWords, postQuizAnswers } = useQuiz();
@@ -89,51 +89,51 @@ function PlayQuiz() {
 
   return (
     <section className="play-quiz">
-      <div className="quiz-card">
+      <div className={styles["quiz-card"]}>
         <button type="button" onClick={cancel}
-          className="quiz-card__cancel"
+          className={styles["quiz-card__cancel"]}
           to={`/my-quiz/${id}/all-quiz-words`}
         >
           <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
         </button>
-        <div className="quiz-card__header">
-          <h1 className="quiz-card__title">
+        <div className={styles["quiz-card__header"]}>
+          <h1 className={styles["quiz-card__title"]}>
             {quiz?.[currentQuestion].translations[0].word}
           </h1>
         </div>
 
-        <p className="quiz-card__subtitle">Übersetzte das Word:</p>
+        <p className={styles["quiz-card__subtitle"]}>Übersetzte das Word:</p>
 
-        <div className="hint-container">
-          <div className={`hide-hint ${hint ? "show-hint" : ""}`}>
+        <div className={styles["hint-container"]}>
+          <div className={`${styles["hide-hint"]} ${hint ? styles["show-hint"] : ""}`}>
             {quiz?.[currentQuestion].translations[1].tip === "" ? (
-              <p className="hint-text">Du hast kein Tipp hinterlegt.</p>
+              <p className={styles["hint-text"]}>Du hast kein Tipp hinterlegt.</p>
             ) : (
-              <p className="hint-text">
+              <p className={styles["hint-text"]}>
                 {quiz?.[currentQuestion].translations[1].tip}
               </p>
             )}
           </div>
         </div>
 
-        <form className="quiz-card__form">
-          <label htmlFor="translation" className="quiz-card__label">
+        <form className={styles["quiz-card__form"]}>
+          <label htmlFor="translation" className={styles["quiz-card__label"]}>
             Your Translation
           </label>
 
-          <div className="quiz-card__input-wrapper">
+          <div className={styles["quiz-card__input-wrapper"]}>
             <input
               name="answer"
               value={formData.answer}
               onChange={handleAnswer}
               type="text"
               placeholder="Type your answer here..."
-              className="quiz-card__input"
+              className={styles["quiz-card__input"]}
               autoComplete="off"
             />
             <button
               type="button"
-              className="quiz-card__help"
+              className={styles["quiz-card__help"]}
               aria-label="Help"
               onClick={() => setHint((prev) => !prev)}
               title="Klick um hinweis zu sehen"
@@ -143,7 +143,7 @@ function PlayQuiz() {
           </div>
           <button
             type="button"
-            className="main-quiz-button play-button"
+            className={`main-quiz-button ${styles["play-button"]}`}
             onClick={adjustCurrentQuestion}
             disabled={formData.answer.length <= 2}
           >

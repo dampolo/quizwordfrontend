@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./all-quizzes.scss";
+import styles from "./all-quizzes.module.scss";
 import { Link, useSearchParams } from "react-router-dom";
 import useQuiz from "../../../../context/useQuiz";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
@@ -58,8 +58,8 @@ function Quizzes() {
   }
 
   return (
-    <section className="vocab-page">
-      <header className="topbar">
+    <section className={styles["vocab-page"]}>
+      <header className={styles["topbar"]}>
         <div>
           <h1>Aktive Quizze</h1>
           <p>
@@ -70,21 +70,21 @@ function Quizzes() {
         </div>
 
         {/* <Link
-          className="main-quiz-button add-new-category-button"
+          className={`main-quiz-button ${styles["add-new-category-button"]}`}
           to="/my-quiz/add-new-quiz"
         >
           + Add New Quiz
         </Link> */}
       </header>
 
-      <ul className="languages-list">
+      <ul className={styles["languages-list"]}>
         <li
           className={
-            active === null ? "language-single active" : "language-single"
+            `${styles["language-single"]} ${active === null ? styles["active"] : ""}`
           }
         >
           <button
-            className="language-button"
+            className={styles["language-button"]}
             onClick={() => selectLanguage(null)}
           >
             Alle
@@ -95,11 +95,11 @@ function Quizzes() {
           <li
             key={lang.id}
             className={
-              active === lang.id ? "language-single active" : "language-single"
+              `${styles["language-single"]} ${active === lang.id ? styles["active"] : ""}`
             }
           >
             <button
-              className="language-button"
+              className={styles["language-button"]}
               onClick={() => selectLanguage(lang.id)}
             >
               {lang.language_name}
@@ -109,20 +109,20 @@ function Quizzes() {
       </ul>
 
       {/* Quiz */}
-      <div className="category">
+      <div className={styles["category"]}>
         {!quizzes ? (
           <div className="show-container">
             <PreLoader />
           </div>
         ) : quizzes.length === 0 ? (
-          <p className="no-quiz">Du hast hier kein Quiz erstellt.</p>
+          <p className={styles["no-quiz"]}>Du hast hier kein Quiz erstellt.</p>
         ) : (
           quizzes.map((quiz) => (
-            <article className="vocab-card" key={quiz.quiz_id}>
+            <article className={styles["vocab-card"]} key={quiz.quiz_id}>
               <h3>{quiz.quiz_name}</h3>
               <button
                 type="button"
-                className="edit"
+                className={styles["edit"]}
                 onClick={() => {
                   setSelectedQuiz(quiz);
                   openDialog();
@@ -131,9 +131,9 @@ function Quizzes() {
                 <img src="/assets/edit.svg" alt="edit" />
               </button>
 
-              <div className="action-button">
+              <div className={styles["action-button"]}>
                 <Link
-                  className="action-button__icon"
+                  className={styles["action-button__icon"]}
                   to={`/my-quiz/${quiz.quiz_id}/learn-quiz?language=${quiz?.target_language}&redirect=true`}
                 >
                   <img
@@ -144,7 +144,7 @@ function Quizzes() {
                   />
                 </Link>
                 <Link
-                  className="action-button__icon"
+                  className={styles["action-button__icon"]}
                   to={`/my-quiz/${quiz.quiz_id}/play-quiz?language=${quiz?.target_language}&redirect=true`}
                 >
                   <img
@@ -156,7 +156,7 @@ function Quizzes() {
                 </Link>
 
                 <Link
-                  className="action-button__icon"
+                  className={styles["action-button__icon"]}
                   to={`/my-quiz/${quiz.quiz_id}/all-quiz-words?language=${quiz?.target_language}`}
                 >
                   <img
@@ -169,7 +169,7 @@ function Quizzes() {
 
                 {/* Flip Card */}
                 <Link
-                  className="action-button__icon"
+                  className={styles["action-button__icon"]}
                   to={`/my-quiz/${quiz.quiz_id}/flip-card-quiz?language=${quiz?.target_language}&redirect=true`}
                 >
                   <img
@@ -183,16 +183,16 @@ function Quizzes() {
               
               </div>
 
-              <div className="vocab-card__footer">
+              <div className={styles["vocab-card__footer"]}>
                 <Link
                   to={`/my-quiz/${quiz.quiz_id}/all-quiz-words?language=${quiz?.target_language}`}
-                  className="vocab-card__meta"
+                  className={styles["vocab-card__meta"]}
                 >
                   <span>▦</span>
                   <strong>{quiz.concepts_count} Words</strong>
                 </Link>
 
-                <div className="vocab-card__updated">
+                <div className={styles["vocab-card__updated"]}>
                   <span>Erstellt:</span>
                   <strong>
                     {new Date(quiz.created_at).toLocaleDateString("de-DE", {
@@ -209,7 +209,7 @@ function Quizzes() {
 
         {/* Quiz END */}
 
-        {/* <Link className="add-card" to="/my-quiz/add-new-quiz">
+        {/* <Link className={styles["add-card"]} to="/my-quiz/add-new-quiz">
           <span>⊕</span>
           <strong>Create Custom Quiz</strong>
           <small>

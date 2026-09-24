@@ -1,4 +1,4 @@
-import "./../../AddNewCategory/add-new-category.scss";
+import styles from "./add-new-quiz.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useQuiz from "../../../../context/useQuiz";
@@ -36,10 +36,10 @@ function AddNewQuiz() {
   }
 
   return (
-    <div className="add-category-card">
+    <div className={styles["add-category-card"]}>
       <BackButton to="/my-quiz/all-quizzes/"/>
-      <div className="form-header">
-        <div className="header-icon">✚</div>
+      <div className={styles["form-header"]}>
+        <div className={styles["header-icon"]}>✚</div>
 
         <div>
           <h2>Add New Quiz</h2>
@@ -47,10 +47,10 @@ function AddNewQuiz() {
         </div>
       </div>
 
-      <form className="category-form" onSubmit={handleSubmit}>
+      <form className={styles["category-form"]} onSubmit={handleSubmit}>
         <label htmlFor="quiz_name">Category Name</label>
 
-        <div className="input-wrap">
+        <div className={styles["input-wrap"]}>
           <input
             id="quiz_name"
             name="quiz_name"
@@ -60,23 +60,23 @@ function AddNewQuiz() {
             placeholder="e.g., Business Travel"
             autoComplete="off"
           />
-          <span className="input-icon">⌘</span>
+          <span className={styles["input-icon"]}>⌘</span>
         </div>
 
         <small>Short, descriptive names work best for navigation.</small>
 
-        <div className="color-section">
+        <div className={styles["color-section"]}>
           <h4>Selected Color Theme</h4>
 
-          <div className="color-options">
-            <button type="button" className="color-option active purple" />
-            <button type="button" className="color-option green" />
-            <button type="button" className="color-option orange" />
-            <button type="button" className="color-option pink" />
+          <div className={styles["color-options"]}>
+            <button type="button" className={`${styles["color-option"]} ${styles["active"]} ${styles["purple"]}`} />
+            <button type="button" className={`${styles["color-option"]} ${styles["green"]}`} />
+            <button type="button" className={`${styles["color-option"]} ${styles["orange"]}`} />
+            <button type="button" className={`${styles["color-option"]} ${styles["pink"]}`} />
           </div>
         </div>
 
-        <div className="form-actions">
+        <div className={styles["form-actions"]}>
           <Link
             type="button"
             className="main-quiz-button-cancel"
@@ -87,7 +87,7 @@ function AddNewQuiz() {
 
           <button
             type="submit"
-            className="main-quiz-button save-btn"
+            className={`main-quiz-button ${styles["save-btn"]}`}
             disabled={formData.quiz_name.trim().length < 3}
           >
             <img

@@ -197,3 +197,25 @@ $bg: #f7f8fd;
     width: 100%;
   }
 }
+
+.languages-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  .language-single {
+    background: #eef5ff;
+    height: fit-content;
+    border-radius: basic.$border-radius;
+    &.active {
+      background: #bed2ff;
+    }
+    &:hover {
+      background: #bed2ff;
+    }
+    .language-button {
+      padding: 0.5rem 1rem;
+      width: 100%;
+    }
+  }
+}
+

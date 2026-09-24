@@ -2,7 +2,7 @@ import useQuiz from "../../../../context/useQuiz";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import "./all-quiz-words.scss";
+import styles from "./all-quiz-words.module.scss";
 import useDialog from "../../../../context/DialogContext/useDialog";
 import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
@@ -83,12 +83,12 @@ function AllQuizWords() {
   }
 
   return (
-    <div className="vocabulary">
+    <div className={styles["vocabulary"]}>
       <BackButton
         to={`/my-quiz/all-quizzes?language=${quiz?.target_language}`}
       />
 
-      <div className="vocabulary__header">
+      <div className={styles["vocabulary__header"]}>
         <div>
           <h1>Quiz: {quiz?.quiz_name}</h1>
           <p>
@@ -97,22 +97,22 @@ function AllQuizWords() {
           </p>
         </div>
 
-        <div className="action-button">
+        <div className={styles["action-button"]}>
           <Link
-            className="main-quiz-button all-quiz-add-btn"
+            className={`main-quiz-button ${styles["all-quiz-add-btn"]}`}
             to={`/my-quiz/${id}/learn-quiz?language=${quiz?.target_language}`}
           >
             Learn
           </Link>
 
           <Link
-            className="main-quiz-button all-quiz-add-btn"
+            className={`main-quiz-button ${styles["all-quiz-add-btn"]}`}
             to={`/my-quiz/${id}/play-quiz?language=${quiz?.target_language}`}
           >
             Spiel
           </Link>
           <Link
-            className="main-quiz-button all-quiz-add-btn"
+            className={`main-quiz-button ${styles["all-quiz-add-btn"]}`}
             to={`/my-quiz/${id}/flip-card-quiz?language=${quiz?.target_language}`}
           >
             Karteikarten
@@ -120,34 +120,34 @@ function AllQuizWords() {
         </div>
       </div>
 
-      <div className="word-list-attempt">
-        <div className="list-head-attempt">
-          <div className="rank">Rang</div>
-          <div className="word">Wort & Übersetzung</div>
-          <div className="category">Kategorie</div>
-          <div className="streak">Serie</div>
-          <div className="actions">Aktionen</div>
+      <div className={styles["word-list-attempt"]}>
+        <div className={styles["list-head-attempt"]}>
+          <div className={styles["rank"]}>Rang</div>
+          <div className={styles["word"]}>Wort & Übersetzung</div>
+          <div className={styles["category"]}>Kategorie</div>
+          <div className={styles["streak"]}>Serie</div>
+          <div className={styles["actions"]}>Aktionen</div>
         </div>
 
         {quiz?.concepts.map((concept) => (
-          <div className="list-row-attempt" key={concept.id}>
-            <div className="rank">#{concept.translations[1].rank}</div>
+          <div className={styles["list-row-attempt"]} key={concept.id}>
+            <div className={styles["rank"]}>#{concept.translations[1].rank}</div>
 
-            <div className="word">
+            <div className={styles["word"]}>
               <h3>{concept.translations[0].word}</h3>
               <span>»</span>
               <p>{concept.translations[1].word}</p>
             </div>
 
-            <div className="category">
+            <div className={styles["category"]}>
               <span
-                className={`badge ${concept.translations[1].category_name}`}
+                className={`${styles["badge"]} ${styles[concept.translations[1].category_name] || ""}`}
               >
                 {concept.translations[1].category_name}
               </span>
             </div>
 
-            <div className="streak">
+            <div className={styles["streak"]}>
               🔥
               <strong>{concept.translations[1].streak}</strong>
               <span>Days</span>
@@ -155,7 +155,7 @@ function AllQuizWords() {
 
             <Link
               to={`/my-quiz/${concept.id}/edit-word?target-word=${concept.translations[1].id}&language=${concept.translations[1].language}`}
-              className="actions"
+              className={styles["actions"]}
             >
               ✏️
             </Link>
@@ -164,8 +164,8 @@ function AllQuizWords() {
       </div>
 
       {/* ATTEMPTS */}
-      <div className="attempt-list">
-        <div className="list-head-score">
+      <div className={styles["attempt-list"]}>
+        <div className={styles["list-head-score"]}>
           <div>Punktzahl</div>
           <div>Richtung</div>
           <div>Datum</div>
@@ -176,10 +176,10 @@ function AllQuizWords() {
           <p>Du hast bis jetzt keine Quize gemacht.</p>
         ) : (
           attempts.map((attempt) => (
-            <div className="list-row-score" key={attempt.id}>
-              <div className="rank">#{attempt.score}</div>
+            <div className={styles["list-row-score"]} key={attempt.id}>
+              <div className={styles["rank"]}>#{attempt.score}</div>
 
-              <div className="word">
+              <div className={styles["word"]}>
                 <span>{attempt.direction}</span>
               </div>
 
@@ -193,7 +193,7 @@ function AllQuizWords() {
               </div>
               <button
                 onClick={() => handleAttemptDetails(attempt.id)}
-                className="actions"
+                className={styles["actions"]}
               >
                 🔍
               </button>
@@ -204,24 +204,24 @@ function AllQuizWords() {
 
       {/* ATTEMPTS ENDE */}
 
-      <div className="cards">
-        <div className="card goal">
+      <div className={styles["cards"]}>
+        <div className={`${styles["card"]} goal`}>
           <h3>Today's Goal</h3>
           <p>Review 20 new words to keep your streak alive.</p>
 
-          <div className="progress">
-            <div className="progress-fill"></div>
+          <div className={styles["progress"]}>
+            <div className={styles["progress-fill"]}></div>
           </div>
 
           <small>12 / 20 Words • 60%</small>
         </div>
 
-        <div className="card mastery">
+        <div className={`${styles["card"]} ${styles["mastery"]}`}>
           <h3>Mastery Level</h3>
           <p>You've reached B2 fluency level in Vocabulary.</p>
         </div>
 
-        <div className="card review">
+        <div className={`${styles["card"]} ${styles["review"]}`}>
           <h3>Flashcard Review</h3>
           <p>Ready to test your memory on recent additions?</p>
 
@@ -231,12 +231,12 @@ function AllQuizWords() {
 
       {/* DEATAILS */}
       <section
-        className={`vocabulary-details ${
-          vocabularyDetails ? "show-vocabulary-details" : ""
+        className={`${styles["vocabulary-details"]} ${
+          vocabularyDetails ? styles["show-vocabulary-details"] : ""
         }`}
       >
-        <div className="vocabulary-card">
-          <div className="card-header">
+        <div className={styles["vocabulary-card"]}>
+          <div className={styles["card-header"]}>
             <h3>Vocabulary details</h3>
             {selectedAttempt && (
               <span>
@@ -249,10 +249,10 @@ function AllQuizWords() {
                 })}
               </span>
             )}
-            <span className="badge">{details.length} Words Total</span>
+            <span className={styles["badge"]}>{details.length} Words Total</span>
           </div>
 
-          <div className="table">
+          <div className={styles["table"]}>
             <button
               type="button"
               onClick={() => setVocabularyDetails(false)}
@@ -268,33 +268,33 @@ function AllQuizWords() {
               details.map((item) => (
                 <div
                   key={item.id}
-                  className={`table-row ${!item.is_correct ? "wrong" : ""}`}
+                  className={`${styles["table-row"]} ${!item.is_correct ? styles["wrong"] : ""}`}
                 >
-                  <div className="status">
+                  <div className={styles["status"]}>
                     <span
                       className={
-                        item.is_correct ? "icon success" : "icon error"
+                        `${styles["icon"]} ${item.is_correct ? styles["success"] : styles["error"]}`
                       }
                     >
                       {item.is_correct ? "✓" : "✕"}
                     </span>
                   </div>
 
-                  <div className="column">
-                    <span className="label">Wort</span>
+                  <div className={styles["column"]}>
+                    <span className={styles["label"]}>Wort</span>
                     <h4>{item.correct_answer}</h4>
                   </div>
 
-                  <div className="column">
-                    <span className="label">Antwort</span>
-                    <p className={!item.is_correct ? "incorrect" : ""}>
+                  <div className={styles["column"]}>
+                    <span className={styles["label"]}>Antwort</span>
+                    <p className={!item.is_correct ? styles["incorrect"] : ""}>
                       {item.user_answer}
                     </p>
                   </div>
 
-                  <div className="column">
-                    <span className="label">Richtig</span>
-                    <p className="correct">{item.correct_answer}</p>
+                  <div className={styles["column"]}>
+                    <span className={styles["label"]}>Richtig</span>
+                    <p className={styles["correct"]}>{item.correct_answer}</p>
                   </div>
                 </div>
               ))

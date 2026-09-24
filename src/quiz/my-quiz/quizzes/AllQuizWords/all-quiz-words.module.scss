@@ -1,7 +1,8 @@
 @use "./../../../../styles/basic.scss";
 @use "./../../AllWords/all-words.scss";
+@use "./../QuizResults/quiz-results.scss";
 
-// Manche styles sind in der all-quizzes.scss
+// Shared list and result styles are scoped through this module.
 
 .vocabulary-card {
   width: calc(100% - 2.5rem);
@@ -100,12 +101,14 @@
 
 .vocabulary__header {
   .action-button {
+    display: flex;
+    align-items: center;
     flex-wrap: wrap;
     justify-content: end;
     gap: 1rem;
     height: auto;
     flex: 1;
-    .main-quiz-button {
+    :global(.main-quiz-button) {
       &.all-quiz-add-btn {
         margin: 0;
       }

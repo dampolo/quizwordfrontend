@@ -132,14 +132,14 @@
 
     h4 {
       margin: 0;
-      font-size: 21px;
+      font-size: clamp(0.5rem, 0.1556rem + 3.5556vw, 3rem);
       color: #17233b;
       font-weight: 700;
     }
 
     p {
       margin: 0;
-      font-size: 16px;
+      font-size: clamp(0.5rem, 0.1556rem + 3.5556vw, 3rem);
       color: #1f2937;
       font-weight: 500;
     }
@@ -181,18 +181,9 @@
         font-size: 8px;
       }
 
-      h4 {
-        font-size: 1rem;
-      }
-
-      .answer,
-      .correct {
-        font-size: 1rem;
-      }
     }
   }
   .vocabulary-card {
-    margin: 1.25rem;
     background: #fff;
     border: 0.0625rem solid #dbe3ef;
     border-radius: 0.625rem;

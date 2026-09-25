@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import "./edit-profile.scss";
+import styles from "./edit-profile.module.scss";
 import { useAuth } from "../../../../context/useAuth";
 import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
@@ -25,18 +25,18 @@ function InfoRow({
   };
 
   return (
-    <div className="profile-user__single">
-      <div className="profile-user__row">
+    <div className={styles["profile-user__single"]}>
+      <div className={styles["profile-user__row"]}>
         {isReadOnly ? (
-          <span className="profile-user__label">{label}</span>
+          <span className={styles["profile-user__label"]}>{label}</span>
         ) : (
-          <label htmlFor={name} className="profile-user__label">
+          <label htmlFor={name} className={styles["profile-user__label"]}>
             {label}
           </label>
         )}
 
         {isReadOnly ? (
-          <span className="profile-user__value">{renderValue()}</span>
+          <span className={styles["profile-user__value"]}>{renderValue()}</span>
         ) : type === "checkbox" ? (
           <input
             id={name}
@@ -52,7 +52,7 @@ function InfoRow({
             name={name}
             value={value ?? ""}
             onChange={onChange}
-            className="profile-user__input input-select"
+            className={`profile-user__input ${styles["input-select"]}`}
           >
             <option value="Herr">Herr</option>
             <option value="Frau">Frau</option>
@@ -65,11 +65,11 @@ function InfoRow({
             type={type}
             value={value ?? ""}
             onChange={onChange}
-            className="profile-user__input input-field"
+            className={`profile-user__input ${styles["input-field"]}`}
           />
         )}
       </div>
-      {error && <p className="warn-txt warn-profile">{error}</p>}
+      {error && <p className={`warn-txt ${styles["warn-profile"]}`}>{error}</p>}
     </div>
   );
 }
@@ -153,10 +153,10 @@ function EditProfile() {
   }
 
   return (
-    <div className="profile-user">
-      <h1 className="title">Edit Profil</h1>
+    <div className={styles["profile-user"]}>
+      <h1 className={styles["title"]}>Edit Profil</h1>
 
-      <form className="profile-user__card" onSubmit={handleSubmit}>
+      <form className={styles["profile-user__card"]} onSubmit={handleSubmit}>
         <BackButton to="/my-quiz/profile/" />
         <InfoRow
           label="Customer Number:"
@@ -236,11 +236,11 @@ function EditProfile() {
           onChange={handleChange}
         />
 
-        <div className="profile-user__row">
-          <label className="profile-user__label">Description:</label>
+        <div className={styles["profile-user__row"]}>
+          <label className={styles["profile-user__label"]}>Description:</label>
 
           <textarea
-            className="profile-user__textarea"
+            className={styles["profile-user__textarea"]}
             name="description"
             value={form.description}
             onChange={handleChange}

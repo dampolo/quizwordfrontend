@@ -129,6 +129,7 @@
     line-height: 1;
     padding-inline: 0.3125rem;
     font-size: clamp(1.7rem, 0.1556rem + 3.5556vw, 3rem);
+    z-index: 1;
   }
 
   &__input {

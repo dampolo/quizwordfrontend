@@ -1,5 +1,5 @@
 import { useLocation, useParams, Link } from "react-router-dom";
-import "./quiz-results.scss";
+import styles from "./quiz-results.module.scss";
 import BackButton from "../../../../components/BackButton/BackButton";
 
 function QuizResults() {
@@ -9,57 +9,57 @@ function QuizResults() {
   const details = state?.results || [];
 
   return (
-    <section className="results">
+    <section className={styles["results"]}>
       <BackButton to={`/my-quiz/${id}/all-quiz-words/`} />
-      <div className="vocabulary-card">
-        <div className="card-header">
+      <div className={styles["vocabulary-card"]}>
+        <div className={styles["card-header"]}>
           <h3>Deine Ergebnise</h3>
-          <span className="badge">{details.length} Wörter</span>
+          <span className={styles["badge"]}>{details.length} Wörter</span>
         </div>
 
-        <div className="table">
+        <div className={styles["table"]}>
           {details.map((item) => (
             <div
               key={item.word_id}
-              className={`table-row ${!item.is_correct ? "wrong" : ""}`}
+              className={`${styles["table-row"]} ${!item.is_correct ? styles["wrong"] : ""}`}
             >
-              <div className="status">
+              <div className={styles["status"]}>
                 <span
-                  className={item.is_correct ? "icon success" : "icon error"}
+                  className={`${styles["icon"]} ${item.is_correct ? styles["success"] : styles["error"]}`}
                 >
                   {item.is_correct ? "✓" : "✕"}
                 </span>
               </div>
 
-              <div className="column">
-                <span className="label">Wort</span>
+              <div className={styles["column"]}>
+                <span className={styles["label"]}>Wort</span>
                 <h4>{item.source_word}</h4>
               </div>
 
-              <div className="column">
-                <span className="label">Antwort</span>
-                <p className={!item.is_correct ? "incorrect" : ""}>
+              <div className={styles["column"]}>
+                <span className={styles["label"]}>Antwort</span>
+                <p className={!item.is_correct ? styles["incorrect"] : ""}>
                   {item.user_answer}
                 </p>
               </div>
 
-              <div className="column">
-                <span className="label">Richtig</span>
-                <p className="correct">{item.correct_answer}</p>
+              <div className={styles["column"]}>
+                <span className={styles["label"]}>Richtig</span>
+                <p className={styles["correct"]}>{item.correct_answer}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
-      <div className="action-buttons">
+      <div className={styles["action-buttons"]}>
         <Link
-          className="main-quiz-button-cancel cancel-btn"
+          className={`${styles["main-quiz-button-cancel"]} ${styles["cancel-btn"]}`}
           to={`/my-quiz/${id}/all-quiz-words/`}
         >
           Zurück
         </Link>
         <Link
-          className="main-quiz-button add-btn"
+          className={`${styles["main-quiz-button"]} ${styles["save-btn"]}`}
           to={`/my-quiz/${id}/play-quiz`}
         >
           Wiederholen

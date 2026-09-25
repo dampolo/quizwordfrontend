@@ -8,7 +8,7 @@ import FormDialog from "../../../../components/FormDialog/FormDialog";
 import { toast } from "react-toastify";
 
 function Quizzes() {
-  const { getFiltredQuizzes, quizzes, getQuizzes, putQuiz } = useQuiz();
+  const { getFiltredQuizzes, quizzes, loading, getQuizzes, putQuiz } = useQuiz();
   const { userLanguages } = useVocabulary();
   const [searchParams, setSearchParams] = useSearchParams();
   const language = searchParams.get("language");
@@ -110,7 +110,7 @@ function Quizzes() {
 
       {/* Quiz */}
       <div className={styles["category"]}>
-        {!quizzes ? (
+        {loading ? (
           <div className="show-container">
             <PreLoader />
           </div>

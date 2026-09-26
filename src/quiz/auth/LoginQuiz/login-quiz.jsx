@@ -20,31 +20,27 @@ function LoginQuiz() {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  async function loginWithEmailAndPassword(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     const errors = validate(formValues);
     setFormErrors(errors);
 
-    if (Object.keys(errors).length > 0) {
-      return;
-    }
+    if (Object.keys(errors).length > 0) return;
 
+    await loginWithEmailAndPassword();
+  }
+
+  async function loginWithEmailAndPassword() {
     try {
-      const success = await login(formValues.email, formValues.password);
-
-      if (success) {
+      if (await login(formValues.email, formValues.password)) {
         navigate("/my-quiz/all-words");
       }
     } catch (err) {
-      const message =
-        err.response?.detail ||
-        "Login Fehler";
+      const message = err.response?.detail || "Login Fehler";
 
       toast.error(message);
-      setFormErrors({
-        message: message,
-      });
+      setFormErrors({ message });
     }
   }
 
@@ -87,7 +83,7 @@ function LoginQuiz() {
           </Link>
         </p>
 
-        <form onSubmit={loginWithEmailAndPassword}>
+        <form onSubmit={handleSubmit}>
           <div className="input-container">
             <label htmlFor="email">E-Mail-Adresse</label>
             <input

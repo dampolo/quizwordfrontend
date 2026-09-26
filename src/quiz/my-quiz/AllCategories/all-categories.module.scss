@@ -72,7 +72,7 @@ $bg: #f7f8fd;
       align-items: center;
       gap: 16px;
       padding: 18px;
-      background: #fff;
+      background: basic.$qw-fourth;
       border: 1px solid $border;
       border-radius: 12px;
 
@@ -118,7 +118,7 @@ $bg: #f7f8fd;
       padding: 22px;
       min-height: 150px;
       width: 300px;
-      background: #fff;
+      background: basic.$qw-fourth;
       border: 1px solid $border;
       border-radius: 12px;
 
@@ -145,7 +145,7 @@ $bg: #f7f8fd;
         margin-bottom: 14px;
         border-radius: 10px;
         background: #5438e8;
-        color: #fff;
+        color: basic.$qw-fourth;
       }
 
       .tag {
@@ -155,7 +155,7 @@ $bg: #f7f8fd;
         padding: 4px 9px;
         border-radius: 999px;
         background: #21d07a;
-        color: #fff;
+        color: basic.$qw-fourth;
         font-size: 10px;
         font-weight: 900;
       }
@@ -222,7 +222,7 @@ $bg: #f7f8fd;
 
     .activity,
     .streak {
-      background: #fff;
+      background: basic.$qw-fourth;
       border: 1px solid $border;
       border-radius: 12px;
     }
@@ -261,7 +261,7 @@ $bg: #f7f8fd;
           place-items: center;
           border-radius: 50%;
           background: #65e6a6;
-          color: #fff;
+          color: basic.$qw-fourth;
         }
 
         div {
@@ -283,7 +283,7 @@ $bg: #f7f8fd;
     .streak {
       padding: 26px;
       background: basic.$qw-primary;
-      color: #fff;
+      color: basic.$qw-fourth;
       box-shadow: 0 14px 28px rgba(basic.$qw-primary, 0.3);
 
       span {
@@ -305,7 +305,7 @@ $bg: #f7f8fd;
         height: 48px;
         border: 0;
         border-radius: 9px;
-        background: #fff;
+        background: basic.$qw-fourth;
         color: basic.$qw-primary;
         font-weight: 900;
       }

@@ -10,7 +10,7 @@
   max-width: 37.875rem;
   width: 100%;
   height: fit-content;
-  background-color: basic.$color-surface-container;
+  background-color: basic.$qw-fourth;
   border-radius: 1.25rem;
   padding: 2.5rem;
   margin: 0.625rem;
@@ -125,7 +125,7 @@
       }
     }
     .input-field {
-      background-color: basic.$color-surface-container;
+      background-color: basic.$qw-fourth;
       border: solid 0.0625rem basic.$qw-third;
       padding-left: 5.3125rem;
       padding-top: 1.125rem;
@@ -138,12 +138,12 @@
         border: solid 0.0625rem basic.$qw-third;
       }
       &:focus {
-        background-color: basic.$color-surface-container;
+        background-color: basic.$qw-fourth;
         border: solid 0.0625rem basic.$qw-primary;
         outline: basic.$qw-third;
       }
       &:-webkit-autofill {
-        box-shadow: 0 0 0px 62.5rem basic.$color-surface-container inset;
+        box-shadow: 0 0 0px 62.5rem basic.$qw-fourth inset;
       }
     }
 
@@ -161,11 +161,11 @@
       transition: all 175ms ease-in-out;
       &:hover {
         color: basic.$qw-primary;
-        background: basic.$color-surface-container;
+        background: basic.$qw-fourth;
       }
       &:focus {
         color: basic.$qw-primary;
-        background: basic.$color-surface-container;
+        background: basic.$qw-fourth;
         border: solid 0.0625rem basic.$qw-third;
         outline: basic.$qw-third;
       }

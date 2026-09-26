@@ -52,7 +52,7 @@ main {
         }
 
         .input-field {
-          background-color: basic.$color-surface-container;
+          background-color: basic.$qw-fourth;
           border: solid 0.0625rem basic.$qw-third;
           // padding-left: 5.3125rem;
           padding-top: 1.125rem;
@@ -65,12 +65,12 @@ main {
             border: solid 0.0625rem basic.$qw-third;
           }
           &:focus {
-            background-color: basic.$color-surface-container;
+            background-color: basic.$qw-fourth;
             border: solid 0.0625rem basic.$qw-primary;
             outline: basic.$qw-third;
           }
           &:-webkit-autofill {
-            box-shadow: 0 0 0px 62.5rem basic.$color-surface-container inset;
+            box-shadow: 0 0 0px 62.5rem basic.$qw-fourth inset;
           }
         }
       }
@@ -100,7 +100,7 @@ main {
           resize: unset;
           resize: vertical;
           &:focus {
-            background-color: basic.$color-surface-container;
+            background-color: basic.$qw-fourth;
             border: solid 0.0625rem basic.$qw-primary;
             outline: basic.$qw-third;
           }

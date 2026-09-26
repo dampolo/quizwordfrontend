@@ -6,7 +6,7 @@
 
 .navbar {
   width: 100%;
-  background: basic.$color-surface-container;
+  background: basic.$qw-fourth;
   border-bottom: 1px solid basic.$color-border;
   padding: 20px 0;
   &__container {
@@ -98,7 +98,7 @@
     padding: 16px 32px;
     border-radius: 16px;
     background: basic.$qw-primary;
-    color: white;
+    color: basic.$qw-fourth;
     text-decoration: none;
     font-size: 1.125rem;
     font-weight: 700;

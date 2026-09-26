@@ -85,7 +85,7 @@
 .word-list {
   display: flex;
   flex-direction: column;
-  background: white;
+  background: basic.$qw-fourth;
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid #ececec;
@@ -95,14 +95,14 @@
 .word-list-attempt {
   display: flex;
   flex-direction: column;
-  background: white;
+  background: basic.$qw-fourth;
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid #ececec;
 }
 
 .attempt-list {
-  background: white;
+  background: basic.$qw-fourth;
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid #ececec;
@@ -299,17 +299,17 @@
 
 .review {
   background: linear-gradient(135deg, #4338ca, #5635ff);
-  color: white;
+  color: basic.$qw-fourth;
 
   p {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(basic.$qw-fourth, 0.85);
   }
 
   button {
     margin-top: 1rem;
     width: 100%;
     border: none;
-    background: white;
+    background: basic.$qw-fourth;
     color: #4338ca;
     padding: 0.9rem;
     border-radius: 12px;
@@ -328,7 +328,7 @@
     margin-top: 1rem;
     width: 100%;
     border: none;
-    color: white;
+    color: basic.$qw-fourth;
     background: #4338ca;
     padding: 0.9rem;
     border-radius: 12px;

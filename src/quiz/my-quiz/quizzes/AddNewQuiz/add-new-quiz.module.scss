@@ -10,7 +10,7 @@ $bg: #f7f8fd;
   max-width: 620px;
   margin: 30px auto;
   padding: 40px;
-  background: #fff;
+  background: basic.$qw-fourth;
   border: 1px solid $border;
   border-radius: 20px;
   box-shadow: 0 12px 30px rgba(16, 24, 40, 0.08);
@@ -125,7 +125,7 @@ $bg: #f7f8fd;
           }
 
           &.active {
-            box-shadow: 0 0 0 3px #fff,
+            box-shadow: 0 0 0 3px basic.$qw-fourth,
                         0 0 0 5px basic.$qw-primary;
           }
 

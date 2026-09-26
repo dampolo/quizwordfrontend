@@ -6,7 +6,7 @@
   max-width: 760px;
   margin: 1rem;
   padding: 3rem;
-  background: #fff;
+  background: basic.$qw-fourth;
   border: 1px solid #e8e8f4;
   border-radius: 28px;
   box-shadow: basic.$box-shadow;
@@ -39,7 +39,7 @@
     right: 1rem;
     border: 1px solid #dddded;
     border-radius: 50%;
-    background: white;
+    background: basic.$qw-fourth;
     font-size: 1rem;
     color: #555;
     transition: 0.2s;
@@ -68,7 +68,7 @@
 
   &__answer-wrapper-learn {
     width: fit-content;
-    background: #fff;
+    background: basic.$qw-fourth;
     color: basic.$qw-primary;
     line-height: 1;
     padding-inline: 0.3125rem;

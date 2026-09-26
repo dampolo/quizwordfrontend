@@ -36,7 +36,7 @@ body {
     gap: 16px;
     border-radius: 7px;
     background: #3421d6;
-    color: #fff;
+    color: basic.$qw-fourth;
     margin: 0;
     padding: 0.75rem 1.5625rem;
   }
@@ -139,7 +139,7 @@ main {
   // margin: 0 0.0625rem 0.0625rem 0.0625rem;
   min-height: calc(100vh - 177px);
   color: basic.$color-heading;
-  background-color: basic.$color-surface-container;
+  background-color: basic.$qw-fourth;
 }
 
 .main-customer {

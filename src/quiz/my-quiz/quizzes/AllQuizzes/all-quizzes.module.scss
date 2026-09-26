@@ -1,7 +1,6 @@
 @use "./../../../../styles/basic.scss";
 
 $text: #151633;
-$bg: #f7f8fd;
 
 .vocab-page {
   display: flex;
@@ -9,7 +8,7 @@ $bg: #f7f8fd;
   justify-content: start;
   width: 100%;
   padding: 2rem;
-  background: $bg;
+  background: basic.$qw-bg-quiz;
   color: $text;
   gap: 1rem;
 
@@ -45,7 +44,7 @@ $bg: #f7f8fd;
   justify-content: start;
   width: 100%;
   padding: 2rem;
-  background: $bg;
+  background: basic.$qw-bg-quiz;
   color: $text;
 
   .category {

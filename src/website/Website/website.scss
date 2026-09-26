@@ -9,7 +9,7 @@
 .hero {
   width: 100%;
   min-height: 100vh;
-  background: basic.$color-background-main;
+  background: basic.$qw-third;
   display: flex;
   align-items: center;
   padding: 80px 0;
@@ -333,7 +333,7 @@
 
 .workflow {
   width: 100%;
-  background: basic.$color-background-main;
+  background: basic.$qw-third;
   padding: 120px 0;
 
   &__container {
@@ -482,7 +482,7 @@
     text-align: center;
     background: linear-gradient(
       135deg,
-      basic.$color-brand-background 0%,
+      basic.$qw-secondary 0%,
       basic.$qw-primary 100%
     );
   }

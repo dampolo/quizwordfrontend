@@ -3,7 +3,7 @@
 
 .input-field {
   background-color: basic.$color-surface-container;
-  border: solid 0.0625rem basic.$color-background-main;
+  border: solid 0.0625rem basic.$qw-third;
   padding-inline: 1rem;
   padding-block: 1.125rem;
   width: 100%;
@@ -11,12 +11,12 @@
   border-radius: basic.$border-radius;
   transition: basic.$first-transition;
   &:hover {
-    border: solid 0.0625rem basic.$color-background-main;
+    border: solid 0.0625rem basic.$qw-third;
   }
   &:focus {
     background-color: basic.$color-surface-container;
     border: solid 0.0625rem basic.$qw-primary;
-    outline: basic.$color-background-main;
+    outline: basic.$qw-third;
   }
   &:-webkit-autofill {
     box-shadow: 0 0 0px 62.5rem basic.$color-surface-container inset;
@@ -33,12 +33,12 @@
   color: #334155;
   outline: none;
   &:hover {
-    border: solid 0.0625rem basic.$color-background-main;
+    border: solid 0.0625rem basic.$qw-third;
   }
   &:focus {
     background-color: basic.$color-surface-container;
     border: solid 0.0625rem basic.$qw-primary;
-    outline: basic.$color-background-main;
+    outline: basic.$qw-third;
   }
   &:-webkit-autofill {
     box-shadow: 0 0 0px 62.5rem basic.$color-surface-container inset;

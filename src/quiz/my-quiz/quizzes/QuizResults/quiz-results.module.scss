@@ -56,7 +56,7 @@
     &:hover,
     &:focus-visible {
       border: solid 1px basic.$qw-primary;
-      background-color: basic.$color-background-main;
+      background-color: basic.$qw-third;
       color: basic.$qw-primary;
     }
   }

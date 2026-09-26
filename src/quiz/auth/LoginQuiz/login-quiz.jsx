@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/useAuth";
-import PreLoader from "../../components/PreLoader/PreLoader";
+import { useAuth } from "../../../context/useAuth";
+import PreLoader from "../../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
 
 import "./login-quiz.scss";
-import PageTitle from "../../components/PageTitle/PageTitle";
+import PageTitle from "../../../components/PageTitle/PageTitle";
 
 function LoginQuiz() {
   const initialValues = { email: "", password: "" };

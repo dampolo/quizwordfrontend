@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import "./login-quiz.scss";
-import { useAuth } from "../../context/useAuth";
+import "./reset-password.scss";
+import { useAuth } from "../../../context/useAuth";
 import { toast } from "react-toastify";
 
 function ResetPassword() {

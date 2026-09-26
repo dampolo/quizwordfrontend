@@ -60,7 +60,7 @@
   &__description {
     font-size: 1.35rem;
     line-height: 1.9;
-    color: basic.$color-body-text;
+    color: basic.$qw-body-text-color;
     margin-bottom: 48px;
   }
 
@@ -252,7 +252,7 @@
     margin: 0 auto;
     font-size: 1.1rem;
     line-height: 1.8;
-    color: basic.$color-body-text;
+    color: basic.$qw-body-text-color;
   }
 
   // ========================================
@@ -323,7 +323,7 @@
   &__card-text {
     font-size: 1.05rem;
     line-height: 1.9;
-    color: basic.$color-body-text;
+    color: basic.$qw-body-text-color;
   }
 }
 
@@ -454,7 +454,7 @@
     p {
       font-size: 1rem;
       line-height: 1.8;
-      color: basic.$color-body-text;
+      color: basic.$qw-body-text-color;
       max-width: 420px;
     }
   }

@@ -38,7 +38,7 @@
   &__copyright {
     font-size: 0.95rem;
     line-height: 1.7;
-    color: basic.$color-body-text;
+    color: basic.$qw-body-text-color;
   }
 
   // ========================================
@@ -58,7 +58,7 @@
     text-decoration: none;
     font-size: 0.95rem;
     font-weight: 500;
-    color: basic.$color-body-text;
+    color: basic.$qw-body-text-color;
     transition: text-decoration 0.5s ease;
     margin: 0;
 

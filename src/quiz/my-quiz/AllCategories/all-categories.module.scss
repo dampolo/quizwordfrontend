@@ -1,7 +1,6 @@
 @use "./../../../styles/basic.scss";
 
 $text: #151633;
-$muted: #667085;
 $bg: #f7f8fd;
 
 .vocab-page {
@@ -27,7 +26,7 @@ $bg: #f7f8fd;
 
     p {
       margin: 6px 0 0;
-      color: $muted;
+      color: basic.$qw-body-text-color;
     }
 
     .add-new-category-button {
@@ -128,7 +127,7 @@ $bg: #f7f8fd;
       .card-actions {
         display: flex;
         gap: 16px;
-        color: $muted;
+        color: basic.$qw-body-text-color;
         .edit {
           position: absolute;
           top: 18px;
@@ -209,7 +208,7 @@ $bg: #f7f8fd;
       }
 
       small {
-        color: $muted;
+        color: basic.$qw-body-text-color;
       }
     }
   }
@@ -269,7 +268,7 @@ $bg: #f7f8fd;
 
         small {
           display: block;
-          color: $muted;
+          color: basic.$qw-body-text-color;
           margin-top: 4px;
         }
 

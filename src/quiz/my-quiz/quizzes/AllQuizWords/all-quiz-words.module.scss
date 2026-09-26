@@ -1,8 +1,402 @@
 @use "./../../../../styles/basic.scss";
-@use "./../../AllWords/all-words.module.scss";
+.vocabulary {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  padding: 2rem;
+  background: #fafbff;
+  color: #222;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    h1 {
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    p {
+      color: #666;
+      max-width: 650px;
+    }
+  }
+}
+
+.vocabulary :global(.main-quiz-button) {
+  &.create-quiz-small {
+    display: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.create-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  .create-quiz {
+    height: 48px;
+    padding: 0 24px;
+    font-weight: 800;
+    max-width: fit-content;
+    margin: initial;
+  }
+  .add-btn {
+    height: 48px;
+    padding: 0 24px;
+    font-weight: 800;
+    max-width: fit-content;
+    margin: initial;
+  }
+}
+
+.languages-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  .language-single {
+    background: #eef5ff;
+    height: fit-content;
+    border-radius: basic.$border-radius;
+    &.active {
+      background: #bed2ff;
+    }
+    &:hover {
+      background: #bed2ff;
+    }
+    .language-button {
+      padding: 0.5rem 1rem;
+      width: 100%;
+    }
+  }
+}
+
+.no-words {
+  padding: 1rem;
+  text-align: center;
+  margin: auto;
+}
+
+.word-list {
+  display: flex;
+  flex-direction: column;
+  background: basic.$qw-fourth;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #ececec;
+  height: 100%;
+}
+
+.word-list-attempt {
+  display: flex;
+  flex-direction: column;
+  background: basic.$qw-fourth;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #ececec;
+}
+
+.attempt-list {
+  background: basic.$qw-fourth;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #ececec;
+  width: fit-content;
+}
+
+.list-head,
+.list-row {
+  display: grid;
+  grid-template-columns:
+    20px
+    90px
+    1fr
+    160px
+    140px
+    80px;
+
+  align-items: center;
+}
+
+.list-head-attempt,
+.list-row-attempt {
+  display: grid;
+  grid-template-columns:
+    90px
+    3.5fr
+    160px
+    140px
+    80px;
+
+  align-items: center;
+}
+.list-head-score,
+.list-head-attempt,
+.list-head {
+  background: #eef5ff;
+  padding: 1rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #888;
+}
+
+.list-row-score,
+.list-row-attempt,
+.list-row {
+  padding: 1.2rem 1rem;
+  border-top: 1px solid #efefef;
+
+  &:hover {
+    background: #fafcff;
+  }
+}
+.check,
+.checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rank {
+  text-align: center;
+  color: #4b38f5;
+  font-weight: 700;
+}
+
+.word {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+
+  h3 {
+    color: #4738d6;
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  p {
+    margin: 0;
+    color: #444;
+  }
+
+  span {
+    color: #bbb;
+    font-size: 1.2rem;
+  }
+}
+
+.badge {
+  display: inline-flex;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  &.travel {
+    background: #d9fff0;
+    color: #10a56b;
+  }
+
+  &.psychology {
+    background: #ece8ff;
+    color: #6a4cff;
+  }
+
+  &.phrases {
+    background: #ffe8c7;
+    color: #d68a00;
+  }
+
+  &.culture {
+    background: #d8fff2;
+    color: #11af7d;
+  }
+}
+
+.streak {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  strong {
+    font-size: 1rem;
+  }
+
+  span {
+    color: #777;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+}
+
+.actions a {
+  margin: 0;
+}
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin-top: auto;
+
+  .pages {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .btn-pagination {
+    padding: unset;
+    padding-inline: 0.5rem;
+  }
+}
+
+.cards {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.card {
+  border-radius: 18px;
+  padding: 1.5rem;
+  background: #edf4ff;
+
+  h3 {
+    margin-bottom: 0.8rem;
+  }
+
+  p {
+    color: #666;
+    margin-bottom: 1rem;
+  }
+}
+
+.progress {
+  width: 100%;
+  height: 10px;
+  background: #dfe4ef;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.7rem;
+
+  &-fill {
+    width: 60%;
+    height: 100%;
+    background: #4b38f5;
+  }
+}
+
+.review {
+  background: linear-gradient(135deg, #4338ca, #5635ff);
+  color: basic.$qw-fourth;
+
+  p {
+    color: rgba(basic.$qw-fourth, 0.85);
+  }
+
+  button {
+    margin-top: 1rem;
+    width: 100%;
+    border: none;
+    background: basic.$qw-fourth;
+    color: #4338ca;
+    padding: 0.9rem;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+}
+
+.mastery {
+  background: #bed2ff;
+
+  p {
+    color: #666;
+  }
+
+  button {
+    margin-top: 1rem;
+    width: 100%;
+    border: none;
+    color: basic.$qw-fourth;
+    background: #4338ca;
+    padding: 0.9rem;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 81.25rem) {
+  .list-head,
+  .list-row {
+    display: grid;
+    grid-template-columns:
+      20px
+      60px
+      2fr
+      75px;
+    align-items: center;
+    padding: 1.2rem 0.5rem;
+  }
+
+  .list-head-attempt,
+  .list-row-attempt {
+    display: grid;
+    grid-template-columns:
+      80px
+      2fr
+      1fr;
+    align-items: center;
+    padding: 1.2rem 0.5rem;
+  }
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .category,
+  .streak {
+    display: none;
+  }
+
+  .vocabulary__header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .vocabulary {
+    padding: 1rem 0.5rem;
+  }
+}
+
+@media (max-width: 46rem) {
+  .vocabulary :global(.main-quiz-button) {
+    &.create-quiz-small {
+      display: flex;
+      position: fixed;
+      bottom: 4.1rem;
+      right: 0.5rem;
+      max-width: 2.5rem;
+      height: 2.5rem;
+      padding: 0;
+      margin: 0;
+    }
+    &:hover {
+      color: basic.$qw-primary;
+    }
+  }
+}
 
 
-// List styles are imported above; result-card styles are defined locally.
+// Result-card styles.
 
 .table-row {
   display: grid;

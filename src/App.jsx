@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import LoginQuiz from "./quiz/auth/login-quiz";
-import CreateAccount from "./quiz/auth/create-account";
+import CreateAccount from "./quiz/auth/CreateAccount/create-account";
 import ForgotPassword from "./quiz/auth/forgot-password";
 import PublicLayout from "./layouts/PublicLayout";
 import Website from "./website/Website/website";

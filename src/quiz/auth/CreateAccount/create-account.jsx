@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/useAuth";
-import BackButton from "../../components/BackButton/BackButton";
-import PreLoader from "../../components/PreLoader/PreLoader";
+import { useAuth } from "../../../context/useAuth";
+import BackButton from "../../../components/BackButton/BackButton";
+import PreLoader from "../../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
-import PageTitle from "../../components/PageTitle/PageTitle";
+import PageTitle from "../../../components/PageTitle/PageTitle";
 
 function CreateAccount() {
   const initialValues = {

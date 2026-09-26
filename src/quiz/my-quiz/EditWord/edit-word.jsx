@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import PreLoader from "../../../components/PreLoader/PreLoader";
 
-import styles from "./../AddNewWord/add-new-word.module.scss";
+import styles from "./edit-word.module.scss";
 
 export default function EditWord() {
   const {

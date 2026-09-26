@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import "./reset-password.scss";
 import { useAuth } from "../../../context/useAuth";
 import { toast } from "react-toastify";
+import PageTitle from "../../../components/PageTitle/PageTitle";
 
 function ResetPassword() {
 

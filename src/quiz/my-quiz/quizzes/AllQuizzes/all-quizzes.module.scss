@@ -130,7 +130,7 @@ $text: #151633;
     }
     .add-card {
       min-height: 150px;
-      border: 2px dashed #cfd5e8;
+      border: 2px dashed basic.$qw-border-color;
       border-radius: basic.$qw-border-radius;
       background: transparent;
       display: grid;

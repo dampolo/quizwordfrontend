@@ -27,8 +27,8 @@ $bg: #f7f8fd;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(basic.$color-primary-indigo, 0.12);
-      color: basic.$color-primary-indigo;
+      background: rgba(basic.$qw-primary, 0.12);
+      color: basic.$qw-primary;
       border-radius: 12px;
       font-size: 24px;
       font-weight: bold;
@@ -105,8 +105,8 @@ $bg: #f7f8fd;
         }
 
         &:focus {
-          border-color: basic.$color-primary-indigo;
-          //   box-shadow: 0 0 0 3px rgba($color-primary-indigo, .12);
+          border-color: basic.$qw-primary;
+          //   box-shadow: 0 0 0 3px rgba($qw-primary, .12);
         }
       }
 
@@ -155,7 +155,7 @@ $bg: #f7f8fd;
           &.active {
             box-shadow:
               0 0 0 3px #fff,
-              0 0 0 5px basic.$color-primary-indigo;
+              0 0 0 5px basic.$qw-primary;
           }
 
           &.purple {
@@ -193,10 +193,10 @@ $bg: #f7f8fd;
         transition: 0.25s;
         height: 50px;
         background: transparent;
-        color: basic.$color-primary-indigo;
+        color: basic.$qw-primary;
 
         &:hover {
-          background: rgba(basic.$color-primary-indigo, 0.06);
+          background: rgba(basic.$qw-primary, 0.06);
         }
       }
 

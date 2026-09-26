@@ -26,7 +26,7 @@ body {
 
   .cancel-btn {
     background: transparent;
-    color: basic.$color-primary-indigo;
+    color: basic.$qw-primary;
     margin: 0;
   }
 
@@ -56,16 +56,16 @@ body {
   margin: auto;
   border-radius: 0.625rem;
   color: #f4f4f4;
-  background-color: basic.$color-primary-indigo;
-  border: solid 1px basic.$color-primary-indigo;
+  background-color: basic.$qw-primary;
+  border: solid 1px basic.$qw-primary;
   transition: basic.$first-transition;
   outline: none;
 
   &:hover,
   &:focus-visible {
-    border: solid 1px basic.$color-primary-indigo;
+    border: solid 1px basic.$qw-primary;
     background-color: basic.$color-background-main;
-    color: basic.$color-primary-indigo;
+    color: basic.$qw-primary;
   }
 }
 
@@ -79,15 +79,15 @@ body {
   transition: 0.25s;
   height: 3.125rem;
   background: transparent;
-  color: basic.$color-primary-indigo;
+  color: basic.$qw-primary;
   border-radius: basic.$border-radius;
   border: .0625rem solid #dfe3ef;
   outline: none;
 
   &:hover,
   &:focus-visible {
-    background: rgba(basic.$color-primary-indigo, 0.06);
-    border: 1px solid basic.$color-primary-indigo;
+    background: rgba(basic.$qw-primary, 0.06);
+    border: 1px solid basic.$qw-primary;
   }
 }
 

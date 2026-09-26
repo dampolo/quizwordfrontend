@@ -5,12 +5,12 @@
   align-items: center;
   outline: transparent;
   &:focus-visible {
-    border: 2px dotted basic.$color-primary-indigo;
-    outline: basic.$color-primary-indigo;
+    border: 2px dotted basic.$qw-primary;
+    outline: basic.$qw-primary;
   }
   img {
     &:hover {
-      filter: drop-shadow(2px 4px 6px basic.$color-primary-indigo);
+      filter: drop-shadow(2px 4px 6px basic.$qw-primary);
     }
   }
 }

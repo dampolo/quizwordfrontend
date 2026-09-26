@@ -15,7 +15,7 @@
   }
   &:focus {
     background-color: basic.$color-surface-container;
-    border: solid 0.0625rem basic.$color-primary-indigo;
+    border: solid 0.0625rem basic.$qw-primary;
     outline: basic.$color-background-main;
   }
   &:-webkit-autofill {
@@ -37,7 +37,7 @@
   }
   &:focus {
     background-color: basic.$color-surface-container;
-    border: solid 0.0625rem basic.$color-primary-indigo;
+    border: solid 0.0625rem basic.$qw-primary;
     outline: basic.$color-background-main;
   }
   &:-webkit-autofill {

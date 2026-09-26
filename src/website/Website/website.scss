@@ -38,7 +38,7 @@
     padding: 12px 22px;
     background: rgba(79, 70, 229, 0.08);
     border-radius: 999px;
-    color: basic.$color-primary-indigo;
+    color: basic.$qw-primary;
     font-size: 0.95rem;
     font-weight: 600;
     margin-bottom: 32px;
@@ -53,7 +53,7 @@
     letter-spacing: -2px;
 
     span {
-      color: basic.$color-primary-indigo;
+      color: basic.$qw-primary;
     }
   }
 
@@ -88,7 +88,7 @@
     transition: all 0.25s ease;
 
     &--primary {
-      background: basic.$color-primary-indigo;
+      background: basic.$qw-primary;
       color: basic.$color-surface-container;
       box-shadow: 0 14px 30px rgba(79, 70, 229, 0.22);
 
@@ -103,7 +103,7 @@
 
     &--secondary {
       background: rgba(79, 70, 229, 0.08);
-      color: basic.$color-primary-indigo;
+      color: basic.$qw-primary;
       border: 1px solid rgba(79, 70, 229, 0.12);
 
       &:hover {
@@ -210,7 +210,7 @@
   &__progress-bar {
     width: 74%;
     height: 100%;
-    background: basic.$color-primary-indigo;
+    background: basic.$qw-primary;
     border-radius: 999px;
   }
 }
@@ -381,7 +381,7 @@
     height: 82px;
     border: none;
     border-radius: 50%;
-    background: basic.$color-primary-indigo;
+    background: basic.$qw-primary;
     color: basic.$color-surface-container;
     font-size: 1.6rem;
     cursor: pointer;
@@ -433,7 +433,7 @@
     min-width: 54px;
     height: 54px;
     border-radius: 50%;
-    background: basic.$color-primary-indigo;
+    background: basic.$qw-primary;
     color: basic.$color-surface-container;
     display: flex;
     align-items: center;
@@ -483,7 +483,7 @@
     background: linear-gradient(
       135deg,
       basic.$color-brand-background 0%,
-      basic.$color-primary-indigo 100%
+      basic.$qw-primary 100%
     );
   }
 
@@ -532,7 +532,7 @@
     padding: 18px 42px;
     border-radius: 16px;
     background: basic.$color-surface-container;
-    color: basic.$color-primary-indigo;
+    color: basic.$qw-primary;
     text-decoration: none;
     font-size: 1rem;
     font-weight: 700;

@@ -27,7 +27,7 @@
   &__title {
     display: flex;
     align-items: center;
-    color: basic.$color-primary-indigo;
+    color: basic.$qw-primary;
     gap: 0.6rem;
     margin-bottom: 1rem;
     font-size: 3rem;
@@ -124,7 +124,7 @@
   &__answer-wrapper-learn {
     width: fit-content;
     background: #fff;
-    color: basic.$color-primary-indigo;
+    color: basic.$qw-primary;
     font-size: 3rem;
     line-height: 1;
     padding-inline: 0.3125rem;

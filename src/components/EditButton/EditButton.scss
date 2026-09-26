@@ -11,12 +11,12 @@
   transition: basic.$first-transition;
 
   svg path {
-    fill: basic.$color-primary-indigo;
+    fill: basic.$qw-primary;
   }
 
   &:hover,
   &:focus {
-    background: basic.$color-primary-indigo;
+    background: basic.$qw-primary;
     outline: none;
   }
 

@@ -241,7 +241,7 @@ $bg: #f7f8fd;
         }
 
         a {
-          color: basic.$color-primary-indigo;
+          color: basic.$qw-primary;
           font-size: 13px;
           font-weight: 800;
         }
@@ -282,9 +282,9 @@ $bg: #f7f8fd;
 
     .streak {
       padding: 26px;
-      background: basic.$color-primary-indigo;
+      background: basic.$qw-primary;
       color: #fff;
-      box-shadow: 0 14px 28px rgba(basic.$color-primary-indigo, 0.3);
+      box-shadow: 0 14px 28px rgba(basic.$qw-primary, 0.3);
 
       span {
         font-size: 13px;
@@ -306,7 +306,7 @@ $bg: #f7f8fd;
         border: 0;
         border-radius: 9px;
         background: #fff;
-        color: basic.$color-primary-indigo;
+        color: basic.$qw-primary;
         font-weight: 900;
       }
     }

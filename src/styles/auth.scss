@@ -40,7 +40,7 @@
       font-size: 1.8rem;
       font-weight: 500;
       .form-title-name {
-        color: basic.$color-primary-indigo;
+        color: basic.$qw-primary;
         font-size: 1.8rem;
         font-weight: 700;
         line-height: normal;
@@ -51,7 +51,7 @@
       text-align: center;
       margin-bottom: 1.875rem;
       .new-user-link {
-        color: basic.$color-primary-indigo;
+        color: basic.$qw-primary;
         border: 0.125rem dotted transparent;
         display: inline-block;
         &.confirmation {
@@ -62,8 +62,8 @@
           text-decoration: underline;
         }
         &:focus-visible {
-          border: 0.125rem dotted basic.$color-primary-indigo;
-          outline: basic.$color-primary-indigo;
+          border: 0.125rem dotted basic.$qw-primary;
+          outline: basic.$qw-primary;
         }
       }
     }
@@ -106,7 +106,7 @@
           border: 0.0625rem solid transparent;
           outline: none;
           &:focus-visible {
-            border: 0.0625rem solid basic.$color-primary-indigo;
+            border: 0.0625rem solid basic.$qw-primary;
             background-color: basic.$color-background-main;
             color: basic.$color-background-main;
           }
@@ -138,7 +138,7 @@
           text-align: left;
           .privacy {
             text-decoration: none;
-            color: basic.$color-primary-indigo;
+            color: basic.$qw-primary;
             cursor: pointer;
             &:hover {
               text-decoration: underline;
@@ -161,7 +161,7 @@
         }
         &:focus {
           background-color: basic.$color-surface-container;
-          border: solid 0.0625rem basic.$color-primary-indigo;
+          border: solid 0.0625rem basic.$qw-primary;
           outline: basic.$color-background-main;
         }
         &:-webkit-autofill {
@@ -173,7 +173,7 @@
         display: flex;
         justify-content: center;
         background: none;
-        color: basic.$color-primary-indigo;
+        color: basic.$qw-primary;
         text-decoration: none;
         width: fit-content;
         padding: 0.3125rem 0.9375rem;
@@ -183,11 +183,11 @@
         border: solid 0.0625rem transparent;
         transition: all 175ms ease-in-out;
         &:hover {
-          color: basic.$color-primary-indigo;
+          color: basic.$qw-primary;
           background: basic.$color-surface-container;
         }
         &:focus {
-          color: basic.$color-primary-indigo;
+          color: basic.$qw-primary;
           background: basic.$color-surface-container;
           border: solid 0.0625rem basic.$color-background-main;
           outline: basic.$color-background-main;

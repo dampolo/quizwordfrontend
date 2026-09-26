@@ -9,7 +9,7 @@
 }
 
 // Brand & Primary Colors
-$color-primary-indigo: #3f2bdc;
+$qw-primary: #3f2bdc;
 $color-brand-background: #5850ec;
 
 // Surface Colors
@@ -28,4 +28,4 @@ $box-shadow: 0 2px 10px 0 rgb(0 0 0 / 20%);
 $letter-color: #000;
 $first-transition: all 200ms ease-in-out;
 $required: #ff0000;
-$focus: 2px dotted $color-primary-indigo;
+$focus: 2px dotted $qw-primary;

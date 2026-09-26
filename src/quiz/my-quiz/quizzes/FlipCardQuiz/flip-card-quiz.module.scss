@@ -27,7 +27,7 @@
   &__title {
     display: flex;
     align-items: center;
-    color: basic.$color-primary-indigo;
+    color: basic.$qw-primary;
     gap: 0.6rem;
     margin-bottom: 1rem;
     font-size: 3rem;
@@ -113,7 +113,7 @@
   &__answer-wrapper-learn {
     width: fit-content;
     background: #fff;
-    color: basic.$color-primary-indigo;
+    color: basic.$qw-primary;
     font-size: 3rem;
     line-height: 1;
     padding-inline: 0.3125rem;
@@ -216,8 +216,8 @@
   font-size: 1.125rem;
   gap: 0.625rem;
   border-radius: 0.625rem;
-  background-color: #3f2bdc;
-  border: solid 1px #3f2bdc;
+  background-color: basic.$qw-primary;
+  border: solid 1px basic.$qw-primary;
   transition: all 200ms ease-in-out;
   outline: none;
 }

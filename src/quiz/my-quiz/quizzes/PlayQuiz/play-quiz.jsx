@@ -145,7 +145,7 @@ function PlayQuiz() {
             type="button"
             className={`main-quiz-button ${styles["play-button"]}`}
             onClick={adjustCurrentQuestion}
-            disabled={formData.answer.length <= 2}
+            disabled={formData.answer.length < 2}
           >
             <span>Weiter</span>
           </button>

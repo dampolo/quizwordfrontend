@@ -2,7 +2,6 @@
 
 $text: #151633;
 $muted: #667085;
-$border: #dfe3ef;
 $bg: #f7f8fd;
 
 .vocab-page {
@@ -73,7 +72,7 @@ $bg: #f7f8fd;
       gap: 16px;
       padding: 18px;
       background: basic.$qw-fourth;
-      border: 1px solid $border;
+      border: 1px solid basic.$qw-border-color;
       border-radius: 12px;
 
       > span {
@@ -119,7 +118,7 @@ $bg: #f7f8fd;
       min-height: 150px;
       width: 300px;
       background: basic.$qw-fourth;
-      border: 1px solid $border;
+      border: 1px solid basic.$qw-border-color;
       border-radius: 12px;
 
       &.wide {
@@ -223,7 +222,7 @@ $bg: #f7f8fd;
     .activity,
     .streak {
       background: basic.$qw-fourth;
-      border: 1px solid $border;
+      border: 1px solid basic.$qw-border-color;
       border-radius: 12px;
     }
 

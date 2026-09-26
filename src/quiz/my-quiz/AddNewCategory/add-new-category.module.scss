@@ -2,7 +2,6 @@
 
 $text: #151633;
 $muted: #667085;
-$border: #dfe3ef;
 $bg: #f7f8fd;
 
 .add-category-card {
@@ -11,7 +10,7 @@ $bg: #f7f8fd;
   margin: 30px auto;
   padding: 40px;
   background: basic.$qw-fourth;
-  border: 1px solid $border;
+  border: 1px solid basic.$qw-border-color;
   border-radius: 20px;
   box-shadow: 0 12px 30px rgba(16, 24, 40, 0.08);
 
@@ -94,7 +93,7 @@ $bg: #f7f8fd;
         width: 100%;
         height: 56px;
         padding: 0 50px 0 18px;
-        border: 1.5px solid $border;
+        border: 1.5px solid basic.$qw-border-color;
         border-radius: 12px;
         font-size: 16px;
         outline: none;

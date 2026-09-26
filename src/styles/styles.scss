@@ -81,7 +81,7 @@ body {
   background: transparent;
   color: basic.$qw-primary;
   border-radius: basic.$border-radius;
-  border: .0625rem solid #dfe3ef;
+  border: .0625rem solid basic.$qw-border-color;
   outline: none;
 
   &:hover,

@@ -8,7 +8,7 @@
   padding-block: 1.125rem;
   width: 100%;
   height: 3.07rem;
-  border-radius: basic.$border-radius;
+  border-radius: basic.$qw-border-radius;
   transition: basic.$first-transition;
   &:hover {
     border: solid 0.0625rem basic.$qw-third;
@@ -26,7 +26,7 @@
 .input-select {
   width: 100%;
   border: 1px solid #cbd5e1;
-  border-radius: 7px;
+  border-radius: basic.$qw-border-radius;
   background: #f8f9ff;
   padding: 15px;
   font-size: 14px;

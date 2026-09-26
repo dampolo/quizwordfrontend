@@ -42,7 +42,7 @@
     margin: 0 auto;
     background: basic.$qw-fourth;
     border: 1px solid #cfd5e8;
-    border-radius: 10px;
+    border-radius: basic.$qw-border-radius;
     padding: 26px;
 
     hr {
@@ -71,7 +71,7 @@
     textarea {
       width: 100%;
       border: 1px solid #cbd5e1;
-      border-radius: 7px;
+      border-radius: basic.$qw-border-radius;
       background: #f8f9ff;
       padding: 15px;
       font-size: 14px;
@@ -108,7 +108,7 @@
         height: 200px;
         .word-panel {
           border: 1px dashed #cfd7ed;
-          border-radius: 10px;
+          border-radius: basic.$qw-border-radius;
           background: #fbfcff;
           padding: 24px;
           display: flex;
@@ -197,7 +197,7 @@
       .more-source-button {
         padding-inline: 1rem;
         background: basic.$qw-fourth;
-        border-radius: basic.$border-radius;
+        border-radius: basic.$qw-border-radius;
         border: solid 1px basic.$qw-border-color;
         transition: basic.$first-transition;
         &:hover {
@@ -214,7 +214,7 @@
         gap: 14px;
         padding: 20px 24px;
         border: 1px solid #dfe3f5;
-        border-radius: 9px;
+        border-radius: basic.$qw-border-radius;
         background: #f4f5ff;
 
         strong {

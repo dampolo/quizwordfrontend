@@ -46,7 +46,7 @@ $bg: #f7f8fd;
     .language-single {
       background: #eef5ff;
       height: fit-content;
-      border-radius: basic.$border-radius;
+      border-radius: basic.$qw-border-radius;
       &.active {
         background: #bed2ff;
       }
@@ -73,14 +73,14 @@ $bg: #f7f8fd;
       padding: 18px;
       background: basic.$qw-fourth;
       border: 1px solid basic.$qw-border-color;
-      border-radius: 12px;
+      border-radius: basic.$qw-border-radius;
 
       > span {
         display: grid;
         place-items: center;
         width: 38px;
         height: 38px;
-        border-radius: 8px;
+        border-radius: basic.$qw-border-radius;
         background: #eeeaff;
       }
 
@@ -119,7 +119,7 @@ $bg: #f7f8fd;
       width: 300px;
       background: basic.$qw-fourth;
       border: 1px solid basic.$qw-border-color;
-      border-radius: 12px;
+      border-radius: basic.$qw-border-radius;
 
       &.wide {
         grid-column: span 2;
@@ -142,7 +142,7 @@ $bg: #f7f8fd;
         width: 48px;
         height: 48px;
         margin-bottom: 14px;
-        border-radius: 10px;
+        border-radius: basic.$qw-border-radius;
         background: #5438e8;
         color: basic.$qw-fourth;
       }
@@ -195,7 +195,7 @@ $bg: #f7f8fd;
     .add-card {
       min-height: 150px;
       border: 2px dashed #cfd5e8;
-      border-radius: 12px;
+      border-radius: basic.$qw-border-radius;
       background: transparent;
       display: grid;
       place-items: center;
@@ -223,7 +223,7 @@ $bg: #f7f8fd;
     .streak {
       background: basic.$qw-fourth;
       border: 1px solid basic.$qw-border-color;
-      border-radius: 12px;
+      border-radius: basic.$qw-border-radius;
     }
 
     .activity {
@@ -303,7 +303,7 @@ $bg: #f7f8fd;
         width: 100%;
         height: 48px;
         border: 0;
-        border-radius: 9px;
+        border-radius: basic.$qw-border-radius;
         background: basic.$qw-fourth;
         color: basic.$qw-primary;
         font-weight: 900;

@@ -30,7 +30,7 @@
     max-width: 900px;
     background: basic.$qw-fourth;
     border: 1px solid basic.$qw-border-color;
-    border-radius: 12px;
+    border-radius: basic.$qw-border-radius;
     padding: 2rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
@@ -57,7 +57,7 @@
   }
   &__textarea {
     border: solid 0.0625rem basic.$qw-third;
-    border-radius: basic.$border-radius;
+    border-radius: basic.$qw-border-radius;
     padding: 0.5rem;
     &:hover {
       border: solid 0.0625rem basic.$qw-third;

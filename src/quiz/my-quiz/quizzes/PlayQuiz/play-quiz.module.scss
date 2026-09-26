@@ -8,7 +8,7 @@
   padding: 3rem;
   background: basic.$qw-fourth;
   border: 1px solid #e8e8f4;
-  border-radius: 28px;
+  border-radius: basic.$qw-border-radius;
   box-shadow: basic.$box-shadow;
   height: fit-content;
   &.learn-card {
@@ -138,7 +138,7 @@
     padding-right: 170px;
 
     border: 1px solid #d8d8eb;
-    border-radius: 16px;
+    border-radius: basic.$qw-border-radius;
 
     font-size: 1.15rem;
     outline: none;
@@ -180,9 +180,9 @@
   align-items: center;
   width: fit-content;
   background-color: rgba(0, 0, 0, 0.39);
-  border-radius: basic.$border-radius;
+  border-radius: basic.$qw-border-radius;
   .hint-text {
-    border-radius: basic.$border-radius;
+    border-radius: basic.$qw-border-radius;
     padding-inline: 1rem;
   }
 }

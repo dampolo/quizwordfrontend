@@ -26,7 +26,7 @@
       display: flex;
       align-items: center;
       gap: 16px;
-      border-radius: 7px;
+      border-radius: basic.$qw-border-radius;
       background: #3421d6;
       color: basic.$qw-fourth;
       margin: 0;
@@ -46,7 +46,7 @@
     gap: 0.625rem;
     padding: 0.75rem 1.5625rem;
     margin: auto;
-    border-radius: 0.625rem;
+    border-radius: basic.$qw-border-radius;
     color: #f4f4f4;
     background-color: basic.$qw-primary;
     border: solid 1px basic.$qw-primary;
@@ -72,7 +72,7 @@
     height: 3.125rem;
     background: transparent;
     color: basic.$qw-primary;
-    border-radius: basic.$border-radius;
+    border-radius: basic.$qw-border-radius;
     border: .0625rem solid basic.$qw-border-color;
     outline: none;
 
@@ -186,7 +186,7 @@
   .vocabulary-card {
     background: basic.$qw-fourth;
     border: 0.0625rem solid #dbe3ef;
-    border-radius: 0.625rem;
+    border-radius: basic.$qw-border-radius;
     overflow: hidden;
   }
 
@@ -211,7 +211,7 @@
       font-weight: 600;
       padding: 5px 10px;
       border: 1px solid #cfd8e6;
-      border-radius: 5px;
+      border-radius: basic.$qw-border-radius;
       background: basic.$qw-fourth;
       color: #5f6b7a;
     }

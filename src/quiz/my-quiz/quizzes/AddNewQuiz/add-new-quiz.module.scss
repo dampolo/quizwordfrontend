@@ -11,7 +11,7 @@ $bg: #f7f8fd;
   padding: 40px;
   background: basic.$qw-fourth;
   border: 1px solid basic.$qw-border-color;
-  border-radius: 20px;
+  border-radius: basic.$qw-border-radius;
   box-shadow: 0 12px 30px rgba(16, 24, 40, 0.08);
 
   .form-header {
@@ -28,7 +28,7 @@ $bg: #f7f8fd;
       justify-content: center;
       background: rgba(basic.$qw-primary, 0.12);
       color: basic.$qw-primary;
-      border-radius: 12px;
+      border-radius: basic.$qw-border-radius;
       font-size: 24px;
       font-weight: bold;
     }
@@ -65,7 +65,7 @@ $bg: #f7f8fd;
         height: 56px;
         padding: 0 50px 0 18px;
         border: 1.5px solid basic.$qw-border-color;
-        border-radius: 12px;
+        border-radius: basic.$qw-border-radius;
         font-size: 16px;
         outline: none;
         transition: .25s;

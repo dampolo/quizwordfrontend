@@ -84,7 +84,7 @@
     font-size: 1.1rem;
     font-weight: 700;
     padding: 18px 34px;
-    border-radius: 18px;
+    border-radius: basic.$qw-border-radius;
     transition: all 0.25s ease;
 
     &--primary {
@@ -129,7 +129,7 @@
     position: relative;
     width: 100%;
     max-width: 600px;
-    border-radius: 42px;
+    border-radius: basic.$qw-border-radius;
     border: 15px solid basic.$qw-fourth;
     background: basic.$qw-fourth;
     padding: 18px;
@@ -150,7 +150,7 @@
     width: calc(100% - 110px);
     background: rgba(basic.$qw-fourth, 0.95);
     backdrop-filter: blur(12px);
-    border-radius: 22px;
+    border-radius: basic.$qw-border-radius;
     padding: 22px 24px;
     box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
   }
@@ -273,7 +273,7 @@
   &__single-card {
     background: basic.$qw-fourth;
     border: 1px solid basic.$qw-border-color;
-    border-radius: 28px;
+    border-radius: basic.$qw-border-radius;
     padding: 42px 34px;
     flex-basis: 350px;
     transition: all 0.25s ease;
@@ -290,7 +290,7 @@
   &__icon {
     width: 72px;
     height: 72px;
-    border-radius: 20px;
+    border-radius: basic.$qw-border-radius;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -351,7 +351,7 @@
 
   &__video {
     position: relative;
-    border-radius: 28px;
+    border-radius: basic.$qw-border-radius;
     overflow: hidden;
     flex: 1;
     box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
@@ -477,7 +477,7 @@
     max-width: 1280px;
     margin: 0 1rem;
     padding: 90px 40px;
-    border-radius: 42px;
+    border-radius: basic.$qw-border-radius;
     overflow: hidden;
     text-align: center;
     background: linear-gradient(
@@ -530,7 +530,7 @@
     align-items: center;
     justify-content: center;
     padding: 18px 42px;
-    border-radius: 16px;
+    border-radius: basic.$qw-border-radius;
     background: basic.$qw-fourth;
     color: basic.$qw-primary;
     text-decoration: none;

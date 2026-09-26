@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  border-radius: basic.$border-radius;
+  border-radius: basic.$qw-border-radius;
   background: basic.$qw-third;
   height: 9rem;
   width: 13rem;
@@ -36,7 +36,7 @@
       width: 100%;
       max-width: 9.375rem;
       height: 2.1875rem;
-      border-radius: basic.$border-radius;
+      border-radius: basic.$qw-border-radius;
       &:hover {
         background: basic.$qw-fourth;
         transform: scale(1.05);

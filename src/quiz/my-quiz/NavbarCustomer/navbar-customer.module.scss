@@ -20,7 +20,7 @@
       width: 100%;
       padding: 0.5rem;
       gap: 0.5rem;
-      border-radius: basic.$border-radius;
+      border-radius: basic.$qw-border-radius;
       &:hover {
         transition: basic.$first-transition;
         background: basic.$color-hover;
@@ -83,7 +83,7 @@
       width: 3.75rem;
       height: 3.75rem;
       box-sizing: initial;
-      border-radius: 50%;      
+      border-radius: 50%;
     }
     li:nth-last-child(-n + 1) {
       margin-top: 0rem;

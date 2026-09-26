@@ -47,7 +47,7 @@ export function DialogProvider({ children }) {
         slotProps={{
           paper: {
             sx: {
-              borderRadius: "24px",
+              borderRadius: "var(--qw-border-radius)",
               p: 2,
             },
           },
@@ -77,7 +77,7 @@ export function DialogProvider({ children }) {
               padding: "0.2rem 0.3rem",
               background: "transparent",
               color: "#5B5CE2",
-              borderRadius: "0.625rem",
+              borderRadius: "var(--qw-border-radius)",
               border: "1px solid #dfe3ef",
               transition: "all 0.2s ease-in-out",
 
@@ -105,7 +105,7 @@ export function DialogProvider({ children }) {
               fontWeight: 600,
               fontSize: "1rem",
               gap: "0.625rem",
-              borderRadius: "0.625rem",
+              borderRadius: "var(--qw-border-radius)",
               color: "#f4f4f4",
               backgroundColor: "#3f2bdc",
               border: "1px solid #3f2bdc",

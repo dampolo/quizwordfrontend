@@ -27,24 +27,24 @@ function Confirmation() {
 
   return (
     <main className={styles["confirmation"]}>
-      <section className={styles["confirmation-content"]}>
+      <section className={styles["content"]}>
         { !redirect ?
            <></> : <BackButton to={"/login"} />
         }
 
-        <div className={styles["confirmation-title"]}>
-          <h1 className={styles["confirmation-heading"]}>Bestätigung</h1>
+        <div className={styles["title"]}>
+          <h1 className={styles["heading"]}>Bestätigung</h1>
         </div>
 
-        <div className={styles["confirmation-description"]}>
+        <div className={styles["description"]}>
           <p>{confirmationMessage}</p>
 
           {!redirect ? (
-            <><Link className={styles["confirmation-link"]} to="/">
+            <><Link className={styles["link"]} to="/">
               Quiz Word
             </Link></>
           ) : (
-            <Link className={styles["confirmation-link"]} to="/login">
+            <Link className={styles["link"]} to="/login">
               Anmelden
             </Link>
           )}

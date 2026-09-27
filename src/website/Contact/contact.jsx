@@ -109,7 +109,7 @@ function Contact() {
   }
 
   return (
-    <main>
+    <main className="contact">
       <PageTitle title="Kontakt" />
       <BackButton to="/" className="back-button" />
       <section className="main-contact">

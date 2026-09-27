@@ -1,7 +1,7 @@
 @use "./../../styles/basic";
 @use "./../../styles/styles";
 
-main {
+.contact {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,9 +54,7 @@ main {
         .input-field {
           background-color: basic.$qw-fourth;
           border: solid 0.0625rem basic.$qw-third;
-          // padding-left: 5.3125rem;
-          padding-top: 1.125rem;
-          padding-bottom: 1.125rem;
+          padding: 1.125rem;
           width: 100%;
           height: 3.07rem;
           border-radius: basic.$qw-border-radius;
@@ -89,7 +87,7 @@ main {
         }
         textarea {
           width: 100%;
-          padding: 15px 25px 15px 25px;
+          padding: 1rem;
           gap: 10px;
           border-radius: basic.$qw-border-radius;
           font-size: 16px;
@@ -144,6 +142,12 @@ main {
           font-weight: 400;
           line-height: 16.8px;
           text-align: left;
+          &::after {
+            color: #e61e50;
+            content: "*";
+            font-size: 1.2rem;
+            padding-left: 0.2rem;
+          }
           .privacy {
             text-decoration: none;
             // color: $blue;

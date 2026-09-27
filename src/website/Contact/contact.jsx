@@ -7,6 +7,7 @@ import "./contact.scss";
 import { useAuth } from "../../context/useAuth";
 import { toast } from "react-toastify";
 import ReCAPTCHA from "react-google-recaptcha";
+import PreLoader from "../../components/PreLoader/PreLoader";
 
 function Contact() {
   const VITE_RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
@@ -39,6 +40,7 @@ function Contact() {
     contactData.message.trim().length <= 5000;
 
   const isFormValid = isNameValid && isEmailValid && isMessageValid;
+  const [loading, setLoading] = useState(false);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -64,7 +66,7 @@ function Contact() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-
+    setLoading(true);
     setTouched({
       name: true,
       email: true,
@@ -74,12 +76,16 @@ function Contact() {
     setCheckboxChecked(true);
 
     if (!isFormValid || !checkboxState) {
+      setLoading(false);
+
       return;
     }
 
     if (captchaToken === null) {
-      toast.error("Bestätige bitte Captcha")
-      return
+      setLoading(false);
+
+      toast.error("Bestätige bitte Captcha");
+      return;
     }
 
     const payload = {
@@ -89,11 +95,15 @@ function Contact() {
 
     try {
       await postSupport(payload);
+      setLoading(false);
+
       setConfirmationMessage("Danke für deine Nachricht!");
       navigate("/confirmation?redirect=false");
     } catch (error) {
       const message = error.response?.data;
       console.error(error.response?.data);
+      setLoading(false);
+
       toast.error(message);
     }
   }
@@ -230,6 +240,7 @@ function Contact() {
             sitekey={VITE_RECAPTCHA_SITE_KEY}
             onChange={handleCaptcha}
           />
+          {loading ? <PreLoader /> : <></>}
 
           <button
             type="submit"

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import BackButton from "../BackButton/BackButton";
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import "./confirmation.scss";
+import styles from "./confirmation.module.scss";
 import { useAuth } from "../../context/useAuth";
 
 function Confirmation() {
@@ -26,25 +26,25 @@ function Confirmation() {
   }, [uidb64, token]);
 
   return (
-    <main className="main-auth">
-      <section className="main-content-customer">
+    <main className={styles.confirmation}>
+      <section className={styles.content}>
         { !redirect ?
            <></> : <BackButton to={"/login"} />
         }
 
-        <div className="form-title">
-          <h1 className="form-title-name">Bestätigung</h1>
+        <div className={styles.title}>
+          <h1 className={styles.heading}>Bestätigung</h1>
         </div>
 
-        <div className="description">
+        <div className={styles.description}>
           <p>{confirmationMessage}</p>
 
           {!redirect ? (
-            <><Link className="new-user-link confirmation" to="/">
+            <><Link className={styles.link} to="/">
               Quiz Word
             </Link></>
           ) : (
-            <Link className="new-user-link confirmation" to="/login">
+            <Link className={styles.link} to="/login">
               Anmelden
             </Link>
           )}

@@ -1,6 +1,5 @@
 @use "./../../../styles/basic.scss";
 
-$text: #151633;
 
 .add-category-card {
   width: 100%;
@@ -35,7 +34,7 @@ $text: #151633;
       margin: 0;
       font-size: 2rem;
       font-weight: 700;
-      color: $text;
+      color: basic.$qw-color-heading;
     }
 
     p {
@@ -79,7 +78,7 @@ $text: #151633;
 
     label {
       font-weight: 600;
-      color: $text;
+      color: basic.$qw-color-heading;
     }
 
     .input-wrap {
@@ -128,7 +127,7 @@ $text: #151633;
 
       h4 {
         margin-bottom: 18px;
-        color: $text;
+        color: basic.$qw-color-heading;
         font-size: 1rem;
       }
 

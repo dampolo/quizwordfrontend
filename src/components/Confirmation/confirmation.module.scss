@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
 
-  .content {
+  .confirmation-content {
     position: relative;
     display: flex;
     align-items: center;
@@ -19,7 +19,7 @@
     padding: 2.5rem;
     margin: 0.625rem;
 
-    .title {
+    .confirmation-title {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -30,7 +30,7 @@
       font-size: 1.8rem;
       font-weight: 500;
 
-      .heading {
+      .confirmation-heading {
         color: basic.$qw-primary;
         font-size: 1.8rem;
         font-weight: 700;
@@ -39,11 +39,11 @@
       }
     }
 
-    .description {
+    .confirmation-description {
       text-align: center;
       margin-bottom: 1.875rem;
 
-      .link {
+      .confirmation-link {
         color: basic.$qw-primary;
         border: 0.125rem dotted transparent;
         display: inline-block;
@@ -66,7 +66,7 @@
   .confirmation {
     margin: 0.5rem;
 
-    .content {
+    .confirmation-content {
       padding: 0.5rem;
     }
   }

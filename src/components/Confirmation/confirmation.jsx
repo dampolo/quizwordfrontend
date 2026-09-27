@@ -26,25 +26,25 @@ function Confirmation() {
   }, [uidb64, token]);
 
   return (
-    <main className={styles.confirmation}>
-      <section className={styles.content}>
+    <main className={styles["confirmation"]}>
+      <section className={styles["confirmation-content"]}>
         { !redirect ?
            <></> : <BackButton to={"/login"} />
         }
 
-        <div className={styles.title}>
-          <h1 className={styles.heading}>Bestätigung</h1>
+        <div className={styles["confirmation-title"]}>
+          <h1 className={styles["confirmation-heading"]}>Bestätigung</h1>
         </div>
 
-        <div className={styles.description}>
+        <div className={styles["confirmation-description"]}>
           <p>{confirmationMessage}</p>
 
           {!redirect ? (
-            <><Link className={styles.link} to="/">
+            <><Link className={styles["confirmation-link"]} to="/">
               Quiz Word
             </Link></>
           ) : (
-            <Link className={styles.link} to="/login">
+            <Link className={styles["confirmation-link"]} to="/login">
               Anmelden
             </Link>
           )}

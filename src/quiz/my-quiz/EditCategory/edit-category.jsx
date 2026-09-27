@@ -98,7 +98,7 @@ function EditCategory() {
   }
 
   return (
-    <section className={styles["add-category-card"]}>
+    <section className={styles["edit-category-card"]}>
       <BackButton
         to={`/my-quiz/all-categories/?language=${formData.language_id}`}
       />

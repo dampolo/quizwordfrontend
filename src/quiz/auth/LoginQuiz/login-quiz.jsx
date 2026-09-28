@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth";
 import PreLoader from "../../../components/PreLoader/PreLoader";
@@ -33,9 +33,10 @@ function LoginQuiz() {
 
   async function loginWithEmailAndPassword() {
     try {
-      if (await login(formValues.email, formValues.password)) {
-        navigate("/my-quiz/all-words");
-      }
+      const response = await login(formValues.email, formValues.password);
+      if (!response) return;
+
+      navigate("/my-quiz/all-words");
     } catch (err) {
       const message = err.response?.detail || "Login Fehler";
 
@@ -44,7 +45,7 @@ function LoginQuiz() {
     }
   }
 
-  const validate = (values) => {
+  function validate(values) {
     const errors = {};
 
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -61,8 +62,7 @@ function LoginQuiz() {
     }
 
     return errors;
-  };
-
+  }
 
   return (
     <main className="main-auth">

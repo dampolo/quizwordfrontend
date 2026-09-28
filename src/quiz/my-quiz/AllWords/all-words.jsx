@@ -8,6 +8,7 @@ import PreLoader from "../../../components/PreLoader/PreLoader";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import PageTitle from "../../../components/PageTitle/PageTitle";
 
 function AllWords() {
   const {
@@ -105,7 +106,8 @@ function AllWords() {
   }, [language, currentPage]);
 
   return (
-    <div className={styles["vocabulary"]}>
+      <div className={styles["vocabulary"]}>
+        <PageTitle title="Alle Wörter" />
       <div className={styles["vocabulary__header"]}>
         <div>
           <h1>Deine Vokabeln</h1>
@@ -126,7 +128,10 @@ function AllWords() {
             + Quiz
           </button>
 
-          <Link className={`main-quiz-button ${styles["add-btn"]}`} to="/my-quiz/add-new-word">
+          <Link
+            className={`main-quiz-button ${styles["add-btn"]}`}
+            to="/my-quiz/add-new-word"
+          >
             + Wort
           </Link>
         </div>
@@ -135,9 +140,7 @@ function AllWords() {
       <ul className={styles["languages-list"]}>
         {userLanguages?.map((lang) => (
           <li
-            className={
-              `${styles["language-single"]} ${active === lang.id ? styles["active"] : ""}`
-            }
+            className={`${styles["language-single"]} ${active === lang.id ? styles["active"] : ""}`}
             key={lang.id}
           >
             <button
@@ -187,7 +190,9 @@ function AllWords() {
               </div>
 
               <div className={styles["category"]}>
-                <span className={`${styles["badge"]} ${styles[word.category_name] || ""}`}>
+                <span
+                  className={`${styles["badge"]} ${styles[word.category_name] || ""}`}
+                >
                   {word.translations[1].category_name}
                 </span>
               </div>
@@ -202,7 +207,7 @@ function AllWords() {
                 <Link
                   to={`/my-quiz/${word.id}/edit-word?target-word=${word.translations[1].id}&language=${word.translations[1].language}`}
                 >
-                  ✏️
+                  <img src="/assets/edit.svg" alt="edit" />
                 </Link>
               </div>
             </div>
@@ -260,7 +265,6 @@ function AllWords() {
         </div>
 
         {/* Start last quiz ENDE*/}
-
       </div>
       <button
         type="submit"

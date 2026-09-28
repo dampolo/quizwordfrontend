@@ -239,8 +239,14 @@
 }
 
 .actions a {
+  padding: 0.5rem;
+  border-radius: basic.$qw-border-radius;
   margin: 0;
+  &:hover {
+    background-color: basic.$color-hover;
+  }
 }
+
 .pagination {
   display: flex;
   justify-content: space-between;
@@ -395,7 +401,6 @@
   }
 }
 
-
 // Result-card styles.
 
 .table-row {
@@ -452,7 +457,6 @@
 }
 
 @media (max-width: 43.75rem) {
-
   .table-row {
     display: grid;
     grid-template-columns: 50px 1fr 1fr 1fr;

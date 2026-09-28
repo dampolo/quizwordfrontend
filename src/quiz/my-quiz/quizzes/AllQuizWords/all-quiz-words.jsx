@@ -132,7 +132,9 @@ function AllQuizWords() {
 
         {quiz?.concepts.map((concept) => (
           <div className={styles["list-row-attempt"]} key={concept.id}>
-            <div className={styles["rank"]}>#{concept.translations[1].rank}</div>
+            <div className={styles["rank"]}>
+              #{concept.translations[1].rank}
+            </div>
 
             <div className={styles["word"]}>
               <h3>{concept.translations[0].word}</h3>
@@ -154,12 +156,13 @@ function AllQuizWords() {
               <span>Days</span>
             </div>
 
-            <Link
-              to={`/my-quiz/${concept.id}/edit-word?target-word=${concept.translations[1].id}&language=${concept.translations[1].language}`}
-              className={styles["actions"]}
-            >
-              ✏️
-            </Link>
+            <div className={styles["actions"]}>
+              <Link
+                to={`/my-quiz/${concept.id}/edit-word?target-word=${concept.translations[1].id}&language=${concept.translations[1].language}`}
+              >
+                <img src="/assets/edit.svg" alt="edit" />
+              </Link>
+            </div>
           </div>
         ))}
       </div>
@@ -250,7 +253,9 @@ function AllQuizWords() {
                 })}
               </span>
             )}
-            <span className={styles["badge"]}>{details.length} Words Total</span>
+            <span className={styles["badge"]}>
+              {details.length} Words Total
+            </span>
           </div>
 
           <div className={styles["table"]}>
@@ -273,9 +278,7 @@ function AllQuizWords() {
                 >
                   <div className={styles["status"]}>
                     <span
-                      className={
-                        `${styles["icon"]} ${item.is_correct ? styles["success"] : styles["error"]}`
-                      }
+                      className={`${styles["icon"]} ${item.is_correct ? styles["success"] : styles["error"]}`}
                     >
                       {item.is_correct ? "✓" : "✕"}
                     </span>

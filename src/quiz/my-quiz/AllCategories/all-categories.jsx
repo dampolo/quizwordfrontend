@@ -4,6 +4,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import PreLoader from "../../../components/PreLoader/PreLoader";
 
 import styles from "./all-categories.module.scss";
+import PageTitle from "../../../components/PageTitle/PageTitle";
 
 export default function AllCategories() {
   const {
@@ -35,6 +36,7 @@ export default function AllCategories() {
 
   return (
     <section className={styles["vocab-page"]}>
+        <PageTitle title="Kategorien" />
       <header className={styles["topbar"]}>
         <div>
           <h1>Vokabelkategorien</h1>

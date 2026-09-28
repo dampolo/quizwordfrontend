@@ -240,8 +240,14 @@
 }
 
 .actions a {
+  padding: 0.5rem;
+  border-radius: basic.$qw-border-radius;
   margin: 0;
+  &:hover {
+    background-color: basic.$color-hover;
+  }
 }
+
 .pagination {
   display: flex;
   justify-content: space-between;

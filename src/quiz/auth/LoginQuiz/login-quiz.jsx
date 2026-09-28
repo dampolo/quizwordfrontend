@@ -88,6 +88,7 @@ function LoginQuiz() {
             <label htmlFor="email">E-Mail-Adresse</label>
             <input
               className="input-field"
+              id="email"
               type="email"
               name="email"
               placeholder="beispielname@email.com"
@@ -113,6 +114,7 @@ function LoginQuiz() {
             <label htmlFor="password">Passwort</label>
             <input
               autoComplete="current-password"
+              id="password"
               className="input-field"
               type={isPasswordVisible ? "text" : "password"}
               name="password"

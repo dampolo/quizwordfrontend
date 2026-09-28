@@ -307,8 +307,10 @@
       }
     }
   }
+}
 
-  @media (max-width: 56.25rem) {
+@media (max-width: 56.25rem) {
+  .vocab-page {
     .vocab-page {
       padding: 1rem 0.5rem;
     }
@@ -325,8 +327,10 @@
       grid-column: span 2;
     }
   }
+}
 
-  @media (max-width: 37.5rem) {
+@media (max-width: 37.5rem) {
+  .vocab-page {
     padding: 20px;
 
     .topbar,

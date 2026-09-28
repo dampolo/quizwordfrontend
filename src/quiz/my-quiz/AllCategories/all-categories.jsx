@@ -33,7 +33,6 @@ export default function AllCategories() {
     }
   }, [language]);
 
-
   return (
     <section className={styles["vocab-page"]}>
       <header className={styles["topbar"]}>
@@ -55,9 +54,7 @@ export default function AllCategories() {
 
       <ul className={styles["languages-list"]}>
         <li
-          className={
-            `${styles["language-single"]} ${active === null ? styles["active"] : ""}`
-          }
+          className={`${styles["language-single"]} ${active === null ? styles["active"] : ""}`}
         >
           <button
             className={styles["language-button"]}
@@ -69,9 +66,7 @@ export default function AllCategories() {
 
         {userLanguages.map((lang) => (
           <li
-            className={
-              `${styles["language-single"]} ${active === lang.id ? styles["active"] : ""}`
-            }
+            className={`${styles["language-single"]} ${active === lang.id ? styles["active"] : ""}`}
             key={lang.id}
           >
             <button
@@ -89,10 +84,15 @@ export default function AllCategories() {
             <PreLoader />
           </div>
         ) : categories.length === 0 ? (
-          <p className={styles["no-category"]}>Du hast hier keine Kategorie erstellt.</p>
+          <p className={styles["no-category"]}>
+            Du hast hier keine Kategorie erstellt.
+          </p>
         ) : (
           categories.map((cat) => (
-            <article className={`${styles["card"]} ${cat.wide ? styles["wide"] : ""}`} key={cat.id}>
+            <article
+              className={`${styles["card"]} ${cat.wide ? styles["wide"] : ""}`}
+              key={cat.id}
+            >
               <div className={styles["card-actions"]}>
                 <h3>{cat.category_name}</h3>
                 <Link

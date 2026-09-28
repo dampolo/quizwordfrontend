@@ -22,6 +22,7 @@ import { ToastContainer } from "react-toastify";
 import Profile from "./quiz/my-quiz/Profile/Profile/profile";
 import EditProfile from "./quiz/my-quiz/Profile/EditProfile/edit-profile";
 import Confirmation from "./components/Confirmation/confirmation";
+import PageNotFound from "./components/PageNotFound/page-not-found";
 import ChooseLanguages from "./components/ChooseLanguage/ChooseLanguage";
 import AddNewQuiz from "./quiz/my-quiz/quizzes/AddNewQuiz/add-new-quiz";
 import AllQuizzes from "./quiz/my-quiz/quizzes/AllQuizzes/all-quizzes";
@@ -69,6 +70,7 @@ function App() {
             path="/reset-password/:uid/:token"
             element={<ResetPassword />}
           />
+          <Route path="*" element={<PageNotFound />} />
         </Route>
 
         {/* Protected */}

@@ -1,0 +1,75 @@
+@use "../../styles/basic.scss";
+
+.page-not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    max-width: 37.875rem;
+    width: 100%;
+    background-color: basic.$qw-third;
+    border-radius: basic.$qw-border-radius;
+    padding: 2.5rem;
+    margin: 0.625rem;
+
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 2.5rem;
+      margin-bottom: 1.875rem;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 500;
+
+      .heading {
+        color: basic.$qw-primary;
+        font-size: 1.8rem;
+        font-weight: 700;
+        line-height: normal;
+        text-align: center;
+      }
+    }
+
+    .description {
+      text-align: center;
+      margin-bottom: 1.875rem;
+
+      .link {
+        color: basic.$qw-primary;
+        border: 0.125rem dotted transparent;
+        display: inline-block;
+        margin-top: 1rem;
+
+        &:hover {
+          text-decoration: underline;
+        }
+
+        &:focus-visible {
+          border: 0.125rem dotted basic.$qw-primary;
+          outline: basic.$qw-primary;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 31.25rem) {
+  .page-not-found {
+    margin: 0.5rem;
+
+    .content {
+      padding: 0.5rem;
+    }
+  }
+}
+
+

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import "./EditButton.scss";
 
-function EditButton({ to }) {
+function EditButton({ to, className = "" }) {
   return (
-    <Link to={to} className="edit-button">
+    <Link to={to} className={`edit-button ${className}`.trim()}>
       <svg
         width={40}
         height={40}

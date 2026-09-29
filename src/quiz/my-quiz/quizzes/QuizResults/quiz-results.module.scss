@@ -20,25 +20,6 @@
     }
   }
 
-  @media (max-width: 48rem) {
-    .action-buttons {
-      justify-content: space-between;
-
-      .save-btn {
-        padding: 0;
-        width: fit-content;
-        padding-inline: 1rem;
-      }
-
-      .cancel-btn {
-        min-width: fit-content;
-        padding: 0;
-        padding-inline: 1rem;
-        height: fit-content;
-      }
-    }
-  }
-
   .table-row {
     display: grid;
     grid-template-columns: 50px 1fr 1fr 1fr;
@@ -92,34 +73,6 @@
     }
   }
 
-  @media (max-width: 43.75rem) {
-    & {
-      padding: 0.625rem;
-    }
-
-    .table-row {
-      display: grid;
-      grid-template-columns: 50px 1fr 1fr 1fr;
-      align-items: center;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid #edf1f6;
-
-      &:last-child {
-        border-bottom: none;
-      }
-
-      &.wrong {
-        background: #fff7f7;
-      }
-    }
-
-    .column {
-      .label {
-        font-size: 8px;
-      }
-
-    }
-  }
   .vocabulary-card {
     background: basic.$qw-fourth;
     border: 0.0625rem solid #dbe3ef;
@@ -181,6 +134,56 @@
     &.error {
       background: #dc2626;
       color: basic.$qw-fourth;
+    }
+  }
+}
+
+@media (max-width: 48rem) {
+  .results {
+    .action-buttons {
+      justify-content: space-between;
+
+      .save-btn {
+        padding: 0;
+        width: fit-content;
+        padding-inline: 1rem;
+      }
+
+      .cancel-btn {
+        min-width: fit-content;
+        padding: 0;
+        padding-inline: 1rem;
+        height: fit-content;
+      }
+    }
+  }
+}
+
+@media (max-width: 43.75rem) {
+  .results {
+    padding: 0.625rem;
+
+    .table-row {
+      display: grid;
+      grid-template-columns: 50px 1fr 1fr 1fr;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #edf1f6;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &.wrong {
+        background: #fff7f7;
+      }
+    }
+
+    .column {
+      .label {
+        font-size: 8px;
+      }
+
     }
   }
 }

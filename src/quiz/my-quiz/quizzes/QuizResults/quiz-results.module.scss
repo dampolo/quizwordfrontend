@@ -15,22 +15,8 @@
     align-items: center;
     gap: 26px;
     margin-top: 1rem;
-
-  .cancel-btn {
-      background: transparent;
-      color: basic.$qw-primary;
-      margin: 0;
-    }
-
     .save-btn {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      border-radius: basic.$qw-border-radius;
-      background: #3421d6;
-      color: basic.$qw-fourth;
       margin: 0;
-      padding: 0.75rem 1.5625rem;
     }
   }
 

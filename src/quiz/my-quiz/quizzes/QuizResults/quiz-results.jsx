@@ -53,13 +53,13 @@ function QuizResults() {
       </div>
       <div className={styles["action-buttons"]}>
         <Link
-          className={`${styles["main-quiz-button-cancel"]} ${styles["cancel-btn"]}`}
+          className={`main-quiz-button-cancel ${styles["cancel-btn"]}`}
           to={`/my-quiz/${id}/all-quiz-words/`}
         >
           Zurück
         </Link>
         <Link
-          className={`${styles["main-quiz-button"]} ${styles["save-btn"]}`}
+          className={`main-quiz-button ${styles["save-btn"]}`}
           to={`/my-quiz/${id}/play-quiz`}
         >
           Wiederholen

@@ -1,5 +1,82 @@
 @use "./../../../../styles/basic.scss";
-@use "./../Profile/profile.scss";
+
+.edit-profile {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+  background: basic.$qw-bg-quiz;
+  .title {
+    font-size: 1.8rem;
+  }
+
+  &__single {
+    display: flex;
+    flex-direction: column;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #f3f4f6;
+    }
+  }
+
+  &__card {
+    width: 100%;
+    max-width: 900px;
+    background: basic.$qw-fourth;
+    border: 1px solid basic.$qw-border-color;
+    border-radius: basic.$qw-border-radius;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 9.378rem 1fr;
+    align-items: start;
+    gap: 12px;
+    padding: 12px 0;
+    overflow: hidden;
+  }
+
+  &__label {
+    color: #6b7280;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  &__value {
+    color: #111827;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  &__checkbox {
+    justify-self: start;
+    accent-color: basic.$qw-primary;
+  }
+  &__textarea {
+    border: solid 0.0625rem basic.$qw-third;
+    border-radius: basic.$qw-border-radius;
+    padding: 0.5rem;
+    &:hover {
+      border: solid 0.0625rem basic.$qw-third;
+    }
+    &:focus {
+      background-color: basic.$qw-fourth;
+      border: solid 0.0625rem basic.$qw-primary;
+      outline: basic.$qw-third;
+    }
+    &:-webkit-autofill {
+      box-shadow: 0 0 0px 62.5rem basic.$qw-fourth inset;
+    }
+  }
+
+  .warn-profile {
+    margin-bottom: 12px;
+    text-align: center;
+    margin-top: -10px;
+  }
+
+}
 
 .input-field {
   background-color: basic.$qw-fourth;
@@ -42,5 +119,19 @@
   }
   &:-webkit-autofill {
     box-shadow: 0 0 0px 62.5rem basic.$qw-fourth inset;
+  }
+}
+
+@media (max-width: 46rem) {
+  .edit-profile {
+    width: 100%;
+    padding: 1rem;
+    &__row {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    &__card {
+      padding: 1rem;
+    }
   }
 }

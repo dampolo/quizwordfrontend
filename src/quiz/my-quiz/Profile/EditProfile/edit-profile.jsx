@@ -25,18 +25,18 @@ function InfoRow({
   };
 
   return (
-    <div className={styles["profile-user__single"]}>
-      <div className={styles["profile-user__row"]}>
+    <div className={styles["edit-profile__single"]}>
+      <div className={styles["edit-profile__row"]}>
         {isReadOnly ? (
-          <span className={styles["profile-user__label"]}>{label}</span>
+          <span className={styles["edit-profile__label"]}>{label}</span>
         ) : (
-          <label htmlFor={name} className={styles["profile-user__label"]}>
+          <label htmlFor={name} className={styles["edit-profile__label"]}>
             {label}
           </label>
         )}
 
         {isReadOnly ? (
-          <span className={styles["profile-user__value"]}>{renderValue()}</span>
+          <span className={styles["edit-profile__value"]}>{renderValue()}</span>
         ) : type === "checkbox" ? (
           <input
             id={name}
@@ -44,7 +44,7 @@ function InfoRow({
             type="checkbox"
             checked={Boolean(value)}
             onChange={onChange}
-            className="profile-user__checkbox"
+            className={styles["edit-profile__checkbox"]}
           />
         ) : type === "select" ? (
           <select
@@ -52,7 +52,7 @@ function InfoRow({
             name={name}
             value={value ?? ""}
             onChange={onChange}
-            className={`profile-user__input ${styles["input-select"]}`}
+            className={styles["input-select"]}
           >
             <option value="Herr">Herr</option>
             <option value="Frau">Frau</option>
@@ -65,7 +65,7 @@ function InfoRow({
             type={type}
             value={value ?? ""}
             onChange={onChange}
-            className={`profile-user__input ${styles["input-field"]}`}
+            className={styles["input-field"]}
           />
         )}
       </div>
@@ -153,10 +153,10 @@ function EditProfile() {
   }
 
   return (
-    <div className={styles["profile-user"]}>
+    <div className={styles["edit-profile"]}>
       <h1 className={styles["title"]}>Edit Profil</h1>
 
-      <form className={styles["profile-user__card"]} onSubmit={handleSubmit}>
+      <form className={styles["edit-profile__card"]} onSubmit={handleSubmit}>
         <BackButton to="/my-quiz/profile/" />
         <InfoRow
           label="Customer Number:"
@@ -236,11 +236,11 @@ function EditProfile() {
           onChange={handleChange}
         />
 
-        <div className={styles["profile-user__row"]}>
-          <label className={styles["profile-user__label"]}>Description:</label>
+        <div className={styles["edit-profile__row"]}>
+          <label className={styles["edit-profile__label"]}>Description:</label>
 
           <textarea
-            className={styles["profile-user__textarea"]}
+            className={styles["edit-profile__textarea"]}
             name="description"
             value={form.description}
             onChange={handleChange}

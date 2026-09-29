@@ -27,21 +27,12 @@ function CreateAccount() {
 
   const { createAccount, loading, setConfirmationMessage } = useAuth();
 
-  const isFormValid =
-    regexEmail.test(formValues.email) &&
-    regexPassword.test(formValues.password) &&
-    formValues.password === formValues.repeated_password &&
-    formValues.checked;
+  const isFormValid = Object.keys(validateInput(formValues)).length === 0;
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const errors = validateInput(formValues, {
-      email: true,
-      password: true,
-      repeated_password: true,
-      checked: true,
-    });
+    const errors = validateInput(formValues);
 
     setFormErrors(errors);
 
@@ -73,21 +64,14 @@ function CreateAccount() {
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
 
-    const updatedValues = {
-      ...formValues,
+    setFormValues((previousValues) => ({
+      ...previousValues,
       [name]: type === "checkbox" ? checked : value,
-    };
-
-    setFormValues(updatedValues);
+    }));
   }
 
   function handleBlur(e) {
-    const { name, value, type, checked } = e.target;
-
-    const updatedValues = {
-      ...formValues,
-      [name]: type === "checkbox" ? checked : value,
-    };
+    const { name } = e.target;
 
     const newTouched = {
       ...touched,
@@ -95,29 +79,37 @@ function CreateAccount() {
     };
 
     setTouched(newTouched);
-    setFormErrors(validateInput(updatedValues, newTouched));
+    setFormErrors(validateInput(formValues, newTouched));
   }
 
-  function validateInput(values, touched) {
+  function validateInput(
+    values,
+    touchedFields = {
+      email: true,
+      password: true,
+      repeated_password: true,
+      checked: true,
+    },
+  ) {
     const errors = {};
 
-    if (touched.email && !regexEmail.test(values.email)) {
+    if (touchedFields.email && !regexEmail.test(values.email)) {
       errors.email = "E-Mail ist unvollständig/inkorrekt.";
     }
 
-    if (touched.password && !regexPassword.test(values.password)) {
+    if (touchedFields.password && !regexPassword.test(values.password)) {
       errors.password =
         "Mindestens 10 Zeichen erforderlich: ein Klein- u. ein Großbuchstabe, eine Zahl und ein Sonderzeichen.";
     }
 
     if (
-      touched.repeated_password &&
+      touchedFields.repeated_password &&
       values.password !== values.repeated_password
     ) {
       errors.notMatch = "Passwörter stimmen nicht überein.";
     }
 
-    if (touched.checked && !values.checked) {
+    if (touchedFields.checked && !values.checked) {
       errors.checked = "Bitte akzeptiere die Datenschutzerklärung.";
     }
 

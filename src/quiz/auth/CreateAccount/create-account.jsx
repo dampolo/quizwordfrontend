@@ -21,11 +21,11 @@ function CreateAccount() {
   const [formErrors, setFormErrors] = useState({});
   const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
   const regexPassword =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%+\-/*?&])[A-Za-z\d@$!%+\-/*?&]{10,}$/;
-  const navigate = useNavigate();
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%+\-/*?&#])[A-Za-z\d@$!%+\-/*?&#]{10,}$/;
+  
+	const navigate = useNavigate();
 
-  const { createAccount, loading, setConfirmationMessage } =
-    useAuth();
+  const { createAccount, loading, setConfirmationMessage } = useAuth();
 
   const isFormValid =
     regexEmail.test(formValues.email) &&
@@ -33,7 +33,7 @@ function CreateAccount() {
     formValues.password === formValues.repeated_password &&
     formValues.checked;
 
-  async function submit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     const errors = validateInput(formValues, {
@@ -49,9 +49,12 @@ function CreateAccount() {
       return;
     }
 
+    await submitAccount(formValues);
+  }
+
+  async function submitAccount(values) {
     try {
-      await createAccount(formValues);
-      console.log("Account created!");
+      await createAccount(values);
       setConfirmationMessage(
         "Du bist erfolgreich registriert. Um dich anzumelden, musst du dein E-Mail bestätigen!",
       );
@@ -138,7 +141,7 @@ function CreateAccount() {
           </Link>
         </p>
 
-        <form onSubmit={submit}>
+        <form onSubmit={handleSubmit}>
           <div className="input-container">
             <label htmlFor="email">Dein E-Mail</label>
 
@@ -275,8 +278,8 @@ function CreateAccount() {
             <div className="checkbox-description">
               <label htmlFor="checkbox" id="checkbox">
                 Ich stimme der{" "}
-                <Link className="privacy" to="/privacy-policy" target="blank"> 
-                  Datenschutzerklärung 
+                <Link className="privacy" to="/privacy-policy" target="blank">
+                  Datenschutzerklärung
                 </Link>{" "}
                 zu.
               </label>

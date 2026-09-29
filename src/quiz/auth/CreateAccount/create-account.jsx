@@ -63,7 +63,7 @@ function CreateAccount() {
 
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
-
+	
     setFormValues((previousValues) => ({
       ...previousValues,
       [name]: type === "checkbox" ? checked : value,

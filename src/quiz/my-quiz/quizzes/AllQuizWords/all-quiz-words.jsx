@@ -83,12 +83,12 @@ function AllQuizWords() {
   }
 
   return (
-    <div className={styles["vocabulary"]}>
+    <div className={styles["all-quiz-words"]}>
       <BackButton
         to={`/my-quiz/all-quizzes?language=${quiz?.target_language}`}
       />
 
-      <div className={styles["vocabulary__header"]}>
+      <div className={styles["all-quiz-words__header"]}>
         <div>
           <h1>Quiz: {quiz?.quiz_name}</h1>
           <p>

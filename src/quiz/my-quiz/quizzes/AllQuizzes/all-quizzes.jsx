@@ -79,7 +79,7 @@ function Quizzes() {
   }
 
   return (
-    <section className={styles["vocab-page"]}>
+    <section className={styles["all-quizzes"]}>
       <header className={styles["topbar"]}>
         <div>
           <h1>Aktive Quizze</h1>

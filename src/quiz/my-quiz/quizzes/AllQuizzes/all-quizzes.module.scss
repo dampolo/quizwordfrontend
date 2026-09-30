@@ -25,26 +25,7 @@
       margin: 6px 0 0;
       color: basic.$qw-body-text-color;
     }
-
-    .add-new-category-button {
-      height: 48px;
-      padding: 0 24px;
-      font-weight: 800;
-      max-width: fit-content;
-      margin: initial;
-    }
   }
-}
-
-.vocab-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  width: 100%;
-  padding: 2rem;
-  background: basic.$qw-bg-quiz;
-  color: basic.$qw-color-heading;
-
   .category {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(12.5rem, 18.75rem));
@@ -64,13 +45,6 @@
       background: basic.$qw-fourth;
       box-shadow: 0 1px 2px rgba(20, 20, 40, 0.04);
       color: #07152f;
-
-      &__top {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        margin-bottom: 14px;
-      }
 
       h3 {
         margin: 0 0 8px;
@@ -126,27 +100,6 @@
         }
       }
     }
-    .add-card {
-      min-height: 150px;
-      border: 2px dashed basic.$qw-border-color;
-      border-radius: basic.$qw-border-radius;
-      background: transparent;
-      display: grid;
-      place-items: center;
-      align-content: center;
-      gap: 6px;
-      color: basic.$qw-color-heading;
-
-      span {
-        font-size: 28px;
-        color: #8aa0c8;
-      }
-
-      small {
-        color: basic.$qw-body-text-color;
-        text-align: center;
-      }
-    }
   }
 }
 
@@ -192,37 +145,94 @@
   left: 0;
   right: 0;
   background-color: rgba(52, 33, 214, 0.4);
+  padding: 4.5rem 1rem 1rem;
 }
 
-/* VocabularyCard.scss */
+.quiz-overview__list {
+  width: 100%;
+  max-width: 50rem;
+  max-height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: basic.$qw-fourth;
+  border-radius: basic.$qw-border-radius;
+  overflow-y: auto;
+  border: 1px solid #ececec;
+}
+
+.quiz-overview__head,
+.quiz-overview__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 5rem;
+  gap: 1rem;
+  padding: 1rem;
+
+  align-items: center;
+}
+.quiz-overview__row {
+  border-top: 1px solid #efefef;
+}
+
+.quiz-overview__head {
+  background: #eef5ff;
+  padding: 1rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #888;
+}
+
+.quiz-overview__word {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+
+  h3 {
+    color: #4738d6;
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  p {
+    margin: 0;
+    color: #444;
+  }
+
+  span {
+    color: #bbb;
+    font-size: 1.2rem;
+  }
+}
+
+.quiz-overview__actions {
+  display: flex;
+  justify-content: center;
+}
+
+.quiz-overview__actions a {
+  padding: 0.5rem;
+  border-radius: basic.$qw-border-radius;
+  margin: 0;
+  &:hover {
+    background-color: basic.$color-hover;
+  }
+}
 
 @media (max-width: 56.25rem) {
   .vocab-page {
     padding: 1rem 0.5rem;
   }
-  .stats,
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .bottom {
-    grid-template-columns: 1fr;
-  }
-
-  .card.wide {
-    grid-column: span 2;
-  }
 }
 
 @media (max-width: 37.5rem) {
-  .topbar,
-  .activity-row {
+  .topbar {
     flex-direction: column;
     align-items: stretch;
-  }
-
-  .topbar button {
-    width: 100%;
   }
 }
 

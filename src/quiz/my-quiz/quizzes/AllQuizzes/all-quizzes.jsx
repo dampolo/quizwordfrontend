@@ -8,8 +8,14 @@ import FormDialog from "../../../../components/FormDialog/FormDialog";
 import { toast } from "react-toastify";
 
 function Quizzes() {
-  const { getFiltredQuizzes, quizzes, loading, getQuizzes, putQuiz } =
-    useQuiz();
+  const {
+    getFiltredQuizzes,
+    quizzes,
+    loading,
+    getQuizzes,
+    putQuiz,
+    getQuizWords,
+  } = useQuiz();
   const { userLanguages } = useVocabulary();
   const [searchParams, setSearchParams] = useSearchParams();
   const language = searchParams.get("language");
@@ -20,9 +26,13 @@ function Quizzes() {
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogDescription, setDialogDescription] = useState("");
   const [quizOverview, setQuizOverview] = useState(false);
+  const [quiz, setQuiz] = useState(null);
 
-  function activate() {
+  async function activate(id) {
     setQuizOverview(true);
+    const quizData = await getQuizWords(id);
+    setQuiz(quizData);
+    // console.log(quizData);
   }
 
   function selectLanguage(languageId) {
@@ -38,6 +48,11 @@ function Quizzes() {
     setDialogDescription("Du kannst Name des Quizzes ändern: ");
     setDialogOpen(true);
   }
+
+  function setQuizWords() {
+    setQuizOverview(false);
+  }
+
   useEffect(() => {
     if (language) {
       getFiltredQuizzes(language);
@@ -74,13 +89,6 @@ function Quizzes() {
             Schwachstellen.
           </p>
         </div>
-
-        {/* <Link
-          className={`main-quiz-button ${styles["add-new-category-button"]}`}
-          to="/my-quiz/add-new-quiz"
-        >
-          + Add New Quiz
-        </Link> */}
       </header>
 
       <ul className={styles["languages-list"]}>
@@ -157,13 +165,10 @@ function Quizzes() {
                   />
                 </Link>
 
-                <button type="button" onClick={activate}>
-                  TEST
-                </button>
-
-                <Link
+                <button
+                  type="button"
+                  onClick={() => activate(quiz.quiz_id)}
                   className={styles["action-button__icon"]}
-                  to={`/my-quiz/${quiz.quiz_id}/all-quiz-words?language=${quiz?.target_language}`}
                 >
                   <img
                     width={40}
@@ -171,7 +176,7 @@ function Quizzes() {
                     src="/assets/look-quiz.svg"
                     alt="look"
                   />
-                </Link>
+                </button>
 
                 {/* Flip Card */}
                 <Link
@@ -213,14 +218,6 @@ function Quizzes() {
         )}
 
         {/* Quiz END */}
-
-        {/* <Link className={styles["add-card"]} to="/my-quiz/add-new-quiz">
-          <span>⊕</span>
-          <strong>Create Custom Quiz</strong>
-          <small>
-            Hand-pick words from your library to focus your study session
-          </small>
-        </Link> */}
       </div>
       <FormDialog
         quizName={selectedQuiz?.quiz_name}
@@ -236,11 +233,36 @@ function Quizzes() {
       >
         <button
           type="button"
-          onClick={() => setQuizOverview(false)}
+          onClick={setQuizWords}
           className={styles["quiz-overview__close"]}
         >
           <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
         </button>
+        <div className={styles["quiz-overview__list"]}>
+          <div className={styles["quiz-overview__head"]}>
+            <div className={styles["quiz-overview__word"]}>
+              Wort & Übersetzung
+            </div>
+            <div className={styles["quiz-overview__actions"]}>Aktionen</div>
+          </div>
+          {quiz?.concepts.map((concept) => (
+            <div className={styles["quiz-overview__row"]} key={concept.id}>
+              <div className={styles["quiz-overview__word"]}>
+                <h3>{concept.translations[0].word}</h3>
+                <span>»</span>
+                <p>{concept.translations[1].word}</p>
+              </div>
+
+              <div className={styles["quiz-overview__actions"]}>
+                <Link
+                  to={`/my-quiz/${concept.id}/edit-word?target-word=${concept.translations[1].id}&language=${concept.translations[1].language}`}
+                >
+                  <img src="/assets/edit.svg" alt="edit" />
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
     </section>
   );

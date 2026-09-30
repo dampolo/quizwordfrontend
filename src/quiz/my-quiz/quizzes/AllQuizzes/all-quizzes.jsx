@@ -8,7 +8,8 @@ import FormDialog from "../../../../components/FormDialog/FormDialog";
 import { toast } from "react-toastify";
 
 function Quizzes() {
-  const { getFiltredQuizzes, quizzes, loading, getQuizzes, putQuiz } = useQuiz();
+  const { getFiltredQuizzes, quizzes, loading, getQuizzes, putQuiz } =
+    useQuiz();
   const { userLanguages } = useVocabulary();
   const [searchParams, setSearchParams] = useSearchParams();
   const language = searchParams.get("language");
@@ -18,6 +19,11 @@ function Quizzes() {
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogDescription, setDialogDescription] = useState("");
+  const [quizOverview, setQuizOverview] = useState(false);
+
+  function activate() {
+    setQuizOverview(true);
+  }
 
   function selectLanguage(languageId) {
     if (languageId === null) {
@@ -79,9 +85,7 @@ function Quizzes() {
 
       <ul className={styles["languages-list"]}>
         <li
-          className={
-            `${styles["language-single"]} ${active === null ? styles["active"] : ""}`
-          }
+          className={`${styles["language-single"]} ${active === null ? styles["active"] : ""}`}
         >
           <button
             className={styles["language-button"]}
@@ -94,9 +98,7 @@ function Quizzes() {
         {userLanguages.map((lang) => (
           <li
             key={lang.id}
-            className={
-              `${styles["language-single"]} ${active === lang.id ? styles["active"] : ""}`
-            }
+            className={`${styles["language-single"]} ${active === lang.id ? styles["active"] : ""}`}
           >
             <button
               className={styles["language-button"]}
@@ -155,6 +157,10 @@ function Quizzes() {
                   />
                 </Link>
 
+                <button type="button" onClick={activate}>
+                  TEST
+                </button>
+
                 <Link
                   className={styles["action-button__icon"]}
                   to={`/my-quiz/${quiz.quiz_id}/all-quiz-words?language=${quiz?.target_language}`}
@@ -180,7 +186,6 @@ function Quizzes() {
                   />
                 </Link>
                 {/* Flip Card end*/}
-              
               </div>
 
               <div className={styles["vocab-card__footer"]}>
@@ -226,6 +231,17 @@ function Quizzes() {
         message={message}
         onSubmit={handleEditQuiz}
       />
+      <section
+        className={`${styles["quiz-overview"]} ${quizOverview ? styles["show-quiz-overview"] : ""}`}
+      >
+        <button
+          type="button"
+          onClick={() => setQuizOverview(false)}
+          className={styles["quiz-overview__close"]}
+        >
+          <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
+        </button>
+      </section>
     </section>
   );
 }

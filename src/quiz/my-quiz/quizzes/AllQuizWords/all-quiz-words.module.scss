@@ -1,4 +1,6 @@
 @use "./../../../../styles/basic.scss";
+
+
 .vocabulary {
   display: flex;
   flex-direction: column;
@@ -567,6 +569,22 @@
 
 .vocabulary-details {
   display: none;
+
+  &__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border: 1px solid #dddded;
+    border-radius: 50%;
+    background: basic.$qw-fourth;
+    font-size: 1rem;
+    color: #555;
+    transition: 0.2s;
+
+    &:hover {
+      background: #f6f6fb;
+    }
+  }
 }
 
 .show-vocabulary-details {

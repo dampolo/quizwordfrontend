@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import styles from "./all-quiz-words.module.scss";
-import quizStyles from "../PlayQuiz/play-quiz.module.scss";
 import useDialog from "../../../../context/DialogContext/useDialog";
 import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
@@ -262,7 +261,7 @@ function AllQuizWords() {
             <button
               type="button"
               onClick={() => setVocabularyDetails(false)}
-              className={quizStyles["quiz-card__cancel"]}
+              className={styles["vocabulary-details__close"]}
             >
               <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
             </button>

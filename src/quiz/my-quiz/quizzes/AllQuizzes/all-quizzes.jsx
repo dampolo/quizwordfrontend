@@ -27,12 +27,22 @@ function Quizzes() {
   const [dialogDescription, setDialogDescription] = useState("");
   const [quizOverview, setQuizOverview] = useState(false);
   const [quiz, setQuiz] = useState(null);
+  const [loadingWords, setLoadingWords] = useState(false);
 
-  async function activate(id) {
+  async function getOverview(id) {
     setQuizOverview(true);
-    const quizData = await getQuizWords(id);
-    setQuiz(quizData);
-    // console.log(quizData);
+    setLoadingWords(true);
+
+    try {
+      const quizData = await getQuizWords(id);
+      setQuiz(quizData);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to load quiz overview.");
+      setQuiz(null);
+    } finally {
+      setLoadingWords(false);
+    }
   }
 
   function selectLanguage(languageId) {
@@ -167,7 +177,7 @@ function Quizzes() {
 
                 <button
                   type="button"
-                  onClick={() => activate(quiz.quiz_id)}
+                  onClick={() => getOverview(quiz.quiz_id)}
                   className={styles["action-button__icon"]}
                 >
                   <img
@@ -245,23 +255,30 @@ function Quizzes() {
             </div>
             <div className={styles["quiz-overview__actions"]}>Aktionen</div>
           </div>
-          {quiz?.concepts.map((concept) => (
-            <div className={styles["quiz-overview__row"]} key={concept.id}>
-              <div className={styles["quiz-overview__word"]}>
-                <h3>{concept.translations[0].word}</h3>
-                <span>»</span>
-                <p>{concept.translations[1].word}</p>
-              </div>
 
-              <div className={styles["quiz-overview__actions"]}>
-                <Link
-                  to={`/my-quiz/${concept.id}/edit-word?target-word=${concept.translations[1].id}&language=${concept.translations[1].language}`}
-                >
-                  <img src="/assets/edit.svg" alt="edit" />
-                </Link>
-              </div>
+          {loadingWords ? (
+            <div className="show-container">
+              <PreLoader />
             </div>
-          ))}
+          ) : (
+            quiz?.concepts.map((concept) => (
+              <div className={styles["quiz-overview__row"]} key={concept.id}>
+                <div className={styles["quiz-overview__word"]}>
+                  <h3>{concept.translations[0].word}</h3>
+                  <span>»</span>
+                  <p>{concept.translations[1].word}</p>
+                </div>
+
+                <div className={styles["quiz-overview__actions"]}>
+                  <Link
+                    to={`/my-quiz/${concept.id}/edit-word?target-word=${concept.translations[1].id}&language=${concept.translations[1].language}`}
+                  >
+                    <img src="/assets/edit.svg" alt="edit" />
+                  </Link>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </section>
     </section>

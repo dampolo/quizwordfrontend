@@ -111,8 +111,9 @@ export function QuizProvider({ children }) {
     return data;
   }
 
+  // Do not call setLoading(true) in this function.
+  // It will affect the quiz preview in AllQuizzes.
   async function getQuizWords(id, isFlipcard = false) {
-    setLoading(true);
     try {
       const response = await apiFetch(
         `${api}quizzes/${id}?is_flipcard=${isFlipcard}`,
@@ -127,8 +128,9 @@ export function QuizProvider({ children }) {
       }
 
       return data;
-    } finally {
-      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      throw error;
     }
   }
 

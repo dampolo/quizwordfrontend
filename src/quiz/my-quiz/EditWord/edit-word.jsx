@@ -80,47 +80,43 @@ export default function EditWord() {
     }
   }
 
-  function handleChange(index, e) {
-    const { name, value } = e.target;
-
-    if (name === "language") {
-      setFormData((prev) => ({
-        ...prev,
-        translations: prev.translations.map((translation, i) =>
-          i === index
-            ? {
-                ...translation,
-                language: value,
-                category_id: "",
-              }
-            : translation,
-        ),
-      }));
-
-      clearCategories();
-
-      return;
-    }
-
-    if (name === "category") {
-      setFormData((prev) => ({
-        ...prev,
-        category: value,
-      }));
-      return;
-    }
-
+  function updateTranslation(index, changes) {
     setFormData((prev) => ({
       ...prev,
       translations: prev.translations.map((translation, i) =>
         i === index
           ? {
               ...translation,
-              [name]: value,
+              ...changes,
             }
           : translation,
       ),
     }));
+  }
+
+  function handleLanguageChange(index, value) {
+    updateTranslation(index, { language: value, category_id: "" });
+    clearCategories();
+  }
+
+  function handleCategoryChange(value) {
+    setFormData((prev) => ({ ...prev, category: value }));
+  }
+
+  function handleChange(index, e) {
+    const { name, value } = e.target;
+
+    if (name === "language") {
+      handleLanguageChange(index, value);
+      return;
+    }
+
+    if (name === "category") {
+      handleCategoryChange(value);
+      return;
+    }
+
+    updateTranslation(index, { [name]: value });
   }
 
   function handleDelete() {

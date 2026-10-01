@@ -1,0 +1,42 @@
+@use "../../../styles/basic.scss";
+
+.show-word-page {
+  padding: 28px;
+  background: #f7f8ff;
+  color: #172554;
+
+  h1 {
+    margin: 24px 0;
+    color: #06154f;
+  }
+}
+
+.word-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 24px;
+  max-width: 1070px;
+  margin: 0 auto;
+}
+
+.word-card {
+  padding: 26px;
+  background: basic.$qw-fourth;
+  border: 1px solid basic.$qw-border-color;
+  border-radius: basic.$qw-border-radius;
+  overflow-wrap: anywhere;
+
+  h2 { margin: 12px 0 24px; }
+  h3 { margin: 20px 0 8px; font-size: 14px; }
+  p { white-space: pre-wrap; }
+}
+
+.language {
+  color: #334155;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .show-word-page { padding: 16px; }
+}

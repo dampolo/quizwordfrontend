@@ -106,8 +106,8 @@ function AllWords() {
   }, [language, currentPage]);
 
   return (
-      <div className={styles["vocabulary"]}>
-        <PageTitle title="Alle Wörter" />
+    <div className={styles["vocabulary"]}>
+      <PageTitle title="Alle Wörter" />
       <div className={styles["vocabulary__header"]}>
         <div>
           <h1>Deine Vokabeln</h1>
@@ -170,7 +170,11 @@ function AllWords() {
           <p className={styles["no-words"]}>Du hast hier keine Wörter.</p>
         ) : (
           words?.results?.map((word) => (
-            <div className={styles["list-row"]} key={word.id}>
+            <Link
+              to={`/my-quiz/${word.id}/show-word?target-word=${word.translations[1].id}&language=${word.translations[1].language}`}
+              className={styles["list-row"]}
+              key={word.id}
+            >
               <div className={styles["checkbox"]}>
                 <input
                   type="checkbox"
@@ -210,7 +214,7 @@ function AllWords() {
                   <img src="/assets/edit.svg" alt="edit" />
                 </Link>
               </div>
-            </div>
+            </Link>
           ))
         )}
 

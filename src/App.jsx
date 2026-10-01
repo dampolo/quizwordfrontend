@@ -13,6 +13,7 @@ import { QuizProvider } from "./context/QuizContext";
 import { DialogProvider } from "./context/DialogContext/DialogContext";
 import { Outlet } from "react-router-dom";
 import EditWord from "./quiz/my-quiz/EditWord/edit-word";
+import ShowWord from "./quiz/my-quiz/ShowWord/show-word";
 import AddNewWord from "./quiz/my-quiz/AddNewWord/add-new-word";
 import AllCategories from "./quiz/my-quiz/AllCategories/all-categories";
 import AddNewCategory from "./quiz/my-quiz/AddNewCategory/add-new-category";
@@ -102,6 +103,7 @@ function App() {
 
               {/* Vocabulary */}
               <Route path="all-words" element={<AllWords />} />
+              <Route path=":id/show-word" element={<ShowWord />} />
               <Route path=":id/edit-word" element={<EditWord />} />
               <Route path="add-new-word" element={<AddNewWord />} />
               <Route

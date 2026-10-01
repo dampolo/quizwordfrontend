@@ -108,45 +108,47 @@ export default function AddNewWord() {
     }
   }
 
-  function handleChange(index, e) {
-    const { name, value } = e.target;
-
-    if (name === "language") {
-      setFormData((prev) => ({
-        ...prev,
-        translations: prev.translations.map((translation, i) =>
-          i === index ? { ...translation, language: value } : translation,
-        ),
-      }));
-
-      clearCategories();
-
-      if (index === 1 && value) {
-        getFiltredCategories(value);
-      }
-
-      return;
-    }
-
-    if (name === "category") {
-      setFormData((prev) => ({
-        ...prev,
-        category: value,
-      }));
-      return;
-    }
-
+  function updateTranslation(index, changes) {
     setFormData((prev) => ({
       ...prev,
       translations: prev.translations.map((translation, i) =>
         i === index
           ? {
               ...translation,
-              [name]: value,
+              ...changes,
             }
           : translation,
       ),
     }));
+  }
+
+  function handleLanguageChange(index, value) {
+    updateTranslation(index, { language: value });
+    clearCategories();
+
+    if (index === 1 && value) {
+      getFiltredCategories(value);
+    }
+  }
+
+  function handleCategoryChange(value) {
+    setFormData((prev) => ({ ...prev, category: value }));
+  }
+
+  function handleChange(index, e) {
+    const { name, value } = e.target;
+
+    if (name === "language") {
+      handleLanguageChange(index, value);
+      return;
+    }
+
+    if (name === "category") {
+      handleCategoryChange(value);
+      return;
+    }
+
+    updateTranslation(index, { [name]: value });
   }
 
   useEffect(() => {

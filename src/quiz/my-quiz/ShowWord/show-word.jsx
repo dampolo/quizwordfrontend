@@ -46,18 +46,14 @@ export default function ShowWord() {
                 )?.language_name || "Übersetzung"}
               </p>
               <h2>{translation.word}</h2>
-              {translation.tip && (
                 <div>
                   <h3>Tipp</h3>
-                  <p>{translation.tip}</p>
+                  <p>{translation.tip || "---" }</p>
                 </div>
-              )}
-              {translation.sentence && (
                 <div>
                   <h3>Beispielsatz</h3>
-                  <p>{translation.sentence}</p>
+                  <p>{translation.sentence || "---"}</p>
                 </div>
-              )}
             </article>
           ))}
         </div>

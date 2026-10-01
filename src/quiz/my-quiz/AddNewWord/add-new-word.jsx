@@ -45,11 +45,22 @@ export default function AddNewWord() {
     ],
   });
 
+  function getConceptPayload() {
+    return {
+      ...formData,
+      translations: formData.translations.map((translation, index) =>
+        index === 0
+          ? { ...translation, language: nativeLanguage?.id ?? "" }
+          : translation,
+      ),
+    };
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
-      const data = await createConcept(formData);
+      const data = await createConcept(getConceptPayload());
 
       // Confirmation needed
       if (data.requires_confirmation) {
@@ -91,7 +102,7 @@ export default function AddNewWord() {
   async function createNewConcept() {
     try {
       const newFormData = {
-        ...formData,
+        ...getConceptPayload(),
         allow_new_meaning: true,
       };
       await createConcept(newFormData);
@@ -158,23 +169,7 @@ export default function AddNewWord() {
 
   useEffect(() => {
     clearCategories();
-  }, []);
-
-  useEffect(() => {
-    if (!nativeLanguage) return;
-
-    setFormData((prev) => ({
-      ...prev,
-      translations: prev.translations.map((translation, index) =>
-        index === 0
-          ? {
-              ...translation,
-              language: nativeLanguage.id,
-            }
-          : translation,
-      ),
-    }));
-  }, [nativeLanguage]);
+  }, [clearCategories]);
 
   if (loading) {
     return (

@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import useApi from "./ApiContext";
 import { useNavigate } from "react-router-dom";
 import { apiFetch } from "../services/apiFetch";
@@ -130,9 +130,12 @@ export function VocabularyProvider({ children }) {
     setLoading(true);
 
     try {
-      const response = await apiFetch(`${api}categories/?target_language=${id}`, {
-        credentials: "include",
-      });
+      const response = await apiFetch(
+        `${api}categories/?target_language=${id}`,
+        {
+          credentials: "include",
+        },
+      );
       if (!response.ok) {
         throw new Error("Failed to load words.");
       }
@@ -308,9 +311,9 @@ export function VocabularyProvider({ children }) {
     loadData();
   }, []);
 
-  function clearCategories() {
+  const clearCategories = useCallback(() => {
     setCategories([]);
-  }
+  }, []);
 
   return (
     <VocabularyContext.Provider

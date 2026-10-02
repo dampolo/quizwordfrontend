@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../../../context/useAuth";
 import useVocabulary from "../../../../context/useVocabulary";
 import styles from "./profile.module.scss";
-import EditButton from "../../../../components/EditButton/EditButon";
+import EditButton from "../../../../components/EditButton/EditButton";
 import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
 import { useEffect } from "react";

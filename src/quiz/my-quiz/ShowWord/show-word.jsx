@@ -37,7 +37,7 @@ export default function ShowWord() {
   return (
     <section className={styles["show-word-page"]}>
       <div className={styles["actions"]}>
-        <BackButton to={`/my-quiz/all-words?language=${languageId}`} />
+        <BackButton to={`/my-quiz/all-words?language=${languageId}`} className={styles["arrow-back"]} />
         <EditButton to={`/my-quiz/${formData?.id}/edit-word?target-word=${formData?.translations[1].id}&language=${formData?.translations[1].language}`}/>
       </div>
 

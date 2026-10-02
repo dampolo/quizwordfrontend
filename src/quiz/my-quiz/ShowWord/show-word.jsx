@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import useVocabulary from "../../../context/useVocabulary";
 import BackButton from "../../../components/BackButton/BackButton";
+import EditButton from "../../../components/EditButton/EditButton";
+
 import PreLoader from "../../../components/PreLoader/PreLoader";
 import styles from "./show-word.module.scss";
 
@@ -20,6 +23,7 @@ export default function ShowWord() {
       try {
         const concept = await getConcept(id, languageId);
         setFormData(concept);
+        console.log(concept);
       } catch (err) {
         console.error(err);
         toast.error("Das Wort konnte nicht geladen werden.");
@@ -33,7 +37,10 @@ export default function ShowWord() {
 
   return (
     <section className={styles["show-word-page"]}>
-      <BackButton to={`/my-quiz/all-words?language=${languageId}`} />
+      <div className={styles["actions"]}>
+        <BackButton to={`/my-quiz/all-words?language=${languageId}`} />
+        <EditButton to={`/my-quiz/${formData?.id}/edit-word?target-word=${formData?.translations[1].id}&language=${formData?.translations[1].language}`}/>
+      </div>
 
       <h1>Wort ansehen</h1>
 

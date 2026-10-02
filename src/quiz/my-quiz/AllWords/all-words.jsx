@@ -170,8 +170,7 @@ function AllWords() {
           <p className={styles["no-words"]}>Du hast hier keine Wörter.</p>
         ) : (
           words?.results?.map((word) => (
-            <Link
-              to={`/my-quiz/${word.id}/show-word?target-word=${word.translations[1].id}&language=${word.translations[1].language}`}
+            <div
               className={styles["list-row"]}
               key={word.id}
             >
@@ -187,11 +186,14 @@ function AllWords() {
 
               <div className={styles["rank"]}>#{word.translations[1].rank}</div>
 
-              <div className={styles["word"]}>
+              <Link
+                className={styles["word"]}
+                to={`/my-quiz/${word.id}/show-word?target-word=${word.translations[1].id}&language=${word.translations[1].language}`}
+              >
                 <h3>{word.translations[0].word}</h3>
                 <span>»</span>
                 <p>{word.translations[1].word}</p>
-              </div>
+              </Link>
 
               <div className={styles["category"]}>
                 <span
@@ -214,7 +216,7 @@ function AllWords() {
                   <img src="/assets/edit.svg" alt="edit" />
                 </Link>
               </div>
-            </Link>
+            </div>
           ))
         )}
 

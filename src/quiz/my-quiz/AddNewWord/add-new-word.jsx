@@ -163,11 +163,6 @@ export default function AddNewWord() {
   }
 
   useEffect(() => {
-    if (!formData.language_id) return;
-    getFiltredCategories(formData.language_id);
-  }, [formData.language_id]);
-
-  useEffect(() => {
     clearCategories();
   }, [clearCategories]);
 

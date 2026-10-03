@@ -36,6 +36,7 @@ export function AuthProvider({ children }) {
         response = await fetch(`${api}me/`, {
           credentials: "include",
         });
+
       }
 
       if (!response.ok) {

@@ -342,6 +342,121 @@
   }
 }
 
+.search-container {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  max-width: 56.25rem;
+
+  form {
+    position: relative;
+    height: 3.375rem;
+  }
+
+  input {
+    width: 100%;
+    height: 100%;
+    border: 1px solid basic.$qw-border-color;
+    border-radius: basic.$qw-border-radius;
+    padding-inline: 3.25rem;
+    background: basic.$qw-fourth;
+    color: basic.$qw-body-text-color;
+    text-overflow: ellipsis;
+
+    &:focus {
+      border-color: basic.$qw-primary;
+      outline: basic.$focus;
+    }
+
+    &::-webkit-search-cancel-button {
+      appearance: none;
+    }
+  }
+
+  .search-btn,
+  .close-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: basic.$qw-primary;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+      background: basic.$qw-third;
+    }
+  }
+
+  .search-btn { left: 0.625rem; }
+  .close-btn { right: 0.625rem; font-size: 1.5rem; }
+
+  .show-found {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 50vh;
+    overflow-y: auto;
+    background: basic.$qw-fourth;
+    border: 1px solid basic.$qw-primary;
+    border-radius: basic.$qw-border-radius;
+    box-shadow: basic.$box-shadow;
+    z-index: 2;
+
+    &[hidden] { display: none; }
+
+    .search-hint { padding: 1rem; font-size: 0.875rem; }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      list-style: none;
+      margin: 0;
+      padding: 0 1rem 1rem;
+      gap: 0.5625rem;
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: basic.$qw-border-radius;
+      padding: 0.5rem 0.75rem;
+      background: transparent;
+      text-align: start;
+      color: basic.$qw-body-text-color;
+      cursor: pointer;
+
+      &:hover,
+      &:focus-visible,
+      &.selected-result {
+        background: basic.$qw-third;
+        color: basic.$qw-primary;
+      }
+    }
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 @media (max-width: 81.25rem) {
   .list-head,
   .list-row {

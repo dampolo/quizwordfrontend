@@ -32,8 +32,7 @@ function Profile() {
   const { profile, getProfile } = useAuth();
   const { userLanguages, nativeLanguage } = useVocabulary();
 
-  useEffect(() => {
-    
+  useEffect(() => {    
     getProfile();
   }, []);
 

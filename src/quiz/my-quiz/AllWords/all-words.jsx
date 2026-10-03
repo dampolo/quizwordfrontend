@@ -1,7 +1,7 @@
 import styles from "./all-words.module.scss";
 import useVocabulary from "../../../context/useVocabulary";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FormDialog from "../../../components/FormDialog/FormDialog";
 import useQuiz from "../../../context/useQuiz";
 import PreLoader from "../../../components/PreLoader/PreLoader";
@@ -9,6 +9,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import PageTitle from "../../../components/PageTitle/PageTitle";
+import { useAuth } from "../../../context/useAuth";
 
 function AllWords() {
   const {
@@ -20,6 +21,7 @@ function AllWords() {
     previousPage,
     getConcepts,
   } = useVocabulary();
+  const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectedWordIds, setSelectedWordIds] = useState([]);
@@ -27,6 +29,46 @@ function AllWords() {
   const { createQuiz, getLastQuiz, getLastFlipCard } = useQuiz();
   const [currentPage, setCurrentPage] = useState(1);
   const [message, setMessage] = useState("");
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isResultsVisible, setIsResultsVisible] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(-1);
+  const searchInputRef = useRef(null);
+  const query = searchTerm.trim().toLocaleLowerCase();
+  const searchResults = query
+    ? (words?.results ?? []).filter((word) =>
+        word.translations?.some((translation) =>
+          translation.word?.toLocaleLowerCase().includes(query),
+        ),
+      )
+    : [];
+
+  function openSearchResult(word) {
+    const target = word.translations?.[1];
+    if (!target) return;
+    setIsResultsVisible(false);
+    navigate(
+      `/my-quiz/${word.id}/show-word?target-word=${target.id}&language=${target.language}`,
+    );
+  }
+
+  function handleSearchKeyDown(event) {
+    if (event.key === "Escape") {
+      setIsResultsVisible(false);
+      setCurrentIndex(-1);
+    } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      setIsResultsVisible(true);
+      if (!searchResults.length) return;
+      setCurrentIndex((index) => {
+        const lastIndex = searchResults.length - 1;
+        if (index < 0) return event.key === "ArrowDown" ? 0 : lastIndex;
+        return event.key === "ArrowDown"
+          ? (index + 1) % searchResults.length
+          : (index - 1 + searchResults.length) % searchResults.length;
+      });
+    }
+  }
 
   const language = searchParams.get("language");
   const active = language ? Number(language) : null;
@@ -117,7 +159,131 @@ function AllWords() {
             gespeicherten Ausdrücke.
           </p>
         </div>
-
+        {user?.is_superuser && (
+          <search
+            className={styles["search-container"]}
+            aria-label="Vokabelsuche"
+            onBlur={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget)) {
+                setIsResultsVisible(false);
+                setCurrentIndex(-1);
+              }
+            }}
+          >
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                const result = searchResults[currentIndex] ?? searchResults[0];
+                if (result) openSearchResult(result);
+                else setIsResultsVisible(true);
+              }}
+            >
+              <label
+                htmlFor="vocabulary-search"
+                className={styles["visually-hidden"]}
+              >
+                Wörter und Übersetzungen suchen
+              </label>
+              <button
+                className={styles["search-btn"]}
+                type="submit"
+                aria-label="Suchen"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  aria-hidden="true"
+                >
+                  <circle cx="10" cy="10" r="7" />
+                  <path d="m15 15 6 6" />
+                </svg>
+              </button>
+              <input
+                ref={searchInputRef}
+                type="search"
+                id="vocabulary-search"
+                name="search"
+                placeholder="Wörter auf dieser Seite suchen …"
+                value={searchTerm}
+                onChange={(event) => {
+                  setSearchTerm(event.target.value);
+                  setCurrentIndex(-1);
+                  setIsResultsVisible(true);
+                }}
+                onFocus={() => setIsResultsVisible(true)}
+                onKeyDown={handleSearchKeyDown}
+                autoComplete="off"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-expanded={isResultsVisible}
+                aria-controls="vocabulary-search-results"
+                aria-activedescendant={
+                  isResultsVisible && searchResults[currentIndex]
+                    ? `vocabulary-result-${searchResults[currentIndex].id}`
+                    : undefined
+                }
+              />
+              {searchTerm !== "" && (
+                <button
+                  className={styles["close-btn"]}
+                  type="button"
+                  aria-label="Suche löschen"
+                  onClick={() => {
+                    setSearchTerm("");
+                    setCurrentIndex(-1);
+                    searchInputRef.current?.focus();
+                  }}
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              )}
+            </form>
+            <div className={styles["show-found"]} hidden={!isResultsVisible}>
+              <p className={styles["search-hint"]} role="status">
+                {loading
+                  ? "Wörter werden geladen …"
+                  : !query
+                    ? "Suche in den Wörtern und Übersetzungen dieser Seite."
+                    : searchResults.length === 0
+                      ? "Keine passenden Wörter auf dieser Seite."
+                      : `${searchResults.length} Treffer für „${searchTerm}“`}
+              </p>
+              <ul
+                id="vocabulary-search-results"
+                role="listbox"
+                aria-label="Gefundene Wörter"
+              >
+                {searchResults.map((word, index) => (
+                  <li
+                    key={word.id}
+                    id={`vocabulary-result-${word.id}`}
+                    role="option"
+                    aria-selected={index === currentIndex}
+                  >
+                    <button
+                      type="button"
+                      tabIndex={-1}
+                      className={
+                        index === currentIndex
+                          ? styles["selected-result"]
+                          : undefined
+                      }
+                      onClick={() => openSearchResult(word)}
+                    >
+                      {word.translations
+                        ?.map((translation) => translation.word)
+                        .join(" » ")}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </search>
+        )}
         <div className={styles["create-buttons"]}>
           <button
             type="submit"
@@ -170,10 +336,7 @@ function AllWords() {
           <p className={styles["no-words"]}>Du hast hier keine Wörter.</p>
         ) : (
           words?.results?.map((word) => (
-            <div
-              className={styles["list-row"]}
-              key={word.id}
-            >
+            <div className={styles["list-row"]} key={word.id}>
               <div className={styles["checkbox"]}>
                 <input
                   type="checkbox"

@@ -17,7 +17,7 @@ function LearnQuiz() {
   // You can learn in the infinity loop.
   // I leave the code commented out and wait for user feedback.
   function adjustCurrentQuestion() {
-    const isLastWord = currentQuestion === quiz.length - 1;
+    const isLastWord = currentQuestion === quiz.concepts.length - 1;
     if (isLastWord && redirect) {
       setCurrentQuestion(0);
       // navigate(`/my-quiz/all-quizzes?language=${language}`);
@@ -34,7 +34,7 @@ function LearnQuiz() {
     async function loadData() {
       try {
         const quizData = await getQuizWords(id);
-        setQuiz(quizData.concepts);
+        setQuiz(quizData);
       } catch (error) {
         console.error(error);
       }
@@ -53,19 +53,22 @@ function LearnQuiz() {
   return (
     <section className="play-quiz">
       <div className={`${styles["quiz-card"]} ${styles["learn-card"]}`}>
+        <span className={styles["quiz-name"]}>
+                    {quiz?.quiz_name}
+                  </span>
         <button type="button" className={styles["quiz-card__cancel"]} onClick={cancel}>
           <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
         </button>
         <div className={styles["quiz-card__header"]}>
           <h1 className={styles["quiz-card__title-learn"]}>
-            {quiz?.[currentQuestion].translations[0].word}
+            {quiz?.concepts[currentQuestion].translations[0].word}
           </h1>
         </div>
         <div className={styles["quiz-card__form"]}>
           <span className={styles["quiz-card__line"]}></span>
 
           <span className={styles["quiz-card__answer-wrapper-learn"]}>
-            {quiz?.[currentQuestion].translations[1].word}
+            {quiz?.concepts[currentQuestion].translations[1].word}
           </span>
         </div>
 

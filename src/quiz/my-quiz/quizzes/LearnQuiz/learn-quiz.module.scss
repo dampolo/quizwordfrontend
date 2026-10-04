@@ -11,7 +11,15 @@
   border-radius: basic.$qw-border-radius;
   box-shadow: basic.$box-shadow;
   height: fit-content;
-
+  .quiz-name {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    writing-mode: vertical-rl;
+    transform: translateY(-50%) rotate(180deg);
+    font-size: 0.6rem;
+    white-space: nowrap;
+  }
   &.learn-card {
     display: flex;
     flex-direction: column;

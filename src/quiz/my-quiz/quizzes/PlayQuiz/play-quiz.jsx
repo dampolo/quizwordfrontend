@@ -29,8 +29,8 @@ function PlayQuiz() {
       [name]: value,
     }));
   }
-  async function adjustCurrentQuestion() {
-    setHint(false);
+
+  function saveCurrentAnswer() {
     const updatedAnswers = [
       ...answers,
       {
@@ -40,31 +40,44 @@ function PlayQuiz() {
     ];
 
     setAnswers(updatedAnswers);
+    return updatedAnswers;
+  }
 
-    const isLastQuestion = currentQuestion === quiz.concepts.length - 1;
+  async function submitQuiz(updatedAnswers) {
+    const payload = {
+      direction: "FORWARD",
+      answers: updatedAnswers,
+    };
 
-    if (isLastQuestion) {
-      const payload = {
-        direction: "FORWARD",
-        answers: updatedAnswers,
-      };
+    try {
+      const result = await postQuizAnswers(id, payload);
 
-      try {
-        const result = await postQuizAnswers(id, payload);
-
-        navigate(`/my-quiz/${id}/quiz-results`, {
-          state: result,
-        });
-      } catch (error) {
-        console.error("Quiz could not be submitted:", error);
-      }
-      return;
+      navigate(`/my-quiz/${id}/quiz-results`, {
+        state: result,
+      });
+    } catch (error) {
+      console.error("Quiz could not be submitted:", error);
     }
+  }
 
+  function goToNextQuestion() {
     setCurrentQuestion(currentQuestion + 1);
     setFormData({
       answer: "",
     });
+  }
+
+  async function adjustCurrentQuestion() {
+    setHint(false);
+    const updatedAnswers = saveCurrentAnswer();
+    const isLastQuestion = currentQuestion === quiz.concepts.length - 1;
+
+    if (isLastQuestion) {
+      await submitQuiz(updatedAnswers);
+      return;
+    }
+
+    goToNextQuestion();
   }
 
   useEffect(() => {
@@ -90,10 +103,11 @@ function PlayQuiz() {
   return (
     <section className="play-quiz">
       <div className={styles["quiz-card"]}>
-        <span className={styles["languages"]}>
+        <span className={styles["quiz-card__languages"]}>
           {quiz?.concepts[currentQuestion].translations[0].language_name} →{" "}
           {quiz?.concepts[currentQuestion].translations[1].language_name}
         </span>
+        <span className={styles["quiz-card__quiz-name"]}>{quiz?.quiz_name}</span>
         <button
           type="button"
           onClick={cancel}

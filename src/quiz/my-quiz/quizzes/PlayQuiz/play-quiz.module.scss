@@ -18,11 +18,20 @@
     gap: 1rem;
   }
 
-  .languages {
+  &__languages {
     position: absolute;
     left: 1rem;
     top: 0.5rem;
     font-size: 0.6rem;
+  }
+  &__quiz-name {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    writing-mode: vertical-rl;
+    transform: translateY(-50%) rotate(180deg);
+    font-size: 0.6rem;
+    white-space: nowrap;
   }
   &__header {
     display: flex;

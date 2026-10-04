@@ -11,7 +11,7 @@
   border-radius: basic.$qw-border-radius;
   box-shadow: basic.$box-shadow;
   height: fit-content;
-  .quiz-name {
+  &__quiz-name {
     position: absolute;
     left: 0;
     top: 50%;

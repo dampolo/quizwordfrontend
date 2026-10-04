@@ -53,7 +53,7 @@ function LearnQuiz() {
   return (
     <section className="play-quiz">
       <div className={`${styles["quiz-card"]} ${styles["learn-card"]}`}>
-        <span className={styles["quiz-name"]}>
+        <span className={styles["quiz-card__quiz-name"]}>
                     {quiz?.quiz_name}
                   </span>
         <button type="button" className={styles["quiz-card__cancel"]} onClick={cancel}>

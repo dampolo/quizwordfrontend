@@ -1,0 +1,77 @@
+diff --git "a/C:\\Users\\damia\\AppData\\Local\\Temp\\play-quiz-before.jsx" b/src/quiz/my-quiz/quizzes/PlayQuiz/play-quiz.jsx
+index 947b0d1..a1839b8 100644
+--- "a/C:\\Users\\damia\\AppData\\Local\\Temp\\play-quiz-before.jsx"
++++ b/src/quiz/my-quiz/quizzes/PlayQuiz/play-quiz.jsx
+@@ -30,8 +30,7 @@ function PlayQuiz() {
+     }));
+   }
+ 
+-  async function adjustCurrentQuestion() {
+-    setHint(false);
++  function saveCurrentAnswer() {
+     const updatedAnswers = [
+       ...answers,
+       {
+@@ -41,33 +40,46 @@ function PlayQuiz() {
+     ];
+ 
+     setAnswers(updatedAnswers);
++    return updatedAnswers;
++  }
+ 
+-    const isLastQuestion = currentQuestion === quiz.concepts.length - 1;
++  async function submitQuiz(updatedAnswers) {
++    const payload = {
++      direction: "FORWARD",
++      answers: updatedAnswers,
++    };
+ 
+-    if (isLastQuestion) {
+-      const payload = {
+-        direction: "FORWARD",
+-        answers: updatedAnswers,
+-      };
++    try {
++      const result = await postQuizAnswers(id, payload);
+ 
+-      try {
+-        const result = await postQuizAnswers(id, payload);
+-
+-        navigate(`/my-quiz/${id}/quiz-results`, {
+-          state: result,
+-        });
+-      } catch (error) {
+-        console.error("Quiz could not be submitted:", error);
+-      }
+-      return;
++      navigate(`/my-quiz/${id}/quiz-results`, {
++        state: result,
++      });
++    } catch (error) {
++      console.error("Quiz could not be submitted:", error);
+     }
++  }
+ 
++  function goToNextQuestion() {
+     setCurrentQuestion(currentQuestion + 1);
+     setFormData({
+       answer: "",
+     });
+   }
+ 
++  async function adjustCurrentQuestion() {
++    setHint(false);
++    const updatedAnswers = saveCurrentAnswer();
++    const isLastQuestion = currentQuestion === quiz.concepts.length - 1;
++
++    if (isLastQuestion) {
++      await submitQuiz(updatedAnswers);
++      return;
++    }
++
++    goToNextQuestion();
++  }
++
+   useEffect(() => {
+     async function loadData() {
+       try {

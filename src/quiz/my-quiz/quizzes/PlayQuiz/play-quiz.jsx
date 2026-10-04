@@ -34,14 +34,14 @@ function PlayQuiz() {
     const updatedAnswers = [
       ...answers,
       {
-        id: quiz[currentQuestion].id,
+        id: quiz.concepts[currentQuestion].id,
         answer: formData.answer,
       },
     ];
 
     setAnswers(updatedAnswers);
 
-    const isLastQuestion = currentQuestion === quiz.length - 1;
+    const isLastQuestion = currentQuestion === quiz.concepts.length - 1;
 
     if (isLastQuestion) {
       const payload = {
@@ -71,7 +71,7 @@ function PlayQuiz() {
     async function loadData() {
       try {
         const quizData = await getQuizWords(id);
-        setQuiz(quizData.concepts);
+        setQuiz(quizData);
       } catch (error) {
         console.error(error);
       }
@@ -79,7 +79,7 @@ function PlayQuiz() {
     loadData();
   }, [id]);
 
-    function cancel() {
+  function cancel() {
     if (redirect) {
       navigate(`/my-quiz/all-quizzes?language=${language}`);
     } else {
@@ -90,7 +90,13 @@ function PlayQuiz() {
   return (
     <section className="play-quiz">
       <div className={styles["quiz-card"]}>
-        <button type="button" onClick={cancel}
+        <span className={styles["languages"]}>
+          {quiz?.concepts[currentQuestion].translations[0].language_name} →{" "}
+          {quiz?.concepts[currentQuestion].translations[1].language_name}
+        </span>
+        <button
+          type="button"
+          onClick={cancel}
           className={styles["quiz-card__cancel"]}
           to={`/my-quiz/${id}/all-quiz-words`}
         >
@@ -98,19 +104,23 @@ function PlayQuiz() {
         </button>
         <div className={styles["quiz-card__header"]}>
           <h1 className={styles["quiz-card__title"]}>
-            {quiz?.[currentQuestion].translations[0].word}
+            {quiz?.concepts[currentQuestion].translations[0].word}
           </h1>
         </div>
 
         <p className={styles["quiz-card__subtitle"]}>Übersetzte das Word:</p>
 
         <div className={styles["hint-container"]}>
-          <div className={`${styles["hide-hint"]} ${hint ? styles["show-hint"] : ""}`}>
-            {quiz?.[currentQuestion].translations[1].tip === "" ? (
-              <p className={styles["hint-text"]}>Du hast kein Tipp hinterlegt.</p>
+          <div
+            className={`${styles["hide-hint"]} ${hint ? styles["show-hint"] : ""}`}
+          >
+            {quiz?.concepts[currentQuestion].translations[1].tip === "" ? (
+              <p className={styles["hint-text"]}>
+                Du hast kein Tipp hinterlegt.
+              </p>
             ) : (
               <p className={styles["hint-text"]}>
-                {quiz?.[currentQuestion].translations[1].tip}
+                {quiz?.concepts[currentQuestion].translations[1].tip}
               </p>
             )}
           </div>

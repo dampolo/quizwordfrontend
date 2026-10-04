@@ -18,6 +18,12 @@
     gap: 1rem;
   }
 
+  .languages {
+    position: absolute;
+    left: 1rem;
+    top: 0.5rem;
+    font-size: 0.6rem;
+  }
   &__header {
     display: flex;
     justify-content: center;

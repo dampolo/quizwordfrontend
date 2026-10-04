@@ -197,6 +197,14 @@
   transform: rotateY(180deg);
 }
 
+.quiz-name {
+  position: absolute;
+  left: 0;
+  transform: rotate(-90deg) translateX(-50px);
+  font-size: 0.6rem;
+}
+
+
 .flip-card-inner.flipped {
   transform: rotateY(180deg);
 }

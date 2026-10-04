@@ -37,7 +37,7 @@ function FlipCardQuiz() {
   }
 
   function showNextQuestion() {
-    const isLastWord = currentQuestion === quiz.length - 1;
+    const isLastWord = currentQuestion === quiz.concepts.length - 1;
 
     if (isLastWord) {
       setCurrentQuestion(0);
@@ -78,7 +78,10 @@ function FlipCardQuiz() {
       const isFlipcard = true;
       try {
         const quizData = await getQuizWords(id, isFlipcard);
-        setQuiz(quizData.concepts);
+        setQuiz(quizData);
+
+        console.log(quizData);
+              
       } catch (error) {
         console.error(error);
       }
@@ -101,10 +104,16 @@ function FlipCardQuiz() {
         className={`${styles["flip-card-inner"]} ${isFlipped ? styles["flipped"] : ""}`}
         onTransitionEnd={handleTransitionEnd}
       >
+
+        {/* FRONT */}
         <div className={styles["flip-card-front"]}>
+          <span className={styles["quiz-name"]}>
+            {quiz?.quiz_name}
+          </span>
+
           <span className={styles["languages"]}>
-            {quiz?.[currentQuestion].translations[0].language_name} →{" "}
-            {quiz?.[currentQuestion].translations[1].language_name}
+            {quiz?.concepts[currentQuestion].translations[0].language_name} →{" "}
+            {quiz?.concepts[currentQuestion].translations[1].language_name}
           </span>
 
           <button type="button" className={styles["quiz-card__cancel"]} onClick={cancel}>
@@ -113,7 +122,7 @@ function FlipCardQuiz() {
 
           <div className={styles["quiz-card__header"]}>
             <h1 className={`${styles["quiz-card__title-learn"]} ${styles["flip-title"]}`}>
-              {quiz?.[currentQuestion].translations[0].word}
+              {quiz?.concepts[currentQuestion].translations[0].word}
             </h1>
           </div>
 
@@ -183,7 +192,7 @@ function FlipCardQuiz() {
         {/* Back */}
         <div className={styles["flip-card-back"]}>
           <span className={styles["languages"]}>
-            {quiz?.[currentQuestion].translations[1].language_name}
+            {quiz?.concepts[currentQuestion].translations[1].language_name}
           </span>
 
           <button type="button" className={styles["quiz-card__cancel"]} onClick={cancel}>
@@ -195,7 +204,7 @@ function FlipCardQuiz() {
             <span className={styles["quiz-card__line"]}></span>
 
             <h1 className={`${styles["quiz-card__answer-wrapper-learn"]} ${styles["flip-title"]}`}>
-              {quiz?.[currentQuestion].translations[1].word}
+              {quiz?.concepts[currentQuestion].translations[1].word}
             </h1>
           </div>
 
@@ -256,7 +265,7 @@ function FlipCardQuiz() {
               />
             </button>
           </div>
-          <span>{quiz?.[currentQuestion].translations[1].sentence}</span>
+          <span>{quiz?.concepts[currentQuestion].translations[1].sentence}</span>
           {/* Buttons ENDE */}
         </div>
         {/* Back ENDE */}

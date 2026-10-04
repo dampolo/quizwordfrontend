@@ -200,7 +200,7 @@
 .quiz-name {
   position: absolute;
   left: 0;
-  transform: rotate(-90deg) translateX(-50px);
+  transform: rotate(-90deg) translateX(-50px) translateY(-10px);
   font-size: 0.6rem;
 }
 

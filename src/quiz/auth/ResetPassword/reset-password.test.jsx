@@ -171,3 +171,28 @@ it("blocks submission when the repeated password is weak", async () => {
   await user.click(submit);
   expect(resetPassword).not.toHaveBeenCalled();
 });
+
+it("blocks mismatched strong passwords and enables submission after correction", async () => {
+  const { user, resetPassword, password, repeatedPassword, passwordError, mismatchError, submit } = renderResetPassword();
+
+  // Act: enter two different passwords that both meet the strength rules.
+  await user.type(password, "StrongPass123!");
+  await user.type(repeatedPassword, "DifferentPass123!");
+  await user.tab();
+
+  // Assert: a mismatch must block submission even though both passwords are strong.
+  expect(passwordError.textContent).toBe("");
+  expect(mismatchError.textContent.trim()).not.toBe("");
+  expect(submit.disabled).toBe(true);
+  await user.click(submit);
+  expect(resetPassword).not.toHaveBeenCalled();
+
+  // Act: correct the repeated password and leave the field again.
+  await user.clear(repeatedPassword);
+  await user.type(repeatedPassword, "StrongPass123!");
+  await user.tab();
+
+  // Assert: matching valid passwords clear the error and allow submission.
+  expect(mismatchError.textContent).toBe("");
+  expect(submit.disabled).toBe(false);
+});

@@ -13,25 +13,31 @@ afterEach(() => {
   vi.resetAllMocks();
 });
 
-it("renders empty hidden passwords and a disabled submit button", () => {
-  // Arrange: authentication is idle when the form first opens.
+function renderResetPassword() {
+  const user = userEvent.setup();
+  const resetPassword = vi.fn();
   useAuth.mockReturnValue({
-    resetPassword: vi.fn(),
+    resetPassword,
     setConfirmationMessage: vi.fn(),
     loading: false,
   });
 
-  // Act: render the form inside the router it needs.
   const { container } = render(
     <MemoryRouter>
       <ResetPassword />
     </MemoryRouter>
   );
-
-  // Assert: both passwords start empty and hidden; submission is disabled.
   const password = container.querySelector('input[name="password1"]');
   const repeatedPassword = container.querySelector('input[name="password2"]');
+  const passwordError = password.closest(".input-container").querySelector(".warn-txt");
+  const mismatchError = container.querySelector("form > .warn-txt");
   const submit = container.querySelector('button[type="submit"]');
+
+  return { user, resetPassword, password, repeatedPassword, passwordError, mismatchError, submit };
+}
+
+it("renders empty hidden passwords and a disabled submit button", () => {
+  const { password, repeatedPassword, submit } = renderResetPassword();
 
   expect(password.value).toBe("");
   expect(repeatedPassword.value).toBe("");
@@ -41,22 +47,7 @@ it("renders empty hidden passwords and a disabled submit button", () => {
 });
 
 it("validates a password on blur and clears the error after correction", async () => {
-  // Arrange: render an idle form and locate fields without translated labels.
-  const user = userEvent.setup();
-  useAuth.mockReturnValue({
-    resetPassword: vi.fn(),
-    setConfirmationMessage: vi.fn(),
-    loading: false,
-  });
-
-  const { container } = render(
-    <MemoryRouter>
-      <ResetPassword />
-    </MemoryRouter>
-  );
-  const password = container.querySelector('input[name="password1"]');
-  const passwordError = password.closest(".input-container").querySelector(".warn-txt");
-  const mismatchError = container.querySelector("form > .warn-txt");
+  const { user, password, passwordError, mismatchError } = renderResetPassword();
 
   // Act and assert: typing alone shows no error; leaving the field validates it.
   await user.type(password, "short");
@@ -73,23 +64,7 @@ it("validates a password on blur and clears the error after correction", async (
 });
 
 it("blocks submission when the repeated password is empty", async () => {
-  // Arrange: record reset requests without calling the backend.
-  const user = userEvent.setup();
-  const resetPassword = vi.fn();
-  useAuth.mockReturnValue({
-    resetPassword,
-    setConfirmationMessage: vi.fn(),
-    loading: false,
-  });
-
-  const { container } = render(
-    <MemoryRouter>
-      <ResetPassword />
-    </MemoryRouter>
-  );
-  const password = container.querySelector('input[name="password1"]');
-  const repeatedPassword = container.querySelector('input[name="password2"]');
-  const submit = container.querySelector('button[type="submit"]');
+  const { user, resetPassword, password, repeatedPassword, submit } = renderResetPassword();
 
   // Act: enter a valid password but leave its confirmation empty.
   await user.type(password, "StrongPass123!");
@@ -102,25 +77,7 @@ it("blocks submission when the repeated password is empty", async () => {
 });
 
 it("blocks matching passwords shorter than 10 characters", async () => {
-  // Arrange: record reset requests without calling the backend.
-  const user = userEvent.setup();
-  const resetPassword = vi.fn();
-  useAuth.mockReturnValue({
-    resetPassword,
-    setConfirmationMessage: vi.fn(),
-    loading: false,
-  });
-
-  const { container } = render(
-    <MemoryRouter>
-      <ResetPassword />
-    </MemoryRouter>
-  );
-  const password = container.querySelector('input[name="password1"]');
-  const repeatedPassword = container.querySelector('input[name="password2"]');
-  const passwordError = password.closest(".input-container").querySelector(".warn-txt");
-  const mismatchError = container.querySelector("form > .warn-txt");
-  const submit = container.querySelector('button[type="submit"]');
+  const { user, resetPassword, password, repeatedPassword, passwordError, mismatchError, submit } = renderResetPassword();
 
   // Act: use 9 characters with every required character type in both fields.
   await user.type(password, "Abcdef12!");
@@ -128,6 +85,22 @@ it("blocks matching passwords shorter than 10 characters", async () => {
   await user.tab();
 
   // Assert: length validation fails despite matching passwords.
+  expect(passwordError.textContent.trim()).not.toBe("");
+  expect(mismatchError.textContent).toBe("");
+  expect(submit.disabled).toBe(true);
+  await user.click(submit);
+  expect(resetPassword).not.toHaveBeenCalled();
+});
+
+it("blocks matching passwords without a lowercase letter", async () => {
+  const { user, resetPassword, password, repeatedPassword, passwordError, mismatchError, submit } = renderResetPassword();
+
+  // Act: use matching passwords that meet every rule except lowercase letters.
+  await user.type(password, "STRONGPASS123!");
+  await user.type(repeatedPassword, "STRONGPASS123!");
+  await user.tab();
+
+  // Assert: password validation fails without a mismatch error or reset request.
   expect(passwordError.textContent.trim()).not.toBe("");
   expect(mismatchError.textContent).toBe("");
   expect(submit.disabled).toBe(true);

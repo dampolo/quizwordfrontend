@@ -100,3 +100,37 @@ it("blocks submission when the repeated password is empty", async () => {
   await user.click(submit);
   expect(resetPassword).not.toHaveBeenCalled();
 });
+
+it("blocks matching passwords shorter than 10 characters", async () => {
+  // Arrange: record reset requests without calling the backend.
+  const user = userEvent.setup();
+  const resetPassword = vi.fn();
+  useAuth.mockReturnValue({
+    resetPassword,
+    setConfirmationMessage: vi.fn(),
+    loading: false,
+  });
+
+  const { container } = render(
+    <MemoryRouter>
+      <ResetPassword />
+    </MemoryRouter>
+  );
+  const password = container.querySelector('input[name="password1"]');
+  const repeatedPassword = container.querySelector('input[name="password2"]');
+  const passwordError = password.closest(".input-container").querySelector(".warn-txt");
+  const mismatchError = container.querySelector("form > .warn-txt");
+  const submit = container.querySelector('button[type="submit"]');
+
+  // Act: use 9 characters with every required character type in both fields.
+  await user.type(password, "Abcdef12!");
+  await user.type(repeatedPassword, "Abcdef12!");
+  await user.tab();
+
+  // Assert: length validation fails despite matching passwords.
+  expect(passwordError.textContent.trim()).not.toBe("");
+  expect(mismatchError.textContent).toBe("");
+  expect(submit.disabled).toBe(true);
+  await user.click(submit);
+  expect(resetPassword).not.toHaveBeenCalled();
+});

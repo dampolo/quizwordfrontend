@@ -155,3 +155,19 @@ it("blocks matching passwords without a special character", async () => {
   await user.click(submit);
   expect(resetPassword).not.toHaveBeenCalled();
 });
+
+it("blocks submission when the repeated password is weak", async () => {
+  const { user, resetPassword, password, repeatedPassword, passwordError, mismatchError, submit } = renderResetPassword();
+
+  // Act: enter a valid first password and a weak repeated password.
+  await user.type(password, "StrongPass123!");
+  await user.type(repeatedPassword, "short");
+  await user.tab();
+
+  // Assert: the first password is valid, but the incomplete confirmation blocks reset.
+  expect(passwordError.textContent).toBe("");
+  expect(mismatchError.textContent.trim()).not.toBe("");
+  expect(submit.disabled).toBe(true);
+  await user.click(submit);
+  expect(resetPassword).not.toHaveBeenCalled();
+});

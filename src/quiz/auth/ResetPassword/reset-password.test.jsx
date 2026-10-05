@@ -48,32 +48,55 @@ it("validates a password on blur and clears the error after correction", async (
     setConfirmationMessage: vi.fn(),
     loading: false,
   });
-  // The component currently logs password values on every change.
-  const consoleLog = vi.spyOn(console, "log").mockImplementation(() => {});
 
-  try {
-    const { container } = render(
-      <MemoryRouter>
-        <ResetPassword />
-      </MemoryRouter>
-    );
-    const password = container.querySelector('input[name="password1"]');
-    const passwordError = password.closest(".input-container").querySelector(".warn-txt");
-    const mismatchError = container.querySelector("form > .warn-txt");
+  const { container } = render(
+    <MemoryRouter>
+      <ResetPassword />
+    </MemoryRouter>
+  );
+  const password = container.querySelector('input[name="password1"]');
+  const passwordError = password.closest(".input-container").querySelector(".warn-txt");
+  const mismatchError = container.querySelector("form > .warn-txt");
 
-    // Act and assert: typing alone shows no error; leaving the field validates it.
-    await user.type(password, "short");
-    expect(passwordError.textContent).toBe("");
-    await user.tab();
-    expect(passwordError.textContent.trim()).not.toBe("");
-    expect(mismatchError.textContent).toBe("");
+  // Act and assert: typing alone shows no error; leaving the field validates it.
+  await user.type(password, "short");
+  expect(passwordError.textContent).toBe("");
+  await user.tab();
+  expect(passwordError.textContent.trim()).not.toBe("");
+  expect(mismatchError.textContent).toBe("");
 
-    // Act and assert: correct the password and blur again to clear its error.
-    await user.clear(password);
-    await user.type(password, "StrongPass123!");
-    await user.tab();
-    expect(passwordError.textContent).toBe("");
-  } finally {
-    consoleLog.mockRestore();
-  }
+  // Act and assert: correct the password and blur again to clear its error.
+  await user.clear(password);
+  await user.type(password, "StrongPass123!");
+  await user.tab();
+  expect(passwordError.textContent).toBe("");
+});
+
+it("blocks submission when the repeated password is empty", async () => {
+  // Arrange: record reset requests without calling the backend.
+  const user = userEvent.setup();
+  const resetPassword = vi.fn();
+  useAuth.mockReturnValue({
+    resetPassword,
+    setConfirmationMessage: vi.fn(),
+    loading: false,
+  });
+
+  const { container } = render(
+    <MemoryRouter>
+      <ResetPassword />
+    </MemoryRouter>
+  );
+  const password = container.querySelector('input[name="password1"]');
+  const repeatedPassword = container.querySelector('input[name="password2"]');
+  const submit = container.querySelector('button[type="submit"]');
+
+  // Act: enter a valid password but leave its confirmation empty.
+  await user.type(password, "StrongPass123!");
+
+  // Assert: the incomplete form cannot send a reset request.
+  expect(repeatedPassword.value).toBe("");
+  expect(submit.disabled).toBe(true);
+  await user.click(submit);
+  expect(resetPassword).not.toHaveBeenCalled();
 });

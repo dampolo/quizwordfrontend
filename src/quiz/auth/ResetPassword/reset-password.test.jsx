@@ -107,3 +107,19 @@ it("blocks matching passwords without a lowercase letter", async () => {
   await user.click(submit);
   expect(resetPassword).not.toHaveBeenCalled();
 });
+
+it("blocks matching passwords without an uppercase letter", async () => {
+  const { user, resetPassword, password, repeatedPassword, passwordError, mismatchError, submit } = renderResetPassword();
+
+  // Act: use matching passwords that meet every rule except uppercase letters.
+  await user.type(password, "strongpass123!");
+  await user.type(repeatedPassword, "strongpass123!");
+  await user.tab();
+
+  // Assert: password validation fails without a mismatch error or reset request.
+  expect(passwordError.textContent.trim()).not.toBe("");
+  expect(mismatchError.textContent).toBe("");
+  expect(submit.disabled).toBe(true);
+  await user.click(submit);
+  expect(resetPassword).not.toHaveBeenCalled();
+});

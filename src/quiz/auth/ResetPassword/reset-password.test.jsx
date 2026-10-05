@@ -139,3 +139,19 @@ it("blocks matching passwords without a digit", async () => {
   await user.click(submit);
   expect(resetPassword).not.toHaveBeenCalled();
 });
+
+it("blocks matching passwords without a special character", async () => {
+  const { user, resetPassword, password, repeatedPassword, passwordError, mismatchError, submit } = renderResetPassword();
+
+  // Act: use matching passwords that meet every rule except a special character.
+  await user.type(password, "StrongPass123");
+  await user.type(repeatedPassword, "StrongPass123");
+  await user.tab();
+
+  // Assert: password validation fails without a mismatch error or reset request.
+  expect(passwordError.textContent.trim()).not.toBe("");
+  expect(mismatchError.textContent).toBe("");
+  expect(submit.disabled).toBe(true);
+  await user.click(submit);
+  expect(resetPassword).not.toHaveBeenCalled();
+});

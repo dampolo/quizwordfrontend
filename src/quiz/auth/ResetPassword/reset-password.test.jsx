@@ -44,9 +44,10 @@ function renderResetPassword({ loading = false } = {}) {
   const passwordError = password.closest(".input-container").querySelector(".warn-txt");
   const mismatchError = container.querySelector("form > .warn-txt");
   const submit = container.querySelector('button[type="submit"]');
-  const toggles = container.querySelectorAll('button[type="button"].eye-button');
+  const passwordToggle1 = container.querySelector("#password1").closest(".input-container").querySelector(".eye-button");
+  const passwordToggle2 = container.querySelector("#password2").closest(".input-container").querySelector(".eye-button");
 
-  return { user, resetPassword, setConfirmationMessage, navigate, password, repeatedPassword, passwordError, mismatchError, submit, toggles };
+  return { user, resetPassword, setConfirmationMessage, navigate, password, repeatedPassword, passwordError, mismatchError, submit, passwordToggle1, passwordToggle2 };
 }
 
 it("renders empty hidden passwords and a disabled submit button", () => {
@@ -272,7 +273,7 @@ it("disables submission while authentication is loading", async () => {
 });
 
 it("toggles each password independently without changing values or submitting", async () => {
-  const { user, resetPassword, password, repeatedPassword, submit, toggles } = renderResetPassword();
+  const { user, resetPassword, password, repeatedPassword, submit, passwordToggle1, passwordToggle2 } = renderResetPassword();
 
   // Arrange: a valid form would submit if a toggle acted as a submit button.
   await user.type(password, "StrongPass123!");
@@ -282,16 +283,16 @@ it("toggles each password independently without changing values or submitting", 
   expect(repeatedPassword.type).toBe("password");
 
   // Act and assert: reveal each password independently, then hide each again.
-  await user.click(toggles[0]);
+  await user.click(passwordToggle1);
   expect(password.type).toBe("text");
   expect(repeatedPassword.type).toBe("password");
-  await user.click(toggles[1]);
+  await user.click(passwordToggle2);
   expect(password.type).toBe("text");
   expect(repeatedPassword.type).toBe("text");
-  await user.click(toggles[0]);
+  await user.click(passwordToggle1);
   expect(password.type).toBe("password");
   expect(repeatedPassword.type).toBe("text");
-  await user.click(toggles[1]);
+  await user.click(passwordToggle2);
   expect(password.type).toBe("password");
   expect(repeatedPassword.type).toBe("password");
 

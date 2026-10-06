@@ -50,7 +50,7 @@ function FlipCardQuiz() {
     const isFirstWord = currentQuestion === 0;
 
     if (isFirstWord) {
-      setCurrentQuestion(quiz.length - 1);
+      setCurrentQuestion(quiz.concepts.length - 1);
     } else {
       setCurrentQuestion((prev) => prev - 1);
     }

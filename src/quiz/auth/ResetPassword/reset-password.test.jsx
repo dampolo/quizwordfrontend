@@ -2,11 +2,13 @@ import { afterEach, expect, it, vi } from "vitest";
 import { cleanup, render, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes, useNavigate } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
+import { toast } from "react-toastify";
 import { useAuth } from "../../../context/useAuth";
 import ResetPassword from "./reset-password";
 
 // Replace authentication so this test never calls the backend.
 vi.mock("../../../context/useAuth", () => ({ useAuth: vi.fn() }));
+vi.mock("react-toastify", () => ({ toast: { error: vi.fn() } }));
 
 vi.mock("react-router-dom", async (importOriginal) => ({
   ...(await importOriginal()),
@@ -226,4 +228,29 @@ it("resets the password with route credentials and confirms success", async () =
     expect(password.value).toBe("");
     expect(repeatedPassword.value).toBe("");
   });
+});
+
+it("reports a failed reset without confirming, navigating, or clearing the passwords", async () => {
+  const { user, resetPassword, setConfirmationMessage, navigate, password, repeatedPassword, submit } = renderResetPassword();
+  const error = new Error("Reset unavailable");
+  resetPassword.mockRejectedValue(error);
+  const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+
+  try {
+    // Act: submit valid passwords, but let the reset request fail.
+    await user.type(password, "StrongPass123!");
+    await user.type(repeatedPassword, "StrongPass123!");
+    await user.click(submit);
+    await waitFor(() => expect(consoleError).toHaveBeenCalledWith(error));
+
+    // Assert: failure preserves the form and does not enter the success flow.
+    expect(resetPassword).toHaveBeenCalledTimes(1);
+    expect(setConfirmationMessage).not.toHaveBeenCalled();
+    expect(navigate).not.toHaveBeenCalled();
+    expect(password.value).toBe("StrongPass123!");
+    expect(repeatedPassword.value).toBe("StrongPass123!");
+    expect(toast.error).toHaveBeenCalledTimes(1);
+  } finally {
+    consoleError.mockRestore();
+  }
 });

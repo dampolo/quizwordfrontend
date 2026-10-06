@@ -20,7 +20,7 @@ afterEach(() => {
   vi.resetAllMocks();
 });
 
-function renderResetPassword() {
+function renderResetPassword({ loading = false } = {}) {
   const user = userEvent.setup();
   const resetPassword = vi.fn();
   const setConfirmationMessage = vi.fn();
@@ -29,7 +29,7 @@ function renderResetPassword() {
   useAuth.mockReturnValue({
     resetPassword,
     setConfirmationMessage,
-    loading: false,
+    loading,
   });
 
   const { container } = render(
@@ -253,4 +253,19 @@ it("reports a failed reset without confirming, navigating, or clearing the passw
   } finally {
     consoleError.mockRestore();
   }
+});
+
+it("disables submission while authentication is loading", async () => {
+  const { user, resetPassword, setConfirmationMessage, navigate, password, repeatedPassword, submit } = renderResetPassword({ loading: true });
+
+  // Act: enter matching valid passwords while authentication is busy.
+  await user.type(password, "StrongPass123!");
+  await user.type(repeatedPassword, "StrongPass123!");
+
+  // Assert: loading prevents submission and the success flow.
+  expect(submit.disabled).toBe(true);
+  await user.click(submit);
+  expect(resetPassword).not.toHaveBeenCalled();
+  expect(setConfirmationMessage).not.toHaveBeenCalled();
+  expect(navigate).not.toHaveBeenCalled();
 });

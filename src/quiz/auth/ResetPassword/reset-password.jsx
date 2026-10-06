@@ -65,7 +65,7 @@ function ResetPassword() {
       navigate("/confirmation");
       setFormValues(initialValues);
     } catch (error) {
-      toast.error
+      toast.error(error)
       console.error(error);
     }
     

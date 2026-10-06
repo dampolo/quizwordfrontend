@@ -18,7 +18,7 @@ afterEach(() => {
   vi.resetAllMocks();
 });
 
-function renderForgotPassword() {
+function renderForgotPassword({ loading = false } = {}) {
   const user = userEvent.setup();
   const forgotPassword = vi.fn();
   const setConfirmationMessage = vi.fn();
@@ -27,7 +27,7 @@ function renderForgotPassword() {
   useAuth.mockReturnValue({
     forgotPassword,
     setConfirmationMessage,
-    loading: false,
+    loading,
   });
 
   const { container } = render(
@@ -38,8 +38,11 @@ function renderForgotPassword() {
   const email = container.querySelector('input[name="email"]');
   const emailError = email.closest(".input-container").querySelector(".warn-txt");
   const submit = container.querySelector('button[type="submit"]');
+  const loader = container.querySelector(".rotate-center");
+  const backLink = container.querySelector("a.arrow-back");
+  const cancelLink = container.querySelector("a.back-button");
 
-  return { user, forgotPassword, setConfirmationMessage, navigate, email, emailError, submit };
+  return { user, forgotPassword, setConfirmationMessage, navigate, email, emailError, submit, loader, backLink, cancelLink };
 }
 
 it("renders an empty email field without an error and a disabled submit button", () => {
@@ -113,4 +116,25 @@ it("preserves the email without confirming or navigating when the request fails"
   } finally {
     consoleError.mockRestore();
   }
+});
+
+it("shows the loader and blocks submission while authentication is loading", async () => {
+  const { user, forgotPassword, setConfirmationMessage, navigate, email, emailError, submit, loader } = renderForgotPassword({ loading: true });
+
+  await user.type(email, "user@example.com");
+
+  expect(loader).not.toBeNull();
+  expect(emailError.textContent).toBe("");
+  expect(submit.disabled).toBe(true);
+  await user.click(submit);
+  expect(forgotPassword).not.toHaveBeenCalled();
+  expect(setConfirmationMessage).not.toHaveBeenCalled();
+  expect(navigate).not.toHaveBeenCalled();
+});
+
+it("links back to login and cancels to the customer profile", () => {
+  const { backLink, cancelLink } = renderForgotPassword();
+
+  expect(backLink.getAttribute("href")).toBe("/login");
+  expect(cancelLink.getAttribute("href")).toBe("/customer/profile");
 });

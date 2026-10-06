@@ -72,6 +72,7 @@ function ForgotPassword() {
 
             <input
               className="input-field"
+              id="email"
               type="email"
               name="email"
               placeholder="beispielname@email.com"

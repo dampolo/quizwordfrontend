@@ -1,5 +1,6 @@
 import { afterEach, expect, it, vi } from "vitest";
 import { cleanup, render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth";
 import ForgotPassword from "./forgot-password";
@@ -12,9 +13,11 @@ afterEach(() => {
   vi.resetAllMocks();
 });
 
-it("renders an empty email field without an error and a disabled submit button", () => {
+function renderForgotPassword() {
+  const user = userEvent.setup();
+  const forgotPassword = vi.fn();
   useAuth.mockReturnValue({
-    forgotPassword: vi.fn(),
+    forgotPassword,
     setConfirmationMessage: vi.fn(),
     loading: false,
   });
@@ -28,7 +31,58 @@ it("renders an empty email field without an error and a disabled submit button",
   const emailError = email.closest(".input-container").querySelector(".warn-txt");
   const submit = container.querySelector('button[type="submit"]');
 
+  return { user, forgotPassword, email, emailError, submit };
+}
+
+it("renders an empty email field without an error and a disabled submit button", () => {
+  const { email, emailError, submit } = renderForgotPassword();
+
   expect(email.value).toBe("");
   expect(emailError.textContent).toBe("");
   expect(submit.disabled).toBe(true);
+});
+
+it.each(["invalid", "user@example", "user@example.c", "user name@example.com"])(
+  "shows an error and blocks submission for invalid email %s",
+  async (emailValue) => {
+    const { user, forgotPassword, email, emailError, submit } = renderForgotPassword();
+
+    await user.type(email, emailValue);
+
+    expect(emailError.textContent).toBe("E-Mail ist unvollständig/inkorrekt.");
+    expect(submit.disabled).toBe(true);
+    await user.click(submit);
+    expect(forgotPassword).not.toHaveBeenCalled();
+  }
+);
+
+it("clears the error after correcting the email and disables submission when cleared", async () => {
+  const { user, forgotPassword, email, emailError, submit } = renderForgotPassword();
+
+  await user.type(email, "invalid");
+  expect(emailError.textContent).toBe("E-Mail ist unvollständig/inkorrekt.");
+  expect(submit.disabled).toBe(true);
+
+  await user.clear(email);
+  await user.type(email, "user@example.com");
+  expect(email.value).toBe("user@example.com");
+  expect(emailError.textContent).toBe("");
+  expect(submit.disabled).toBe(false);
+
+  await user.clear(email);
+  expect(email.value).toBe("");
+  expect(emailError.textContent).toBe("E-Mail ist unvollständig/inkorrekt.");
+  expect(submit.disabled).toBe(true);
+  expect(forgotPassword).not.toHaveBeenCalled();
+});
+
+it("submits a valid email once with the correct payload", async () => {
+  const { user, forgotPassword, email, submit } = renderForgotPassword();
+  forgotPassword.mockResolvedValue(true);
+
+  await user.type(email, "user@example.com");
+  await user.click(submit);
+
+  expect(forgotPassword).toHaveBeenCalledTimes(1);
+  expect(forgotPassword).toHaveBeenCalledWith({ email: "user@example.com" });
 });

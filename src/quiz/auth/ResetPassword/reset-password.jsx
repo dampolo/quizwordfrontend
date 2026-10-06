@@ -27,7 +27,8 @@ function ResetPassword() {
   formValues.password1 && 
   formValues.password2 && 
   regexPassword.test(formValues.password1) &&
-  regexPassword.test(formValues.password2);
+  regexPassword.test(formValues.password2) &&
+  formValues.password1 === formValues.password2;
   
     const navigate = useNavigate();
 

@@ -1,12 +1,17 @@
 import { afterEach, expect, it, vi } from "vitest";
-import { cleanup, render } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { cleanup, render, waitFor } from "@testing-library/react";
+import { MemoryRouter, Route, Routes, useNavigate } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { useAuth } from "../../../context/useAuth";
 import ResetPassword from "./reset-password";
 
 // Replace authentication so this test never calls the backend.
 vi.mock("../../../context/useAuth", () => ({ useAuth: vi.fn() }));
+
+vi.mock("react-router-dom", async (importOriginal) => ({
+  ...(await importOriginal()),
+  useNavigate: vi.fn(),
+}));
 
 afterEach(() => {
   cleanup();
@@ -16,15 +21,20 @@ afterEach(() => {
 function renderResetPassword() {
   const user = userEvent.setup();
   const resetPassword = vi.fn();
+  const setConfirmationMessage = vi.fn();
+  const navigate = vi.fn();
+  useNavigate.mockReturnValue(navigate);
   useAuth.mockReturnValue({
     resetPassword,
-    setConfirmationMessage: vi.fn(),
+    setConfirmationMessage,
     loading: false,
   });
 
   const { container } = render(
-    <MemoryRouter>
-      <ResetPassword />
+    <MemoryRouter initialEntries={["/reset-password/test-uid/test-token"]}>
+      <Routes>
+        <Route path="/reset-password/:uid/:token" element={<ResetPassword />} />
+      </Routes>
     </MemoryRouter>
   );
   const password = container.querySelector('input[name="password1"]');
@@ -33,7 +43,7 @@ function renderResetPassword() {
   const mismatchError = container.querySelector("form > .warn-txt");
   const submit = container.querySelector('button[type="submit"]');
 
-  return { user, resetPassword, password, repeatedPassword, passwordError, mismatchError, submit };
+  return { user, resetPassword, setConfirmationMessage, navigate, password, repeatedPassword, passwordError, mismatchError, submit };
 }
 
 it("renders empty hidden passwords and a disabled submit button", () => {
@@ -195,4 +205,25 @@ it("blocks mismatched strong passwords and enables submission after correction",
   // Assert: matching valid passwords clear the error and allow submission.
   expect(mismatchError.textContent).toBe("");
   expect(submit.disabled).toBe(false);
+});
+
+it("resets the password with route credentials and confirms success", async () => {
+  const { user, resetPassword, setConfirmationMessage, navigate, password, repeatedPassword, submit } = renderResetPassword();
+  resetPassword.mockResolvedValue(true);
+
+  // Act: submit matching valid passwords.
+  await user.type(password, "StrongPass123!");
+  await user.type(repeatedPassword, "StrongPass123!");
+  expect(submit.disabled).toBe(false);
+  await user.click(submit);
+
+  // Assert: use the password and URL credentials, then confirm and clear the form.
+  expect(resetPassword).toHaveBeenCalledTimes(1);
+  expect(resetPassword).toHaveBeenCalledWith("StrongPass123!", "test-uid", "test-token");
+  await waitFor(() => {
+    expect(setConfirmationMessage).toHaveBeenCalledWith("Dein Password wurde erfolgreich geändert.");
+    expect(navigate).toHaveBeenCalledWith("/confirmation");
+    expect(password.value).toBe("");
+    expect(repeatedPassword.value).toBe("");
+  });
 });

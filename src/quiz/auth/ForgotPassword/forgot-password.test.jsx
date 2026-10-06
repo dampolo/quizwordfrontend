@@ -1,12 +1,17 @@
 import { afterEach, expect, it, vi } from "vitest";
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth";
 import ForgotPassword from "./forgot-password";
 
 // Replace authentication so the test never calls the real backend.
 vi.mock("../../../context/useAuth", () => ({ useAuth: vi.fn() }));
+
+vi.mock("react-router-dom", async (importOriginal) => ({
+  ...(await importOriginal()),
+  useNavigate: vi.fn(),
+}));
 
 afterEach(() => {
   cleanup();
@@ -16,9 +21,12 @@ afterEach(() => {
 function renderForgotPassword() {
   const user = userEvent.setup();
   const forgotPassword = vi.fn();
+  const setConfirmationMessage = vi.fn();
+  const navigate = vi.fn();
+  useNavigate.mockReturnValue(navigate);
   useAuth.mockReturnValue({
     forgotPassword,
-    setConfirmationMessage: vi.fn(),
+    setConfirmationMessage,
     loading: false,
   });
 
@@ -31,7 +39,7 @@ function renderForgotPassword() {
   const emailError = email.closest(".input-container").querySelector(".warn-txt");
   const submit = container.querySelector('button[type="submit"]');
 
-  return { user, forgotPassword, email, emailError, submit };
+  return { user, forgotPassword, setConfirmationMessage, navigate, email, emailError, submit };
 }
 
 it("renders an empty email field without an error and a disabled submit button", () => {
@@ -85,4 +93,24 @@ it("submits a valid email once with the correct payload", async () => {
 
   expect(forgotPassword).toHaveBeenCalledTimes(1);
   expect(forgotPassword).toHaveBeenCalledWith({ email: "user@example.com" });
+});
+
+it("preserves the email without confirming or navigating when the request fails", async () => {
+  const { user, forgotPassword, setConfirmationMessage, navigate, email, submit } = renderForgotPassword();
+  const error = new Error("Recovery unavailable");
+  forgotPassword.mockRejectedValue(error);
+  const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+
+  try {
+    await user.type(email, "user@example.com");
+    await user.click(submit);
+    await waitFor(() => expect(consoleError).toHaveBeenCalledWith(error));
+
+    expect(forgotPassword).toHaveBeenCalledTimes(1);
+    expect(email.value).toBe("user@example.com");
+    expect(setConfirmationMessage).not.toHaveBeenCalled();
+    expect(navigate).not.toHaveBeenCalled();
+  } finally {
+    consoleError.mockRestore();
+  }
 });

@@ -44,8 +44,9 @@ function renderResetPassword({ loading = false } = {}) {
   const passwordError = password.closest(".input-container").querySelector(".warn-txt");
   const mismatchError = container.querySelector("form > .warn-txt");
   const submit = container.querySelector('button[type="submit"]');
+  const toggles = container.querySelectorAll('button[type="button"].eye-button');
 
-  return { user, resetPassword, setConfirmationMessage, navigate, password, repeatedPassword, passwordError, mismatchError, submit };
+  return { user, resetPassword, setConfirmationMessage, navigate, password, repeatedPassword, passwordError, mismatchError, submit, toggles };
 }
 
 it("renders empty hidden passwords and a disabled submit button", () => {
@@ -268,4 +269,34 @@ it("disables submission while authentication is loading", async () => {
   expect(resetPassword).not.toHaveBeenCalled();
   expect(setConfirmationMessage).not.toHaveBeenCalled();
   expect(navigate).not.toHaveBeenCalled();
+});
+
+it("toggles each password independently without changing values or submitting", async () => {
+  const { user, resetPassword, password, repeatedPassword, submit, toggles } = renderResetPassword();
+
+  // Arrange: a valid form would submit if a toggle acted as a submit button.
+  await user.type(password, "StrongPass123!");
+  await user.type(repeatedPassword, "StrongPass123!");
+  expect(submit.disabled).toBe(false);
+  expect(password.type).toBe("password");
+  expect(repeatedPassword.type).toBe("password");
+
+  // Act and assert: reveal each password independently, then hide each again.
+  await user.click(toggles[0]);
+  expect(password.type).toBe("text");
+  expect(repeatedPassword.type).toBe("password");
+  await user.click(toggles[1]);
+  expect(password.type).toBe("text");
+  expect(repeatedPassword.type).toBe("text");
+  await user.click(toggles[0]);
+  expect(password.type).toBe("password");
+  expect(repeatedPassword.type).toBe("text");
+  await user.click(toggles[1]);
+  expect(password.type).toBe("password");
+  expect(repeatedPassword.type).toBe("password");
+
+  // Assert: visibility changes preserve both passwords and never request a reset.
+  expect(password.value).toBe("StrongPass123!");
+  expect(repeatedPassword.value).toBe("StrongPass123!");
+  expect(resetPassword).not.toHaveBeenCalled();
 });

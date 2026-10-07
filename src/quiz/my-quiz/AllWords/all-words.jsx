@@ -142,6 +142,7 @@ function AllWords() {
   useEffect(() => {
     if (language) {
       getFiltredConcepts(language, currentPage);
+      
     } else {
       getConcepts(currentPage);
     }

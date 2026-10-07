@@ -34,6 +34,7 @@ export function VocabularyProvider({ children }) {
 
       const data = await response.json();
       setWords(data);
+
       setNextPage(data.next);
       setPreviousPage(data.previous);
     } catch (error) {

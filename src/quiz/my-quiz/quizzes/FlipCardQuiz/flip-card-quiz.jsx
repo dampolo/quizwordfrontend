@@ -46,6 +46,10 @@ function FlipCardQuiz() {
     }
   }
 
+  function speakWord() {
+    
+  }
+
   function showPreviousQuestion() {
     const isFirstWord = currentQuestion === 0;
 
@@ -81,7 +85,6 @@ function FlipCardQuiz() {
         setQuiz(quizData);
 
         console.log(quizData);
-              
       } catch (error) {
         console.error(error);
       }
@@ -104,24 +107,49 @@ function FlipCardQuiz() {
         className={`${styles["flip-card-inner"]} ${isFlipped ? styles["flipped"] : ""}`}
         onTransitionEnd={handleTransitionEnd}
       >
-
         {/* FRONT */}
         <div className={styles["flip-card-front"]}>
-          <span className={styles["quiz-name"]}>
-            {quiz?.quiz_name}
-          </span>
+          <span className={styles["quiz-name"]}>{quiz?.quiz_name}</span>
+
+          {/* Sound */}
+          <button onClick={() => speakWord(quiz?.concepts[currentQuestion].translations[0].word, quiz?.concepts[currentQuestion].translations[0].language_code)}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="icon icon-tabler icons-tabler-outline icon-tabler-volume"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M15 8a5 5 0 0 1 0 8" />
+              <path d="M17.7 5a9 9 0 0 1 0 14" />
+              <path d="M6 15h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a.8 .8 0 0 1 1.5 .5v14a.8 .8 0 0 1 -1.5 .5l-3.5 -4.5" />
+            </svg>
+          </button>
+          {/* Sound Ende */}
 
           <span className={styles["languages"]}>
             {quiz?.concepts[currentQuestion].translations[0].language_name} →{" "}
             {quiz?.concepts[currentQuestion].translations[1].language_name}
           </span>
 
-          <button type="button" className={styles["quiz-card__cancel"]} onClick={cancel}>
+          <button
+            type="button"
+            className={styles["quiz-card__cancel"]}
+            onClick={cancel}
+          >
             <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
           </button>
 
           <div className={styles["quiz-card__header"]}>
-            <h1 className={`${styles["quiz-card__title-learn"]} ${styles["flip-title"]}`}>
+            <h1
+              className={`${styles["quiz-card__title-learn"]} ${styles["flip-title"]}`}
+            >
               {quiz?.concepts[currentQuestion].translations[0].word}
             </h1>
           </div>
@@ -195,7 +223,33 @@ function FlipCardQuiz() {
             {quiz?.concepts[currentQuestion].translations[1].language_name}
           </span>
 
-          <button type="button" className={styles["quiz-card__cancel"]} onClick={cancel}>
+          {/* Sound */}
+          <button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="icon icon-tabler icons-tabler-outline icon-tabler-volume"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M15 8a5 5 0 0 1 0 8" />
+              <path d="M17.7 5a9 9 0 0 1 0 14" />
+              <path d="M6 15h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a.8 .8 0 0 1 1.5 .5v14a.8 .8 0 0 1 -1.5 .5l-3.5 -4.5" />
+            </svg>
+          </button>
+          {/* Sound Ende */}
+
+          <button
+            type="button"
+            className={styles["quiz-card__cancel"]}
+            onClick={cancel}
+          >
             <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
           </button>
 
@@ -203,7 +257,9 @@ function FlipCardQuiz() {
           <div className={styles["quiz-card__form"]}>
             <span className={styles["quiz-card__line"]}></span>
 
-            <h1 className={`${styles["quiz-card__answer-wrapper-learn"]} ${styles["flip-title"]}`}>
+            <h1
+              className={`${styles["quiz-card__answer-wrapper-learn"]} ${styles["flip-title"]}`}
+            >
               {quiz?.concepts[currentQuestion].translations[1].word}
             </h1>
           </div>
@@ -265,7 +321,9 @@ function FlipCardQuiz() {
               />
             </button>
           </div>
-          <span>{quiz?.concepts[currentQuestion].translations[1].sentence}</span>
+          <span>
+            {quiz?.concepts[currentQuestion].translations[1].sentence}
+          </span>
           {/* Buttons ENDE */}
         </div>
         {/* Back ENDE */}

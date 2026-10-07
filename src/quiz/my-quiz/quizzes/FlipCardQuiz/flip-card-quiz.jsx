@@ -46,8 +46,10 @@ function FlipCardQuiz() {
     }
   }
 
-  function speakWord() {
-    
+  function speakWord(word, language_code) {
+    const speach = new SpeechSynthesisUtterance(word);
+    speach.lang = language_code;
+    window.speechSynthesis.speak(speach);
   }
 
   function showPreviousQuestion() {
@@ -84,7 +86,6 @@ function FlipCardQuiz() {
         const quizData = await getQuizWords(id, isFlipcard);
         setQuiz(quizData);
 
-        console.log(quizData);
       } catch (error) {
         console.error(error);
       }
@@ -198,6 +199,7 @@ function FlipCardQuiz() {
                   <path d="M9 18l6-6-6-6" />
                 </svg>
               </button>
+
               <button
                 type="button"
                 className={styles["turn-around"]}
@@ -224,7 +226,7 @@ function FlipCardQuiz() {
           </span>
 
           {/* Sound */}
-          <button>
+          <button onClick={() => speakWord(quiz?.concepts[currentQuestion].translations[1].word, quiz?.concepts[currentQuestion].translations[1].language_code)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"

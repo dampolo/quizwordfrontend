@@ -109,7 +109,7 @@ function FlipCardQuiz() {
           <span className={styles["quiz-name"]}>{quiz?.quiz_name}</span>
 
           {/* Sound */}
-          <button
+          <button type="button"
             onClick={() =>
               speakWord(
                 quiz?.concepts[currentQuestion].translations[0].word,

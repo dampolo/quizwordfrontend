@@ -20,7 +20,8 @@ export function VocabularyProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [nextPage, setNextPage] = useState(null);
   const [previousPage, setPreviousPage] = useState(null);
-    const [speakActive, setSpeakActive] = useState(false);
+  const [speakActive, setSpeakActive] = useState(false);
+  const [activeSpeechId, setActiveSpeechId] = useState(null);
 
   async function getConcepts(page = 1) {
     setLoading(true);
@@ -151,20 +152,23 @@ export function VocabularyProvider({ children }) {
     }
   }
 
-  async function getConcept(id, languageId) {
-    const response = await apiFetch(
-      `${api}concepts/${id}/?language=${languageId}`,
-      {
-        credentials: "include",
-      },
-    );
+  const getConcept = useCallback(
+    async (id, languageId) => {
+      const response = await apiFetch(
+        `${api}concepts/${id}/?language=${languageId}`,
+        {
+          credentials: "include",
+        },
+      );
 
-    if (!response.ok) {
-      throw new Error("Word not found.");
-    }
+      if (!response.ok) {
+        throw new Error("Word not found.");
+      }
 
-    return await response.json();
-  }
+      return await response.json();
+    },
+    [api],
+  );
 
   async function getFiltredConcepts(id, page = 1) {
     setLoading(true);
@@ -317,15 +321,21 @@ export function VocabularyProvider({ children }) {
     setCategories([]);
   }, []);
 
-  function speakWord(word, language_code) {
+  function speakWord(word, language_code, speechId = null) {
     const speach = new SpeechSynthesisUtterance(word);
     speach.lang = language_code;
-    speach.onstart = () => setSpeakActive(true);
-    speach.onend = () => setSpeakActive(false);
-    speach.onerror = () => setSpeakActive(false);
+    speach.onstart = () => {
+      setSpeakActive(true);
+      setActiveSpeechId(speechId);
+    };
+    const resetSpeech = () => {
+      setSpeakActive(false);
+      setActiveSpeechId(null);
+    };
+    speach.onend = resetSpeech;
+    speach.onerror = resetSpeech;
     window.speechSynthesis.speak(speach);
   }
-
 
   return (
     <VocabularyContext.Provider
@@ -339,6 +349,7 @@ export function VocabularyProvider({ children }) {
         nextPage,
         previousPage,
         speakActive,
+        activeSpeechId,
         postLanguages,
 
         getConcepts,

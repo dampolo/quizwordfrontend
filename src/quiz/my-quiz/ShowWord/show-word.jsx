@@ -13,7 +13,8 @@ import SpeakButton from "../../../components/SpeakButton/SpeakButton";
 export default function ShowWord() {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
-  const { getConcept, speakWord, speakActive } = useVocabulary();
+  const { getConcept, speakWord, speakActive, activeSpeechId } =
+    useVocabulary();
   const languageId = searchParams.get("language");
   const [formData, setFormData] = useState(null);
   const [wordLoaded, setWordLoaded] = useState(false);
@@ -63,14 +64,21 @@ export default function ShowWord() {
                   </p>
 
                   <button
+                    type="button"
                     onClick={() =>
                       speakWord(
-                        formData.translations[1].word,
-                        formData?.translations[1].language_code,
+                        formData.translations[0].word,
+                        formData.translations[0].language_code,
+                        formData.translations[0].id,
                       )
                     }
                   >
-                    <SpeakButton speakActive={speakActive} />
+                    <SpeakButton
+                      speakActive={
+                        speakActive &&
+                        activeSpeechId === formData.translations[0].id
+                      }
+                    />
                   </button>
                 </div>
                 <h2>{formData.translations[0].word}</h2>
@@ -96,14 +104,21 @@ export default function ShowWord() {
                     {formData.translations[1].language_name}
                   </p>
                   <button
+                    type="button"
                     onClick={() =>
                       speakWord(
                         formData.translations[1].word,
                         formData?.translations[1].language_code,
+                        formData.translations[1].id,
                       )
                     }
                   >
-                    <SpeakButton speakActive={speakActive} />
+                    <SpeakButton
+                      speakActive={
+                        speakActive &&
+                        activeSpeechId === formData.translations[1].id
+                      }
+                    />
                   </button>
                 </div>
 

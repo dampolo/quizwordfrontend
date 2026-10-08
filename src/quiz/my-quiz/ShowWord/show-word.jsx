@@ -25,7 +25,6 @@ export default function ShowWord() {
       try {
         const concept = await getConcept(id, languageId);
         setFormData(concept);
-        console.log(concept);
       } catch (err) {
         console.error(err);
         toast.error("Das Wort konnte nicht geladen werden.");

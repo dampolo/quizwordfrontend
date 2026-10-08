@@ -149,7 +149,6 @@
 .list-row-score,
 .list-row-attempt,
 .list-row {
-  padding: 1.2rem 1rem;
   border-top: 1px solid #efefef;
 
   &:hover {
@@ -161,6 +160,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-left: 1rem;
 }
 
 .rank {
@@ -175,7 +175,7 @@
   justify-content: start;
   flex-wrap: wrap;
   gap: 0.3rem;
-
+  padding: 1.2rem 1rem;
   h3 {
     color: #4738d6;
     margin: 0;
@@ -467,7 +467,6 @@
       2fr
       75px;
     align-items: center;
-    padding: 1.2rem 0.5rem;
   }
 
   .list-head-attempt,

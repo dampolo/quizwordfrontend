@@ -6,7 +6,7 @@ import useQuiz from "../../../../context/useQuiz";
 function FlipCardQuiz() {
   const [quiz, setQuiz] = useState(null);
   const { id } = useParams();
-  const { getQuizWords } = useQuiz();
+  const { getQuizWords, speakWord, speakActive } = useQuiz();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -46,11 +46,6 @@ function FlipCardQuiz() {
     }
   }
 
-  function speakWord(word, language_code) {
-    const speach = new SpeechSynthesisUtterance(word);
-    speach.lang = language_code;
-    window.speechSynthesis.speak(speach);
-  }
 
   function showPreviousQuestion() {
     const isFirstWord = currentQuestion === 0;
@@ -120,7 +115,7 @@ function FlipCardQuiz() {
               height="24"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="currentColor"
+              stroke={speakActive ? "#3f2bdc" : "currentColor"}
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"

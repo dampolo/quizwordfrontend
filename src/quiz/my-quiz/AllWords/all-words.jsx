@@ -290,13 +290,9 @@ function AllWords() {
                 </button>
               )}
             </form>
-            <div className={styles["show-found"]} hidden={!isResultsVisible}>
+            <div className={styles["show-found"]} hidden={!isResultsVisible || !query}>
               <p className={styles["search-hint"]} role="status">
-                {searchLoading
-                  ? "Wörter werden gesucht …"
-                  : !query
-                    ? "Suche in deinen Wörtern und Übersetzungen."
-                    : searchError
+                {searchLoading ? "Wörter werden gesucht …" : searchError
                       ? searchError
                       : searchResults.length === 0
                         ? "Keine passenden Wörter gefunden."

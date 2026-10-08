@@ -16,10 +16,12 @@ function AllWords() {
     words,
     loading,
     userLanguages,
+    languages,
     getFiltredConcepts,
     nextPage,
     previousPage,
     getConcepts,
+    searchVocabulary,
   } = useVocabulary();
   const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,21 +36,69 @@ function AllWords() {
   const [isResultsVisible, setIsResultsVisible] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const searchInputRef = useRef(null);
-  const query = searchTerm.trim().toLocaleLowerCase();
-  const searchResults = query
-    ? (words?.results ?? []).filter((word) =>
-        word.translations?.some((translation) =>
-          translation.word?.toLocaleLowerCase().includes(query),
-        ),
-      )
-    : [];
+  const query = searchTerm.trim();
+  const [searchState, setSearchState] = useState({
+    query: "",
+    results: [],
+    loading: false,
+    error: "",
+  });
+  const searchResults =
+    query && searchState.query === query ? searchState.results : [];
+  const searchLoading =
+    Boolean(query) && (searchState.query !== query || searchState.loading);
+  const searchError = searchState.query === query ? searchState.error : "";
+
+  useEffect(() => {
+    const controller = new AbortController();
+    let active = true;
+    const timeout = setTimeout(async () => {
+      setSearchState({ query, results: [], loading: true, error: "" });
+      setCurrentIndex(-1);
+      try {
+        const results = await searchVocabulary(query, {
+          signal: controller.signal,
+        });
+        if (active) {
+          setSearchState({ query, results, loading: false, error: "" });
+        }
+      } catch (error) {
+        if (active && error.name !== "AbortError") {
+          setSearchState({
+            query,
+            results: [],
+            loading: false,
+            error: error.message || "Die Vokabelsuche ist fehlgeschlagen.",
+          });
+        }
+      }
+    }, 300);
+
+    return () => {
+      active = false;
+      clearTimeout(timeout);
+      controller.abort();
+    };
+  }, [query, searchVocabulary, user?.is_superuser]);
 
   function openSearchResult(word) {
-    const target = word.translations?.[1];
-    if (!target) return;
+    const targetLanguage = [
+      ...(userLanguages ?? []),
+      ...(languages ?? []),
+    ].find(
+      (item) =>
+        item.language_name?.toLocaleLowerCase() ===
+        word.target_language?.toLocaleLowerCase(),
+    );
+    if (!targetLanguage) {
+      toast.error(
+        "Die Zielsprache des Suchergebnisses konnte nicht zugeordnet werden.",
+      );
+      return;
+    }
     setIsResultsVisible(false);
     navigate(
-      `/my-quiz/${word.id}/show-word?target-word=${target.id}&language=${target.language}`,
+      `/my-quiz/${word.concept_id}/show-word?language=${targetLanguage.id}`,
     );
   }
 
@@ -142,7 +192,6 @@ function AllWords() {
   useEffect(() => {
     if (language) {
       getFiltredConcepts(language, currentPage);
-      
     } else {
       getConcepts(currentPage);
     }
@@ -159,8 +208,6 @@ function AllWords() {
             Übersetzungen, Kategorien und Wiederholungspläne für alle deine
             gespeicherten Ausdrücke.
           </p>
-        </div>
-        {user?.is_superuser && (
           <search
             className={styles["search-container"]}
             aria-label="Vokabelsuche"
@@ -208,7 +255,7 @@ function AllWords() {
                 type="search"
                 id="vocabulary-search"
                 name="search"
-                placeholder="Wörter auf dieser Seite suchen …"
+                placeholder="Wörter und Übersetzungen suchen …"
                 value={searchTerm}
                 onChange={(event) => {
                   setSearchTerm(event.target.value);
@@ -224,7 +271,7 @@ function AllWords() {
                 aria-controls="vocabulary-search-results"
                 aria-activedescendant={
                   isResultsVisible && searchResults[currentIndex]
-                    ? `vocabulary-result-${searchResults[currentIndex].id}`
+                    ? `vocabulary-result-${currentIndex}`
                     : undefined
                 }
               />
@@ -245,13 +292,15 @@ function AllWords() {
             </form>
             <div className={styles["show-found"]} hidden={!isResultsVisible}>
               <p className={styles["search-hint"]} role="status">
-                {loading
-                  ? "Wörter werden geladen …"
+                {searchLoading
+                  ? "Wörter werden gesucht …"
                   : !query
-                    ? "Suche in den Wörtern und Übersetzungen dieser Seite."
-                    : searchResults.length === 0
-                      ? "Keine passenden Wörter auf dieser Seite."
-                      : `${searchResults.length} Treffer für „${searchTerm}“`}
+                    ? "Suche in deinen Wörtern und Übersetzungen."
+                    : searchError
+                      ? searchError
+                      : searchResults.length === 0
+                        ? "Keine passenden Wörter gefunden."
+                        : `${searchResults.length} Treffer für „${searchTerm}“`}
               </p>
               <ul
                 id="vocabulary-search-results"
@@ -260,8 +309,8 @@ function AllWords() {
               >
                 {searchResults.map((word, index) => (
                   <li
-                    key={word.id}
-                    id={`vocabulary-result-${word.id}`}
+                    key={`${word.concept_id}-${word.target_language}-${word.target_word}`}
+                    id={`vocabulary-result-${index}`}
                     role="option"
                     aria-selected={index === currentIndex}
                   >
@@ -275,16 +324,20 @@ function AllWords() {
                       }
                       onClick={() => openSearchResult(word)}
                     >
-                      {word.translations
-                        ?.map((translation) => translation.word)
-                        .join(" » ")}
+                      {word.native_word} » {word.target_word}
+                      <small>
+                        {" "}
+                        ({word.native_language} → {word.target_language})
+                      </small>
                     </button>
                   </li>
                 ))}
               </ul>
             </div>
           </search>
-        )}
+        </div>
+          
+        
         <div className={styles["create-buttons"]}>
           <button
             type="submit"

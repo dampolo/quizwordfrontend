@@ -46,6 +46,29 @@ export function VocabularyProvider({ children }) {
     }
   }
 
+  const searchVocabulary = useCallback(
+    async (search, { signal } = {}) => {
+      const query = search.trim();
+      if (!query) return [];
+
+      const params = new URLSearchParams({ search: query });
+      const response = await apiFetch(
+        `${api}vocabulary-search/?${params}`,
+        { credentials: "include", signal },
+      );
+
+      if (!response.ok) {
+        throw new Error("Die Vokabelsuche ist fehlgeschlagen.");
+      }
+
+      const data = await response.json();
+      if (Array.isArray(data)) return data;
+      if (Array.isArray(data.results)) return data.results;
+      throw new Error("Die Vokabelsuche hat ein ungültiges Ergebnis geliefert.");
+    },
+    [api],
+  );
+
   async function getCategory(id) {
     setLoading(true);
 
@@ -353,6 +376,7 @@ export function VocabularyProvider({ children }) {
         postLanguages,
 
         getConcepts,
+        searchVocabulary,
         clearCategories,
         getUserLanguages,
         getConcept,

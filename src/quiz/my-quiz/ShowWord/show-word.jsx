@@ -8,11 +8,12 @@ import EditButton from "../../../components/EditButton/EditButton";
 
 import PreLoader from "../../../components/PreLoader/PreLoader";
 import styles from "./show-word.module.scss";
+import SpeakButton from "../../../components/SpeakButton/SpeakButton";
 
 export default function ShowWord() {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
-  const { getConcept, languages } = useVocabulary();
+  const { getConcept, speakWord, speakActive } = useVocabulary();
   const languageId = searchParams.get("language");
   const [formData, setFormData] = useState(null);
   const [wordLoaded, setWordLoaded] = useState(false);
@@ -23,6 +24,7 @@ export default function ShowWord() {
       try {
         const concept = await getConcept(id, languageId);
         setFormData(concept);
+        console.log(concept);
       } catch (err) {
         console.error(err);
         toast.error("Das Wort konnte nicht geladen werden.");
@@ -37,8 +39,13 @@ export default function ShowWord() {
   return (
     <section className={styles["show-word-page"]}>
       <div className={styles["actions"]}>
-        <BackButton to={`/my-quiz/all-words?language=${languageId}`} className={styles["arrow-back"]} />
-        <EditButton to={`/my-quiz/${formData?.id}/edit-word?target-word=${formData?.translations[1].id}&language=${formData?.translations[1].language}`}/>
+        <BackButton
+          to={`/my-quiz/all-words?language=${languageId}`}
+          className={styles["arrow-back"]}
+        />
+        <EditButton
+          to={`/my-quiz/${formData?.id}/edit-word?target-word=${formData?.translations[1].id}&language=${formData?.translations[1].language}`}
+        />
       </div>
 
       <h1>Wort ansehen</h1>
@@ -50,14 +57,22 @@ export default function ShowWord() {
           {formData?.translations?.[0] && (
             <article className={styles["word-card"]}>
               <header className={styles["word-header"]}>
-                <p className={styles.language}>
-                  {languages.find(
-                    (language) =>
-                      String(language.id) ===
-                      String(formData.translations[0].language),
-                  )?.language_name || "Übersetzung"}
-                </p>
+                <div className={styles["word-language"]}>
+                  <p className={styles.language}>
+                    {formData.translations[0].language_name}
+                  </p>
 
+                  <button
+                    onClick={() =>
+                      speakWord(
+                        formData.translations[1].word,
+                        formData?.translations[1].language_code,
+                      )
+                    }
+                  >
+                    <SpeakButton speakActive={speakActive} />
+                  </button>
+                </div>
                 <h2>{formData.translations[0].word}</h2>
               </header>
 
@@ -76,13 +91,21 @@ export default function ShowWord() {
           {formData?.translations?.[1] && (
             <article className={styles["word-card"]}>
               <header className={styles["word-header"]}>
-                <p className={styles.language}>
-                  {languages.find(
-                    (language) =>
-                      String(language.id) ===
-                      String(formData.translations[1].language),
-                  )?.language_name || "Übersetzung"}
-                </p>
+                <div className={styles["word-language"]}>
+                  <p className={styles.language}>
+                    {formData.translations[1].language_name}
+                  </p>
+                  <button
+                    onClick={() =>
+                      speakWord(
+                        formData.translations[1].word,
+                        formData?.translations[1].language_code,
+                      )
+                    }
+                  >
+                    <SpeakButton speakActive={speakActive} />
+                  </button>
+                </div>
 
                 <h2>{formData.translations[1].word}</h2>
               </header>

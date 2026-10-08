@@ -20,6 +20,7 @@ export function VocabularyProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [nextPage, setNextPage] = useState(null);
   const [previousPage, setPreviousPage] = useState(null);
+    const [speakActive, setSpeakActive] = useState(false);
 
   async function getConcepts(page = 1) {
     setLoading(true);
@@ -316,6 +317,16 @@ export function VocabularyProvider({ children }) {
     setCategories([]);
   }, []);
 
+  function speakWord(word, language_code) {
+    const speach = new SpeechSynthesisUtterance(word);
+    speach.lang = language_code;
+    speach.onstart = () => setSpeakActive(true);
+    speach.onend = () => setSpeakActive(false);
+    speach.onerror = () => setSpeakActive(false);
+    window.speechSynthesis.speak(speach);
+  }
+
+
   return (
     <VocabularyContext.Provider
       value={{
@@ -327,7 +338,9 @@ export function VocabularyProvider({ children }) {
         nativeLanguage,
         nextPage,
         previousPage,
+        speakActive,
         postLanguages,
+
         getConcepts,
         clearCategories,
         getUserLanguages,
@@ -342,6 +355,7 @@ export function VocabularyProvider({ children }) {
         getCategory,
         getCategories,
         createCategory,
+        speakWord,
       }}
     >
       {children}

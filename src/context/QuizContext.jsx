@@ -10,7 +10,6 @@ export function QuizProvider({ children }) {
   const api = useApi();
   const [loading, setLoading] = useState(false);
   const [quizzes, setQuizzes] = useState([]);
-  const [speakActive, setSpeakActive] = useState(false);
 
   async function getQuizzes() {
     setLoading(true);
@@ -221,21 +220,11 @@ export function QuizProvider({ children }) {
     }
   }
 
-  function speakWord(word, language_code) {
-    const speach = new SpeechSynthesisUtterance(word);
-    speach.lang = language_code;
-    speach.onstart = () => setSpeakActive(true);
-    speach.onend = () => setSpeakActive(false);
-    speach.onerror = () => setSpeakActive(false);
-    window.speechSynthesis.speak(speach);
-  }
-
   return (
     <QuizContext.Provider
       value={{
         loading,
         quizzes,
-        speakActive,
         putQuiz,
         createQuiz,
         deleteQuiz,
@@ -247,7 +236,6 @@ export function QuizProvider({ children }) {
         getAttemptQuizScore,
         getAttemptDetails,
         postQuizAnswers,
-        speakWord,
       }}
     >
       {children}

@@ -28,6 +28,7 @@ function AllWords() {
 
   const [selectedWordIds, setSelectedWordIds] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const filterDialogRef = useRef(null);
   const { createQuiz, getLastQuiz, getLastFlipCard } = useQuiz();
   const [currentPage, setCurrentPage] = useState(1);
   const [message, setMessage] = useState("");
@@ -290,13 +291,18 @@ function AllWords() {
                 </button>
               )}
             </form>
-            <div className={styles["show-found"]} hidden={!isResultsVisible || !query}>
+            <div
+              className={styles["show-found"]}
+              hidden={!isResultsVisible || !query}
+            >
               <p className={styles["search-hint"]} role="status">
-                {searchLoading ? "Wörter werden gesucht …" : searchError
-                      ? searchError
-                      : searchResults.length === 0
-                        ? "Keine passenden Wörter gefunden."
-                        : `${searchResults.length} Treffer für „${searchTerm}“`}
+                {searchLoading
+                  ? "Wörter werden gesucht …"
+                  : searchError
+                    ? searchError
+                    : searchResults.length === 0
+                      ? "Keine passenden Wörter gefunden."
+                      : `${searchResults.length} Treffer für „${searchTerm}“`}
               </p>
               <ul
                 id="vocabulary-search-results"
@@ -332,8 +338,7 @@ function AllWords() {
             </div>
           </search>
         </div>
-          
-        
+
         <div className={styles["create-buttons"]}>
           <button
             type="submit"
@@ -367,6 +372,16 @@ function AllWords() {
             </button>
           </li>
         ))}
+        <li className={`${styles["language-single"]}`}>
+          <button
+            type="button"
+            className={styles["language-button"]}
+            aria-label="Filter öffnen"
+            onClick={() => filterDialogRef.current?.showModal()}
+          >
+            <img src="/assets/filter.svg" alt="filter" />
+          </button>
+        </li>
       </ul>
 
       <div className={styles["word-list"]}>
@@ -504,6 +519,43 @@ function AllWords() {
           />
         </svg>
       </button>
+
+        {/* dialog */}
+
+      <dialog ref={filterDialogRef} className={styles["filter-dialog"]}
+        aria-labelledby="filter-dialog-title">
+        <button
+          type="button"
+          className={styles["filter-dialog__close"]}
+          aria-label="Filter schließen"
+          onClick={() => filterDialogRef.current?.close()}
+        >
+          <img width={25} height={25} src="/assets/xbox.svg" alt="" />
+        </button>
+        <form method="dialog">
+          <h2 id="filter-dialog-title">Filter</h2>
+          <label htmlFor="filter-date">Datum</label>
+          <input id="filter-date" name="filterDate" type="date" />
+          <div className={styles["action-buttons"]}>
+            <button
+              type="button"
+              className={`${styles["main-quiz-button-cancel"]} ${styles["cancel-btn"]}`}
+              onClick={() => filterDialogRef.current?.close()}
+            >
+              {t("BUTTONS.CANCEL")}
+            </button>
+            <button
+              type="submit"
+              className={`${styles["main-quiz-button"]} ${styles["save-btn"]}`}
+            >
+              {t("BUTTONS.SAVE")}
+            </button>
+          </div>
+        </form>
+      </dialog>
+
+        {/* dialogEnde */}
+
       <FormDialog
         open={dialogOpen}
         selectedWordsCount={selectedWordIds.length}

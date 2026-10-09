@@ -1,3 +1,4 @@
+@use "./../../../styles/styles.scss";
 @use "./../../../styles/basic.scss";
 
 .vocabulary {
@@ -73,6 +74,50 @@
       padding: 0.5rem 1rem;
       width: 100%;
     }
+  }
+}
+
+.filter-dialog {
+  margin: auto;
+  width: min(50rem, calc(100% - 2rem));
+  max-height: calc(100% - 5.5rem);
+  padding: 2rem;
+  border: 1px solid #ececec;
+  border-radius: basic.$qw-border-radius;
+  background: basic.$qw-fourth;
+  color: #222;
+
+  &::backdrop {
+    background: rgba(52, 33, 214, 0.4);
+  }
+
+  &__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border: 1px solid #dddded;
+    border-radius: 50%;
+    background: basic.$qw-fourth;
+
+    &:hover {
+      background: #f6f6fb;
+    }
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid basic.$qw-border-color;
+    border-radius: basic.$qw-border-radius;
   }
 }
 

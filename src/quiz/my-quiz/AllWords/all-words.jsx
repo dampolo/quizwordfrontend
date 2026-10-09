@@ -50,8 +50,8 @@ function AllWords() {
   const searchLoading =
     Boolean(query) && (searchState.query !== query || searchState.loading);
   const searchError = searchState.query === query ? searchState.error : "";
-  const [date, setDate] = useState("");
-  const [filterDate, setFilterDate] = useState("");
+  const filterDate = searchParams.get("created_at__date") || "";
+  const [date, setDate] = useState(() => filterDate);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -154,7 +154,7 @@ function AllWords() {
       toast.success(`Quiz "${quizName}" wurde erstellt!`);
       setDialogOpen(false);
       setSelectedWordIds([]);
-      navigate(`/my-quiz/all-words/?language=${language}`);
+      navigate(`/my-quiz/all-words/?${searchParams.toString()}`);
     } catch (error) {
       const message = error.response?.detail || "Error";
       setMessage(message);
@@ -167,15 +167,23 @@ function AllWords() {
   }
 
   function submit() {
-    setFilterDate(date);
+    const params = new URLSearchParams(searchParams);
+    if (date) {
+      params.set("created_at__date", date);
+    } else {
+      params.delete("created_at__date");
+    }
     setCurrentPage(1);
     setSelectedWordIds([]);
+    setSearchParams(params);
   }
 
   function selectLanguage(languageId) {
     setSelectedWordIds([]);
     setCurrentPage(1);
-    setSearchParams({ language: languageId });
+    const params = new URLSearchParams(searchParams);
+    params.set("language", languageId);
+    setSearchParams(params);
   }
 
   async function playLastQuiz() {
@@ -393,7 +401,10 @@ function AllWords() {
             type="button"
             className={styles["language-button"]}
             aria-label="Filter öffnen"
-            onClick={() => filterDialogRef.current?.showModal()}
+            onClick={() => {
+              setDate(filterDate);
+              filterDialogRef.current?.showModal();
+            }}
           >
             <img src="/assets/filter.svg" alt="filter" />
           </button>

@@ -71,7 +71,7 @@ function NavbarCustomer() {
       <li>
         <NavLink to="/my-quiz/settings" onClick={closeMenu} className={({ isActive }) => (isActive ? styles["active"] : "")}>
           <img width={25} height={25} src="/assets/settings.svg" alt="" />
-          <span className={styles["nav-link-text"]}>Einstellungen</span>
+          <span className={styles["nav-link-text"]}>Übersetzer</span>
         </NavLink>
       </li>
     </ul>

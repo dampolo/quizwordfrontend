@@ -45,9 +45,9 @@
     &:nth-child(1) {
       margin-top: 1rem;
     }
-    &:nth-last-child(-n + 1) {
-      margin-top: auto;
-    }
+    // &:nth-last-child(-n + 1) {
+    //   margin-top: auto;
+    // }
   }
 }
 

@@ -11,7 +11,7 @@
   border-radius: basic.$qw-border-radius;
   background: basic.$qw-third;
   height: 9rem;
-  width: 13rem;
+  width: 15rem;
   .rectangle {
     display: none;
     position: absolute;
@@ -34,7 +34,7 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      max-width: 9.375rem;
+      max-width: 12rem;
       height: 2.1875rem;
       border-radius: basic.$qw-border-radius;
       &:hover {

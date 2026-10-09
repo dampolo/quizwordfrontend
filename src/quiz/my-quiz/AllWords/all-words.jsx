@@ -396,7 +396,7 @@ function AllWords() {
             </button>
           </li>
         ))}
-        <li className={`${styles["language-single"]}`}>
+        <li className={`${styles["language-single"]} ${filterDate ? styles["active"] : ""}`}>
           <button
             type="button"
             className={styles["language-button"]}

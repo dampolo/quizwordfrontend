@@ -243,7 +243,6 @@ export function VocabularyProvider({ children }) {
         throw new Error("Failed to load words.");
       }
       const data = await response.json();
-      console.log("DATA: ", data );
       
       setWords(data);
       setNextPage(data.next);

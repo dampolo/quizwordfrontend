@@ -49,6 +49,7 @@ function AllWords() {
   const searchLoading =
     Boolean(query) && (searchState.query !== query || searchState.loading);
   const searchError = searchState.query === query ? searchState.error : "";
+  const [filterDate, setFilterDate] = useState("");
 
   useEffect(() => {
     const controller = new AbortController();
@@ -157,6 +158,19 @@ function AllWords() {
       setMessage(message);
       toast.error(message);
     }
+  }
+
+  function handleChange(e) {
+    e.preventDefault();
+    const { name, value } = e.target;
+
+    setFilterDate((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    console.log(value);
+    
   }
 
   function selectLanguage(languageId) {
@@ -520,10 +534,13 @@ function AllWords() {
         </svg>
       </button>
 
-        {/* dialog */}
+      {/* dialog */}
 
-      <dialog ref={filterDialogRef} className={styles["filter-dialog"]}
-        aria-labelledby="filter-dialog-title">
+      <dialog
+        ref={filterDialogRef}
+        className={styles["filter-dialog"]}
+        aria-labelledby="filter-dialog-title"
+      >
         <button
           type="button"
           className={styles["filter-dialog__close"]}
@@ -535,7 +552,13 @@ function AllWords() {
         <form method="dialog">
           <h2 id="filter-dialog-title">Filter</h2>
           <label htmlFor="filter-date">Datum</label>
-          <input id="filter-date" name="filterDate" type="date" />
+          <input
+            id="filter-date"
+            name="filterDate"
+            type="date"
+            value={filterDate}
+            onChange={(e) => handleChange(e)}
+          />
           <div className={styles["action-buttons"]}>
             <button
               type="button"
@@ -554,7 +577,7 @@ function AllWords() {
         </form>
       </dialog>
 
-        {/* dialogEnde */}
+      {/* dialogEnde */}
 
       <FormDialog
         open={dialogOpen}

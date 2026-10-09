@@ -1,0 +1,113 @@
+diff --git a/translation-fix-before.txt b/src/quiz/my-quiz/Translate/Translation.jsx
+index b316500..67e72b0 100644
+--- a/translation-fix-before.txt
++++ b/src/quiz/my-quiz/Translate/Translation.jsx
+@@ -8,14 +8,15 @@ function Translation() {
+   const { nativeLanguage, userLanguages = [] } = useVocabulary();
+   const languageOptions = [nativeLanguage, ...userLanguages].filter(
+     (language, index, all) => language?.id &&
+-      (language.language_code || language.code) &&
+       all.findIndex((item) => item?.id === language.id) === index,
+   );
+   const getCode = (language) => language?.language_code || language?.code || "";
+   const [selectedSource, setSource] = useState(null);
+   const [selectedTarget, setTarget] = useState(null);
+-  const source = selectedSource ?? getCode(nativeLanguage);
+-  const target = selectedTarget ?? getCode(userLanguages[0]);
++  const sourceId = selectedSource ?? String(nativeLanguage?.id ?? "");
++  const targetId = selectedTarget ?? String(userLanguages[0]?.id ?? "");
++  const source = getCode(languageOptions.find((language) => String(language.id) === sourceId));
++  const target = getCode(languageOptions.find((language) => String(language.id) === targetId));
+   const { translate, translatedText, loading, error } = UseTranslation();
+ 
+   async function handleSubmit(event) {
+@@ -33,25 +34,28 @@ function Translation() {
+           <textarea id="translation-text" name="text" value={text}
+             onChange={(event) => setText(event.target.value)} required rows={4} />
+           <label htmlFor="translation-source">Ausgangssprache</label>
+-          <select id="translation-source" name="source" value={source}
++          <select id="translation-source" name="source" value={sourceId}
+             onChange={(event) => setSource(event.target.value)} required>
+             <option value="">Wähle Sprache</option>
+             {languageOptions.map((language) => (
+-              <option key={language.id} value={getCode(language)}>
++              <option key={language.id} value={String(language.id)}>
+                 {language.language_name}
+               </option>
+             ))}
+           </select>
+           <label htmlFor="translation-target">Zielsprache</label>
+-          <select id="translation-target" name="target" value={target}
++          <select id="translation-target" name="target" value={targetId}
+             onChange={(event) => setTarget(event.target.value)} required>
+             <option value="">Wähle Sprache</option>
+             {languageOptions.map((language) => (
+-              <option key={language.id} value={getCode(language)}>
++              <option key={language.id} value={String(language.id)}>
+                 {language.language_name}
+               </option>
+             ))}
+           </select>
++          {sourceId && targetId && (!source || !target) && (
++            <p role="alert">Für eine ausgewählte Sprache fehlt der Sprachcode. Bitte lade die Seite nach dem Backend-Update neu.</p>
++          )}
+           <button type="submit" disabled={loading || !text.trim() || !source.trim() || !target.trim()}>
+             {loading ? "Wird übersetzt…" : "Übersetzen"}
+           </button>
+diff --git a/src/quiz/my-quiz/Translate/Translation.test.jsx b/src/quiz/my-quiz/Translate/Translation.test.jsx
+new file mode 100644
+index 0000000..f9a54d7
+--- /dev/null
++++ b/src/quiz/my-quiz/Translate/Translation.test.jsx
+@@ -0,0 +1,45 @@
++import { afterEach, expect, it, vi } from "vitest";
++import { cleanup, render } from "@testing-library/react";
++import userEvent from "@testing-library/user-event";
++import Translation from "./Translation";
++import useVocabulary from "../../../context/useVocabulary";
++import UseTranslation from "../../../context/TranslationContex/UseTranslation";
++
++vi.mock("../../../context/useVocabulary", () => ({ default: vi.fn() }));
++vi.mock("../../../context/TranslationContex/UseTranslation", () => ({ default: vi.fn() }));
++afterEach(() => { cleanup(); vi.resetAllMocks(); });
++
++function renderTranslation({ withCodes = true, loading = false } = {}) {
++  const nativeLanguage = { id: 1, language_name: "Deutsch", ...(withCodes && { language_code: "de" }) };
++  const english = { id: 2, language_name: "Englisch", ...(withCodes && { language_code: "en" }) };
++  useVocabulary.mockReturnValue({ nativeLanguage, userLanguages: [english] });
++  const translate = vi.fn();
++  UseTranslation.mockReturnValue({ translate, translatedText: "", loading, error: "" });
++  const { container } = render(<Translation />);
++  return {
++    user: userEvent.setup(), translate,
++    source: container.querySelector('select[name="source"]'),
++    target: container.querySelector('select[name="target"]'),
++    text: container.querySelector('textarea[name="text"]'),
++    submit: container.querySelector('button[type="submit"]'),
++  };
++}
++
++it("keeps languages selectable even without codes and while loading", async () => {
++  const { user, source, target } = renderTranslation({ withCodes: false, loading: true });
++  expect(source.options.length).toBe(3);
++  expect(source.disabled).toBe(false);
++  await user.selectOptions(source, "2");
++  await user.selectOptions(target, "1");
++  expect(source.value).toBe("2");
++  expect(target.value).toBe("1");
++});
++
++it("sends language codes rather than dropdown IDs", async () => {
++  const { user, source, target, text, submit, translate } = renderTranslation();
++  await user.selectOptions(source, "2");
++  await user.selectOptions(target, "1");
++  await user.type(text, "Hello");
++  await user.click(submit);
++  expect(translate).toHaveBeenCalledWith({ text: "Hello", source: "en", target: "de" });
++});
+
+--- D:/quizwordbackend/vocabulary_app/api/serializer.py
++++ D:/quizwordbackend/vocabulary_app/api/serializer.py
+@@
+-        fields = ["id", "language_name"]
++        fields = ["id", "language_name", "language_code"]

@@ -1,0 +1,49 @@
+diff --git a/translation-codes-before.txt b/src/quiz/my-quiz/Translate/Translation.jsx
+index 67e72b0..c876bc8 100644
+--- a/translation-codes-before.txt
++++ b/src/quiz/my-quiz/Translate/Translation.jsx
+@@ -10,7 +10,12 @@ function Translation() {
+     (language, index, all) => language?.id &&
+       all.findIndex((item) => item?.id === language.id) === index,
+   );
+-  const getCode = (language) => language?.language_code || language?.code || "";
++  const getCode = (language) => {
++    const code = (language?.language_code || language?.code || "").trim();
++    // The translation endpoint accepts de/en/es; speech uses regional codes.
++    const baseCode = code.toLowerCase().split(/[-_]/)[0];
++    return ["de", "en", "es"].includes(baseCode) ? baseCode : code;
++  };
+   const [selectedSource, setSource] = useState(null);
+   const [selectedTarget, setTarget] = useState(null);
+   const sourceId = selectedSource ?? String(nativeLanguage?.id ?? "");
+diff --git a/translation-codes-test-before.txt b/src/quiz/my-quiz/Translate/Translation.test.jsx
+index f9a54d7..3685fe3 100644
+--- a/translation-codes-test-before.txt
++++ b/src/quiz/my-quiz/Translate/Translation.test.jsx
+@@ -9,9 +9,9 @@ vi.mock("../../../context/useVocabulary", () => ({ default: vi.fn() }));
+ vi.mock("../../../context/TranslationContex/UseTranslation", () => ({ default: vi.fn() }));
+ afterEach(() => { cleanup(); vi.resetAllMocks(); });
+ 
+-function renderTranslation({ withCodes = true, loading = false } = {}) {
+-  const nativeLanguage = { id: 1, language_name: "Deutsch", ...(withCodes && { language_code: "de" }) };
+-  const english = { id: 2, language_name: "Englisch", ...(withCodes && { language_code: "en" }) };
++function renderTranslation({ withCodes = true, loading = false, sourceCode = "de", targetCode = "en" } = {}) {
++  const nativeLanguage = { id: 1, language_name: "Deutsch", ...(withCodes && { language_code: sourceCode }) };
++  const english = { id: 2, language_name: "Englisch", ...(withCodes && { language_code: targetCode }) };
+   useVocabulary.mockReturnValue({ nativeLanguage, userLanguages: [english] });
+   const translate = vi.fn();
+   UseTranslation.mockReturnValue({ translate, translatedText: "", loading, error: "" });
+@@ -43,3 +43,13 @@ it("sends language codes rather than dropdown IDs", async () => {
+   await user.click(submit);
+   expect(translate).toHaveBeenCalledWith({ text: "Hello", source: "en", target: "de" });
+ });
++
++it.each([
++  ["de-DE", "en-US", "de", "en"],
++  ["de_DE", "es-ES", "de", "es"],
++])("normalizes %s and %s for the translation endpoint", async (sourceCode, targetCode, source, target) => {
++  const { user, text, submit, translate } = renderTranslation({ sourceCode, targetCode });
++  await user.type(text, "Hallo");
++  await user.click(submit);
++  expect(translate).toHaveBeenCalledWith({ text: "Hallo", source, target });
++});

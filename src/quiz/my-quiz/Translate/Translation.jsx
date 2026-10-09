@@ -8,14 +8,20 @@ function Translation() {
   const { nativeLanguage, userLanguages = [] } = useVocabulary();
   const languageOptions = [nativeLanguage, ...userLanguages].filter(
     (language, index, all) => language?.id &&
-      (language.language_code || language.code) &&
       all.findIndex((item) => item?.id === language.id) === index,
   );
-  const getCode = (language) => language?.language_code || language?.code || "";
+  const getCode = (language) => {
+    const code = (language?.language_code || language?.code || "").trim();
+    // The translation endpoint accepts de/en/es; speech uses regional codes.
+    const baseCode = code.toLowerCase().split(/[-_]/)[0];
+    return ["de", "en", "es"].includes(baseCode) ? baseCode : code;
+  };
   const [selectedSource, setSource] = useState(null);
   const [selectedTarget, setTarget] = useState(null);
-  const source = selectedSource ?? getCode(nativeLanguage);
-  const target = selectedTarget ?? getCode(userLanguages[0]);
+  const sourceId = selectedSource ?? String(nativeLanguage?.id ?? "");
+  const targetId = selectedTarget ?? String(userLanguages[0]?.id ?? "");
+  const source = getCode(languageOptions.find((language) => String(language.id) === sourceId));
+  const target = getCode(languageOptions.find((language) => String(language.id) === targetId));
   const { translate, translatedText, loading, error } = UseTranslation();
 
   async function handleSubmit(event) {
@@ -33,25 +39,28 @@ function Translation() {
           <textarea id="translation-text" name="text" value={text}
             onChange={(event) => setText(event.target.value)} required rows={4} />
           <label htmlFor="translation-source">Ausgangssprache</label>
-          <select id="translation-source" name="source" value={source}
+          <select id="translation-source" name="source" value={sourceId}
             onChange={(event) => setSource(event.target.value)} required>
             <option value="">Wähle Sprache</option>
             {languageOptions.map((language) => (
-              <option key={language.id} value={getCode(language)}>
+              <option key={language.id} value={String(language.id)}>
                 {language.language_name}
               </option>
             ))}
           </select>
           <label htmlFor="translation-target">Zielsprache</label>
-          <select id="translation-target" name="target" value={target}
+          <select id="translation-target" name="target" value={targetId}
             onChange={(event) => setTarget(event.target.value)} required>
             <option value="">Wähle Sprache</option>
             {languageOptions.map((language) => (
-              <option key={language.id} value={getCode(language)}>
+              <option key={language.id} value={String(language.id)}>
                 {language.language_name}
               </option>
             ))}
           </select>
+          {sourceId && targetId && (!source || !target) && (
+            <p role="alert">Für eine ausgewählte Sprache fehlt der Sprachcode. Bitte lade die Seite nach dem Backend-Update neu.</p>
+          )}
           <button type="submit" disabled={loading || !text.trim() || !source.trim() || !target.trim()}>
             {loading ? "Wird übersetzt…" : "Übersetzen"}
           </button>

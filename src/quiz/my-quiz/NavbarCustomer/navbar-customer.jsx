@@ -19,7 +19,6 @@ function NavbarCustomer() {
     ? `/my-quiz/all-quizzes?language=${firstLanguage}`
     : "/my-quiz/all-quizzes";
 
-  function closeMenu() {}
 
   return (
     <ul className={styles["navbar-customer"]}>
@@ -69,8 +68,8 @@ function NavbarCustomer() {
       </li>
 
       <li>
-        <NavLink to="/my-quiz/settings" onClick={closeMenu} className={({ isActive }) => (isActive ? styles["active"] : "")}>
-          <img width={25} height={25} src="/assets/settings.svg" alt="" />
+        <NavLink to="/my-quiz/sett" className={({ isActive }) => (isActive ? styles["active"] : "")}>
+          <img width={24} height={24} src="/assets/translate.svg" alt="" />
           <span className={styles["nav-link-text"]}>Übersetzer</span>
         </NavLink>
       </li>

@@ -193,6 +193,42 @@ export function VocabularyProvider({ children }) {
     [api],
   );
 
+  async function getDateFilteredConcepts(language, date, page = 1) {
+    const params = new URLSearchParams({ created_at__date: date, page });
+    if (language) params.set("language", language);
+    setLoading(true);
+
+    try {
+      const response = await apiFetch(`${api}words/?${params}`, {
+        credentials: "include",
+      });
+      if (!response.ok) throw new Error("Failed to load words.");
+      const data = await response.json();
+      const results = await Promise.all(
+        data.results.map(async (word) => {
+          const concept = await getConcept(word.concept, word.language);
+          const translations = concept.translations ?? [];
+          const source = translations.find(
+            (item) => item.language !== word.language,
+          );
+          const target = translations.find((item) => item.id === word.id);
+          return {
+            ...concept,
+            id: word.concept,
+            translations: [source ?? { word: "—" }, { ...target, ...word }],
+          };
+        }),
+      );
+      setWords({ ...data, results });
+      setNextPage(data.next);
+      setPreviousPage(data.previous);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   async function getFiltredConcepts(id, page = 1) {
     setLoading(true);
 
@@ -207,7 +243,8 @@ export function VocabularyProvider({ children }) {
         throw new Error("Failed to load words.");
       }
       const data = await response.json();
-
+      console.log("DATA: ", data );
+      
       setWords(data);
       setNextPage(data.next);
       setPreviousPage(data.previous);
@@ -381,6 +418,7 @@ export function VocabularyProvider({ children }) {
         getUserLanguages,
         getConcept,
         getFiltredConcepts,
+        getDateFilteredConcepts,
         getFiltredCategories,
         createConcept,
         updateWord,

@@ -44,6 +44,8 @@ import DeleteAccount from "./quiz/my-quiz/Profile/DeleteAccount/delete-account";
 import ChangeProfileImage from "./quiz/my-quiz/Profile/ChangeProfileImage/change-profile-image";
 import Contact from "./website/Contact/contact";
 import FlipCardQuiz from "./quiz/my-quiz/quizzes/FlipCardQuiz/flip-card-quiz";
+import Translation from "./quiz/my-quiz/Translate/Translation";
+import { TranslationProvider } from "./context/TranslationContex/TranslationContext";
 
 function App() {
   return (
@@ -126,6 +128,11 @@ function App() {
               <Route path="choose-languages" element={<ChooseLanguages />} />
               <Route path="edit-languages" element={<EditLanguages />} />
               <Route path="settings" element={<Settings />} />
+              <Route path="translation" element={
+                <TranslationProvider>
+                  <Translation />
+                </TranslationProvider>
+              } />
             </Route>
           </Route>
         </Route>

@@ -68,7 +68,7 @@ function NavbarCustomer() {
       </li>
 
       <li>
-        <NavLink to="/my-quiz/sett" className={({ isActive }) => (isActive ? styles["active"] : "")}>
+        <NavLink to="/my-quiz/translation" className={({ isActive }) => (isActive ? styles["active"] : "")}>
           <img width={24} height={24} src="/assets/translate.svg" alt="" />
           <span className={styles["nav-link-text"]}>Übersetzer</span>
         </NavLink>

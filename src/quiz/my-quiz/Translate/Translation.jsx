@@ -1,7 +1,7 @@
 import { useState } from "react";
 import UseTranslation from "../../../context/TranslationContex/UseTranslation";
 import useVocabulary from "../../../context/useVocabulary";
-import "./translate.scss";
+import styles from "./Translation.module.scss";
 
 function Translation() {
   const [text, setText] = useState("");
@@ -16,12 +16,14 @@ function Translation() {
     const baseCode = code.toLowerCase().split(/[-_]/)[0];
     return ["de", "en", "es"].includes(baseCode) ? baseCode : code;
   };
+
   const [selectedSource, setSource] = useState(null);
   const [selectedTarget, setTarget] = useState(null);
   const sourceId = selectedSource ?? String(nativeLanguage?.id ?? "");
   const targetId = selectedTarget ?? String(userLanguages[0]?.id ?? "");
   const source = getCode(languageOptions.find((language) => String(language.id) === sourceId));
   const target = getCode(languageOptions.find((language) => String(language.id) === targetId));
+
   const { translate, translatedText, loading, error } = UseTranslation();
 
   async function handleSubmit(event) {
@@ -31,7 +33,7 @@ function Translation() {
   }
 
   return (
-    <section className="translation">
+    <section className={styles["translation"]}>
       <h2>Übersetzer</h2>
       <form onSubmit={handleSubmit}>
         <fieldset>
@@ -61,14 +63,14 @@ function Translation() {
           {sourceId && targetId && (!source || !target) && (
             <p role="alert">Für eine ausgewählte Sprache fehlt der Sprachcode. Bitte lade die Seite nach dem Backend-Update neu.</p>
           )}
-          <button type="submit" disabled={loading || !text.trim() || !source.trim() || !target.trim()}>
+          <button type="submit" className={styles["main-quiz-button"]} disabled={loading || !text.trim() || !source.trim() || !target.trim()}>
             {loading ? "Wird übersetzt…" : "Übersetzen"}
           </button>
         </fieldset>
       </form>
       {error && <p role="alert">{error}</p>}
       <div aria-live="polite" aria-busy={loading}>
-        {translatedText && <><h3>Übersetzung</h3><p className="translation-result">{translatedText}</p></>}
+        {translatedText && <><h3>Übersetzung</h3><p className={styles["translation-result"]}>{translatedText}</p></>}
       </div>
     </section>
   );

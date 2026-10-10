@@ -1,4 +1,5 @@
 @use "../../../styles/styles.scss";
+@use "../../../styles/basic.scss";
 
 .translation {
   max-width: 36rem;
@@ -13,14 +14,33 @@
     min-width: 0;
   }
 
-  input, select, textarea {
-    padding: 0.75rem;
-    font: inherit;
-    border: 1px solid #dfe3ef;
-    border-radius: var(--qw-border-radius, 0.5rem);
+  label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #172554;
   }
 
-  textarea { resize: vertical; }
+  input,
+  select,
+  textarea {
+    width: 100%;
+    border: 1px solid #cbd5e1;
+    border-radius: basic.$qw-border-radius;
+    background: #f8f9ff;
+    padding: 15px;
+    font-size: 14px;
+    color: #334155;
+    outline: none;
+
+    &:focus {
+      border-color: #4338ca;
+    }
+  }
+
+  textarea {
+    min-height: 126px;
+    resize: vertical;
+  }
   [role="alert"] { color: #b42318; }
   .translation-result { white-space: pre-wrap; overflow-wrap: anywhere; }
 }

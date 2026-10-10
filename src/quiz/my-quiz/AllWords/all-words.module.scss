@@ -349,7 +349,7 @@
 }
 
 .review {
-  background: linear-gradient(135deg, #4338ca, #5635ff);
+  background: linear-gradient(135deg, basic.$qw-primary, #5635ff);
   color: basic.$qw-fourth;
 
   p {
@@ -361,7 +361,7 @@
     width: 100%;
     border: none;
     background: basic.$qw-fourth;
-    color: #4338ca;
+    color: basic.$qw-primary;
     padding: 0.9rem;
     border-radius: basic.$qw-border-radius;
     font-weight: 600;
@@ -380,7 +380,7 @@
     width: 100%;
     border: none;
     color: basic.$qw-fourth;
-    background: #4338ca;
+    background: basic.$qw-primary;
     padding: 0.9rem;
     border-radius: basic.$qw-border-radius;
     font-weight: 600;

@@ -30,8 +30,9 @@ export function TranslationProvider({ children }) {
       if (!response.ok) {
         throw new Error("Die Übersetzung ist fehlgeschlagen. Bitte erneut versuchen.");
       }
-
+      
       const data = await response.json();
+      console.log(data);
 
       if (typeof data.translated_text !== "string") {
         throw new Error("Der Server hat keine gültige Übersetzung zurückgegeben.");

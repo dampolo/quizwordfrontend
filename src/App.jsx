@@ -83,7 +83,9 @@ function App() {
               <VocabularyProvider>
                 <QuizProvider>
                   <DialogProvider>
-                    <Outlet />
+                    <TranslationProvider>
+                      <Outlet />
+                    </TranslationProvider>
                   </DialogProvider>
                 </QuizProvider>
               </VocabularyProvider>
@@ -108,10 +110,7 @@ function App() {
               <Route path=":id/show-word" element={<ShowWord />} />
               <Route path=":id/edit-word" element={<EditWord />} />
               <Route path="add-new-word" element={<AddNewWord />} />
-              <Route
-                path="all-categories"
-                element={<AllCategories />}
-              />
+              <Route path="all-categories" element={<AllCategories />} />
               <Route path="add-new-category" element={<AddNewCategory />} />
               <Route
                 path="all-categories/:id/edit-category"
@@ -128,11 +127,7 @@ function App() {
               <Route path="choose-languages" element={<ChooseLanguages />} />
               <Route path="edit-languages" element={<EditLanguages />} />
               <Route path="settings" element={<Settings />} />
-              <Route path="translation" element={
-                <TranslationProvider>
-                  <Translation />
-                </TranslationProvider>
-              } />
+              <Route path="translation" element={<Translation />} />
             </Route>
           </Route>
         </Route>

@@ -1,12 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import UseTranslation from "../../../context/TranslationContex/UseTranslation";
 import useVocabulary from "../../../context/useVocabulary";
 import styles from "./Translation.module.scss";
 
 function Translation() {
-  const navigate = useNavigate();
-  const [submittedTranslation, setSubmittedTranslation] = useState(null);
   const [text, setText] = useState("");
   const { nativeLanguage, userLanguages = [] } = useVocabulary();
   const languageOptions = [nativeLanguage, ...userLanguages].filter(
@@ -37,28 +34,11 @@ function Translation() {
   async function handleSubmit(event) {
     event.preventDefault();
     if (loading || !text.trim() || !source.trim() || !target.trim()) return;
-    setSubmittedTranslation({ text: text.trim(), sourceId, targetId });
     await translate({
       text: text.trim(),
       source: source.trim(),
       target: target.trim(),
     });
-  }
-
-  const nativeId = String(nativeLanguage?.id ?? "");
-  const canAdd = submittedTranslation && translatedText.trim() && !loading && !error;
-  const includesNativeLanguage = submittedTranslation &&
-    submittedTranslation.sourceId !== submittedTranslation.targetId &&
-    (submittedTranslation.sourceId === nativeId || submittedTranslation.targetId === nativeId);
-
-  function handleAdd() {
-    if (!canAdd || !includesNativeLanguage) return;
-    const translations = [
-      { language: submittedTranslation.sourceId, word: submittedTranslation.text },
-      { language: submittedTranslation.targetId, word: translatedText.trim() },
-    ];
-    if (translations[0].language !== nativeId) translations.reverse();
-    navigate("/my-quiz/add-new-word", { state: { translations } });
   }
 
   return (
@@ -142,17 +122,6 @@ function Translation() {
             <p className={styles["translation-result"]}>{translatedText}</p>
           ) : (
             <span>---</span>
-          )}
-          <button
-            type="button"
-            className={styles["main-quiz-button"]}
-            disabled={!canAdd || !includesNativeLanguage}
-            onClick={handleAdd}
-          >
-            +ADD
-          </button>
-          {canAdd && !includesNativeLanguage && (
-            <p>Zum Hinzufügen wähle deine Muttersprache und eine Lernsprache.</p>
           )}
         </div>
       </div>

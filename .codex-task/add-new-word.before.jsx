@@ -1,6 +1,6 @@
 import useVocabulary from "../../../context/useVocabulary";
-import { useState, useEffect, useEffectEvent } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import BackButton from "../../../components/BackButton/BackButton";
 import PreLoader from "../../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
@@ -21,8 +21,6 @@ export default function AddNewWord() {
   } = useVocabulary();
 
   const navigate = useNavigate();
-  const { state } = useLocation();
-  const [initialTranslations] = useState(() => state?.translations);
   const { openDialog } = useDialog();
   const [moreSource, setMoreSource] = useState(false);
   const [moreTarget, setMoreTarget] = useState(false);
@@ -33,14 +31,14 @@ export default function AddNewWord() {
     category: "",
     translations: [
       {
-        language: initialTranslations?.[0]?.language ?? "",
-        word: initialTranslations?.[0]?.word ?? "",
+        language: "",
+        word: "",
         tip: "",
         sentence: "",
       },
       {
-        language: initialTranslations?.[1]?.language ?? "",
-        word: initialTranslations?.[1]?.word ?? "",
+        language: "",
+        word: "",
         tip: "",
         sentence: "",
       },
@@ -164,15 +162,8 @@ export default function AddNewWord() {
     updateTranslation(index, { [name]: value });
   }
 
-  const loadInitialCategories = useEffectEvent(() => {
-    if (initialTranslations?.[1]?.language) {
-      getFiltredCategories(initialTranslations[1].language);
-    }
-  });
-
   useEffect(() => {
     clearCategories();
-    loadInitialCategories();
   }, [clearCategories]);
 
   if (loading) {

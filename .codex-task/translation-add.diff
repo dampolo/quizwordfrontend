@@ -1,0 +1,253 @@
+diff --git a/src/quiz/my-quiz/AddNewWord/add-new-word.jsx b/src/quiz/my-quiz/AddNewWord/add-new-word.jsx
+index 6f9b862..18c88f7 100644
+--- a/src/quiz/my-quiz/AddNewWord/add-new-word.jsx
++++ b/src/quiz/my-quiz/AddNewWord/add-new-word.jsx
+@@ -1,6 +1,6 @@
+ import useVocabulary from "../../../context/useVocabulary";
+-import { useState, useEffect } from "react";
+-import { Link, useNavigate } from "react-router-dom";
++import { useState, useEffect, useEffectEvent } from "react";
++import { Link, useNavigate, useLocation } from "react-router-dom";
+ import BackButton from "../../../components/BackButton/BackButton";
+ import PreLoader from "../../../components/PreLoader/PreLoader";
+ import { toast } from "react-toastify";
+@@ -21,6 +21,8 @@ export default function AddNewWord() {
+   } = useVocabulary();
+ 
+   const navigate = useNavigate();
++  const { state } = useLocation();
++  const [initialTranslations] = useState(() => state?.translations);
+   const { openDialog } = useDialog();
+   const [moreSource, setMoreSource] = useState(false);
+   const [moreTarget, setMoreTarget] = useState(false);
+@@ -31,14 +33,14 @@ export default function AddNewWord() {
+     category: "",
+     translations: [
+       {
+-        language: "",
+-        word: "",
++        language: initialTranslations?.[0]?.language ?? "",
++        word: initialTranslations?.[0]?.word ?? "",
+         tip: "",
+         sentence: "",
+       },
+       {
+-        language: "",
+-        word: "",
++        language: initialTranslations?.[1]?.language ?? "",
++        word: initialTranslations?.[1]?.word ?? "",
+         tip: "",
+         sentence: "",
+       },
+@@ -162,8 +164,15 @@ export default function AddNewWord() {
+     updateTranslation(index, { [name]: value });
+   }
+ 
++  const loadInitialCategories = useEffectEvent(() => {
++    if (initialTranslations?.[1]?.language) {
++      getFiltredCategories(initialTranslations[1].language);
++    }
++  });
++
+   useEffect(() => {
+     clearCategories();
++    loadInitialCategories();
+   }, [clearCategories]);
+ 
+   if (loading) {
+diff --git a/src/quiz/my-quiz/Translate/Translation.jsx b/src/quiz/my-quiz/Translate/Translation.jsx
+index 625a0f6..c9a312e 100644
+--- a/src/quiz/my-quiz/Translate/Translation.jsx
++++ b/src/quiz/my-quiz/Translate/Translation.jsx
+@@ -1,9 +1,12 @@
+ import { useState } from "react";
++import { useNavigate } from "react-router-dom";
+ import UseTranslation from "../../../context/TranslationContex/UseTranslation";
+ import useVocabulary from "../../../context/useVocabulary";
+ import styles from "./Translation.module.scss";
+ 
+ function Translation() {
++  const navigate = useNavigate();
++  const [submittedTranslation, setSubmittedTranslation] = useState(null);
+   const [text, setText] = useState("");
+   const { nativeLanguage, userLanguages = [] } = useVocabulary();
+   const languageOptions = [nativeLanguage, ...userLanguages].filter(
+@@ -34,6 +37,7 @@ function Translation() {
+   async function handleSubmit(event) {
+     event.preventDefault();
+     if (loading || !text.trim() || !source.trim() || !target.trim()) return;
++    setSubmittedTranslation({ text: text.trim(), sourceId, targetId });
+     await translate({
+       text: text.trim(),
+       source: source.trim(),
+@@ -41,6 +45,22 @@ function Translation() {
+     });
+   }
+ 
++  const nativeId = String(nativeLanguage?.id ?? "");
++  const canAdd = submittedTranslation && translatedText.trim() && !loading && !error;
++  const includesNativeLanguage = submittedTranslation &&
++    submittedTranslation.sourceId !== submittedTranslation.targetId &&
++    (submittedTranslation.sourceId === nativeId || submittedTranslation.targetId === nativeId);
++
++  function handleAdd() {
++    if (!canAdd || !includesNativeLanguage) return;
++    const translations = [
++      { language: submittedTranslation.sourceId, word: submittedTranslation.text },
++      { language: submittedTranslation.targetId, word: translatedText.trim() },
++    ];
++    if (translations[0].language !== nativeId) translations.reverse();
++    navigate("/my-quiz/add-new-word", { state: { translations } });
++  }
++
+   return (
+     <section className={styles["translation"]}>
+       <h2>Übersetzer</h2>
+@@ -123,6 +143,17 @@ function Translation() {
+           ) : (
+             <span>---</span>
+           )}
++          <button
++            type="button"
++            className={styles["main-quiz-button"]}
++            disabled={!canAdd || !includesNativeLanguage}
++            onClick={handleAdd}
++          >
++            +ADD
++          </button>
++          {canAdd && !includesNativeLanguage && (
++            <p>Zum Hinzufügen wähle deine Muttersprache und eine Lernsprache.</p>
++          )}
+         </div>
+       </div>
+     </section>
+diff --git a/src/quiz/my-quiz/Translate/Translation.test.jsx b/src/quiz/my-quiz/Translate/Translation.test.jsx
+index 3685fe3..3e02226 100644
+--- a/src/quiz/my-quiz/Translate/Translation.test.jsx
++++ b/src/quiz/my-quiz/Translate/Translation.test.jsx
+@@ -7,6 +7,8 @@ import UseTranslation from "../../../context/TranslationContex/UseTranslation";
+ 
+ vi.mock("../../../context/useVocabulary", () => ({ default: vi.fn() }));
+ vi.mock("../../../context/TranslationContex/UseTranslation", () => ({ default: vi.fn() }));
++const { navigate } = vi.hoisted(() => ({ navigate: vi.fn() }));
++vi.mock("react-router-dom", () => ({ useNavigate: () => navigate }));
+ afterEach(() => { cleanup(); vi.resetAllMocks(); });
+ 
+ function renderTranslation({ withCodes = true, loading = false, sourceCode = "de", targetCode = "en" } = {}) {
+@@ -15,13 +17,18 @@ function renderTranslation({ withCodes = true, loading = false, sourceCode = "de
+   useVocabulary.mockReturnValue({ nativeLanguage, userLanguages: [english] });
+   const translate = vi.fn();
+   UseTranslation.mockReturnValue({ translate, translatedText: "", loading, error: "" });
+-  const { container } = render(<Translation />);
++  const { container, rerender } = render(<Translation />);
+   return {
+     user: userEvent.setup(), translate,
+     source: container.querySelector('select[name="source"]'),
+     target: container.querySelector('select[name="target"]'),
+-    text: container.querySelector('textarea[name="text"]'),
++    text: container.querySelector('input[name="text"]'),
+     submit: container.querySelector('button[type="submit"]'),
++    add: container.querySelector('button[type="button"]'),
++    completeTranslation(result) {
++      UseTranslation.mockReturnValue({ translate, translatedText: result, loading: false, error: "" });
++      rerender(<Translation />);
++    },
+   };
+ }
+ 
+@@ -35,6 +42,28 @@ it("keeps languages selectable even without codes and while loading", async () =
+   expect(target.value).toBe("1");
+ });
+ 
++it.each([false, true])("passes the completed words with native language first (reverse: %s)", async (reverse) => {
++  const { user, text, source, target, submit, add, completeTranslation } = renderTranslation();
++  expect(add.disabled).toBe(true);
++  if (reverse) {
++    await user.selectOptions(source, "2");
++    await user.selectOptions(target, "1");
++  }
++  await user.type(text, reverse ? "Hello" : "Hallo");
++  await user.click(submit);
++  completeTranslation(reverse ? "Hallo" : "Hello");
++  // Editing the input must not change the word belonging to this result.
++  await user.clear(text);
++  await user.type(text, "Another word");
++  await user.click(add);
++  expect(navigate).toHaveBeenCalledWith("/my-quiz/add-new-word", {
++    state: { translations: [
++      { language: "1", word: "Hallo" },
++      { language: "2", word: "Hello" },
++    ] },
++  });
++});
++
+ it("sends language codes rather than dropdown IDs", async () => {
+   const { user, source, target, text, submit, translate } = renderTranslation();
+   await user.selectOptions(source, "2");
+diff --git a/src/quiz/my-quiz/AddNewWord/add-new-word.test.jsx b/src/quiz/my-quiz/AddNewWord/add-new-word.test.jsx
+new file mode 100644
+index 0000000..701e26a
+--- /dev/null
++++ b/src/quiz/my-quiz/AddNewWord/add-new-word.test.jsx
+@@ -0,0 +1,61 @@
++import { afterEach, expect, it, vi } from "vitest";
++import { cleanup, render } from "@testing-library/react";
++import userEvent from "@testing-library/user-event";
++import { MemoryRouter } from "react-router-dom";
++import AddNewWord from "./add-new-word";
++import useVocabulary from "../../../context/useVocabulary";
++
++vi.mock("../../../context/useVocabulary", () => ({ default: vi.fn() }));
++vi.mock("../../../context/DialogContext/useDialog", () => ({ default: () => ({ openDialog: vi.fn() }) }));
++vi.mock("react-i18next", () => ({ useTranslation: () => ({ t: (key) => key }) }));
++vi.mock("react-toastify", () => ({ toast: { success: vi.fn(), error: vi.fn(), info: vi.fn() } }));
++afterEach(() => { cleanup(); vi.resetAllMocks(); });
++
++function renderAddWord(state) {
++  const createConcept = vi.fn().mockResolvedValue({});
++  const getFiltredCategories = vi.fn();
++  useVocabulary.mockReturnValue({
++    categories: [], loading: false, createConcept, getFiltredCategories,
++    clearCategories: vi.fn(),
++    nativeLanguage: { id: 1, language_name: "Deutsch" },
++    userLanguages: [{ id: 2, language_name: "Englisch" }],
++  });
++  const { container } = render(
++    <MemoryRouter initialEntries={[{ pathname: "/my-quiz/add-new-word", state }]}>
++      <AddNewWord />
++    </MemoryRouter>,
++  );
++  return {
++    user: userEvent.setup(), createConcept, getFiltredCategories,
++    words: container.querySelectorAll('input[name="word"]'),
++    language: container.querySelector('select[name="language"]'),
++    submit: container.querySelector('button[type="submit"]'),
++  };
++}
++
++it("prefills the translated pair, loads categories, and saves edited words", async () => {
++  const { user, words, language, submit, createConcept, getFiltredCategories } = renderAddWord({
++    translations: [{ language: "1", word: "Hallo" }, { language: "2", word: "Hello" }],
++  });
++  expect(words[0].value).toBe("Hallo");
++  expect(words[1].value).toBe("Hello");
++  expect(language.value).toBe("2");
++  expect(getFiltredCategories).toHaveBeenCalledWith("2");
++  await user.clear(words[1]);
++  await user.type(words[1], "Hi");
++  await user.click(submit);
++  expect(createConcept).toHaveBeenCalledWith({
++    category: "", translations: [
++      { language: 1, word: "Hallo", tip: "", sentence: "" },
++      { language: "2", word: "Hi", tip: "", sentence: "" },
++    ],
++  });
++});
++
++it("keeps the form empty when opened without a translation", () => {
++  const { words, language, getFiltredCategories } = renderAddWord();
++  expect(words[0].value).toBe("");
++  expect(words[1].value).toBe("");
++  expect(language.value).toBe("");
++  expect(getFiltredCategories).not.toHaveBeenCalled();
++});

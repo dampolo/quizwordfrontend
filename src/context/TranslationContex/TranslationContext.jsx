@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import useApi from "../ApiContext";
 import { apiFetch } from "../../services/apiFetch";
+import { toast } from "react-toastify";
 
 const TranslationContext = createContext();
 
@@ -27,12 +28,15 @@ export function TranslationProvider({ children }) {
         body: JSON.stringify(translationData),
       });
 
-      if (!response.ok) {
-        throw new Error("Die Übersetzung ist fehlgeschlagen. Bitte erneut versuchen.");
-      }
-      
       const data = await response.json();
-      console.log(data);
+
+      if (!response.ok) {
+        throw new Error(
+          typeof data.detail === "string"
+            ? data.detail
+            : "Die Übersetzung ist fehlgeschlagen. Bitte erneut versuchen.",
+        );
+      }
 
       if (typeof data.translated_text !== "string") {
         throw new Error("Der Server hat keine gültige Übersetzung zurückgegeben.");
@@ -40,7 +44,11 @@ export function TranslationProvider({ children }) {
 
       setTranslatedText(data.translated_text);
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Die Übersetzung ist fehlgeschlagen.");
+      const message = error instanceof Error
+        ? error.message
+        : "Die Übersetzung ist fehlgeschlagen.";
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }

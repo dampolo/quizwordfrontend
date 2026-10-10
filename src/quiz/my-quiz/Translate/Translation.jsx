@@ -48,7 +48,6 @@ function Translation() {
   const nativeId = String(nativeLanguage?.id ?? "");
   const canAdd = submittedTranslation && translatedText.trim() && !loading && !error;
   const includesNativeLanguage = submittedTranslation &&
-    submittedTranslation.sourceId !== submittedTranslation.targetId &&
     (submittedTranslation.sourceId === nativeId || submittedTranslation.targetId === nativeId);
 
   function handleAdd() {
@@ -130,7 +129,7 @@ function Translation() {
             </button>
           </fieldset>
         </form>
-        {error && <p role="alert">{error}</p>}
+        {/* {error && <p role="alert">{error}</p>} */}
 
         <div
           className={styles["result"]}
@@ -152,7 +151,7 @@ function Translation() {
             +ADD
           </button>
           {canAdd && !includesNativeLanguage && (
-            <p>Zum Hinzufügen wähle deine Muttersprache und eine Lernsprache.</p>
+            <p>Zum Hinzufügen muss eine der Sprachen deine Muttersprache sein.</p>
           )}
         </div>
       </div>

@@ -117,7 +117,7 @@ function Translation() {
           aria-live="polite"
           aria-busy={loading}
         >
-          <label>Übersetzung: </label>
+          <h3>Übersetzung: </h3>
           {translatedText ? (
             <p className={styles["translation-result"]}>{translatedText}</p>
           ) : (

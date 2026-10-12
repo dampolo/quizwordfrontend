@@ -184,7 +184,7 @@
 .list-head-attempt,
 .list-head {
   background: #eef5ff;
-  padding: 1rem;
+  padding: 1rem 1rem 1rem 0.5rem;
   font-size: 0.85rem;
   text-transform: uppercase;
   font-weight: 600;
@@ -200,7 +200,12 @@
     background: #fafcff;
   }
 }
-.check,
+.check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .checkbox {
   display: flex;
   justify-content: center;
@@ -441,8 +446,13 @@
     }
   }
 
-  .search-btn { left: 0.625rem; }
-  .close-btn { right: 0.625rem; font-size: 1.5rem; }
+  .search-btn {
+    left: 0.625rem;
+  }
+  .close-btn {
+    right: 0.625rem;
+    font-size: 1.5rem;
+  }
 
   .show-found {
     position: absolute;
@@ -457,9 +467,14 @@
     box-shadow: basic.$box-shadow;
     z-index: 2;
 
-    &[hidden] { display: none; }
+    &[hidden] {
+      display: none;
+    }
 
-    .search-hint { padding: 1rem; font-size: 0.875rem; }
+    .search-hint {
+      padding: 1rem;
+      font-size: 0.875rem;
+    }
 
     ul {
       display: flex;

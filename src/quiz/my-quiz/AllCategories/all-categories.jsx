@@ -99,7 +99,7 @@ export default function AllCategories() {
                 <h3>{cat.category_name}</h3>
                 <Link
                   className={styles["edit"]}
-                  to={`/my-quiz/all-categories/${cat.id}/edit-category?language=${language}`}
+                  to={`/my-quiz/all-categories/${cat.category_id}/edit-category?language=${language}`}
                 >
                   <img src="/assets/edit.svg" alt="edit" />
                 </Link>

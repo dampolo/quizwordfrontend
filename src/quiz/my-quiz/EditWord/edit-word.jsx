@@ -220,12 +220,12 @@ export default function EditWord() {
 
             <select
               name="category_id"
-              value={formData.translations[1].category_id}
+              value={formData.translations[1].category_id ?? ""}
               onChange={(e) => handleChange(1, e)}
             >
               <option value="">Wähle Kategorie</option>
               {categories.map((category) => (
-                <option key={category.id} value={category.id}>
+                <option key={category.category_id} value={category.category_id}>
                   {category.category_name}
                 </option>
               ))}

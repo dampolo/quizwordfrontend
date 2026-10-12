@@ -32,11 +32,11 @@ export default function AllCategories() {
     } else {
       getFiltredCategories(language);
     }
-  }, [language]);
+  }, [language, getCategories, getFiltredCategories]);
 
   return (
     <section className={styles["vocab-page"]}>
-        <PageTitle title="Kategorien" />
+      <PageTitle title="Kategorien" />
       <header className={styles["topbar"]}>
         <div>
           <h1>Vokabelkategorien</h1>

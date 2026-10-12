@@ -6,9 +6,16 @@
   padding: 1.5rem;
   background: basic.$qw-bg-quiz;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  border-radius: basic.$qw-border-radius;
+  margin: 1rem;
 
   .translation-content {
     display: flex;
+    flex: 1;
+    align-items: stretch;
     gap: 1rem;
 
     form {
@@ -53,12 +60,17 @@
         color: #b42318;
       }
     }
-
+    hr {
+      border: 0;
+      border-top: 1px solid #d8def0;
+      margin: 1rem 0;
+    }
     .result {
       display: flex;
       flex: 1;
       flex-direction: column;
       align-items: center;
+      min-width: 0;
       h3 {
         font-size: 16px;
         font-weight: 500;
@@ -69,12 +81,25 @@
         font-weight: 700;
         color: #10b981;
       }
+      .action {
+        display: flex;
+        margin: auto 0 0 auto;
+        align-self: flex-end;
+        .add-word {
+          width: fit-content;
+        }
+        .info {
+          color: orange;
+        }
+      }
     }
   }
 }
 
 @media (max-width: 46rem) {
-  .translation-content {
-    flex-direction: column;
+  .translation {
+    .translation-content {
+      flex-direction: column;
+    }
   }
 }

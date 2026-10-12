@@ -46,14 +46,20 @@ function Translation() {
   }
 
   const nativeId = String(nativeLanguage?.id ?? "");
-  const canAdd = submittedTranslation && translatedText.trim() && !loading && !error;
-  const includesNativeLanguage = submittedTranslation &&
-    (submittedTranslation.sourceId === nativeId || submittedTranslation.targetId === nativeId);
+  const canAdd =
+    submittedTranslation && translatedText.trim() && !loading && !error;
+  const includesNativeLanguage =
+    submittedTranslation &&
+    (submittedTranslation.sourceId === nativeId ||
+      submittedTranslation.targetId === nativeId);
 
   function handleAdd() {
     if (!canAdd || !includesNativeLanguage) return;
     const translations = [
-      { language: submittedTranslation.sourceId, word: submittedTranslation.text },
+      {
+        language: submittedTranslation.sourceId,
+        word: submittedTranslation.text,
+      },
       { language: submittedTranslation.targetId, word: translatedText.trim() },
     ];
     if (translations[0].language !== nativeId) translations.reverse();
@@ -131,6 +137,8 @@ function Translation() {
         </form>
         {/* {error && <p role="alert">{error}</p>} */}
 
+        <hr />
+
         <div
           className={styles["result"]}
           aria-live="polite"
@@ -142,17 +150,21 @@ function Translation() {
           ) : (
             <span>---</span>
           )}
-          <button
-            type="button"
-            className={styles["main-quiz-button"]}
-            disabled={!canAdd || !includesNativeLanguage}
-            onClick={handleAdd}
-          >
-            +ADD
-          </button>
-          {canAdd && !includesNativeLanguage && (
-            <p>Zum Hinzufügen muss eine der Sprachen deine Muttersprache sein.</p>
-          )}
+          <div className={styles["action"]}>
+            {canAdd && !includesNativeLanguage && (
+              <p className={styles["info"]}>
+                Zum Hinzufügen muss eine der Sprachen deine Muttersprache sein.
+              </p>
+            )}
+            <button
+              type="button"
+              className={`main-quiz-button ${styles["add-word"]}`}
+              disabled={!canAdd || !includesNativeLanguage}
+              onClick={handleAdd}
+            >
+              +
+            </button>
+          </div>
         </div>
       </div>
     </section>

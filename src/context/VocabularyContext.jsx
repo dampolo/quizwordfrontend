@@ -152,7 +152,7 @@ export function VocabularyProvider({ children }) {
     }
   }
 
-  async function getFiltredCategories(id) {
+  const getFiltredCategories = useCallback(async (id) => {
     setLoading(true);
 
     try {
@@ -167,13 +167,12 @@ export function VocabularyProvider({ children }) {
       }
       const data = await response.json();
       setCategories(data);
-      setLoading(false);
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
-  }
+  }, [api]);
 
   const getConcept = useCallback(
     async (id, languageId) => {

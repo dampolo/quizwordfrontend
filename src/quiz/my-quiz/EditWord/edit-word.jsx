@@ -98,20 +98,11 @@ export default function EditWord() {
     clearCategories();
   }
 
-  function handleCategoryChange(value) {
-    setFormData((prev) => ({ ...prev, category: value }));
-  }
-
   function handleChange(index, e) {
     const { name, value } = e.target;
 
     if (name === "language") {
       handleLanguageChange(index, value);
-      return;
-    }
-
-    if (name === "category") {
-      handleCategoryChange(value);
       return;
     }
 
@@ -144,51 +135,55 @@ export default function EditWord() {
   }
 
   useEffect(() => {
+    let ignore = false;
+
     async function loadConcept() {
       try {
         const data = await getConcept(id, languageId);
-        getFiltredCategories(languageId);
+        if (ignore) return;
+
+        if (
+          !Array.isArray(data?.translations) ||
+          data.translations.length !== 2 ||
+          data.translations.some((translation) => !translation)
+        ) {
+          throw new Error("Expected a source and target translation.");
+        }
 
         setFormData({
           translations: data.translations.map((translation) => ({
             id: translation.id,
-            word: translation.word,
-            tip: translation.tip,
-            sentence: translation.sentence,
-            category_id: translation.category_id,
-            language: translation.language,
+            word: translation.word ?? "",
+            tip: translation.tip ?? "",
+            sentence: translation.sentence ?? "",
+            category_id: translation.category_id ?? "",
+            language: translation.language ?? "",
           })),
         });
       } catch (err) {
-        console.error(err);
+        if (!ignore) {
+          console.error(err);
+          toast.error("Das Wort konnte nicht geladen werden.");
+        }
       }
     }
 
     loadConcept();
+
+    return () => {
+      ignore = true;
+    };
+    // Reload only when id changes; other dependencies are intentionally ignored.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  useEffect(() => {
-    if (formData.translations[1].language) {
-      getFiltredCategories(formData.translations[1].language);
-    }
-  }, [formData.translations[1].language]);
+  const targetLanguage = formData.translations[1]?.language;
 
   useEffect(() => {
-    if (categories.length > 0) {
-      setFormData((prev) => ({
-        ...prev,
-        translations: prev.translations.map((translation, index) =>
-          index === 0
-            ? {
-                ...translation,
-                category_id: prev.category,
-                language: nativeLanguage.id,
-              }
-            : translation,
-        ),
-      }));
+    if (targetLanguage) {
+      getFiltredCategories(targetLanguage);
     }
-  }, [nativeLanguage]);
+  }, [targetLanguage, getFiltredCategories]);
 
   if (loading) {
     return (

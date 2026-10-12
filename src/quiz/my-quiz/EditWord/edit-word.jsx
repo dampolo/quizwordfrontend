@@ -66,7 +66,6 @@ export default function EditWord() {
     e.preventDefault();
     try {
       await updateWord(Number(id), formData);
-
       toast.success(`Wort "${formData.translations[1].word}" wurde geändert!`);
       navigate(
         `/my-quiz/all-words?language=${formData.translations[1].language}`,

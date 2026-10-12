@@ -93,7 +93,7 @@ export default function AllCategories() {
           categories.map((cat) => (
             <article
               className={`${styles["card"]} ${cat.wide ? styles["wide"] : ""}`}
-              key={cat.id}
+              key={cat.category_id}
             >
               <div className={styles["card-actions"]}>
                 <h3>{cat.category_name}</h3>

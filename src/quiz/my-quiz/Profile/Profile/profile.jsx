@@ -34,8 +34,6 @@ function Profile() {
 
   useEffect(() => {
     getProfile();
-    console.log(user);
-    
   }, []);
 
   if (!profile) {

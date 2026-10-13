@@ -32,7 +32,7 @@ export default function AllCategories() {
     } else {
       getFiltredCategories(language);
     }
-  }, [language, getCategories, getFiltredCategories]);
+  }, [language]);
 
   return (
     <section className={styles["vocab-page"]}>

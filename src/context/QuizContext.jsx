@@ -174,6 +174,26 @@ export function QuizProvider({ children }) {
     }
   }
 
+  async function getRandomFlipCard() {
+    setLoading(true);
+
+    try {
+      const response = await apiFetch(`${api}random-flipcard-quiz/`);
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const error = new Error("Failed to get last quiz");
+        error.response = data;
+        throw error;
+      }
+
+      return data;
+    } finally {
+      setLoading(false);
+    }
+  }
+
   async function deleteQuiz(id) {
     const response = await apiFetch(`${api}quizzes/${id}/`, {
       method: "DELETE",
@@ -236,6 +256,7 @@ export function QuizProvider({ children }) {
         getAttemptQuizScore,
         getAttemptDetails,
         postQuizAnswers,
+        getRandomFlipCard,
       }}
     >
       {children}

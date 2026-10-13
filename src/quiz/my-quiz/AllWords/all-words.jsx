@@ -527,6 +527,7 @@ function AllWords() {
 
         {/* Start last quiz ENDE*/}
       </div>
+      
       <button
         type="submit"
         onClick={openDialog}

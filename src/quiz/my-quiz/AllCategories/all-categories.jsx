@@ -97,6 +97,7 @@ export default function AllCategories() {
             >
               <div className={styles["card-actions"]}>
                 <h3>{cat.category_name}</h3>
+
                 <Link
                   className={styles["edit"]}
                   to={`/my-quiz/all-categories/${cat.category_id}/edit-category?language=${language}`}
@@ -105,7 +106,16 @@ export default function AllCategories() {
                 </Link>
               </div>
 
-              <span>{cat.language_name}</span>
+              <div className={styles["card__footer"]}>
+                <Link
+                  to={`/my-quiz/${cat.quiz_id}/all-category-words?language=${cat.target_language}`}
+                  className={styles["card__meta"]}
+                >
+                  <span>▦</span>
+                  <strong>{cat.concepts_count} Words</strong>
+                </Link>
+                <span>{cat.language_name}</span>
+              </div>
             </article>
           ))
         )}

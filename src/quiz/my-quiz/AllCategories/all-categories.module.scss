@@ -1,6 +1,5 @@
 @use "./../../../styles/basic.scss";
 
-
 .vocab-page {
   display: flex;
   flex-direction: column;
@@ -168,23 +167,27 @@
         font-size: 14px;
       }
 
-      footer {
+      &__footer {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 0.0625rem solid #eef0f5;
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        margin-top: 24px;
-        font-size: 12px;
+        align-items: flex-end;
+      }
 
-        .mastered {
-          color: #027a48;
+      &__meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.8rem;
+        text-decoration: underline;
+        &:hover {
+          color: basic.$qw-primary;
         }
 
-        .pill {
-          padding: 5px 8px;
-          border-radius: 999px;
-          background: #fff0dd;
-          color: #b54708;
-          font-weight: 800;
+        strong {
+          font-weight: 700;
         }
       }
     }

@@ -18,7 +18,7 @@ function Translation() {
     const code = (language?.language_code || language?.code || "").trim();
     // The translation endpoint accepts de/en/es; speech uses regional codes.
     const baseCode = code.toLowerCase().split(/[-_]/)[0];
-    return ["de", "en", "es"].includes(baseCode) ? baseCode : code;
+    return ["de", "en", "es", "fr" ].includes(baseCode) ? baseCode : code;
   };
 
   const [selectedSource, setSource] = useState(null);

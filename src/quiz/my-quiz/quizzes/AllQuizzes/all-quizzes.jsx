@@ -203,6 +203,22 @@ function Quizzes() {
                 {/* Flip Card end*/}
               </div>
 
+              <div className={styles["action-button"]}>
+                {/* HEAR Card */}
+                <Link
+                  className={styles["action-button__icon"]}
+                  to={`/my-quiz/${quiz.quiz_id}/flip-card-quiz?language=${quiz?.target_language}&redirect=true`}
+                >
+                  <img
+                    width={40}
+                    height={40}
+                    src="/assets/hear.svg"
+                    alt="look"
+                  />
+                </Link>
+                {/* HEAR Card end*/}
+              </div>
+
               <div className={styles["vocab-card__footer"]}>
                 <Link
                   to={`/my-quiz/${quiz.quiz_id}/all-quiz-words?language=${quiz?.target_language}`}

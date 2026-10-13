@@ -29,11 +29,13 @@ const InfoRow = ({ label, value, type }) => {
 };
 
 function Profile() {
-  const { profile, getProfile } = useAuth();
+  const { user, profile, getProfile } = useAuth();
   const { userLanguages, nativeLanguage } = useVocabulary();
 
-  useEffect(() => {    
+  useEffect(() => {
     getProfile();
+    console.log(user);
+    
   }, []);
 
   if (!profile) {
@@ -52,8 +54,17 @@ function Profile() {
       {/* IMAGE */}
       <h2 className={styles["features-title"]}>Foto:</h2>
       <div className={styles["profile-user__card"]}>
-        <img className={styles["profile-user__avatar"]} width={100} height={100} src={profile?.image || "/assets/profile.svg"} alt={`Profilbild von ${profile?.username || "Benutzer" }`} />
-        <EditButton to="/my-quiz/change-profile-image" className={styles["edit-button"]} />
+        <img
+          className={styles["profile-user__avatar"]}
+          width={100}
+          height={100}
+          src={profile?.image || "/assets/profile.svg"}
+          alt={`Profilbild von ${profile?.username || "Benutzer"}`}
+        />
+        <EditButton
+          to="/my-quiz/change-profile-image"
+          className={styles["edit-button"]}
+        />
       </div>
       {/* IMAGE Ende */}
 
@@ -91,38 +102,54 @@ function Profile() {
               : "-"
           }
         />
-        <EditButton to="/my-quiz/edit-profile" className={styles["edit-button"]} />
+        <EditButton
+          to="/my-quiz/edit-profile"
+          className={styles["edit-button"]}
+        />
       </div>
 
       <h2 className={styles["features-title"]}>Username ändern:</h2>
       <div className={styles["profile-user__card"]}>
         <InfoRow label="Username:" value={profile.username} />
-        <EditButton to="/my-quiz/change-username" className={styles["edit-button"]} />
+        <EditButton
+          to="/my-quiz/change-username"
+          className={styles["edit-button"]}
+        />
       </div>
 
       <h2 className={styles["features-title"]}>E-Mail-Adresse ändern:</h2>
       <div className={styles["profile-user__card"]}>
         <InfoRow label="E-Mail:" value={profile.email} />
-        <EditButton to="/my-quiz/change-email" className={styles["edit-button"]} />
+        <EditButton
+          to="/my-quiz/change-email"
+          className={styles["edit-button"]}
+        />
       </div>
 
       <h2 className={styles["features-title"]}>Passwort ändern:</h2>
       <div className={styles["profile-user__card"]}>
         <InfoRow label="Passwort:" value={profile.password} type="password" />
-        <EditButton to="/my-quiz/change-password" className={styles["edit-button"]} />
+        <EditButton
+          to="/my-quiz/change-password"
+          className={styles["edit-button"]}
+        />
       </div>
 
       <h2 className={styles["features-title"]}>Deine Sprachen</h2>
       <div className={styles["profile-user__card"]}>
         <div className={styles["profile-user__row"]}>
-          <span className={styles["profile-user__label"]}>Deine Muttersprache:</span>
+          <span className={styles["profile-user__label"]}>
+            Deine Muttersprache:
+          </span>
           <span className={styles["profile-user__value"]}>
             {nativeLanguage?.language_name}
           </span>
         </div>
 
         <div className={styles["profile-user__row"]}>
-          <span className={styles["profile-user__label"]}>Deine Lernsprachen:</span>
+          <span className={styles["profile-user__label"]}>
+            Deine Lernsprachen:
+          </span>
           <ul>
             {userLanguages.map((lang) => (
               <li className={styles["profile-user__value"]} key={lang.id}>
@@ -136,6 +163,15 @@ function Profile() {
           className={styles["edit-button"]}
         />
       </div>
+
+      {user?.auth_provider === "email" && (
+        <>
+          <h2 className={styles["features-title"]}>Anmeldung</h2>
+          <div className={styles["profile-user__card"]}>
+              <p>Du bist mit deinem E-Mail {profile.email} angemeldet</p>
+          </div>
+        </>
+      )}
 
       <h2 className={styles["features-title"]}>Lösche dein Konto:</h2>
       <div className={styles["profile-user__card"]}>

@@ -1,0 +1,146 @@
+import { Routes, Route } from "react-router-dom";
+import LoginQuiz from "./quiz/auth/LoginQuiz/login-quiz";
+import CreateAccount from "./quiz/auth/CreateAccount/create-account";
+import ForgotPassword from "./quiz/auth/ForgotPassword/forgot-password";
+import PublicLayout from "./layouts/PublicLayout";
+import Website from "./website/Website/website";
+import Login from "./quiz/auth/LoginQuiz/login-quiz";
+import MyQuiz from "./layouts/MyQuiz";
+import AllWords from "./quiz/my-quiz/AllWords/all-words";
+import ProtectedRoute from "./context/ProtectedRoute";
+import { VocabularyProvider } from "./context/VocabularyContext";
+import { QuizProvider } from "./context/QuizContext";
+import { DialogProvider } from "./context/DialogContext/DialogContext";
+import { Outlet } from "react-router-dom";
+import EditWord from "./quiz/my-quiz/EditWord/edit-word";
+import ShowWord from "./quiz/my-quiz/ShowWord/show-word";
+import AddNewWord from "./quiz/my-quiz/AddNewWord/add-new-word";
+import AllCategories from "./quiz/my-quiz/AllCategories/all-categories";
+import AddNewCategory from "./quiz/my-quiz/AddNewCategory/add-new-category";
+import EditCategory from "./quiz/my-quiz/EditCategory/edit-category";
+import AllQuizWords from "./quiz/my-quiz/quizzes/AllQuizWords/all-quiz-words";
+import { ToastContainer } from "react-toastify";
+import Profile from "./quiz/my-quiz/Profile/Profile/profile";
+import EditProfile from "./quiz/my-quiz/Profile/EditProfile/edit-profile";
+import Confirmation from "./components/Confirmation/confirmation";
+import PageNotFound from "./components/PageNotFound/page-not-found";
+import ChooseLanguages from "./components/ChooseLanguage/ChooseLanguage";
+import AddNewQuiz from "./quiz/my-quiz/quizzes/AddNewQuiz/add-new-quiz";
+import AllQuizzes from "./quiz/my-quiz/quizzes/AllQuizzes/all-quizzes";
+import PlayQuiz from "./quiz/my-quiz/quizzes/PlayQuiz/play-quiz";
+import QuizResults from "./quiz/my-quiz/quizzes/QuizResults/quiz-results";
+import LearnQuiz from "./quiz/my-quiz/quizzes/LearnQuiz/learn-quiz";
+import Imprint from "./components/Imprint/imprint";
+import PrivacyPolicy from "./components/PrivacyPolicy/privacy-policy";
+import Price from "./website/Price/price";
+import HelpDesk from "./website/HelpDesk/help-desk";
+import EditLanguages from "./components/ChooseLanguage/EditLanguages";
+import ResetPassword from "./quiz/auth/ResetPassword/reset-password";
+import Settings from "./quiz/my-quiz/Settings/settings";
+import ChangeEmail from "./quiz/my-quiz/Profile/ChangeEmail/change-email";
+import ChangePassword from "./quiz/my-quiz/Profile/ChangePassword/change-password";
+import ChangeUsername from "./quiz/my-quiz/Profile/ChangeUsername/change-username";
+import DeleteAccount from "./quiz/my-quiz/Profile/DeleteAccount/delete-account";
+import ChangeProfileImage from "./quiz/my-quiz/Profile/ChangeProfileImage/change-profile-image";
+import Contact from "./website/Contact/contact";
+import FlipCardQuiz from "./quiz/my-quiz/quizzes/FlipCardQuiz/flip-card-quiz";
+import Translation from "./quiz/my-quiz/Translate/Translation";
+import { TranslationProvider } from "./context/TranslationContex/TranslationContext";
+
+function App() {
+  return (
+    // Auth
+    <>
+      <Routes>
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<Website />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/imprint" element={<Imprint />} />
+          <Route path="/contact" element={<Contact />} />
+
+          <Route path="/price" element={<Price />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/help-desk" element={<HelpDesk />} />
+          <Route path="/login-quiz" element={<LoginQuiz />} />
+          <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/confirmation" element={<Confirmation />} />
+          <Route
+            path="/verify-email/:uidb64/:token"
+            element={<Confirmation />}
+          />
+          <Route
+            path="/reset-password/:uid/:token"
+            element={<ResetPassword />}
+          />
+          <Route path="*" element={<PageNotFound />} />
+        </Route>
+
+        {/* Protected */}
+        <Route element={<ProtectedRoute />}>
+          <Route
+            element={
+              <VocabularyProvider>
+                <QuizProvider>
+                  <DialogProvider>
+                    <TranslationProvider>
+                      <Outlet />
+                    </TranslationProvider>
+                  </DialogProvider>
+                </QuizProvider>
+              </VocabularyProvider>
+            }
+          >
+            {/* Mmy Quiz */}
+            <Route path="/my-quiz" element={<MyQuiz />}>
+              {/* Profile */}
+              <Route path="profile" element={<Profile />} />
+              <Route path="edit-profile" element={<EditProfile />} />
+              <Route path="change-email" element={<ChangeEmail />} />
+              <Route path="change-password" element={<ChangePassword />} />
+              <Route path="change-username" element={<ChangeUsername />} />
+              <Route path="delete-account" element={<DeleteAccount />} />
+              <Route
+                path="change-profile-image"
+                element={<ChangeProfileImage />}
+              />
+
+              {/* Vocabulary */}
+              <Route path="all-words" element={<AllWords />} />
+              <Route path=":id/show-word" element={<ShowWord />} />
+              <Route path=":id/edit-word" element={<EditWord />} />
+              <Route path="add-new-word" element={<AddNewWord />} />
+              <Route path="all-categories" element={<AllCategories />} />
+              <Route path="add-new-category" element={<AddNewCategory />} />
+              <Route
+                path="all-categories/:id/edit-category"
+                element={<EditCategory />}
+              />
+              {/* Quizzes */}
+              <Route path="all-quizzes" element={<AllQuizzes />} />
+              <Route path="add-new-quiz" element={<AddNewQuiz />} />
+              <Route path=":id/all-quiz-words" element={<AllQuizWords />} />
+              <Route path=":id/play-quiz" element={<PlayQuiz />} />
+              <Route path=":id/flip-card-quiz" element={<FlipCardQuiz />} />
+              <Route path=":id/learn-quiz" element={<LearnQuiz />} />
+              <Route path=":id/quiz-results" element={<QuizResults />} />
+              <Route path="choose-languages" element={<ChooseLanguages />} />
+              <Route path="edit-languages" element={<EditLanguages />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="translation" element={<Translation />} />
+            </Route>
+          </Route>
+        </Route>
+      </Routes>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        closeOnClick
+        pauseOnHover
+        theme="light"
+      />
+    </>
+  );
+}
+
+export default App;

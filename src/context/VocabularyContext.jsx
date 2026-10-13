@@ -69,6 +69,21 @@ export function VocabularyProvider({ children }) {
     [api],
   );
 
+  const getCategoryWords = useCallback(async (id) => {
+    const response = await apiFetch(`${api}categories/${id}/`, {
+      credentials: "include",
+    });
+    const data = await response.json();
+
+    if (!response.ok) {
+      const error = new Error("Failed to get category words.");
+      error.response = data;
+      throw error;
+    }
+
+    return data;
+  }, [api]);
+
   async function getCategory(id) {
     setLoading(true);
 
@@ -424,6 +439,7 @@ export function VocabularyProvider({ children }) {
         deleteCategory,
         deleteWord,
         getCategory,
+        getCategoryWords,
         getCategories,
         createCategory,
         speakWord,

@@ -16,6 +16,7 @@ import EditWord from "./quiz/my-quiz/EditWord/edit-word";
 import ShowWord from "./quiz/my-quiz/ShowWord/show-word";
 import AddNewWord from "./quiz/my-quiz/AddNewWord/add-new-word";
 import AllCategories from "./quiz/my-quiz/AllCategories/all-categories";
+import AllCategoryWords from "./quiz/my-quiz/AllCategoryWords/all-category-words";
 import AddNewCategory from "./quiz/my-quiz/AddNewCategory/add-new-category";
 import EditCategory from "./quiz/my-quiz/EditCategory/edit-category";
 import AllQuizWords from "./quiz/my-quiz/quizzes/AllQuizWords/all-quiz-words";
@@ -111,6 +112,7 @@ function App() {
               <Route path=":id/edit-word" element={<EditWord />} />
               <Route path="add-new-word" element={<AddNewWord />} />
               <Route path="all-categories" element={<AllCategories />} />
+              <Route path=":id/all-category-words" element={<AllCategoryWords />} />
               <Route path="add-new-category" element={<AddNewCategory />} />
               <Route
                 path="all-categories/:id/edit-category"

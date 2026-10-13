@@ -207,7 +207,7 @@ function Quizzes() {
                 {/* HEAR Card */}
                 <Link
                   className={styles["action-button__icon"]}
-                  to={`/my-quiz/${quiz.quiz_id}/flip-card-quiz?language=${quiz?.target_language}&redirect=true`}
+                  to={`/my-quiz/${quiz.quiz_id}/hear-quiz?language=${quiz?.target_language}&redirect=true`}
                 >
                   <img
                     width={40}

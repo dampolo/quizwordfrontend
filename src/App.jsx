@@ -29,6 +29,7 @@ import ChooseLanguages from "./components/ChooseLanguage/ChooseLanguage";
 import AddNewQuiz from "./quiz/my-quiz/quizzes/AddNewQuiz/add-new-quiz";
 import AllQuizzes from "./quiz/my-quiz/quizzes/AllQuizzes/all-quizzes";
 import PlayQuiz from "./quiz/my-quiz/quizzes/PlayQuiz/play-quiz";
+import HearQuiz from "./quiz/my-quiz/quizzes/HearQuiz/hear-quiz";
 import QuizResults from "./quiz/my-quiz/quizzes/QuizResults/quiz-results";
 import LearnQuiz from "./quiz/my-quiz/quizzes/LearnQuiz/learn-quiz";
 import Imprint from "./components/Imprint/imprint";
@@ -123,6 +124,7 @@ function App() {
               <Route path="add-new-quiz" element={<AddNewQuiz />} />
               <Route path=":id/all-quiz-words" element={<AllQuizWords />} />
               <Route path=":id/play-quiz" element={<PlayQuiz />} />
+              <Route path=":id/hear-quiz" element={<HearQuiz />} />
               <Route path=":id/flip-card-quiz" element={<FlipCardQuiz />} />
               <Route path=":id/learn-quiz" element={<LearnQuiz />} />
               <Route path=":id/quiz-results" element={<QuizResults />} />

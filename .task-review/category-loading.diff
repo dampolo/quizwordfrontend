@@ -1,0 +1,98 @@
+diff --git a/.task-review/all-category-words.before-loading.jsx b/src/quiz/my-quiz/AllCategoryWords/all-category-words.jsx
+index fcc522d..d6ff7bb 100644
+--- a/.task-review/all-category-words.before-loading.jsx
++++ b/src/quiz/my-quiz/AllCategoryWords/all-category-words.jsx
+@@ -8,29 +8,37 @@ import PreLoader from "../../../components/PreLoader/PreLoader";
+ import styles from "./all-category-words.module.scss";
+ 
+ export default function AllCategoryWords() {
+-  const { getCategoryWords } = useVocabulary();
++  const { getCategoryWords, loading } = useVocabulary();
+   const { id } = useParams();
+-  const [result, setResult] = useState(null);
++  const [category, setCategory] = useState(null);
++  const [error, setError] = useState("");
+ 
+   useEffect(() => {
+     async function loadData() {
+       try {
++        setError("");
+         const category = await getCategoryWords(id);
+-        setResult({ id, category });
++        setCategory(category);
+         console.log({ id, category });
+         
+       } catch (err) {
+         console.error(err);
+         const message = "Die Wörter konnten nicht geladen werden.";
+         toast.error(message);
+-        setResult({ id, error: message });
++        setError(message);
+       }
+     }
+ 
+     loadData();
+   }, [id, getCategoryWords]);
+ 
+-  const category = result?.id === id ? result.category : null;
++  if (loading) {
++    return (
++      <div className="show-container">
++        <PreLoader />
++      </div>
++    );
++  }
+ 
+   return (
+     <section className={styles["all-category-words"]}>
+@@ -39,10 +47,8 @@ export default function AllCategoryWords() {
+         to={`/my-quiz/all-categories?language=${category?.language_id}`}
+       />
+       <h1>Kategorie: {category?.category_name ?? "…"}</h1>
+-      {result?.id !== id ? (
+-        <div className="show-container"><PreLoader /></div>
+-      ) : result.error ? (
+-        <p role="alert">{result.error}</p>
++      {error ? (
++        <p role="alert">{error}</p>
+       ) : !category?.concepts?.length ? (
+         <p>Du hast in dieser Kategorie noch keine Wörter.</p>
+       ) : (
+diff --git a/.task-review/VocabularyContext.before-loading.jsx b/src/context/VocabularyContext.jsx
+index 02ee311..5d95b65 100644
+--- a/.task-review/VocabularyContext.before-loading.jsx
++++ b/src/context/VocabularyContext.jsx
+@@ -70,18 +70,23 @@ export function VocabularyProvider({ children }) {
+   );
+ 
+   const getCategoryWords = useCallback(async (id) => {
+-    const response = await apiFetch(`${api}categories/${id}/`, {
+-      credentials: "include",
+-    });
+-    const data = await response.json();
++    setLoading(true);
++    try {
++      const response = await apiFetch(`${api}categories/${id}/`, {
++        credentials: "include",
++      });
++      const data = await response.json();
+ 
+-    if (!response.ok) {
+-      const error = new Error("Failed to get category words.");
+-      error.response = data;
+-      throw error;
+-    }
++      if (!response.ok) {
++        const error = new Error("Failed to get category words.");
++        error.response = data;
++        throw error;
++      }
+ 
+-    return data;
++      return data;
++    } finally {
++      setLoading(false);
++    }
+   }, [api]);
+ 
+   async function getCategory(id) {

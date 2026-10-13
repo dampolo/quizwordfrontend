@@ -108,7 +108,7 @@ export default function AllCategories() {
 
               <div className={styles["card__footer"]}>
                 <Link
-                  to={`/my-quiz/${cat.category_id}/all-category-words?language=${cat.target_language}`}
+                  to={`/my-quiz/${cat.category_id}/all-category-words?language=${cat.language_id}`}
                   className={styles["card__meta"]}
                 >
                   <span>▦</span>

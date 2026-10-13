@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Link, useParams } from "react-router-dom";
 import useVocabulary from "../../../context/useVocabulary";
 import BackButton from "../../../components/BackButton/BackButton";
 import PageTitle from "../../../components/PageTitle/PageTitle";
@@ -7,41 +8,48 @@ import PreLoader from "../../../components/PreLoader/PreLoader";
 import styles from "./all-category-words.module.scss";
 
 export default function AllCategoryWords() {
-  const { getCategoryWords } = useVocabulary();
+  const { getCategoryWords, loading } = useVocabulary();
   const { id } = useParams();
-  const [searchParams] = useSearchParams();
-  const language = searchParams.get("language");
-  const [result, setResult] = useState(null);
+  const [category, setCategory] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    let active = true;
+    async function loadData() {
+      try {
+        setError("");
+        const category = await getCategoryWords(id);
+        setCategory(category);
+        console.log({ id, category });
+        
+      } catch (err) {
+        console.error(err);
+        const message = "Die Wörter konnten nicht geladen werden.";
+        toast.error(message);
+        setError(message);
+      }
+    }
 
-    getCategoryWords(id).then(
-      (category) => {
-        if (active) setResult({ id, category });
-      },
-      () => {
-        if (active) setResult({ id, error: "Die Wörter konnten nicht geladen werden." });
-      },
-    );
-
-    return () => { active = false; };
+    loadData();
   }, [id, getCategoryWords]);
 
-  const category = result?.id === id ? result.category : null;
-  const concepts = category?.concepts ?? [];
-  const backQuery = language ? `?${new URLSearchParams({ language })}` : "";
+  if (loading) {
+    return (
+      <div className="show-container">
+        <PreLoader />
+      </div>
+    );
+  }
 
   return (
     <section className={styles["all-category-words"]}>
       <PageTitle title={category?.category_name ?? "Kategoriewörter"} />
-      <BackButton to={`/my-quiz/all-categories${backQuery}`} />
+      <BackButton
+        to={`/my-quiz/all-categories?language=${category?.language_id}`}
+      />
       <h1>Kategorie: {category?.category_name ?? "…"}</h1>
-      {result?.id !== id ? (
-        <div className="show-container"><PreLoader /></div>
-      ) : result.error ? (
-        <p role="alert">{result.error}</p>
-      ) : concepts.length === 0 ? (
+      {error ? (
+        <p role="alert">{error}</p>
+      ) : !category?.concepts?.length ? (
         <p>Du hast in dieser Kategorie noch keine Wörter.</p>
       ) : (
         <div className={styles["word-list"]}>
@@ -52,7 +60,7 @@ export default function AllCategoryWords() {
             <div>Serie</div>
             <div>Aktionen</div>
           </div>
-          {concepts.map((concept) => {
+          {category?.concepts?.map((concept) => {
             const [source, target] = concept.translations ?? [];
             return (
               <div className={styles["list-row"]} key={concept.id}>

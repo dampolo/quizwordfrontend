@@ -18,9 +18,7 @@ export default function AllCategoryWords() {
       try {
         setError("");
         const category = await getCategoryWords(id);
-        setCategory(category);
-        console.log({ id, category });
-        
+        setCategory(category);        
       } catch (err) {
         console.error(err);
         const message = "Die Wörter konnten nicht geladen werden.";

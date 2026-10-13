@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./all-quizzes.module.scss";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import useQuiz from "../../../../context/useQuiz";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
 import useVocabulary from "../../../../context/useVocabulary";
@@ -15,6 +15,8 @@ function Quizzes() {
     getQuizzes,
     putQuiz,
     getQuizWords,
+    getLastQuiz,
+    getRandomFlipCard,
   } = useQuiz();
   const { userLanguages } = useVocabulary();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,6 +30,30 @@ function Quizzes() {
   const [quizOverview, setQuizOverview] = useState(false);
   const [quiz, setQuiz] = useState(null);
   const [loadingWords, setLoadingWords] = useState(false);
+  const navigate = useNavigate();
+
+  async function playRandomFlipCard() {
+
+    try {
+      const quiz = await getRandomFlipCard(language);
+      navigate(
+        `/my-quiz/${quiz.quiz_id}/flip-card-quiz?language=${language}&redirect=true`,
+      );
+    } catch (error) {
+      toast.error(error.response?.detail || "Die Karteikarten konnten nicht geladen werden.");
+    }
+  }
+
+  async function playLastQuiz() {
+    try {
+      const quiz = await getLastQuiz();
+      navigate(
+        `/my-quiz/${quiz.quiz_id}/play-quiz?language=${quiz.target_language}&redirect=true`,
+      );
+    } catch (error) {
+      toast.error(error.response?.detail || "Das letzte Quiz konnte nicht geladen werden.");
+    }
+  }
 
   async function getOverview(id) {
     setQuizOverview(true);
@@ -244,7 +270,27 @@ function Quizzes() {
         )}
 
         {/* Quiz END */}
+        
       </div>
+      <div className={styles["cards"]}>
+
+        <div className={`${styles["card"]} ${styles["mastery"]}`}>
+          <h3>Zufällige Karteikarten</h3>
+          <p>Starte die Karteikarten eines zufälligen Quizzes.</p>
+          <button type="button" onClick={playRandomFlipCard} disabled={loading}>
+            Start
+          </button>
+        </div>
+
+        <div className={`${styles["card"]} ${styles["review"]}`}>
+          <h3>Quiz</h3>
+          <p>Fange das letzte Quiz an.</p>
+          <button type="button" onClick={playLastQuiz} disabled={loading}>
+            Start
+          </button>
+        </div>
+      </div>
+
       <FormDialog
         quizName={selectedQuiz?.quiz_name}
         dialogTitle={dialogTitle}

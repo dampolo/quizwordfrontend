@@ -10,6 +10,82 @@
   color: basic.$qw-color-heading;
   gap: 1rem;
 
+  .cards {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .card {
+    border-radius: basic.$qw-border-radius;
+    padding: 1.5rem;
+    background: #edf4ff;
+
+    h3 {
+      margin-bottom: 0.8rem;
+    }
+
+    p {
+      color: #666;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .progress {
+    width: 100%;
+    height: 10px;
+    background: #dfe4ef;
+    border-radius: basic.$qw-border-radius;
+    overflow: hidden;
+    margin-bottom: 0.7rem;
+
+    &-fill {
+      width: 60%;
+      height: 100%;
+      background: #4b38f5;
+    }
+  }
+
+  .review {
+    background: linear-gradient(135deg, basic.$qw-primary, #5635ff);
+    color: basic.$qw-fourth;
+
+    p {
+      color: rgba(basic.$qw-fourth, 0.85);
+    }
+
+    button {
+      margin-top: 1rem;
+      width: 100%;
+      border: none;
+      background: basic.$qw-fourth;
+      color: basic.$qw-primary;
+      padding: 0.9rem;
+      border-radius: basic.$qw-border-radius;
+      font-weight: 600;
+    }
+  }
+
+  .mastery {
+    background: #bed2ff;
+
+    p {
+      color: #666;
+    }
+
+    button {
+      margin-top: 1rem;
+      width: 100%;
+      border: none;
+      color: basic.$qw-fourth;
+      background: basic.$qw-primary;
+      padding: 0.9rem;
+      border-radius: basic.$qw-border-radius;
+      font-weight: 600;
+    }
+  }
+
   .topbar {
     display: flex;
     justify-content: space-between;
@@ -247,6 +323,10 @@
 @media (max-width: 56.25rem) {
   .all-quizzes {
     padding: 1rem 0.5rem;
+
+    .cards {
+      grid-template-columns: 1fr;
+    }
   }
 }
 

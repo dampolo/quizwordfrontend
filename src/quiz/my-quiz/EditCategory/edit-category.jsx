@@ -196,7 +196,7 @@ function EditCategory() {
               )
             }
           >
-            {t("BUTTONS.SAVE")}
+            {t("BUTTONS.CHANGE")}
           </button>
         </div>
       </form>

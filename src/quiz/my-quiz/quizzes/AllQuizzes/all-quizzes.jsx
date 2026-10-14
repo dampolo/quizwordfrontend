@@ -213,7 +213,7 @@ function Quizzes() {
                   </Link>
                 </Tooltip>
 
-                <Tooltip title="Vorschau" placement="top">
+                <Tooltip title="Vorschau" placement="top" arrow>
                   <button
                     type="button"
                     onClick={() => getOverview(quiz.quiz_id)}

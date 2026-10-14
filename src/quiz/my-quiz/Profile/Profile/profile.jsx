@@ -166,7 +166,7 @@ function Profile() {
         <>
           <h2 className={styles["features-title"]}>Anmeldung</h2>
           <div className={styles["profile-user__card"]}>
-              <p>Du bist mit deinem E-Mail {profile.email} angemeldet</p>
+              <p>Du bist mit deinem E-Mail {profile.email} angemeldet.</p>
           </div>
         </>
       )}

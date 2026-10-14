@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import PageTitle from "../../../components/PageTitle/PageTitle";
 import { useAuth } from "../../../context/useAuth";
+import Tooltip from "@mui/material/Tooltip";
 
 function AllWords() {
   const {
@@ -397,7 +398,7 @@ function AllWords() {
           </li>
         ))}
         <li className={`${styles["language-single"]} ${filterDate ? styles["active"] : ""}`}>
-          <button
+          <button 
             type="button"
             className={styles["language-button"]}
             aria-label="Filter öffnen"
@@ -406,7 +407,10 @@ function AllWords() {
               filterDialogRef.current?.showModal();
             }}
           >
+            <Tooltip title="Filter" placement="top" arrow>
             <img src="/assets/filter.svg" alt="filter" />
+            </Tooltip>
+
           </button>
         </li>
       </ul>

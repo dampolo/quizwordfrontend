@@ -207,7 +207,7 @@ function Quizzes() {
                     <img
                       width={40}
                       height={40}
-                      src="/assets/play-quiz.svg"
+                      src="/assets/write.svg"
                       alt="play"
                     />
                   </Link>

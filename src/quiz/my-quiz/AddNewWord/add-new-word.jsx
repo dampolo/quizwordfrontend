@@ -96,7 +96,7 @@ export default function AddNewWord() {
       );
     } catch (err) {
       const message =
-        err.response?.translations?.[0] || err.response?.detail || "Error";
+        err.response?.translations?.[0] || err.response?.detail || "Etwas ist schiefgelaufen.";
       toast.error(message);
     }
   }
@@ -209,7 +209,7 @@ export default function AddNewWord() {
             >
               <option value="">Wähle Kategorie</option>
               {categories.map((category) => (
-                <option key={category.id} value={category.id}>
+                <option key={category.category_id} value={category.id}>
                   {category.category_name}
                 </option>
               ))}

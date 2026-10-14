@@ -5,6 +5,8 @@ import PreLoader from "../../../components/PreLoader/PreLoader";
 
 import styles from "./all-categories.module.scss";
 import PageTitle from "../../../components/PageTitle/PageTitle";
+import Tooltip from '@mui/material/Tooltip';
+
 
 export default function AllCategories() {
   const {
@@ -97,13 +99,14 @@ export default function AllCategories() {
             >
               <div className={styles["card-actions"]}>
                 <h3>{cat.category_name}</h3>
-
-                <Link
-                  className={styles["edit"]}
-                  to={`/my-quiz/all-categories/${cat.category_id}/edit-category?language=${language}`}
-                >
-                  <img src="/assets/edit.svg" alt="edit" />
-                </Link>
+                <Tooltip title="Edit Title">
+                  <Link
+                    className={styles["edit"]}
+                    to={`/my-quiz/all-categories/${cat.category_id}/edit-category?language=${language}`}
+                  >
+                    <img src="/assets/edit.svg" alt="edit" />
+                  </Link>
+                </Tooltip>
               </div>
 
               <div className={styles["card__footer"]}>

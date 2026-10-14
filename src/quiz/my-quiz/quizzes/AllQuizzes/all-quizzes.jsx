@@ -6,6 +6,7 @@ import PreLoader from "../../../../components/PreLoader/PreLoader";
 import useVocabulary from "../../../../context/useVocabulary";
 import FormDialog from "../../../../components/FormDialog/FormDialog";
 import { toast } from "react-toastify";
+import Tooltip from "@mui/material/Tooltip";
 
 function Quizzes() {
   const {
@@ -33,14 +34,16 @@ function Quizzes() {
   const navigate = useNavigate();
 
   async function playRandomFlipCard() {
-
     try {
       const quiz = await getRandomFlipCard(language);
       navigate(
         `/my-quiz/${quiz.quiz_id}/flip-card-quiz?language=${language}&redirect=true`,
       );
     } catch (error) {
-      toast.error(error.response?.detail || "Die Karteikarten konnten nicht geladen werden.");
+      toast.error(
+        error.response?.detail ||
+          "Die Karteikarten konnten nicht geladen werden.",
+      );
     }
   }
 
@@ -51,7 +54,10 @@ function Quizzes() {
         `/my-quiz/${quiz.quiz_id}/play-quiz?language=${quiz.target_language}&redirect=true`,
       );
     } catch (error) {
-      toast.error(error.response?.detail || "Das letzte Quiz konnte nicht geladen werden.");
+      toast.error(
+        error.response?.detail ||
+          "Das letzte Quiz konnte nicht geladen werden.",
+      );
     }
   }
 
@@ -166,82 +172,93 @@ function Quizzes() {
           quizzes.map((quiz) => (
             <article className={styles["vocab-card"]} key={quiz.quiz_id}>
               <h3>{quiz.quiz_name}</h3>
-              <button
-                type="button"
-                className={styles["edit"]}
-                onClick={() => {
-                  setSelectedQuiz(quiz);
-                  openDialog();
-                }}
-              >
-                <img src="/assets/edit.svg" alt="edit" />
-              </button>
-
-              <div className={styles["action-button"]}>
-                <Link
-                  className={styles["action-button__icon"]}
-                  to={`/my-quiz/${quiz.quiz_id}/learn-quiz?language=${quiz?.target_language}&redirect=true`}
-                >
-                  <img
-                    width={40}
-                    height={40}
-                    src="/assets/learn-quiz.svg"
-                    alt="learn"
-                  />
-                </Link>
-                <Link
-                  className={styles["action-button__icon"]}
-                  to={`/my-quiz/${quiz.quiz_id}/play-quiz?language=${quiz?.target_language}&redirect=true`}
-                >
-                  <img
-                    width={40}
-                    height={40}
-                    src="/assets/play-quiz.svg"
-                    alt="play"
-                  />
-                </Link>
-
+              <Tooltip title="Edit Title" placement="top">
                 <button
                   type="button"
-                  onClick={() => getOverview(quiz.quiz_id)}
-                  className={styles["action-button__icon"]}
+                  className={styles["edit"]}
+                  onClick={() => {
+                    setSelectedQuiz(quiz);
+                    openDialog();
+                  }}
                 >
-                  <img
-                    width={40}
-                    height={40}
-                    src="/assets/look-quiz.svg"
-                    alt="look"
-                  />
+                  <img src="/assets/edit.svg" alt="edit" />
                 </button>
+              </Tooltip>
 
+              <div className={styles["action-button"]}>
+                <Tooltip title="Lernen" placement="top">
+                  <Link
+                    className={styles["action-button__icon"]}
+                    to={`/my-quiz/${quiz.quiz_id}/learn-quiz?language=${quiz?.target_language}&redirect=true`}
+                  >
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/learn-quiz.svg"
+                      alt="learn"
+                    />
+                  </Link>
+                </Tooltip>
+                <Tooltip title="Test schreiben" placement="top">
+                  <Link
+                    className={styles["action-button__icon"]}
+                    to={`/my-quiz/${quiz.quiz_id}/play-quiz?language=${quiz?.target_language}&redirect=true`}
+                  >
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/play-quiz.svg"
+                      alt="play"
+                    />
+                  </Link>
+                </Tooltip>
+
+                <Tooltip title="Vorschau" placement="top">
+                  <button
+                    type="button"
+                    onClick={() => getOverview(quiz.quiz_id)}
+                    className={styles["action-button__icon"]}
+                  >
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/look-quiz.svg"
+                      alt="look"
+                    />
+                  </button>
+                </Tooltip>
                 {/* Flip Card */}
-                <Link
-                  className={styles["action-button__icon"]}
-                  to={`/my-quiz/${quiz.quiz_id}/flip-card-quiz?language=${quiz?.target_language}&redirect=true`}
-                >
-                  <img
-                    width={40}
-                    height={40}
-                    src="/assets/flip-card.svg"
-                    alt="look"
-                  />
-                </Link>
+                <Tooltip title="Karteikarten" placement="top">
+                  <Link
+                    className={styles["action-button__icon"]}
+                    to={`/my-quiz/${quiz.quiz_id}/flip-card-quiz?language=${quiz?.target_language}&redirect=true`}
+                  >
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/flip-card.svg"
+                      alt="look"
+                    />
+                  </Link>
+                </Tooltip>
                 {/* Flip Card end*/}
               </div>
 
               <div className={styles["action-button"]}>
                 {/* HEAR Card */}
-                <Link
-                  className={styles["action-button__icon"]}
-                  to={`/my-quiz/${quiz.quiz_id}/hear-quiz?language=${quiz?.target_language}&redirect=true`}
-                >
-                  <img
-                    width={40}
-                    height={40}
-                    src="/assets/hear.svg"
-                    alt="look"
-                  />
-                </Link>
+                <Tooltip title="Hören" placement="bottom">
+                  <Link
+                    className={styles["action-button__icon"]}
+                    to={`/my-quiz/${quiz.quiz_id}/hear-quiz?language=${quiz?.target_language}&redirect=true`}
+                  >
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/hear.svg"
+                      alt="look"
+                    />
+                  </Link>
+                </Tooltip>
                 {/* HEAR Card end*/}
               </div>
 
@@ -270,10 +287,8 @@ function Quizzes() {
         )}
 
         {/* Quiz END */}
-        
       </div>
       <div className={styles["cards"]}>
-
         <div className={`${styles["card"]} ${styles["mastery"]}`}>
           <h3>Zufällige Karteikarten</h3>
           <p>Starte die Karteikarten eines zufälligen Quizzes.</p>

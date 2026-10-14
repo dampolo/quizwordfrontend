@@ -31,7 +31,8 @@ function AllWords() {
   const [selectedWordIds, setSelectedWordIds] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const filterDialogRef = useRef(null);
-  const { createQuiz, getLastQuiz, getLastFlipCard } = useQuiz();
+  const { createQuiz, getLastQuiz, getLastFlipCard, postRandomQuiz } =
+    useQuiz();
   const [currentPage, setCurrentPage] = useState(1);
   const [message, setMessage] = useState("");
 
@@ -206,6 +207,17 @@ function AllWords() {
       navigate(
         `/my-quiz/${response.quiz_id}/flip-card-quiz?language=${response?.target_language}`,
       );
+    } catch (error) {
+      const message = error.response?.detail || "Error";
+
+      toast.error(message);
+    }
+  }
+
+  async function createRandomQuiz() {
+    try {
+      const response = await postRandomQuiz(language);
+      toast.success(`Quiz "${response.quiz_name}" wurde erstellt!`);
     } catch (error) {
       const message = error.response?.detail || "Error";
 
@@ -520,8 +532,7 @@ function AllWords() {
           <h3>Random Quiz</h3>
           <p>Erstelle ein Quiz aus 5 gemischten Wörter.</p>
 
-          <button onClick={playLastFlipCard}>Start</button>
-
+          <button onClick={createRandomQuiz}>Start</button>
         </div>
 
         <div className={`${styles["card"]} ${styles["mastery"]}`}>

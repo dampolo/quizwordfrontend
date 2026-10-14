@@ -172,7 +172,7 @@ function Quizzes() {
           quizzes.map((quiz) => (
             <article className={styles["vocab-card"]} key={quiz.quiz_id}>
               <h3>{quiz.quiz_name}</h3>
-              <Tooltip title="Edit Title" placement="top">
+              <Tooltip title="Edit Title" placement="top" arrow>
                 <button
                   type="button"
                   className={styles["edit"]}
@@ -186,7 +186,7 @@ function Quizzes() {
               </Tooltip>
 
               <div className={styles["action-button"]}>
-                <Tooltip title="Lernen" placement="top">
+                <Tooltip title="Lernen" placement="top" arrow>
                   <Link
                     className={styles["action-button__icon"]}
                     to={`/my-quiz/${quiz.quiz_id}/learn-quiz?language=${quiz?.target_language}&redirect=true`}
@@ -199,7 +199,7 @@ function Quizzes() {
                     />
                   </Link>
                 </Tooltip>
-                <Tooltip title="Test schreiben" placement="top">
+                <Tooltip title="Test schreiben" placement="top" arrow>
                   <Link
                     className={styles["action-button__icon"]}
                     to={`/my-quiz/${quiz.quiz_id}/play-quiz?language=${quiz?.target_language}&redirect=true`}
@@ -228,7 +228,7 @@ function Quizzes() {
                   </button>
                 </Tooltip>
                 {/* Flip Card */}
-                <Tooltip title="Karteikarten" placement="top">
+                <Tooltip title="Karteikarten" placement="top" arrow>
                   <Link
                     className={styles["action-button__icon"]}
                     to={`/my-quiz/${quiz.quiz_id}/flip-card-quiz?language=${quiz?.target_language}&redirect=true`}
@@ -246,7 +246,7 @@ function Quizzes() {
 
               <div className={styles["action-button"]}>
                 {/* HEAR Card */}
-                <Tooltip title="Hören" placement="bottom">
+                <Tooltip title="Hören" placement="bottom" arrow>
                   <Link
                     className={styles["action-button__icon"]}
                     to={`/my-quiz/${quiz.quiz_id}/hear-quiz?language=${quiz?.target_language}&redirect=true`}

@@ -397,8 +397,10 @@ function AllWords() {
             </button>
           </li>
         ))}
-        <li className={`${styles["language-single"]} ${filterDate ? styles["active"] : ""}`}>
-          <button 
+        <li
+          className={`${styles["language-single"]} ${filterDate ? styles["active"] : ""}`}
+        >
+          <button
             type="button"
             className={styles["language-button"]}
             aria-label="Filter öffnen"
@@ -408,9 +410,8 @@ function AllWords() {
             }}
           >
             <Tooltip title="Filter" placement="top" arrow>
-            <img src="/assets/filter.svg" alt="filter" />
+              <img src="/assets/filter.svg" alt="filter" />
             </Tooltip>
-
           </button>
         </li>
       </ul>
@@ -515,6 +516,14 @@ function AllWords() {
           <small>12 / 20 Words • 60%</small>
         </div>
 
+        <div className={`${styles["card"]} ${styles["random"]}`}>
+          <h3>Random Quiz</h3>
+          <p>Erstelle ein Quiz aus 5 gemischten Wörter.</p>
+
+          <button onClick={playLastFlipCard}>Start</button>
+
+        </div>
+
         <div className={`${styles["card"]} ${styles["mastery"]}`}>
           <h3>Karteikarten</h3>
           <p>Fange die letzten Karteikarten an.</p>
@@ -531,7 +540,7 @@ function AllWords() {
 
         {/* Start last quiz ENDE*/}
       </div>
-      
+
       <button
         type="submit"
         onClick={openDialog}

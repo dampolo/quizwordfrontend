@@ -1,0 +1,170 @@
+import { useState, forwardRef, useEffect } from "react";
+import Slide from "@mui/material/Slide";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { useTranslation } from "react-i18next";
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+function FormDialog({
+  open,
+  onClose,
+  onSubmit,
+  selectedWordsCount,
+  message,
+  quizName: initialQuizName,
+  dialogTitle,
+  dialogDescription,
+}) {
+  const { t } = useTranslation();
+  const [quizName, setQuizName] = useState("");
+
+  useEffect(() => {
+    if (open) {
+      setQuizName(initialQuizName ?? "");
+    }
+  }, [open, initialQuizName]);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    const trimmedQuizName = quizName.trim();
+
+    if (!trimmedQuizName) {
+      return;
+    }
+
+    onSubmit(trimmedQuizName);
+    setQuizName("");
+  }
+
+  function handleClose() {
+    setQuizName("");
+    onClose();
+  }
+
+  return (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      fullWidth
+	  keepMounted
+      slotProps={{
+        paper: {
+          sx: {
+            borderRadius: "var(--qw-border-radius)",
+            p: 2,
+          },
+        },
+      }}
+      maxWidth="sm"
+      slots={{
+        transition: Transition,
+      }}
+    >
+      <DialogTitle>
+        {dialogTitle ? dialogTitle : "Erstelle dein Quiz"}
+      </DialogTitle>
+
+      <DialogContent>
+        <DialogContentText>
+          {dialogDescription
+            ? dialogDescription
+            : `Du hast ${selectedWordsCount} Wörter gewählt. Gib einen Namen für dein
+            Quiz ein.`}
+        </DialogContentText>
+
+        <form id="create-quiz-form" onSubmit={handleSubmit}>
+          <TextField
+            autoFocus
+            required
+            fullWidth
+            margin="dense"
+            name="quizName"
+            label="Quizname"
+            value={quizName}
+            onChange={(event) => setQuizName(event.target.value)}
+            variant="standard"
+          />
+        </form>
+        <div className="warn-txt">{message}</div>
+      </DialogContent>
+
+      <DialogActions
+        sx={{
+          alignSelf: "self-end",
+        }}
+      >
+        <Button
+          disableRipple
+          onClick={handleClose}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minWidth: "fit-content",
+            width: "auto",
+            fontSize: "1rem",
+            fontWeight: 600,
+            padding: "0.2rem 0.3rem",
+            background: "transparent",
+            color: "#5B5CE2",
+            borderRadius: "var(--qw-border-radius)",
+            border: "1px solid #dfe3ef",
+            transition: "all 0.2s ease-in-out",
+
+            "&:hover, &:focus-visible": {
+              background: "rgba(91, 92, 226, 0.06)",
+              border: "1px solid #5B5CE2",
+              color: "#3f2bdc",
+            },
+          }}
+        >
+          {t("BUTTONS.CANCEL")}
+        </Button>
+
+        <Button
+          disableRipple
+          type="submit"
+          disabled={quizName.length < 3}
+          form="create-quiz-form"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textDecoration: "none",
+            maxWidth: "8rem",
+            width: "auto",
+            padding: "0.2rem 0.3rem",
+            fontWeight: 600,
+            fontSize: "1rem",
+            gap: "0.625rem",
+            borderRadius: "var(--qw-border-radius)",
+            color: "#f4f4f4",
+            backgroundColor: "#3f2bdc",
+            border: "1px solid #3f2bdc",
+            transition: "all 0.2s ease-in-out",
+            outline: "none",
+
+            "&:hover, &:focus-visible": {
+              border: "1px solid #3f2bdc",
+              backgroundColor: "#fff",
+              color: "#3f2bdc",
+            },
+          }}
+        >
+          {t("BUTTONS.SAVE")}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
+export default FormDialog;

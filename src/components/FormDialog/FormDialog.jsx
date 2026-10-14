@@ -22,6 +22,11 @@ function FormDialog({
   quizName: initialQuizName,
   dialogTitle,
   dialogDescription,
+  inputName = "quizName",
+  inputLabel = "Quizname",
+  formId = "create-quiz-form",
+  submitting = false,
+  preserveInputOnSubmit = false,
 }) {
   const { t } = useTranslation();
   const [quizName, setQuizName] = useState("");
@@ -37,15 +42,16 @@ function FormDialog({
 
     const trimmedQuizName = quizName.trim();
 
-    if (!trimmedQuizName) {
+    if (submitting || trimmedQuizName.length < 3) {
       return;
     }
 
     onSubmit(trimmedQuizName);
-    setQuizName("");
+    if (!preserveInputOnSubmit) setQuizName("");
   }
 
   function handleClose() {
+    if (submitting) return;
     setQuizName("");
     onClose();
   }
@@ -81,14 +87,15 @@ function FormDialog({
             Quiz ein.`}
         </DialogContentText>
 
-        <form id="create-quiz-form" onSubmit={handleSubmit}>
+        <form id={formId} onSubmit={handleSubmit}>
           <TextField
+            disabled={submitting}
             autoFocus
             required
             fullWidth
             margin="dense"
-            name="quizName"
-            label="Quizname"
+            name={inputName}
+            label={inputLabel}
             value={quizName}
             onChange={(event) => setQuizName(event.target.value)}
             variant="standard"
@@ -104,6 +111,7 @@ function FormDialog({
       >
         <Button
           disableRipple
+          disabled={submitting}
           onClick={handleClose}
           sx={{
             display: "flex",
@@ -133,8 +141,8 @@ function FormDialog({
         <Button
           disableRipple
           type="submit"
-          disabled={quizName.length < 3}
-          form="create-quiz-form"
+          disabled={submitting || quizName.trim().length < 3}
+          form={formId}
           sx={{
             display: "flex",
             justifyContent: "center",

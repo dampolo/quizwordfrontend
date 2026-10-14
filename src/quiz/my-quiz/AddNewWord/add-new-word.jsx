@@ -1,6 +1,7 @@
 import useVocabulary from "../../../context/useVocabulary";
 import { useState, useEffect, useEffectEvent } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import FormDialog from "../../../components/FormDialog/FormDialog";
 import BackButton from "../../../components/BackButton/BackButton";
 import PreLoader from "../../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
@@ -14,6 +15,7 @@ export default function AddNewWord() {
     categories,
     loading,
     createConcept,
+    createCategory,
     getFiltredCategories,
     clearCategories,
     nativeLanguage,
@@ -24,6 +26,10 @@ export default function AddNewWord() {
   const { state } = useLocation();
   const [initialTranslations] = useState(() => state?.translations);
   const { openDialog } = useDialog();
+  const [categoryDialogOpen, setCategoryDialogOpen] = useState(false);
+  const [categorySubmitting, setCategorySubmitting] = useState(false);
+  const [categoryMessage, setCategoryMessage] = useState("");
+  const [createdCategory, setCreatedCategory] = useState(null);
   const [moreSource, setMoreSource] = useState(false);
   const [moreTarget, setMoreTarget] = useState(false);
 
@@ -138,11 +144,46 @@ export default function AddNewWord() {
   function handleLanguageChange(index, value) {
     updateTranslation(index, { language: value });
     clearCategories();
+    setCreatedCategory(null);
+    setFormData((prev) => ({ ...prev, category: "" }));
 
     if (index === 1 && value) {
       getFiltredCategories(value);
     }
   }
+
+  async function handleCreateCategory(categoryName) {
+    if (categorySubmitting || !formData.translations[1].language) return;
+    setCategorySubmitting(true);
+    setCategoryMessage("");
+    try {
+      const category = await createCategory({
+        category_name: categoryName,
+        language_id: formData.translations[1].language,
+      });
+      const categoryId = category.id;
+      if (categoryId != null) {
+        setCreatedCategory({ category_id: categoryId, category_name: categoryName });
+        handleCategoryChange(categoryId);
+      }
+      await getFiltredCategories(formData.translations[1].language);
+      setCategoryDialogOpen(false);
+      toast.success(`Kategorie "${categoryName}" wurde hinzugefügt!`);
+    } catch (error) {
+      const detail = error.response?.category_name ?? error.response?.detail;
+      const message = (Array.isArray(detail) ? detail[0] : detail) ||
+        "Die Kategorie konnte nicht erstellt werden.";
+      setCategoryMessage(message);
+      toast.error(message);
+    } finally {
+      setCategorySubmitting(false);
+    }
+  }
+
+  const categoryOptions = createdCategory &&
+    !categories.some((category) => String(category.category_id) === String(createdCategory.category_id))
+    ? [...categories, createdCategory]
+    : categories;
 
   function handleCategoryChange(value) {
     setFormData((prev) => ({ ...prev, category: value }));
@@ -157,6 +198,11 @@ export default function AddNewWord() {
     }
 
     if (name === "category") {
+      if (value === "__add_category__") {
+        setCategoryMessage("");
+        setCategoryDialogOpen(true);
+        return;
+      }
       handleCategoryChange(value);
       return;
     }
@@ -194,25 +240,29 @@ export default function AddNewWord() {
       </header>
 
       <form className={styles["word-card"]} onSubmit={handleSubmit}>
-        {categories.length > 0 && (
+        {formData.translations[1].language && (
           <div
             className={`${styles["form-group"]} ${styles["category-group"]}`}
           >
-            <label>
+            <label htmlFor="word-category">
               Kategorie <span></span>
             </label>
 
             <select
+              id="word-category"
               name="category"
               value={formData.category}
               onChange={(e) => handleChange(1, e)}
             >
               <option value="">Wähle Kategorie</option>
-              {categories.map((category) => (
+              {categoryOptions.map((category) => (
                 <option key={category.category_id} value={category.category_id}>
                   {category.category_name}
                 </option>
               ))}
+              <option value="__add_category__" disabled={categorySubmitting}>
+                + Kategorie hinzufügen
+              </option>
             </select>
           </div>
         )}
@@ -432,6 +482,19 @@ export default function AddNewWord() {
           </button>
         </div>
       </form>
+      <FormDialog
+        open={categoryDialogOpen}
+        onClose={() => setCategoryDialogOpen(false)}
+        onSubmit={handleCreateCategory}
+        dialogTitle="Neue Kategorie hinzufügen"
+        dialogDescription="Gib einen Namen für die Kategorie in deiner gewählten Zielsprache ein."
+        inputName="category_name"
+        inputLabel="Kategoriename"
+        formId="create-word-category-form"
+        submitting={categorySubmitting}
+        preserveInputOnSubmit
+        message={categoryMessage}
+      />
     </section>
   );
 }

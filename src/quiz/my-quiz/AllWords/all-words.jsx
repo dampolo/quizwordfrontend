@@ -552,7 +552,7 @@ function AllWords() {
         </svg>
       </button>
 
-      {/* dialog */}
+      {/* dialog Filter */}
 
       <dialog
         ref={filterDialogRef}

@@ -209,7 +209,7 @@ export default function AddNewWord() {
             >
               <option value="">Wähle Kategorie</option>
               {categories.map((category) => (
-                <option key={category.category_id} value={category.id}>
+                <option key={category.category_id} value={category.category_id}>
                   {category.category_name}
                 </option>
               ))}

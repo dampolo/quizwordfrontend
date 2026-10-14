@@ -99,7 +99,7 @@ export default function AllCategories() {
             >
               <div className={styles["card-actions"]}>
                 <h3>{cat.category_name}</h3>
-                <Tooltip title="Edit Title">
+                <Tooltip title="Edit Title" placement="top" arrow>
                   <Link
                     className={styles["edit"]}
                     to={`/my-quiz/all-categories/${cat.category_id}/edit-category?language=${language}`}

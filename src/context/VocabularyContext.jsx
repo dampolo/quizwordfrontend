@@ -173,7 +173,6 @@ export function VocabularyProvider({ children }) {
   }
 
   const getFiltredCategories = useCallback(async (id) => {
-    setLoading(true);
 
     try {
       const response = await apiFetch(
@@ -189,10 +188,9 @@ export function VocabularyProvider({ children }) {
       setCategories(data);
     } catch (error) {
       console.error(error);
-    } finally {
-      setLoading(false);
     }
   }, [api]);
+
 
   const getConcept = useCallback(
     async (id, languageId) => {

@@ -174,11 +174,11 @@ export function QuizProvider({ children }) {
     }
   }
 
-  async function getRandomFlipCard() {
+  async function getRandomFlipCard(language) {
     setLoading(true);
 
     try {
-      const response = await apiFetch(`${api}random-flipcard-quiz/`);
+      const response = await apiFetch(`${api}random-flipcard-quiz/?language=${language}`);
 
       const data = await response.json();
 

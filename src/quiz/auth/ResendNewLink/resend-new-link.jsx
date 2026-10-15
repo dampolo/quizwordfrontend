@@ -33,7 +33,7 @@ function ResendNewLink() {
       setConfirmationMessage(
         "Falls für diese E-Mail-Adresse ein unbestätigtes Konto besteht, haben wir einen neuen Bestätigungslink gesendet.",
       );
-      navigate("/confirmation?redirect=true");
+      navigate("/confirmation?redirect=false");
       setFormValues(initialValues);
     } catch (error) {
       const message = error.message || "Der Bestätigungslink konnte nicht gesendet werden. Bitte versuche es erneut.";

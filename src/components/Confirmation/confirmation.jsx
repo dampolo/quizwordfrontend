@@ -58,13 +58,13 @@ function Confirmation() {
 
           {!redirect ? (
             <>
-              <Link className={styles["link"]} to="/login">
-                Anmelden
+              <Link className={styles["link"]} to="/">
+                Quiz Word
               </Link>
             </>
           ) : (
-            <Link className={styles["link"]} to="/">
-              Quiz Word
+            <Link className={styles["link"]} to="/login">
+              Anmelden
             </Link>
           )}
         </div>

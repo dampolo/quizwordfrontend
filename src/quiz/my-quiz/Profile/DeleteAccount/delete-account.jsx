@@ -41,7 +41,7 @@ function DeleteAccount() {
       await deleteAccount(payload);
       setConfirmationMessage("Dein Konto wurde erfolgreich gelöscht.");
       logout();
-      navigate("/confirmation");
+      navigate("/confirmation?redirect=true");
     } catch (err) {
       const message =
         err.password?.[0] ||

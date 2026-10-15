@@ -56,7 +56,7 @@ function Confirmation() {
         <div className={styles["description"]}>
           <p>{confirmationMessage}</p>
 
-          {!redirect ? (
+          {redirect ? (
             <>
               <Link className={styles["link"]} to="/">
                 Quiz Word

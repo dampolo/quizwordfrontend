@@ -170,7 +170,9 @@ export function AuthProvider({ children }) {
       });
 
       if (!response.ok) {
-        throw new Error("Email verification failed.");
+        const error = new Error("Email verification failed.");
+        error.status = response.status;
+        throw error;
       }
 
       const data = await response.json();
@@ -178,6 +180,8 @@ export function AuthProvider({ children }) {
     } catch (error) {
       console.error(error);
       throw error;
+    } finally {
+      setLoading(false);
     }
   }
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import InvalidLink from "../InvalidLink/invalid-link";
+import InvalidLink from "../../quiz/auth/InvalidLink/invalid-link";
 import BackButton from "../BackButton/BackButton";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import styles from "./confirmation.module.scss";

@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import LoginQuiz from "./quiz/auth/LoginQuiz/login-quiz";
 import CreateAccount from "./quiz/auth/CreateAccount/create-account";
 import ForgotPassword from "./quiz/auth/ForgotPassword/forgot-password";
+import ResendNewLink from "./quiz/auth/ResendNewLink/resend-new-link";
 import PublicLayout from "./layouts/PublicLayout";
 import Website from "./website/Website/website";
 import Login from "./quiz/auth/LoginQuiz/login-quiz";
@@ -66,6 +67,7 @@ function App() {
           <Route path="/login-quiz" element={<LoginQuiz />} />
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/resend-new-link" element={<ResendNewLink />} />
           <Route path="/confirmation" element={<Confirmation />} />
           <Route
             path="/verify-email/:uidb64/:token"

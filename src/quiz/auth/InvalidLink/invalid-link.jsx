@@ -12,8 +12,8 @@ function InvalidLink() {
         </div>
         <div className={styles["description"]}>
           <p>Dieser Link ist ungültig oder abgelaufen.</p>
-          <Link className={styles["link"]} to="/login">
-            Anmelden
+          <Link className={styles["link"]} to="/resend-new-link">
+            Neuen Bestätigungslink anfordern
           </Link>
         </div>
       </section>

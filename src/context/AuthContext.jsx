@@ -347,6 +347,32 @@ export function AuthProvider({ children }) {
     return data;
   }
 
+
+  async function postResendVerification(payload) {
+    setLoading(true);
+    try {
+      const response = await fetch(`${api}resend-verification/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        const error = new Error("Der Bestätigungslink konnte nicht gesendet werden. Bitte versuche es erneut.");
+        error.response = data;
+        error.status = response.status;
+        throw error;
+      }
+
+      return data;
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     const init = async () => {
       const authenticated = await checkAuth();
@@ -367,6 +393,7 @@ export function AuthProvider({ children }) {
         profile,
         isMenuOpen,
         confirmationMessage,
+        postResendVerification,
         postSupport,
         deleteAccount,
         patchChangeUsername,

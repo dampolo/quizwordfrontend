@@ -27,13 +27,13 @@
         border: 0;
         padding: 0;
         min-width: 0;
-        :nth-child(2) {
-          margin-top: 0.75rem;
-        }
-        :nth-child(4) {
-          margin-top: 0;
+        .input-container:first-of-type {
           margin-bottom: 0.75rem;
         }
+        .input-container:last-of-type {
+          margin-bottom: 0.75rem;
+        }
+
         .switch {
           display: flex;
           justify-content: center;

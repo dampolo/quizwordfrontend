@@ -1,3 +1,4 @@
+import PlayLastQuiz from "../../../../components/PlayLastQuiz/PlayLastQuiz";
 import { useEffect, useState } from "react";
 import styles from "./all-quizzes.module.scss";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -16,7 +17,6 @@ function Quizzes() {
     getQuizzes,
     putQuiz,
     getQuizWords,
-    getLastQuiz,
     getRandomFlipCard,
   } = useQuiz();
   const { userLanguages } = useVocabulary();
@@ -43,20 +43,6 @@ function Quizzes() {
       toast.error(
         error.response?.detail ||
           "Die Karteikarten konnten nicht geladen werden.",
-      );
-    }
-  }
-
-  async function playLastQuiz() {
-    try {
-      const quiz = await getLastQuiz();
-      navigate(
-        `/my-quiz/${quiz.quiz_id}/play-quiz?language=${quiz.target_language}&redirect=true`,
-      );
-    } catch (error) {
-      toast.error(
-        error.response?.detail ||
-          "Das letzte Quiz konnte nicht geladen werden.",
       );
     }
   }
@@ -297,13 +283,7 @@ function Quizzes() {
           </button>
         </div>
 
-        <div className={`${styles["card"]} ${styles["review"]}`}>
-          <h3>Quiz</h3>
-          <p>Fange das letzte Quiz an.</p>
-          <button type="button" onClick={playLastQuiz} disabled={loading}>
-            Start
-          </button>
-        </div>
+        <PlayLastQuiz redirect />
       </div>
 
       <FormDialog

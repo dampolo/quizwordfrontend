@@ -47,26 +47,6 @@
     }
   }
 
-  .review {
-    background: linear-gradient(135deg, basic.$qw-primary, #5635ff);
-    color: basic.$qw-fourth;
-
-    p {
-      color: rgba(basic.$qw-fourth, 0.85);
-    }
-
-    button {
-      margin-top: 1rem;
-      width: 100%;
-      border: none;
-      background: basic.$qw-fourth;
-      color: basic.$qw-primary;
-      padding: 0.9rem;
-      border-radius: basic.$qw-border-radius;
-      font-weight: 600;
-    }
-  }
-
   .mastery {
     background: #bed2ff;
 

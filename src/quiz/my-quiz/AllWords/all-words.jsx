@@ -1,3 +1,4 @@
+import PlayLastQuiz from "../../../components/PlayLastQuiz/PlayLastQuiz";
 import styles from "./all-words.module.scss";
 import useVocabulary from "../../../context/useVocabulary";
 import { Link } from "react-router-dom";
@@ -28,7 +29,7 @@ function AllWords() {
   const [selectedWordIds, setSelectedWordIds] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const filterDialogRef = useRef(null);
-  const { createQuiz, getLastQuiz, getLastFlipCard, postRandomQuiz } =
+  const { createQuiz, getLastFlipCard, postRandomQuiz } =
     useQuiz();
   const [currentPage, setCurrentPage] = useState(1);
   const [message, setMessage] = useState("");
@@ -96,19 +97,6 @@ function AllWords() {
     const params = new URLSearchParams(searchParams);
     params.set("language", languageId);
     setSearchParams(params);
-  }
-
-  async function playLastQuiz() {
-    try {
-      const response = await getLastQuiz();
-      navigate(
-        `/my-quiz/${response.quiz_id}/play-quiz?language=${response?.target_language}`,
-      );
-    } catch (error) {
-      const message = error.response?.detail || "Error";
-
-      toast.error(message);
-    }
   }
 
   async function playLastFlipCard() {
@@ -325,12 +313,7 @@ function AllWords() {
         </div>
 
         {/* Start last quiz */}
-        <div className={`${styles["card"]} ${styles["review"]}`}>
-          <h3>Quiz</h3>
-          <p>Fange das letzte Quiz an.</p>
-
-          <button onClick={playLastQuiz}>Start</button>
-        </div>
+        <PlayLastQuiz />
 
         {/* Start last quiz ENDE*/}
       </div>

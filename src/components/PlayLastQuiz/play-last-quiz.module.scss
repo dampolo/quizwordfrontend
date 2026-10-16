@@ -1,0 +1,28 @@
+@use "../../styles/basic.scss";
+
+.play-last-quiz {
+  border-radius: basic.$qw-border-radius;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, basic.$qw-primary, #5635ff);
+  color: basic.$qw-fourth;
+
+  h3 {
+    margin-bottom: 0.8rem;
+  }
+
+  p {
+    color: rgba(basic.$qw-fourth, 0.85);
+    margin-bottom: 1rem;
+  }
+
+  button {
+    margin-top: 1rem;
+    width: 100%;
+    border: none;
+    background: basic.$qw-fourth;
+    color: basic.$qw-primary;
+    padding: 0.9rem;
+    border-radius: basic.$qw-border-radius;
+    font-weight: 600;
+  }
+}

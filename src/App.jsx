@@ -33,6 +33,7 @@ import PlayQuiz from "./quiz/my-quiz/quizzes/PlayQuiz/play-quiz";
 import HearQuiz from "./quiz/my-quiz/quizzes/HearQuiz/hear-quiz";
 import QuizResults from "./quiz/my-quiz/quizzes/QuizResults/quiz-results";
 import LearnQuiz from "./quiz/my-quiz/quizzes/LearnQuiz/learn-quiz";
+import WordAudioLoop from "./quiz/my-quiz/quizzes/WordAudioLoop/word-audio-loop";
 import Imprint from "./components/Imprint/imprint";
 import PrivacyPolicy from "./components/PrivacyPolicy/privacy-policy";
 import Price from "./website/Price/price";
@@ -129,6 +130,7 @@ function App() {
               <Route path=":id/hear-quiz" element={<HearQuiz />} />
               <Route path=":id/flip-card-quiz" element={<FlipCardQuiz />} />
               <Route path=":id/learn-quiz" element={<LearnQuiz />} />
+              <Route path=":id/word-audio-loop" element={<WordAudioLoop />} />
               <Route path=":id/quiz-results" element={<QuizResults />} />
               <Route path="choose-languages" element={<ChooseLanguages />} />
               <Route path="edit-languages" element={<EditLanguages />} />

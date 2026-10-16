@@ -246,6 +246,22 @@ function Quizzes() {
                   </Link>
                 </Tooltip>
                 {/* HEAR Card end*/}
+
+                                {/* HEAR Card */}
+                <Tooltip title="Lernen and hören" placement="bottom" arrow>
+                  <Link
+                    className={styles["action-button__icon"]}
+                    to={`/my-quiz/${quiz.quiz_id}/word-audio-loop?language=${quiz?.target_language}&redirect=true`}
+                  >
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/repead.svg"
+                      alt="repead"
+                    />
+                  </Link>
+                </Tooltip>
+                {/* HEAR Card end*/}
               </div>
 
               <div className={styles["vocab-card__footer"]}>

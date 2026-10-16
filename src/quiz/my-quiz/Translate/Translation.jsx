@@ -72,6 +72,11 @@ function Translation() {
     navigate("/my-quiz/add-new-word", { state: { translations } });
   }
 
+  function switchLanguage() {
+    setSource(targetId);
+    setTarget(sourceId);
+  }
+
   useEffect(() => {
     if (selectedSource !== null) {
       localStorage.setItem("translation.sourceId", selectedSource);
@@ -90,7 +95,7 @@ function Translation() {
       <div className={styles["translation-content"]}>
         <form onSubmit={handleSubmit}>
           <fieldset>
-            <div>
+            <div className={styles["input-container"]}>
               <label htmlFor="translation-text">Text</label>
               <input
                 id="translation-text"
@@ -101,7 +106,7 @@ function Translation() {
                 autoComplete="off"
               />
             </div>
-            <div>
+            <div className={styles["input-container"]}>
               <label htmlFor="translation-source">Ausgangssprache</label>
               <select
                 id="translation-source"
@@ -119,7 +124,18 @@ function Translation() {
               </select>
             </div>
 
-            <div>
+            <div type="button" className={styles["switch"]}>
+              <button
+                className={styles["switch-button"]}
+                type="button"
+                onClick={switchLanguage}
+                aria-label="Sprachen tauschen"
+              >
+                <img src="/assets/switch.svg" alt="switch language" />
+              </button>
+            </div>
+
+            <div className={styles["input-container"]}>
               <label htmlFor="translation-target">Zielsprache</label>
               <select
                 id="translation-target"

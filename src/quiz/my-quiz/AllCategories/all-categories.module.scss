@@ -312,11 +312,9 @@
   }
 }
 
-@media (max-width: 56.25rem) {
+@media (max-width: 81.25rem) {
   .vocab-page {
-    .vocab-page {
-      padding: 1rem 0.5rem;
-    }
+    padding: 1rem 0.5rem;
     .stats,
     .grid {
       grid-template-columns: repeat(2, 1fr);

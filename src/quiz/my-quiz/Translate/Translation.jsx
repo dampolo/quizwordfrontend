@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UseTranslation from "../../../context/TranslationContex/UseTranslation";
 import useVocabulary from "../../../context/useVocabulary";
@@ -18,11 +18,17 @@ function Translation() {
     const code = (language?.language_code || language?.code || "").trim();
     // The translation endpoint accepts de/en/es; speech uses regional codes.
     const baseCode = code.toLowerCase().split(/[-_]/)[0];
-    return ["de", "en", "es", "fr" ].includes(baseCode) ? baseCode : code;
+    return ["de", "en", "es", "fr"].includes(baseCode) ? baseCode : code;
   };
 
-  const [selectedSource, setSource] = useState(null);
-  const [selectedTarget, setTarget] = useState(null);
+  const [selectedSource, setSource] = useState(() =>
+    localStorage.getItem("translation.sourceId"),
+  );
+
+  const [selectedTarget, setTarget] = useState(() =>
+    localStorage.getItem("translation.targetId"),
+  );
+
   const sourceId = selectedSource ?? String(nativeLanguage?.id ?? "");
   const targetId = selectedTarget ?? String(userLanguages[0]?.id ?? "");
   const source = getCode(
@@ -65,6 +71,18 @@ function Translation() {
     if (translations[0].language !== nativeId) translations.reverse();
     navigate("/my-quiz/add-new-word", { state: { translations } });
   }
+
+  useEffect(() => {
+    if (selectedSource !== null) {
+      localStorage.setItem("translation.sourceId", selectedSource);
+    }
+  }, [selectedSource]);
+
+  useEffect(() => {
+    if (selectedTarget !== null) {
+      localStorage.setItem("translation.targetId", selectedTarget);
+    }
+  }, [selectedTarget]);
 
   return (
     <section className={styles["translation"]}>

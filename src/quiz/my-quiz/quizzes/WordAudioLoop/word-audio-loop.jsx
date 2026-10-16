@@ -143,6 +143,8 @@ function WordAudioLoop() {
           )}
         </div>
         <div className={styles["quiz-card__form"]}>
+          <div className={styles["overlay"]}>
+          </div>
           <span className={styles["quiz-card__line"]}></span>
           <span className={styles["quiz-card__answer-wrapper-learn"]}>
             {current?.translations[1].word}

@@ -92,6 +92,19 @@
   font-size: 0.6rem;
 }
 
+.overlay {
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 16rem;
+  height: 100%;
+  backdrop-filter: blur(10px);
+  z-index: 5;
+  border-radius: 10%;
+}
+
 @media (max-width: 43.75rem) {
   .quiz-card {
     padding: 2rem;

@@ -304,6 +304,7 @@
   .all-quizzes {
     padding: 1rem 0.5rem;
 
+    .category,
     .cards {
       grid-template-columns: 1fr;
     }

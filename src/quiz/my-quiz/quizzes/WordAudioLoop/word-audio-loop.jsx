@@ -5,7 +5,9 @@ import useQuiz from "../../../../context/useQuiz";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
 import styles from "./word-audio-loop.module.scss";
 
-function WordAudioLoop() {
+function WordAudioLoop({ reverse = false }) {
+  const firstTranslation = reverse ? 1 : 0;
+  const secondTranslation = reverse ? 0 : 1;
   const { id } = useParams();
   const { getQuizWords } = useQuiz();
   const loadQuiz = useRef(getQuizWords);
@@ -14,6 +16,7 @@ function WordAudioLoop() {
   const [loading, setLoading] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [answerHidden, setAnswerHidden] = useState(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const language = searchParams.get("language");
@@ -87,8 +90,8 @@ function WordAudioLoop() {
         if (!session.active) return;
         session.timer = setTimeout(() => {
           speak(
-            translationIndex === 0 ? index : (index + 1) % concepts.length,
-            translationIndex === 0 ? 1 : 0,
+            translationIndex === firstTranslation ? index : (index + 1) % concepts.length,
+            translationIndex === firstTranslation ? secondTranslation : firstTranslation,
           );
         }, 700);
       };
@@ -103,7 +106,7 @@ function WordAudioLoop() {
         utterance.onerror();
       }
     }
-    speak(currentQuestion, 0);
+    speak(currentQuestion, firstTranslation);
   }
 
   function cancel() {
@@ -119,8 +122,8 @@ function WordAudioLoop() {
     <section className="play-quiz">
       <div className={`${styles["quiz-card"]} ${styles["learn-card"]}`}>
         <span className={styles["languages"]}>
-          {quiz?.concepts[currentQuestion].translations[0].language_name} →{" "}
-          {quiz?.concepts[currentQuestion].translations[1].language_name}
+          {current?.translations[firstTranslation].language_name} →{" "}
+          {current?.translations[secondTranslation].language_name}
         </span>
         <span className={styles["quiz-card__quiz-name"]}>
           {quiz?.quiz_name}
@@ -138,17 +141,32 @@ function WordAudioLoop() {
             <PreLoader />
           ) : (
             <h1 className={styles["quiz-card__title-learn"]}>
-              {current?.translations[0].word || "Keine Wörter vorhanden."}
+              {current?.translations[firstTranslation].word || "Keine Wörter vorhanden."}
             </h1>
           )}
         </div>
         <div className={styles["quiz-card__form"]}>
-          <div className={styles["overlay"]}>
-          </div>
+          {answerHidden && <div className={styles["overlay"]} aria-hidden="true" />}
           <span className={styles["quiz-card__line"]}></span>
           <span className={styles["quiz-card__answer-wrapper-learn"]}>
-            {current?.translations[1].word}
+            {current?.translations[secondTranslation].word}
           </span>
+        <button
+          type="button"
+          name="toggle-answer"
+          className={styles["quiz-card__toggle-answer"]}
+          onClick={() => setAnswerHidden((hidden) => !hidden)}
+          aria-label={answerHidden ? "Antwort anzeigen" : "Antwort ausblenden"}
+          aria-pressed={answerHidden}
+          disabled={loading || !current}
+        >
+          <img
+            width={24}
+            height={24}
+            src={answerHidden ? "/assets/eye.svg" : "/assets/eye-off.svg"}
+            alt=""
+          />
+        </button>
         </div>
         <button
           type="button"

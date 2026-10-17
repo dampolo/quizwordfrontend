@@ -231,6 +231,21 @@ function Quizzes() {
               </div>
 
               <div className={styles["action-button"]}>
+                {/* Audio loop */}
+                <Tooltip title="Lernen and hören" placement="bottom" arrow>
+                  <Link
+                    className={styles["action-button__icon"]}
+                    to={`/my-quiz/${quiz.quiz_id}/word-audio-loop?language=${quiz?.target_language}&redirect=true`}
+                  >
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/repead.svg"
+                      alt="repead"
+                    />
+                  </Link>
+                </Tooltip>
+                {/* Audio loop end*/}
                 {/* HEAR Card */}
                 <Tooltip title="Hören" placement="bottom" arrow>
                   <Link
@@ -247,21 +262,21 @@ function Quizzes() {
                 </Tooltip>
                 {/* HEAR Card end*/}
 
-                                {/* HEAR Card */}
+                {/* Audio loop reverse */}
                 <Tooltip title="Lernen and hören" placement="bottom" arrow>
                   <Link
                     className={styles["action-button__icon"]}
-                    to={`/my-quiz/${quiz.quiz_id}/word-audio-loop?language=${quiz?.target_language}&redirect=true`}
+                    to={`/my-quiz/${quiz.quiz_id}/word-audio-loop-reverse?language=${quiz?.target_language}&redirect=true`}
                   >
                     <img
                       width={40}
                       height={40}
-                      src="/assets/repead.svg"
+                      src="/assets/repead-reverse.svg"
                       alt="repead"
                     />
                   </Link>
                 </Tooltip>
-                {/* HEAR Card end*/}
+                {/* Audio loop reverse end*/}
               </div>
 
               <div className={styles["vocab-card__footer"]}>

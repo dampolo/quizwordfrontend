@@ -4,6 +4,7 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { toast } from "react-toastify";
 import useQuiz from "../../../../context/useQuiz";
 import WordAudioLoop from "./word-audio-loop";
+import WordAudioLoopReverse from "../WordAudioLoopReverse/word-audio-loop-reverse";
 
 vi.mock("../../../../context/useQuiz", () => ({ default: vi.fn() }));
 vi.mock("react-toastify", () => ({ toast: { error: vi.fn() } }));
@@ -18,7 +19,7 @@ afterEach(() => {
 async function renderAudioLoop(concepts = [
   { translations: [{ word: "Haus", language_code: "de" }, { word: "house", language_code: "en" }] },
   { translations: [{ word: "Katze", language_code: "de" }, { word: "cat", language_code: "en" }] },
-]) {
+], reverse = false) {
   useQuiz.mockReturnValue({ getQuizWords: vi.fn().mockResolvedValue({ quiz_name: "Words", concepts }) });
   const speak = vi.fn();
   const cancel = vi.fn();
@@ -27,12 +28,28 @@ async function renderAudioLoop(concepts = [
     constructor(text) { this.text = text; }
   });
   const result = render(<MemoryRouter initialEntries={["/my-quiz/1/word-audio-loop"]}>
-    <Routes><Route path="/my-quiz/:id/word-audio-loop" element={<WordAudioLoop />} /></Routes>
+    <Routes><Route path="/my-quiz/:id/word-audio-loop" element={reverse ? <WordAudioLoopReverse /> : <WordAudioLoop />} /></Routes>
   </MemoryRouter>);
   const button = result.container.querySelector('button[name="audio-loop"]');
   await waitFor(() => expect(button.disabled).toBe(concepts.length === 0));
   return { ...result, button, speak, cancel };
 }
+
+it("displays and speaks the reverse order, advancing only after both translations", async () => {
+  const { container, button, speak } = await renderAudioLoop(undefined, true);
+  expect(container.querySelector("h1").textContent).toBe("house");
+  vi.useFakeTimers();
+  fireEvent.click(button);
+  for (let index = 0; index < 4; index++) {
+    act(() => {
+      speak.mock.calls[index][0].onend();
+      vi.advanceTimersByTime(700);
+    });
+  }
+  expect(speak.mock.calls.map(([utterance]) => [utterance.text, utterance.lang])).toEqual([
+    ["house", "en"], ["Haus", "de"], ["cat", "en"], ["Katze", "de"], ["house", "en"],
+  ]);
+});
 
 it("speaks each translation sequentially and loops back to the first pair", async () => {
   const { button, speak, unmount, cancel } = await renderAudioLoop();

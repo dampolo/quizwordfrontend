@@ -7,8 +7,8 @@ import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
 import { useEffect } from "react";
 
-const InfoRow = ({ label, value, type }) => {
-  const renderValue = () => {
+function InfoRow({ label, value, type }){
+  function renderValue() {
     if (typeof value === "boolean") {
       return value ? "✅" : "❌";
     }

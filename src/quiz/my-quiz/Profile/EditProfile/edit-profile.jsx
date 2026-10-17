@@ -122,11 +122,12 @@ function EditProfile() {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
+    
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+    debugger
     try {
       setErrors({});
       await updateProfile(form);

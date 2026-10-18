@@ -127,7 +127,6 @@ function EditProfile() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    debugger
     try {
       setErrors({});
       await updateProfile(form);

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import useQuiz from "../../../../context/useQuiz";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
 import styles from "./word-audio-loop.module.scss";
+import useScreenWakeLock from "../../../../hooks/useScreenWakeLock";
 
 function WordAudioLoop({ reverse = false }) {
   const firstTranslation = reverse ? 1 : 0;
@@ -16,6 +17,7 @@ function WordAudioLoop({ reverse = false }) {
   const [loading, setLoading] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [playing, setPlaying] = useState(false);
+  useScreenWakeLock(playing);
   const [answerHidden, setAnswerHidden] = useState(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();

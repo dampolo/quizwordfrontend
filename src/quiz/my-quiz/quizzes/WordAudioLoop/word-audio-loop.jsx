@@ -17,7 +17,7 @@ function WordAudioLoop({ reverse = false }) {
   const [loading, setLoading] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [playing, setPlaying] = useState(false);
-  useScreenWakeLock(playing);
+  const screenAwake = useScreenWakeLock(playing);
   const [answerHidden, setAnswerHidden] = useState(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -181,6 +181,11 @@ function WordAudioLoop({ reverse = false }) {
           <span>{playing ? "Stoppen" : "Starten"}</span>
         </button>
       </div>
+        {screenAwake && (
+          <p role="status" className={styles["quiz-card__wake-lock-message"]}>
+            Der Bildschirm bleibt während der Wiedergabe eingeschaltet.
+          </p>
+        )}
     </section>
   );
 }

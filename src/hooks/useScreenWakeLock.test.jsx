@@ -26,11 +26,14 @@ function setup(requestOverride) {
 Object.defineProperty(navigator, "wakeLock", { configurable: true, get: () => undefined });
 
 it("requests only during playback and releases on stop and unmount", async () => {
-  const { request, lock, rerender, unmount } = setup();
+  const { request, lock, rerender, unmount, result } = setup();
+  expect(result.current).toBe(false);
   expect(request).not.toHaveBeenCalled();
   rerender({ enabled: true });
   await waitFor(() => expect(request).toHaveBeenCalledWith("screen"));
+  await waitFor(() => expect(result.current).toBe(true));
   rerender({ enabled: false });
+  expect(result.current).toBe(false);
   expect(lock.release).toHaveBeenCalledTimes(1);
   rerender({ enabled: true });
   await act(async () => {});
@@ -39,7 +42,7 @@ it("requests only during playback and releases on stop and unmount", async () =>
 });
 
 it("reacquires a released lock when the page becomes visible", async () => {
-  const { request, lock, visibility, rerender } = setup();
+  const { request, lock, visibility, rerender, result } = setup();
   rerender({ enabled: true });
   await act(async () => {});
   visibility.mockReturnValue("hidden");
@@ -48,9 +51,11 @@ it("reacquires a released lock when the page becomes visible", async () => {
     document.dispatchEvent(new Event("visibilitychange"));
   });
   expect(request).toHaveBeenCalledTimes(1);
+  expect(result.current).toBe(false);
   visibility.mockReturnValue("visible");
   await act(async () => document.dispatchEvent(new Event("visibilitychange")));
   expect(request).toHaveBeenCalledTimes(2);
+  expect(result.current).toBe(true);
 });
 
 it("releases requests that finish after playback stops", async () => {

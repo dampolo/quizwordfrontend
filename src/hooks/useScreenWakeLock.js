@@ -1,7 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function useScreenWakeLock(enabled) {
+  const [active, setActive] = useState(false);
+
   useEffect(() => {
     if (!enabled) return;
 
@@ -26,8 +28,12 @@ export default function useScreenWakeLock(enabled) {
           return;
         }
         wakeLock = lock;
+        setActive(true);
         lock.addEventListener("release", () => {
-          if (wakeLock === lock) wakeLock = null;
+          if (wakeLock === lock) {
+            wakeLock = null;
+            if (!disposed) setActive(false);
+          }
         }, { once: true });
       } catch {
         if (!disposed && !notified) {
@@ -47,8 +53,11 @@ export default function useScreenWakeLock(enabled) {
     document.addEventListener("visibilitychange", onVisibilityChange);
     return () => {
       disposed = true;
+      setActive(false);
       document.removeEventListener("visibilitychange", onVisibilityChange);
       if (wakeLock) void wakeLock.release().catch(() => {});
     };
   }, [enabled]);
+
+  return enabled && active;
 }

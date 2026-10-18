@@ -33,6 +33,16 @@
     gap: 1rem;
   }
 
+  &__wake-lock-message {
+    position: absolute;
+    top: 20%;
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    text-align: center;
+    color: basic.$qw-primary;
+  }
+
   &__title-learn {
     display: flex;
     align-items: center;

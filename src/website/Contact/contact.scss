@@ -68,7 +68,7 @@
             outline: basic.$qw-third;
           }
           &:-webkit-autofill {
-            box-shadow: 0 0 0px 62.5rem basic.$qw-fourth inset;
+            box-shadow: 0 0 0 62.5rem basic.$qw-fourth inset;
           }
         }
       }
@@ -88,13 +88,13 @@
         textarea {
           width: 100%;
           padding: 1rem;
-          gap: 10px;
+          gap: 0.625rem;
           border-radius: basic.$qw-border-radius;
-          font-size: 16px;
+          font-size: 1rem;
           font-weight: 400;
-          line-height: 19.2px;
+          line-height: 1.2rem;
           text-align: left;
-          min-height: 130px;
+          min-height: 8.125rem;
           resize: unset;
           resize: vertical;
           &:focus {
@@ -140,9 +140,9 @@
         flex-direction: column;
         min-width: 0;
         label {
-          font-size: 16px;
+          font-size: 1rem;
           font-weight: 400;
-          line-height: 16.8px;
+          line-height: 1.05rem;
           text-align: left;
           &::after {
             color: #e61e50;
@@ -160,9 +160,9 @@
           }
         }
         span {
-          font-size: 14px;
+          font-size: 0.875rem;
           font-weight: 400;
-          line-height: 16.8px;
+          line-height: 1.05rem;
           text-align: left;
           display: flex;
           color: #ff0000;
@@ -181,11 +181,11 @@
     }
   }
   .recaptcha-wrapper {
-    width: 200px;
-    height: 52px;
+    width: 12.5rem;
+    height: 3.25rem;
 
     .recaptcha {
-      width: 304px;
+      width: 19rem;
       transform: scale(0.6579); // 200 / 304
       transform-origin: top left;
     }

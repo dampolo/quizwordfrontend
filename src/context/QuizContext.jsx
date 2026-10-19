@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import useApi from "./ApiContext";
 import { apiFetch } from "../services/apiFetch";
+import { toast } from "react-toastify";
 
 const QuizContext = createContext();
 
@@ -35,6 +36,8 @@ export function QuizProvider({ children }) {
   }
 
   async function getFiltredQuizzes(id) {
+    setLoading(true);
+
     try {
       const response = await apiFetch(`${api}quizzes/?target_language=${id}`, {
         headers: {
@@ -46,10 +49,11 @@ export function QuizProvider({ children }) {
       }
       const data = await response.json();
       setQuizzes(data);
-
-      setLoading(false);
     } catch (error) {
       console.error(error);
+      toast.error("Failed to load quizzes.");
+    } finally {
+      setLoading(false);
     }
   }
 

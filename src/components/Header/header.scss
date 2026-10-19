@@ -28,6 +28,15 @@
     color: basic.$qw-primary;
     text-decoration: none;
     letter-spacing: -0.5px;
+    &:focus-visible {
+      border: 2px dotted basic.$qw-primary;
+      outline: basic.$qw-primary;
+    }
+    img {
+      &:hover {
+        filter: drop-shadow(2px 4px 6px basic.$qw-primary);
+      }
+    }
   }
 
   // Navigation

@@ -14,6 +14,27 @@ import PreLoader from "../../../components/PreLoader/PreLoader";
 
 import styles from "./edit-word.module.scss";
 
+function validateTranslations(translations) {
+  if (
+    !Array.isArray(translations) ||
+    translations.length !== 2 ||
+    translations.some((translation) => !translation)
+  ) {
+    throw new Error("Expected a source and target translation.");
+  }
+}
+
+function normalizeTranslation(translation) {
+  return {
+    id: translation.id,
+    word: translation.word ?? "",
+    tip: translation.tip ?? "",
+    sentence: translation.sentence ?? "",
+    category_id: translation.category_id ?? "",
+    language: translation.language ?? "",
+  };
+}
+
 export default function EditWord() {
   const {
     getConcept,
@@ -142,23 +163,10 @@ export default function EditWord() {
         const data = await getConcept(id, languageId);
         if (ignore) return;
 
-        if (
-          !Array.isArray(data?.translations) ||
-          data.translations.length !== 2 ||
-          data.translations.some((translation) => !translation)
-        ) {
-          throw new Error("Expected a source and target translation.");
-        }
+        validateTranslations(data?.translations);
 
         setFormData({
-          translations: data.translations.map((translation) => ({
-            id: translation.id,
-            word: translation.word ?? "",
-            tip: translation.tip ?? "",
-            sentence: translation.sentence ?? "",
-            category_id: translation.category_id ?? "",
-            language: translation.language ?? "",
-          })),
+          translations: data.translations.map(normalizeTranslation),
         });
       } catch (err) {
         if (!ignore) {

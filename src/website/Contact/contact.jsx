@@ -236,10 +236,14 @@ function Contact() {
             </div>
           </div>
 
-          <ReCAPTCHA
-            sitekey={VITE_RECAPTCHA_SITE_KEY}
-            onChange={handleCaptcha}
-          />
+          <div className="recaptcha-wrapper">
+            <ReCAPTCHA
+              className="recaptcha"
+              size="normal"
+              sitekey={VITE_RECAPTCHA_SITE_KEY}
+              onChange={handleCaptcha}
+            />
+          </div>
           {loading ? <PreLoader /> : <></>}
 
           <button

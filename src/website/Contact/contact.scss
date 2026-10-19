@@ -112,6 +112,7 @@
 
         input {
           display: flex;
+          flex-shrink: 0;
           margin-bottom: auto;
           cursor: pointer;
           width: 1.25rem;
@@ -137,6 +138,7 @@
       .checkbox-description {
         display: flex;
         flex-direction: column;
+        min-width: 0;
         label {
           font-size: 16px;
           font-weight: 400;
@@ -172,10 +174,20 @@
 }
 
 @media (max-width: 31.25rem) {
-  main {
+  .contact {
+    margin: 0.5rem;
     .main-contact {
-      padding: 1rem;
-      margin: 0.5rem;
+      padding: 0.5rem;
+    }
+  }
+  .recaptcha-wrapper {
+    width: 200px;
+    height: 52px;
+
+    .recaptcha {
+      width: 304px;
+      transform: scale(0.6579); // 200 / 304
+      transform-origin: top left;
     }
   }
 }

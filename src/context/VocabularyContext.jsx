@@ -69,10 +69,10 @@ export function VocabularyProvider({ children }) {
     [api],
   );
 
-  const getCategoryWords = useCallback(async (id) => {
+  const getCategoryWords = useCallback(async (id, page = 1) => {
     setLoading(true);
     try {
-      const response = await apiFetch(`${api}categories/${id}/`, {
+      const response = await apiFetch(`${api}categories/${id}/?page=${page}`, {
         credentials: "include",
       });
       const data = await response.json();

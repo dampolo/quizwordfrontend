@@ -12,14 +12,21 @@ export default function AllCategoryWords() {
   const { id } = useParams();
   const [category, setCategory] = useState(null);
   const [error, setError] = useState("");
+  const [pagination, setPagination] = useState({ categoryId: id, page: 1 });
+  const currentPage = pagination.categoryId === id ? pagination.page : 1;
+  const concepts = category?.concepts ?? [];
+  const previousPage = category?.previous;
+  const nextPage = category?.next;
 
   useEffect(() => {
+    let active = true;
     async function loadData() {
       try {
         setError("");
-        const category = await getCategoryWords(id);
-        setCategory(category);        
+        const category = await getCategoryWords(id, currentPage);
+        if (active) setCategory(category);
       } catch (err) {
+        if (!active) return;
         console.error(err);
         const message = "Die Wörter konnten nicht geladen werden.";
         toast.error(message);
@@ -28,7 +35,10 @@ export default function AllCategoryWords() {
     }
 
     loadData();
-  }, [id, getCategoryWords]);
+    return () => {
+      active = false;
+    };
+  }, [id, currentPage, getCategoryWords]);
 
   if (loading) {
     return (
@@ -54,11 +64,11 @@ export default function AllCategoryWords() {
           <div className={styles["list-head"]}>
             <div>Rang</div>
             <div>Wort & Übersetzung</div>
-            <div>Kategorie</div>
-            <div>Serie</div>
+            <div className={styles["category"]}>Kategorie</div>
+            <div className={styles["streak"]}>Serie</div>
             <div>Aktionen</div>
           </div>
-          {category?.concepts?.map((concept) => {
+          {concepts.map((concept) => {
             const [source, target] = concept.translations ?? [];
             return (
               <div className={styles["list-row"]} key={concept.id}>
@@ -68,7 +78,7 @@ export default function AllCategoryWords() {
                   <span>»</span>
                   <p>{target?.word ?? "—"}</p>
                 </div>
-                <div><span className={styles["badge"]}>{target?.category_name ?? category.category_name}</span></div>
+                <div className={styles["category"]}><span className={styles["badge"]}>{target?.category_name ?? category.category_name}</span></div>
                 <div className={styles["streak"]}>🔥 <strong>{target?.streak ?? 0}</strong> <span>Days</span></div>
                 <div className={styles["actions"]}>
                   {target && (
@@ -80,6 +90,28 @@ export default function AllCategoryWords() {
               </div>
             );
           })}
+          <div className={styles["pagination"]}>
+            <span>{category?.count ?? 0} Wörter</span>
+            <div className={styles["pages"]}>
+              <button
+                type="button"
+                className={`main-quiz-button ${styles["btn-pagination"]}`}
+                disabled={!previousPage}
+                onClick={() => setPagination({ categoryId: id, page: currentPage - 1 })}
+              >
+                &lt;
+              </button>
+              {currentPage}
+              <button
+                type="button"
+                className={`main-quiz-button ${styles["btn-pagination"]}`}
+                disabled={!nextPage}
+                onClick={() => setPagination({ categoryId: id, page: currentPage + 1 })}
+              >
+                &gt;
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </section>

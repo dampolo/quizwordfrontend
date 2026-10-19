@@ -39,6 +39,9 @@ function AllWords() {
 
   const language = searchParams.get("language");
   const active = language ? Number(language) : null;
+  
+  const language_name = userLanguages?.find((lang) => Number(lang.id) === active)?.language_name;
+
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -288,6 +291,13 @@ function AllWords() {
       </div>
 
       <div className={styles["cards"]}>
+        <div className={`${styles["card"]} ${styles["random"]}`}>
+          <h3>Zufällige Wörter wiederholen</h3>
+          <p>Höre beide Übersetzungen und wiederhole danach das nächste Wort.</p>
+          <button type="button" disabled={!language} onClick={() => navigate(`/my-quiz/random-repeat-words?language=${language}`)}>
+            Start
+          </button>
+        </div>
         <div className={`${styles["card"]} goal`}>
           <h3>Today's Goal</h3>
           <p>Review 20 new words to keep your streak alive.</p>
@@ -301,7 +311,10 @@ function AllWords() {
 
         <div className={`${styles["card"]} ${styles["random"]}`}>
           <h3>Random Quiz</h3>
-          <p>Erstelle ein Quiz aus 5 gemischten Wörter.</p>
+          <p>
+            Erstelle ein Quiz{language_name ? ` auf ${language_name}` : ""} aus 5
+            gemischten Wörtern.
+          </p>
 
           <button onClick={createRandomQuiz}>Start</button>
         </div>

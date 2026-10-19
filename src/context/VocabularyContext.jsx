@@ -46,6 +46,16 @@ export function VocabularyProvider({ children }) {
     }
   }
 
+  const getRandomRepeatWords = useCallback(async (language, { signal } = {}) => {
+    const params = new URLSearchParams({ language });
+    const response = await apiFetch(`${api}random-repeat-words/?${params}`, {
+      credentials: "include",
+      signal,
+    });
+    if (!response.ok) throw new Error("Zufällige Wörter konnten nicht geladen werden.");
+    return await response.json();
+  }, [api]);
+
   const searchVocabulary = useCallback(
     async (search, { signal } = {}) => {
       const query = search.trim();
@@ -430,6 +440,7 @@ export function VocabularyProvider({ children }) {
 
         getConcepts,
         searchVocabulary,
+        getRandomRepeatWords,
         clearCategories,
         getUserLanguages,
         getConcept,

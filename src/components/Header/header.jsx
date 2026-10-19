@@ -13,7 +13,7 @@ function Header() {
     <header className="navbar">
       <div className="navbar__container">
         {/* Logo */}
-        <Link href="#" className="navbar__logo">
+        <Link to="/" className="navbar__logo">
           <Logo />
         </Link>
 

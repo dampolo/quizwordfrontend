@@ -31,7 +31,7 @@ function Footer() {
       <div className="footer__container">
         {/* Left Side */}
         <div className="footer__brand">
-          <h2 className="footer__logo">QuizWord</h2>
+          <h2 className="footer__logo">Quiz Word</h2>
 
           <p className="footer__copyright">
             © {currentDate} Quiz Word. {t("FOOTER.DESCRIPTION")}

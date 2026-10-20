@@ -36,6 +36,9 @@ async function setup(fetchWord = vi.fn().mockResolvedValue([
     pauseSelect: result.container.querySelector('select[name="pause"]'),
     manual: result.container.querySelector('input[name="manual"]'),
     getNext: () => result.container.querySelector('button[name="next-word"]'),
+    openSettings: result.container.querySelector('button[name="open-settings"]'),
+    closeSettings: result.container.querySelector('button[name="close-settings"]'),
+    settingsDialog: result.container.querySelector('dialog dialog'),
     status: result.container.querySelector('[role="status"]'),
   };
 }
@@ -52,6 +55,21 @@ it("hides the answer from assistive technology and keeps a stable heading", asyn
   expect(answer.getAttribute("aria-hidden")).toBe("true");
   expect(hideAnswer.getAttribute("aria-pressed")).toBe("true");
   expect(container.querySelector("h1").textContent).toBe("Zufällige Wörter wiederholen");
+});
+
+it("opens settings in a separate dialog and stops playback without refetching", async () => {
+  const { button, openSettings, closeSettings, settingsDialog, fetchWord } = await setup();
+  settingsDialog.showModal = vi.fn(() => settingsDialog.setAttribute("open", ""));
+  settingsDialog.close = vi.fn(() => settingsDialog.removeAttribute("open"));
+  expect(settingsDialog.hasAttribute("open")).toBe(false);
+  fireEvent.click(button);
+  fireEvent.click(openSettings);
+  expect(settingsDialog.showModal).toHaveBeenCalledTimes(1);
+  expect(settingsDialog.hasAttribute("open")).toBe(true);
+  expect(button.getAttribute("aria-pressed")).toBe("false");
+  expect(fetchWord).toHaveBeenCalledTimes(1);
+  fireEvent.click(closeSettings);
+  expect(settingsDialog.hasAttribute("open")).toBe(false);
 });
 
 it("supports a longer pause and resumes the current concept", async () => {

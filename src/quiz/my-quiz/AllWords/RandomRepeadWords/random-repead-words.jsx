@@ -14,6 +14,7 @@ function RandomRepeadWords() {
   const [conceptIndex, setConceptIndex] = useState(0);
   const indexRef = useRef(0);
   const dialogRef = useRef(null);
+  const settingsRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [concepts, setConcepts] = useState([]);
@@ -25,6 +26,8 @@ function RandomRepeadWords() {
   const answerId = useId();
   const pauseId = useId();
   const manualId = useId();
+  const settingsId = useId();
+  const settingsTitleId = useId();
   const current = concepts[conceptIndex];
   const screenAwake = useScreenWakeLock(playing);
 
@@ -189,8 +192,21 @@ function RandomRepeadWords() {
             </svg>
           </button>
         </div>
-        <details className={styles["quiz-card__details"]}>
-          <summary>Einstellungen</summary>
+        <button type="button" name="open-settings" className={styles["quiz-card__settings-button"]}
+          aria-label="Einstellungen öffnen" aria-haspopup="dialog" aria-controls={settingsId}
+          onClick={() => {
+            setPlaying(false);
+            settingsRef.current.showModal();
+          }}>
+          <img src="/assets/settings.svg" width={24} height={24} alt="" />
+        </button>
+        <dialog ref={settingsRef} id={settingsId} className={styles["settings-dialog"]}
+          aria-labelledby={settingsTitleId} onCancel={(event) => event.stopPropagation()}>
+          <button type="button" name="close-settings" className={styles["settings-dialog__close"]}
+            aria-label="Einstellungen schließen" onClick={() => settingsRef.current.close()}>
+            <img src="/assets/xbox.svg" width={25} height={25} alt="" />
+          </button>
+          <h2 id={settingsTitleId}>Einstellungen</h2>
           <div className={styles["quiz-card__settings"]}>
           <label htmlFor={pauseId}>Pause zwischen Wörtern</label>
           <select id={pauseId} name="pause" value={pause} disabled={playing || manual}
@@ -206,7 +222,7 @@ function RandomRepeadWords() {
             Wörter manuell wechseln
           </label>
           </div>
-        </details>
+        </dialog>
       </div>
       <p role="status" aria-live="polite" aria-atomic="true" className={styles["quiz-card__status"]}>
         {error || (loading ? "Wörter werden geladen." : !language ? "Bitte wähle zuerst eine Sprache aus."

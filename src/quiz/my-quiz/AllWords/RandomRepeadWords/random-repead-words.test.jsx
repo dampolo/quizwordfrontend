@@ -35,7 +35,7 @@ async function setup(fetchWord = vi.fn().mockResolvedValue([
     hideAnswer: result.container.querySelector('button[name="toggle-answer"]'),
     pauseSelect: result.container.querySelector('select[name="pause"]'),
     manual: result.container.querySelector('input[name="manual"]'),
-    next: result.container.querySelector('button[name="next-word"]'),
+    getNext: () => result.container.querySelector('button[name="next-word"]'),
     status: result.container.querySelector('[role="status"]'),
   };
 }
@@ -70,9 +70,12 @@ it("supports a longer pause and resumes the current concept", async () => {
 });
 
 it("supports manual navigation and stops after speaking one pair", async () => {
-  const { button, manual, next, fetchWord } = await setup();
+  const { button, manual, getNext, fetchWord } = await setup();
+  expect(getNext().disabled).toBe(true);
   fireEvent.click(manual);
-  fireEvent.click(next);
+  expect(getNext().disabled).toBe(false);
+  expect(getNext().parentElement).toBe(button.parentElement);
+  fireEvent.click(getNext());
   fireEvent.click(button);
   expect(window.speechSynthesis.speak.mock.calls[0][0].text).toBe("Katze");
   await act(async () => window.speechSynthesis.speak.mock.calls[0][0].onend());
@@ -81,6 +84,8 @@ it("supports manual navigation and stops after speaking one pair", async () => {
   expect(window.speechSynthesis.speak).toHaveBeenCalledTimes(2);
   expect(button.getAttribute("aria-pressed")).toBe("false");
   expect(fetchWord).toHaveBeenCalledTimes(1);
+  fireEvent.click(manual);
+  expect(getNext().disabled).toBe(true);
 });
 
 it("caches the full list, speaks both translations, pauses and advances without another request", async () => {

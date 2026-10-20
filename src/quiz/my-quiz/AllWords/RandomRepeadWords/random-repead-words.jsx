@@ -148,7 +148,7 @@ function RandomRepeadWords() {
         <span className={styles.languages}>
           {current?.translations[0].language_name} → {current?.translations[1].language_name}
         </span>
-        {/* <h1 id={titleId} className={styles["quiz-card__quiz-name"]}>Zufällige Wörter wiederholen</h1> */}
+        <h1 id={titleId} className="visually-hidden">Zufällige Wörter wiederholen</h1>
         <button type="button" name="close" className={styles["quiz-card__cancel"]}
           aria-label="Zurück zu allen Wörtern" onClick={() => navigate(`/my-quiz/all-words?${params}`)}>
           <img width={25} height={25} src="/assets/xbox.svg" alt="" />
@@ -171,11 +171,27 @@ function RandomRepeadWords() {
             <img width={24} height={24} src={answerHidden ? "/assets/eye.svg" : "/assets/eye-off.svg"} alt="" />
           </button>
         </div>
+        <div className={styles["quiz-card__playback-controls"]}>
         <button type="button" name="random-repeat" className="main-quiz-button"
           onClick={togglePlayback} disabled={!language || loading || !concepts.length} aria-pressed={playing}>
           {playing ? "Stoppen" : "Starten"}
         </button>
-        <div className={styles["quiz-card__settings"]}>
+          <button type="button" name="next-word" aria-label="Nächstes Wort"
+            className={`next-button ${styles["next-button"]}`}
+            disabled={!manual || playing || loading || !concepts.length}
+            onClick={() => {
+              indexRef.current = (indexRef.current + 1) % concepts.length;
+              setConceptIndex(indexRef.current);
+            }}>
+            <svg width={32} height={32} viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        </div>
+        <details className={styles["quiz-card__details"]}>
+          <summary>Einstellungen</summary>
+          <div className={styles["quiz-card__settings"]}>
           <label htmlFor={pauseId}>Pause zwischen Wörtern</label>
           <select id={pauseId} name="pause" value={pause} disabled={playing || manual}
             onChange={(event) => setPause(Number(event.target.value))}>
@@ -189,14 +205,8 @@ function RandomRepeadWords() {
               onChange={(event) => setManual(event.target.checked)} />
             Wörter manuell wechseln
           </label>
-          <button type="button" name="next-word" disabled={playing || loading || !concepts.length}
-            onClick={() => {
-              indexRef.current = (indexRef.current + 1) % concepts.length;
-              setConceptIndex(indexRef.current);
-            }}>
-            Nächstes Wort
-          </button>
-        </div>
+          </div>
+        </details>
       </div>
       <p role="status" aria-live="polite" aria-atomic="true" className={styles["quiz-card__status"]}>
         {error || (loading ? "Wörter werden geladen." : !language ? "Bitte wähle zuerst eine Sprache aus."

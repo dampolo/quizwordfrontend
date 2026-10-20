@@ -17,7 +17,7 @@
     background: rgba(52, 33, 214, 0.4);
   }
 
-  button, select, input {
+  button, select, input, summary {
     &:focus-visible {
       outline: 3px solid #3f2bdc;
       outline-offset: 4px;
@@ -53,6 +53,7 @@
     width: 100%;
     max-width: 22.5rem;
     color: #111827;
+    padding-top: 0.75rem;
 
     select, button {
       min-height: 44px;
@@ -75,6 +76,37 @@
       width: 24px;
       height: 24px;
       flex-shrink: 0;
+    }
+  }
+
+  &__playback-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    > :global(.main-quiz-button) {
+      width: auto;
+      margin: 0;
+    }
+  }
+
+
+  &__details {
+    width: 100%;
+    max-width: 22.5rem;
+    color: #111827;
+
+    summary {
+      min-height: 2.75rem;
+      padding: 0.625rem 0.75rem;
+      border: 0.0625rem solid #6b7280;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      text-align: left;
+
+      &:hover {
+        background: #eff4ff;
+      }
     }
   }
 
@@ -208,19 +240,67 @@
   }
 }
 
+.next-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  font-weight: 700;
+  font-size: 1.125rem;
+  gap: 0.625rem;
+  border-radius: basic.$qw-border-radius;
+  color: #fff;
+  background-color: basic.$qw-primary;
+  border: solid 0.0625rem basic.$qw-primary;
+  transition: background-color 200ms ease-in-out;
+
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
 .languages {
   position: absolute;
   left: 1rem;
   top: 0.5rem;
-  padding-inline: 2rem;
+  padding-inline: 0;
   font-size: 0.875rem;
-  text-align: center;
+  text-align: left;
   color: #4b5563;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .player :global(.rotate-center) {
     animation: none;
+  }
+}
+
+@supports (interpolate-size: allow-keywords) {
+  .quiz-card__details {
+    interpolate-size: allow-keywords;
+
+    &::details-content {
+      block-size: 0;
+      overflow: clip;
+      opacity: 0;
+      transition: block-size 250ms ease, opacity 250ms ease,
+        content-visibility 250ms allow-discrete;
+    }
+
+    &[open]::details-content {
+      block-size: auto;
+      opacity: 1;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quiz-card__details::details-content {
+    transition: none;
   }
 }
 

@@ -93,13 +93,8 @@
 
   &__settings-button {
     position: absolute;
-    right: 1rem;
+    left: 1rem;
     bottom: 0.5rem;
-    display: grid;
-    place-items: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border: 0.0625rem solid #dddded;
     border-radius: 50%;
     background: #fff;
 
@@ -156,10 +151,6 @@
   }
 
   &__cancel {
-    display: grid;
-    place-items: center;
-    min-width: 44px;
-    min-height: 44px;
     position: absolute;
     top: 1rem;
     right: 1rem;

@@ -195,7 +195,9 @@ main {
 
 @media (max-width: 48rem) {
   .action-buttons {
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 1rem;
 
     .save-btn {
       padding: 0;

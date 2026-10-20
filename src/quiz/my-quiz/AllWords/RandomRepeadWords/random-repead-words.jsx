@@ -14,13 +14,56 @@ function RandomRepeadWords() {
   const [current, setCurrent] = useState(null);
   const [loading, setLoading] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const [concepts, setConcepts] = useState([]);
   const [answerHidden, setAnswerHidden] = useState(false);
   const screenAwake = useScreenWakeLock(playing);
 
   useEffect(() => {
-    if (!playing || !language) return;
+    if (!language) return;
     const controller = new AbortController();
-    let pending = false;
+    const storageKey = `random-repeat-words:${language}`;
+
+    function validConcepts(data) {
+      const items = Array.isArray(data) ? data : data?.concepts ?? data?.results;
+      if (!Array.isArray(items)) return [];
+      return items.filter((word) => word?.translations?.[0]?.word && word?.translations?.[1]?.word);
+    }
+
+    async function loadWords() {
+      setLoading(true);
+      setPlaying(false);
+      setCurrent(null);
+      setConcepts([]);
+      try {
+        const data = await getRandomRepeatWords(language, { signal: controller.signal });
+        if (controller.signal.aborted) return;
+        let items = validConcepts(data);
+        if (!items.length) throw new Error("Keine Wörter zum Wiederholen vorhanden.");
+        try {
+          localStorage.setItem(storageKey, JSON.stringify(items));
+          items = validConcepts(JSON.parse(localStorage.getItem(storageKey)));
+        } catch {
+          toast.error("Die Wörter konnten nicht lokal gespeichert werden. Die Wiedergabe läuft für diese Sitzung weiter.");
+        }
+        setConcepts(items);
+        setCurrent(items[0]);
+      } catch (error) {
+        if (!controller.signal.aborted) {
+          toast.error(error.message || "Zufällige Wörter konnten nicht geladen werden.");
+        }
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
+    }
+
+    loadWords();
+    return () => controller.abort();
+  }, [language, getRandomRepeatWords]);
+
+  useEffect(() => {
+    if (!playing || !concepts.length) return;
+    const controller = new AbortController();
+    let conceptIndex = 0;
     let timer;
 
     function fail(message) {
@@ -40,7 +83,10 @@ function RandomRepeadWords() {
       utterance.onend = () => {
         if (controller.signal.aborted) return;
         if (index === 0) speak(word, 1);
-        else timer = setTimeout(loadWord, 1000);
+        else timer = setTimeout(() => {
+          conceptIndex = (conceptIndex + 1) % concepts.length;
+          playWord();
+        }, 1000);
       };
       utterance.onerror = () => fail("Die Sprachausgabe konnte nicht abgespielt werden.");
       try {
@@ -50,36 +96,20 @@ function RandomRepeadWords() {
       }
     }
 
-    async function loadWord() {
-      if (pending) return;
-      pending = true;
-      setLoading(true);
-      try {
-        const data = await getRandomRepeatWords(language, { signal: controller.signal });
-        if (controller.signal.aborted) return;
-        const word = Array.isArray(data) ? data[0] : data.results ? data.results[0] : data;
-        if (!word?.translations?.[0]?.word || !word?.translations?.[1]?.word) {
-          throw new Error("Keine Wörter zum Wiederholen vorhanden.");
-        }
-        setCurrent(word);
-        speak(word, 0);
-      } catch (error) {
-        if (!controller.signal.aborted) {
-          fail(error.message || "Zufällige Wörter konnten nicht geladen werden.");
-        }
-      } finally {
-        pending = false;
-        if (!controller.signal.aborted) setLoading(false);
-      }
+    function playWord() {
+      if (controller.signal.aborted) return;
+      const word = concepts[conceptIndex];
+      setCurrent(word);
+      speak(word, 0);
     }
 
-    loadWord();
+    playWord();
     return () => {
       controller.abort();
       clearTimeout(timer);
       window.speechSynthesis?.cancel();
     };
-  }, [playing, language, getRandomRepeatWords]);
+  }, [playing, concepts]);
 
   function togglePlayback() {
     if (!playing && (!window.speechSynthesis || !window.SpeechSynthesisUtterance)) {
@@ -118,7 +148,7 @@ function RandomRepeadWords() {
           </button>
         </div>
         <button type="button" name="random-repeat" className="main-quiz-button"
-          onClick={togglePlayback} disabled={!language} aria-pressed={playing}>
+          onClick={togglePlayback} disabled={!language || loading || !concepts.length} aria-pressed={playing}>
           {playing ? "Stoppen" : "Starten"}
         </button>
       </div>

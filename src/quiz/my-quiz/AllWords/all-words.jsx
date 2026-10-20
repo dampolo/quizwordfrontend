@@ -293,7 +293,7 @@ function AllWords() {
       <div className={styles["cards"]}>
         <div className={`${styles["card"]} ${styles["random"]}`}>
           <h3>Zufällige Wörter wiederholen</h3>
-          <p>Höre beide Übersetzungen und wiederhole danach das nächste Wort.</p>
+          <p>Höre beide Übersetzungen({language_name ? ` auf ${language_name}` : ""}) und wiederhole danach das nächste Wort.</p>
           <button type="button" disabled={!language} onClick={() => navigate(`/my-quiz/random-repeat-words?language=${language}`)}>
             Start
           </button>

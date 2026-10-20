@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import useVocabulary from "../../../../context/useVocabulary";
@@ -11,12 +11,28 @@ function RandomRepeadWords() {
   const [params] = useSearchParams();
   const language = params.get("language");
   const navigate = useNavigate();
-  const [current, setCurrent] = useState(null);
+  const [conceptIndex, setConceptIndex] = useState(0);
+  const indexRef = useRef(0);
+  const dialogRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [concepts, setConcepts] = useState([]);
   const [answerHidden, setAnswerHidden] = useState(false);
+  const [pause, setPause] = useState(1000);
+  const [manual, setManual] = useState(false);
+  const [error, setError] = useState("");
+  const titleId = useId();
+  const answerId = useId();
+  const pauseId = useId();
+  const manualId = useId();
+  const current = concepts[conceptIndex];
   const screenAwake = useScreenWakeLock(playing);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    dialog.showModal?.();
+    return () => dialog.close?.();
+  }, []);
 
   useEffect(() => {
     if (!language) return;
@@ -32,7 +48,9 @@ function RandomRepeadWords() {
     async function loadWords() {
       setLoading(true);
       setPlaying(false);
-      setCurrent(null);
+      setConceptIndex(0);
+      indexRef.current = 0;
+      setError("");
       setConcepts([]);
       try {
         const data = await getRandomRepeatWords(language, { signal: controller.signal });
@@ -46,10 +64,11 @@ function RandomRepeadWords() {
           toast.error("Die Wörter konnten nicht lokal gespeichert werden. Die Wiedergabe läuft für diese Sitzung weiter.");
         }
         setConcepts(items);
-        setCurrent(items[0]);
       } catch (error) {
         if (!controller.signal.aborted) {
-          toast.error(error.message || "Zufällige Wörter konnten nicht geladen werden.");
+          const message = error.message || "Zufällige Wörter konnten nicht geladen werden.";
+          setError(message);
+          toast.error(message);
         }
       } finally {
         if (!controller.signal.aborted) setLoading(false);
@@ -63,7 +82,6 @@ function RandomRepeadWords() {
   useEffect(() => {
     if (!playing || !concepts.length) return;
     const controller = new AbortController();
-    let conceptIndex = 0;
     let timer;
 
     function fail(message) {
@@ -72,6 +90,7 @@ function RandomRepeadWords() {
       window.speechSynthesis.cancel();
       setLoading(false);
       setPlaying(false);
+      setError(message);
       toast.error(message);
     }
 
@@ -83,10 +102,10 @@ function RandomRepeadWords() {
       utterance.onend = () => {
         if (controller.signal.aborted) return;
         if (index === 0) speak(word, 1);
+        else if (manual) setPlaying(false);
         else timer = setTimeout(() => {
-          conceptIndex = (conceptIndex + 1) % concepts.length;
-          playWord();
-        }, 1000);
+          playWord((indexRef.current + 1) % concepts.length);
+        }, pause);
       };
       utterance.onerror = () => fail("Die Sprachausgabe konnte nicht abgespielt werden.");
       try {
@@ -96,10 +115,11 @@ function RandomRepeadWords() {
       }
     }
 
-    function playWord() {
+    function playWord(index = indexRef.current) {
       if (controller.signal.aborted) return;
-      const word = concepts[conceptIndex];
-      setCurrent(word);
+      indexRef.current = index;
+      const word = concepts[index];
+      setConceptIndex(index);
       speak(word, 0);
     }
 
@@ -109,41 +129,45 @@ function RandomRepeadWords() {
       clearTimeout(timer);
       window.speechSynthesis?.cancel();
     };
-  }, [playing, concepts]);
+  }, [playing, concepts, pause, manual]);
 
   function togglePlayback() {
     if (!playing && (!window.speechSynthesis || !window.SpeechSynthesisUtterance)) {
+      setError("Dein Browser unterstützt keine Sprachausgabe.");
       toast.error("Dein Browser unterstützt keine Sprachausgabe.");
       return;
     }
+    setError("");
     setPlaying((value) => !value);
   }
 
   return (
-    <section className="play-quiz">
-      <div className={`${styles["quiz-card"]} ${styles["learn-card"]}`}>
+    <dialog ref={dialogRef} className={`play-quiz ${styles.player}`} aria-labelledby={titleId}
+      onCancel={() => navigate(`/my-quiz/all-words?${params}`)}>
+      <div className={`${styles["quiz-card"]} ${styles["learn-card"]}`} aria-busy={loading}>
         <span className={styles.languages}>
           {current?.translations[0].language_name} → {current?.translations[1].language_name}
         </span>
-        <span className={styles["quiz-card__quiz-name"]}>Zufällige Wörter</span>
+        {/* <h1 id={titleId} className={styles["quiz-card__quiz-name"]}>Zufällige Wörter wiederholen</h1> */}
         <button type="button" name="close" className={styles["quiz-card__cancel"]}
-          onClick={() => navigate(`/my-quiz/all-words?${params}`)}>
-          <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
+          aria-label="Zurück zu allen Wörtern" onClick={() => navigate(`/my-quiz/all-words?${params}`)}>
+          <img width={25} height={25} src="/assets/xbox.svg" alt="" />
         </button>
         <div className={styles["quiz-card__header"]}>
-          {loading && !current ? <PreLoader /> : (
-            <h1 className={styles["quiz-card__title-learn"]}>
+          {loading && !current ? <div aria-hidden="true"><PreLoader /></div> : (
+            <p data-word="source" className={styles["quiz-card__title-learn"]} lang={current?.translations[0].language_code}>
               {current?.translations[0].word || "Starte die Wiederholung."}
-            </h1>
+            </p>
           )}
         </div>
         <div className={styles["quiz-card__form"]}>
           {answerHidden && <div className={styles.overlay} aria-hidden="true" />}
           <span className={styles["quiz-card__line"]} />
-          <span className={styles["quiz-card__answer-wrapper-learn"]}>{current?.translations[1].word}</span>
+          <span id={answerId} aria-hidden={answerHidden} lang={current?.translations[1].language_code}
+            className={styles["quiz-card__answer-wrapper-learn"]}>{current?.translations[1].word}</span>
           <button type="button" name="toggle-answer" className={styles["quiz-card__toggle-answer"]}
             onClick={() => setAnswerHidden((value) => !value)} disabled={!current}
-            aria-label={answerHidden ? "Antwort anzeigen" : "Antwort ausblenden"} aria-pressed={answerHidden}>
+            aria-label="Antwort ausblenden" aria-controls={answerId} aria-pressed={answerHidden}>
             <img width={24} height={24} src={answerHidden ? "/assets/eye.svg" : "/assets/eye-off.svg"} alt="" />
           </button>
         </div>
@@ -151,11 +175,35 @@ function RandomRepeadWords() {
           onClick={togglePlayback} disabled={!language || loading || !concepts.length} aria-pressed={playing}>
           {playing ? "Stoppen" : "Starten"}
         </button>
+        <div className={styles["quiz-card__settings"]}>
+          <label htmlFor={pauseId}>Pause zwischen Wörtern</label>
+          <select id={pauseId} name="pause" value={pause} disabled={playing || manual}
+            onChange={(event) => setPause(Number(event.target.value))}>
+            <option value={1000}>1 Sekunde</option>
+            <option value={2000}>2 Sekunden</option>
+            <option value={3000}>3 Sekunden</option>
+            <option value={5000}>5 Sekunden</option>
+          </select>
+          <label htmlFor={manualId}>
+            <input id={manualId} name="manual" type="checkbox" checked={manual} disabled={playing}
+              onChange={(event) => setManual(event.target.checked)} />
+            Wörter manuell wechseln
+          </label>
+          <button type="button" name="next-word" disabled={playing || loading || !concepts.length}
+            onClick={() => {
+              indexRef.current = (indexRef.current + 1) % concepts.length;
+              setConceptIndex(indexRef.current);
+            }}>
+            Nächstes Wort
+          </button>
+        </div>
       </div>
-      {screenAwake && <p role="status" className={styles["quiz-card__wake-lock-message"]}>
-        Der Bildschirm bleibt während der Wiedergabe eingeschaltet.
-      </p>}
-    </section>
+      <p role="status" aria-live="polite" aria-atomic="true" className={styles["quiz-card__status"]}>
+        {error || (loading ? "Wörter werden geladen." : !language ? "Bitte wähle zuerst eine Sprache aus."
+          : playing ? `Wiedergabe läuft.${screenAwake ? " Der Bildschirm bleibt eingeschaltet." : ""}`
+          : concepts.length ? `${concepts.length} Wörter bereit. Wiedergabe gestoppt.` : "Keine Wörter vorhanden.")}
+      </p>
+    </dialog>
   );
 }
 

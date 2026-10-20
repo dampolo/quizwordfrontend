@@ -1,24 +1,90 @@
 @use "./../../../../styles/basic.scss";
 
+.player {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-y: auto;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 1rem;
+  border: 0;
+
+  &::backdrop {
+    background: rgba(52, 33, 214, 0.4);
+  }
+
+  button, select, input {
+    &:focus-visible {
+      outline: 3px solid #3f2bdc;
+      outline-offset: 4px;
+    }
+  }
+}
+
 .quiz-card {
   position: relative;
   width: 100%;
   max-width: 760px;
-  margin: 1rem;
+  margin: 1rem 0;
   padding: 3rem;
   background: basic.$qw-fourth;
   border: 1px solid #e8e8f4;
   border-radius: basic.$qw-border-radius;
   box-shadow: basic.$box-shadow;
   height: fit-content;
+  flex-shrink: 0;
   &__quiz-name {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    writing-mode: vertical-rl;
-    transform: translateY(-50%) rotate(180deg);
-    font-size: 0.6rem;
-    white-space: nowrap;
+    margin: 0;
+    padding-inline: 2rem;
+    font-size: 1.25rem;
+    text-align: center;
+    overflow-wrap: anywhere;
+    color: #111827;
+  }
+
+  &__settings {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 22.5rem;
+    color: #111827;
+
+    select, button {
+      min-height: 44px;
+      padding: 0.5rem;
+      border: 1px solid #6b7280;
+      border-radius: 0.5rem;
+      color: #111827;
+      background: #fff;
+      font: inherit;
+    }
+
+    label:has(input) {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-height: 44px;
+    }
+
+    input {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+  }
+
+  &__status {
+    max-width: 45rem;
+    padding: 0 1rem;
+    color: #111827;
+    text-align: center;
+    background: #fff;
+    border-radius: 0.5rem;
   }
   &.learn-card {
     display: flex;
@@ -49,9 +115,16 @@
     gap: 0.6rem;
     font-size: 1rem;
     font-weight: 700;
+    overflow-wrap: anywhere;
+    min-width: 0;
+    margin: 0;
   }
 
   &__cancel {
+    display: grid;
+    place-items: center;
+    min-width: 44px;
+    min-height: 44px;
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -139,7 +212,16 @@
   position: absolute;
   left: 1rem;
   top: 0.5rem;
-  font-size: 0.6rem;
+  padding-inline: 2rem;
+  font-size: 0.875rem;
+  text-align: center;
+  color: #4b5563;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .player :global(.rotate-center) {
+    animation: none;
+  }
 }
 
 .overlay {

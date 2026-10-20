@@ -19,7 +19,14 @@ function RandomRepeadWords() {
   const [playing, setPlaying] = useState(false);
   const [concepts, setConcepts] = useState([]);
   const [answerHidden, setAnswerHidden] = useState(false);
-  const [pause, setPause] = useState(1000);
+  const [pause, setPause] = useState(() => {
+    try {
+      const seconds = Number(localStorage.getItem("random-repeat-words:pause-seconds"));
+      return [1, 2, 3, 5].includes(seconds) ? seconds * 1000 : 1000;
+    } catch {
+      return 1000;
+    }
+  });
   const [manual, setManual] = useState(false);
   const [error, setError] = useState("");
   const titleId = useId();
@@ -134,6 +141,16 @@ function RandomRepeadWords() {
     };
   }, [playing, concepts, pause, manual]);
 
+  function handlePauseChange(event) {
+    const milliseconds = Number(event.target.value);
+    setPause(milliseconds);
+    try {
+      localStorage.setItem("random-repeat-words:pause-seconds", String(milliseconds / 1000));
+    } catch {
+      toast.error("Die Pause konnte nicht lokal gespeichert werden.");
+    }
+  }
+
   function togglePlayback() {
     if (!playing && (!window.speechSynthesis || !window.SpeechSynthesisUtterance)) {
       setError("Dein Browser unterstützt keine Sprachausgabe.");
@@ -210,7 +227,7 @@ function RandomRepeadWords() {
           <div className={styles["quiz-card__settings"]}>
           <label htmlFor={pauseId}>Pause zwischen Wörtern</label>
           <select id={pauseId} name="pause" value={pause} disabled={playing || manual}
-            onChange={(event) => setPause(Number(event.target.value))}>
+            onChange={handlePauseChange}>
             <option value={1000}>1 Sekunde</option>
             <option value={2000}>2 Sekunden</option>
             <option value={3000}>3 Sekunden</option>

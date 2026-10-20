@@ -43,6 +43,21 @@ async function setup(fetchWord = vi.fn().mockResolvedValue([
   };
 }
 
+it("saves pause seconds and restores the selection on reopening", async () => {
+  const { pauseSelect, unmount } = await setup();
+  fireEvent.change(pauseSelect, { target: { value: "3000" } });
+  expect(localStorage.getItem("random-repeat-words:pause-seconds")).toBe("3");
+  unmount();
+  const reopened = await setup();
+  expect(reopened.pauseSelect.value).toBe("3000");
+});
+
+it("defaults to one second for an invalid saved pause", async () => {
+  localStorage.setItem("random-repeat-words:pause-seconds", "invalid");
+  const { pauseSelect } = await setup();
+  expect(pauseSelect.value).toBe("1000");
+});
+
 it("hides the answer from assistive technology and keeps a stable heading", async () => {
   const { container, hideAnswer } = await setup(vi.fn().mockResolvedValue([
     { translations: [{ word: "Haus", language_code: "de" }, { word: "house", language_code: "en" }] },

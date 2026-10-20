@@ -85,6 +85,7 @@ function AllWords() {
   function removefilter() {
     setDate("")
   }
+  
   function submit() {
     const params = new URLSearchParams(searchParams);
     if (date) {

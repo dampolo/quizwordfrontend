@@ -7,6 +7,7 @@ import PreLoader from "../../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
 import useDialog from "../../../context/DialogContext/useDialog";
 import { useTranslation } from "react-i18next";
+import Tooltip from "@mui/material/Tooltip";
 
 import styles from "./add-new-word.module.scss";
 
@@ -66,6 +67,7 @@ export default function AddNewWord() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const addAnother = e.nativeEvent.submitter?.value === "add-another";
 
     try {
       const data = await createConcept(getConceptPayload());
@@ -80,7 +82,7 @@ export default function AddNewWord() {
           confirmButtonClass: "main-quiz-button",
           cancelButtonClass: "main-quiz-button-cancel",
 
-          onConfirm: createNewConcept,
+          onConfirm: () => createNewConcept(addAnother),
         });
 
         return;
@@ -97,17 +99,36 @@ export default function AddNewWord() {
         `Wort "${formData.translations[1].word}" wurde hinzugefügt!`,
       );
 
-      navigate(
-        `/my-quiz/all-words?language=${formData.translations[1].language}`,
-      );
+      finishSave(addAnother);
     } catch (err) {
       const message =
-        err.response?.translations?.[0] || err.response?.detail || "Etwas ist schiefgelaufen.";
+        err.response?.translations?.[0] ||
+        err.response?.detail ||
+        "Etwas ist schiefgelaufen.";
       toast.error(message);
     }
   }
 
-  async function createNewConcept() {
+  function finishSave(addAnother) {
+    if (addAnother) {
+      setFormData((prev) => ({
+        ...prev,
+        translations: prev.translations.map((translation) => ({
+          ...translation,
+          word: "",
+          tip: "",
+          sentence: "",
+        })),
+      }));
+      return;
+    }
+
+    navigate(
+      `/my-quiz/all-words?language=${formData.translations[1].language}`,
+    );
+  }
+
+  async function createNewConcept(addAnother) {
     try {
       const newFormData = {
         ...getConceptPayload(),
@@ -119,11 +140,13 @@ export default function AddNewWord() {
         `Wort "${formData.translations[1].word}" wurde hinzugefügt!`,
       );
 
-      navigate(
-        `/my-quiz/all-words?language=${formData.translations[1].language}`,
-      );
+      finishSave(addAnother);
     } catch (err) {
-      console.error(err);
+      toast.error(
+        err.response?.translations?.[0] ||
+          err.response?.detail ||
+          "Etwas ist schiefgelaufen.",
+      );
     }
   }
 
@@ -163,7 +186,10 @@ export default function AddNewWord() {
       });
       const categoryId = category.id;
       if (categoryId != null) {
-        setCreatedCategory({ category_id: categoryId, category_name: categoryName });
+        setCreatedCategory({
+          category_id: categoryId,
+          category_name: categoryName,
+        });
         handleCategoryChange(categoryId);
       }
       await getFiltredCategories(formData.translations[1].language);
@@ -171,7 +197,8 @@ export default function AddNewWord() {
       toast.success(`Kategorie "${categoryName}" wurde hinzugefügt!`);
     } catch (error) {
       const detail = error.response?.category_name ?? error.response?.detail;
-      const message = (Array.isArray(detail) ? detail[0] : detail) ||
+      const message =
+        (Array.isArray(detail) ? detail[0] : detail) ||
         "Die Kategorie konnte nicht erstellt werden.";
       setCategoryMessage(message);
       toast.error(message);
@@ -180,10 +207,14 @@ export default function AddNewWord() {
     }
   }
 
-  const categoryOptions = createdCategory &&
-    !categories.some((category) => String(category.category_id) === String(createdCategory.category_id))
-    ? [...categories, createdCategory]
-    : categories;
+  const categoryOptions =
+    createdCategory &&
+    !categories.some(
+      (category) =>
+        String(category.category_id) === String(createdCategory.category_id),
+    )
+      ? [...categories, createdCategory]
+      : categories;
 
   function handleCategoryChange(value) {
     setFormData((prev) => ({ ...prev, category: value }));
@@ -480,6 +511,15 @@ export default function AddNewWord() {
           >
             {t("BUTTONS.SAVE")}
           </button>
+          <Tooltip title="Speicher und neues Wort hinzüfugen" placement="top" arrow>
+            <button
+              type="submit"
+              value="add-another"
+              className={`${styles["main-quiz-button"]} ${styles["save-btn"]}`}
+            >
+              {t("BUTTONS.SAVE")} +
+            </button>
+          </Tooltip>
         </div>
       </form>
       <FormDialog

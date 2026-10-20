@@ -82,6 +82,9 @@ function AllWords() {
     setDate(e.target.value);
   }
 
+  function removefilter() {
+    setDate("")
+  }
   function submit() {
     const params = new URLSearchParams(searchParams);
     if (date) {
@@ -377,6 +380,13 @@ function AllWords() {
             onChange={(e) => handleChange(e)}
           />
           <div className={styles["action-buttons"]}>
+            <button
+              type="button"
+              className={`${styles["main-quiz-button-cancel"]} ${styles["cancel-btn"]}`}
+              onClick={removefilter}
+            >
+              {t("BUTTONS.REMOVE")}
+            </button>
             <button
               type="button"
               className={`${styles["main-quiz-button-cancel"]} ${styles["cancel-btn"]}`}

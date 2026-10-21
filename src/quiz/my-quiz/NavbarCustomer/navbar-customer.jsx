@@ -1,22 +1,23 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 import styles from "./navbar-customer.module.scss";
 import useVocabulary from "../../../context/useVocabulary";
 
 function NavbarCustomer() {
   const { userLanguages = [] } = useVocabulary();
 
-  const firstLanguage = userLanguages[0]?.id;
+  const [searchParams] = useSearchParams();
+  const language = searchParams.get("language") || userLanguages[0]?.id;
 
-  const categoriesUrl = firstLanguage
-    ? `/my-quiz/all-categories?language=${firstLanguage}`
+  const categoriesUrl = language
+    ? `/my-quiz/all-categories?language=${language}`
     : "/my-quiz/all-categories";
 
-  const allWordsUrl = firstLanguage
-    ? `/my-quiz/all-words?language=${firstLanguage}`
+  const allWordsUrl = language
+    ? `/my-quiz/all-words?language=${language}`
     : "/my-quiz/all-words";
 
-  const quizzesUrl = firstLanguage
-    ? `/my-quiz/all-quizzes?language=${firstLanguage}`
+  const quizzesUrl = language
+    ? `/my-quiz/all-quizzes?language=${language}`
     : "/my-quiz/all-quizzes";
 
 

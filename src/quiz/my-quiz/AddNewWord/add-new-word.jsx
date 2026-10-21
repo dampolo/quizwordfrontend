@@ -324,7 +324,7 @@ export default function AddNewWord() {
                     value={formData.translations[0].word}
                     onChange={(e) => handleChange(0, e)}
                     placeholder="e.g. Resilience"
-                    autoComplete="word"
+                    autoComplete="off"
                     required
                   />
                 </div>
@@ -357,7 +357,7 @@ export default function AddNewWord() {
                 value={formData.translations[0].tip}
                 onChange={(e) => handleChange(0, e)}
                 placeholder="Stell dir eine Feder vor, die zurückspringt"
-                autoComplete="tip"
+                autoComplete="off"
               />
 
               <label htmlFor="source_sentence">Beispielsatz (Optional)</label>
@@ -417,7 +417,7 @@ export default function AddNewWord() {
                     value={formData.translations[1].word || ""}
                     onChange={(e) => handleChange(1, e)}
                     placeholder="e.g. Resiliencia"
-                    autoComplete="word"
+                    autoComplete="off"
                     required
                   />
                 </div>
@@ -452,7 +452,7 @@ export default function AddNewWord() {
                 value={formData.translations[1].tip}
                 onChange={(e) => handleChange(1, e)}
                 placeholder="Stell dir eine Feder vor, die zurückspringt"
-                autoComplete="tip"
+                autoComplete="off"
               />
 
               <label htmlFor="target_sentence">Beispielsatz (Optional)</label>

@@ -1,0 +1,296 @@
+import { useState } from "react";
+import useApi from "../api/useApi.js";
+import useApiFetch from "../api/useApiFetch.js";
+
+import QuizContext from "./QuizContext.jsx";
+
+export function QuizProvider({ children, api: apiOverride, apiFetch: fetchOverride, request, onError = console.error }) {
+  const contextApi = useApi();
+  const api = apiOverride ?? contextApi;
+  const defaultFetch = useApiFetch(request, api);
+  const apiFetch = fetchOverride ?? defaultFetch;
+  const [loading, setLoading] = useState(false);
+  const [quizzes, setQuizzes] = useState([]);
+
+  async function getQuizzes() {
+    setLoading(true);
+
+    try {
+      const response = await apiFetch(`${api}quizzes/`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to load quizzes.");
+      }
+
+      const data = await response.json();
+      setQuizzes(data);
+    } catch (error) {
+      console.error(error);
+      onError("Failed to load quizzes.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function getFiltredQuizzes(id) {
+    setLoading(true);
+
+    try {
+      const response = await apiFetch(`${api}quizzes/?target_language=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to load words.");
+      }
+      const data = await response.json();
+      setQuizzes(data);
+    } catch (error) {
+      console.error(error);
+      onError("Failed to load quizzes.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function createQuiz(quizData) {
+    const response = await apiFetch(`${api}quizzes/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(quizData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      const error = new Error("Failed to create concept");
+      error.response = data;
+      throw error;
+    }
+
+    return data;
+  }
+
+  async function putQuiz(payload, quizId) {
+    const response = await apiFetch(`${api}quizzes/${quizId}/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      const error = new Error("Failed to create concept");
+      error.response = data;
+      throw error;
+    }
+
+    return data;
+  }
+
+  async function postQuizAnswers(id, payload) {
+    const response = await apiFetch(`${api}quiz-answers/${id}/submit/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.detail || "Quiz submission failed");
+    }
+
+    return data;
+  }
+
+  // Do not call setLoading(true) in this function.
+  // It will affect the quiz preview in AllQuizzes.
+  async function getQuizWords(id, isFlipcard = false) {
+    try {
+      const response = await apiFetch(
+        `${api}quizzes/${id}?is_flipcard=${isFlipcard}`,
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const error = new Error("Failed to get quiz");
+        error.response = data;
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async function getLastQuiz() {
+    setLoading(true);
+
+    try {
+      const response = await apiFetch(`${api}last-quiz/`);
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const error = new Error("Failed to get last quiz");
+        error.response = data;
+        throw error;
+      }
+
+      return data;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function getLastFlipCard() {
+    setLoading(true);
+
+    try {
+      const response = await apiFetch(`${api}last-flipcard-quiz/`);
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const error = new Error("Failed to get last quiz");
+        error.response = data;
+        throw error;
+      }
+
+      return data;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function postRandomQuiz(language) {
+    setLoading(true);
+
+    try {
+      const response = await apiFetch(`${api}random-quiz/?language=${language}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const error = new Error("Failed to create random quiz");
+        error.response = data;
+        throw error;
+      }
+
+      return data;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function getRandomFlipCard(language) {
+    setLoading(true);
+
+    try {
+      const response = await apiFetch(`${api}random-flipcard-quiz/?language=${language}`);
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        const error = new Error("Failed to get last quiz");
+        error.response = data;
+        throw error;
+      }
+
+      return data;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function deleteQuiz(id) {
+    const response = await apiFetch(`${api}quizzes/${id}/`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete quiz");
+    }
+  }
+
+  async function getAttemptQuizScore(id) {
+    setLoading(true);
+
+    try {
+      const response = await apiFetch(`${api}attempts/?quiz_id=${id}`);
+
+      if (!response.ok) {
+        throw new Error("Failed to load words.");
+      }
+
+      const data = await response.json();
+
+      return data;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function getAttemptDetails(id) {
+    setLoading(true);
+
+    try {
+      const response = await apiFetch(`${api}attempts/${id}`);
+
+      if (!response.ok) {
+        throw new Error("Failed to load words.");
+      }
+
+      const data = await response.json();
+
+      return data;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <QuizContext.Provider
+      value={{
+        loading,
+        quizzes,
+        putQuiz,
+        createQuiz,
+        deleteQuiz,
+        getQuizWords,
+        getQuizzes,
+        getLastQuiz,
+        getLastFlipCard,
+        getFiltredQuizzes,
+        getAttemptQuizScore,
+        getAttemptDetails,
+        postQuizAnswers,
+        getRandomFlipCard,
+        postRandomQuiz,
+      }}
+    >
+      {children}
+    </QuizContext.Provider>
+  );
+}

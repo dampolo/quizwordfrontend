@@ -1,5 +1,1 @@
-import { createContext } from "react";
-
-const DialogContext = createContext();
-
-export default DialogContext;
+export { default } from "@quizword/shared/dialog/context";

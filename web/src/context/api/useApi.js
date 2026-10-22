@@ -1,6 +1,5 @@
-import { useContext } from "react";
-import ApiContext from "./ApiContext";
+import useSharedApi from "@quizword/shared/api/useApi";
 
 export default function useApi() {
-  return useContext(ApiContext);
+  return useSharedApi() ?? import.meta.env.VITE_API_URL;
 }

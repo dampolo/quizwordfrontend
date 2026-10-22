@@ -1,4 +1,3 @@
-import { useState, forwardRef } from "react";
 import Slide from "@mui/material/Slide";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -7,37 +6,15 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 
-import DialogContext from "./DialogContext";
+import { forwardRef } from "react";
+import { DialogProvider as SharedDialogProvider } from "@quizword/shared/dialog/provider";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export function DialogProvider({ children }) {
-  const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState({});
-
-  const openDialog = (options) => {
-    setOptions(options);
-    setOpen(true);
-  };
-
-  const closeDialog = () => {
-    setOpen(false);
-  };
-
-  const handleConfirm = () => {
-    if (options.onConfirm) {
-      options.onConfirm();
-    }
-
-    closeDialog();
-  };
-
+function renderDialog({ open, options, closeDialog, handleConfirm }) {
   return (
-    <DialogContext.Provider value={{ openDialog, closeDialog }}>
-      {children}
-
       <Dialog
         open={open}
         onClose={closeDialog}
@@ -121,6 +98,9 @@ export function DialogProvider({ children }) {
           </Button>
         </DialogActions>
       </Dialog>
-    </DialogContext.Provider>
   );
+}
+
+export function DialogProvider({ children }) {
+  return <SharedDialogProvider renderDialog={renderDialog}>{children}</SharedDialogProvider>;
 }

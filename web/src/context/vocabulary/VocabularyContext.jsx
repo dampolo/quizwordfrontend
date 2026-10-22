@@ -1,5 +1,1 @@
-import { createContext } from "react";
-
-const VocabularyContext = createContext();
-
-export default VocabularyContext;
+export { default } from "@quizword/shared/vocabulary/context";

@@ -62,16 +62,16 @@
     "TITLE_2": "Neue Kategorie hinzufügen",
     "DESCRIPTION": "Erstelle eine individuelle Lernliste"
   },
-    "ADD_NEW_CATEGORY": {
+  "ADD_NEW_CATEGORY": {
     "TITLE": "Kategorie hinzufügen",
-    "LANGUAGE":"Sprache",
+    "LANGUAGE": "Sprache",
     "DESCRIPTION": "Organisiere deine Vokabeln nach Themen oder Bereichen.",
     "CATEGORY_NAME": "Kategoriename:",
     "CATEGORY_HINT": "Kurze, aussagekräftige Namen eignen sich am besten für die Navigation."
   },
-    "EDIT_CATEGORY": {
+  "EDIT_CATEGORY": {
     "TITLE": "Neue Kategorie",
-    "LANGUAGE":"Sprache",
+    "LANGUAGE": "Sprache",
     "DESCRIPTION": "Organisiere deine Vokabeln nach Themen oder Bereichen.",
     "CATEGORY_NAME": "Kategoriename:",
     "CATEGORY_HINT": "Kurze, aussagekräftige Namen eignen sich am besten für die Navigation."
@@ -160,5 +160,40 @@
     "PRIVACY_2": "Datenschutzrichtlinie",
     "PRIVACY_3": "gelesen und stimme der Verarbeitung meiner Daten wie beschrieben zu.",
     "CHECKBOX": "Bitte akzeptiere die Datenschutzerklärung."
+  },
+  "MOBILE": {
+    "HOME": "Startseite",
+    "HOME_LABEL": "Quiz Word Startseite",
+    "GO_BACK": "Zurück",
+    "LANGUAGE": "Sprache",
+    "BOARD_LABEL": "Quiz Word Lernübersicht",
+    "BOARD_CAPTION": "Deine Wörter. Dein Tempo. Dein Fortschritt.",
+    "PRICE_TITLE": "Preise",
+    "FREE": "Quiz Word ist komplett kostenlos.",
+    "CONTACT_OPEN": "Kontaktformular öffnen ↗",
+    "CONTACT_NOTE": "Das Kontaktformular öffnet sich auf unserer Website.",
+    "FAQ_TITLE": "Die häufigsten Fragen",
+    "FAQ": {
+      "WHAT": {
+        "QUESTION": "Was ist Quiz Word?",
+        "ANSWER": "Quiz Word ist deine persönliche Vokabeldatenbank, in der du alle Wörter speichern kannst, die du lernen möchtest. Aus diesen Wörtern kannst du beliebig viele Quizze erstellen."
+      },
+      "COST": {
+        "QUESTION": "Was kostet Quiz Word?",
+        "ANSWER": "Quiz Word ist komplett kostenlos."
+      },
+      "WHO": {
+        "QUESTION": "Für wen ist Quiz Word?",
+        "ANSWER": "Quiz Word wurde für alle Menschen erstellt, die gerne Sprachen lernen."
+      }
+    },
+    "FONT_ERROR": "Die Schrift konnte nicht geladen werden. Bitte starte die App erneut.",
+    "LOADING": "App wird geladen",
+    "LOGIN": "Login",
+    "SHARE": "Teilen",
+    "EMAIL": "E-Mail",
+    "SHARE_TEXT": "Schau dir Quiz Word an!",
+    "LINK_COPIED": "Link wurde kopiert.",
+    "SHARE_ERROR": "Teilen ist gerade nicht möglich. Besuche quiz-word.com, um den Link zu kopieren."
   }
 }

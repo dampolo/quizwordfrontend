@@ -8,7 +8,23 @@
     "./api": "./src/api/createApiFetch.js",
     "./auth/context": "./src/auth/AuthContext.js",
     "./auth/provider": "./src/auth/AuthProvider.jsx",
-    "./auth/useAuth": "./src/auth/useAuth.js"
+    "./auth/useAuth": "./src/auth/useAuth.js",
+    "./api/context": "./src/api/ApiContext.jsx",
+    "./api/provider": "./src/api/ApiProvider.jsx",
+    "./api/useApi": "./src/api/useApi.js",
+    "./dialog/context": "./src/dialog/DialogContext.jsx",
+    "./dialog/provider": "./src/dialog/DialogProvider.jsx",
+    "./dialog/useDialog": "./src/dialog/useDialog.js",
+    "./quiz/context": "./src/quiz/QuizContext.jsx",
+    "./quiz/provider": "./src/quiz/QuizProvider.jsx",
+    "./quiz/useQuiz": "./src/quiz/useQuiz.js",
+    "./translation/context": "./src/translation/TranslationContext.jsx",
+    "./translation/provider": "./src/translation/TranslationProvider.jsx",
+    "./translation/useTranslation": "./src/translation/useTranslation.js",
+    "./vocabulary/context": "./src/vocabulary/VocabularyContext.jsx",
+    "./vocabulary/provider": "./src/vocabulary/VocabularyProvider.jsx",
+    "./vocabulary/useVocabulary": "./src/vocabulary/useVocabulary.js",
+    "./i18n": "./src/i18n/i18n.js"
   },
   "peerDependencies": {
     "react": "19.2.3"

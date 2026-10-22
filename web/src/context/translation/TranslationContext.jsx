@@ -1,5 +1,1 @@
-import { createContext } from "react";
-
-const TranslationContext = createContext();
-
-export default TranslationContext;
+export { default } from "@quizword/shared/translation/context";

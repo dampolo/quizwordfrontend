@@ -1,62 +1,16 @@
-import { useEffect, useState } from "react";
-import useApi from "../api/useApi";
-import { apiFetch } from "../../services/apiFetch";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { createApiFetch } from "../api/createApiFetch.js";
 
-import AuthContext from "./AuthContext";
+import AuthContext from "./AuthContext.js";
 
-export function AuthProvider({ children }) {
-  const api = useApi();
+export function AuthProvider({ children, api, session, onProfileError = console.error }) {
+  const request = session?.fetch ?? fetch;
+  const apiFetch = useMemo(() => createApiFetch(api, request), [api, request]);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [loading, setLoading] = useState(Boolean(api));
   const [profile, setProfile] = useState(false);
-  const [confirmationMessage, setConfirmationMessage] = useState("");
 
-  async function checkAuth() {
-    setLoading(true);
-
-    try {
-      let response = await fetch(`${api}me/`, {
-        credentials: "include",
-      });
-
-      if (response.status === 401) {
-        const refreshResponse = await fetch(`${api}token/refresh/`, {
-          method: "POST",
-          credentials: "include",
-        });
-
-        if (!refreshResponse.ok) {
-          setUser(null);
-          return false;
-        }
-
-        response = await fetch(`${api}me/`, {
-          credentials: "include",
-        });
-
-      }
-
-      if (!response.ok) {
-        throw new Error("Not authenticated");
-      }
-
-      const user = await response.json();
-      setUser(user);
-
-      // Avatar must be loaded after log in that why getProfile() 
-      getProfile()
-      
-      return true;
-    } catch {
-      setUser(null);
-      return false;
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function getProfile() {
+  const getProfile = useCallback(async () => {
     try {
       const response = await apiFetch(`${api}profile-customer/`, {
         headers: {
@@ -71,14 +25,58 @@ export function AuthProvider({ children }) {
       const data = await response.json();
       setProfile(data);
     } catch (error) {
-      console.error(error);
+      onProfileError(error);
     }
-  }
+  }, [api, apiFetch, onProfileError]);
+
+  const checkAuth = useCallback(async () => {
+    setLoading(true);
+
+    try {
+      let response = await request(`${api}me/`, {
+        credentials: "include",
+      });
+
+      if (response.status === 401) {
+        const refreshResponse = await request(`${api}token/refresh/`, {
+          method: "POST",
+          credentials: "include",
+        });
+
+        if (!refreshResponse.ok) {
+          setUser(null);
+          return false;
+        }
+
+        response = await request(`${api}me/`, {
+          credentials: "include",
+        });
+
+      }
+
+      if (!response.ok) {
+        throw new Error("Not authenticated");
+      }
+
+      const user = await response.json();
+      setUser(user);
+
+      // Avatar must be loaded after log in that why getProfile() 
+      await getProfile()
+      
+      return true;
+    } catch {
+      setUser(null);
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  }, [api, request, getProfile]);
 
   async function login(email, password) {
     setLoading(true);
     try {
-      const response = await fetch(`${api}token/`, {
+      const response = await request(`${api}token/`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -104,7 +102,7 @@ export function AuthProvider({ children }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${api}create-account/`, {
+      const response = await request(`${api}create-account/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -149,18 +147,19 @@ export function AuthProvider({ children }) {
   }
 
   async function logout() {
-    await fetch(`${api}logout/`, {
+    await request(`${api}logout/`, {
       method: "POST",
       credentials: "include",
     });
 
     setUser(null);
+    setProfile(false);
   }
 
   async function verifyEmail(uidb64, token) {
     setLoading(true);
     try {
-      const response = await fetch(`${api}verify-email/${uidb64}/${token}`, {
+      const response = await request(`${api}verify-email/${uidb64}/${token}`, {
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
@@ -185,7 +184,7 @@ export function AuthProvider({ children }) {
 
   async function forgotPassword(payload) {
     setLoading(true);
-    const response = await fetch(`${api}forgot-password/`, {
+    const response = await request(`${api}forgot-password/`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -207,7 +206,7 @@ export function AuthProvider({ children }) {
 
   async function resetPassword(password, uid, token) {
     setLoading(true);
-    const response = await fetch(`${api}reset-password/`, {
+    const response = await request(`${api}reset-password/`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -230,7 +229,7 @@ export function AuthProvider({ children }) {
 
   async function postChangePassword(payload) {
     try {
-      const response = await fetch(`${api}change-password/`, {
+      const response = await request(`${api}change-password/`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -257,7 +256,7 @@ export function AuthProvider({ children }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${api}change-email/`, {
+      const response = await request(`${api}change-email/`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -285,7 +284,7 @@ export function AuthProvider({ children }) {
 
   async function patchChangeUsername(formData) {
     try {
-      const response = await fetch(`${api}change-username/`, {
+      const response = await request(`${api}change-username/`, {
         method: "PATCH",
         credentials: "include",
         headers: {
@@ -310,7 +309,7 @@ export function AuthProvider({ children }) {
   }
 
   async function deleteAccount(password) {
-    const response = await fetch(`${api}delete-account/`, {
+    const response = await request(`${api}delete-account/`, {
       method: "DELETE",
       credentials: "include",
       headers: {
@@ -328,7 +327,7 @@ export function AuthProvider({ children }) {
   }
 
   async function postSupport(payload) {
-    const response = await fetch(`${api}support/`, {
+    const response = await request(`${api}support/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -349,7 +348,7 @@ export function AuthProvider({ children }) {
   async function postResendVerification(payload) {
     setLoading(true);
     try {
-      const response = await fetch(`${api}resend-verification/`, {
+      const response = await request(`${api}resend-verification/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -372,16 +371,8 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    const init = async () => {
-      const authenticated = await checkAuth();
-
-      if (authenticated) {
-        await getProfile();
-      }
-    };
-
-    init();
-  }, []);
+    if (api) void checkAuth();
+  }, [api, checkAuth]);
 
   return (
     <AuthContext.Provider
@@ -389,8 +380,6 @@ export function AuthProvider({ children }) {
         user,
         loading,
         profile,
-        isMenuOpen,
-        confirmationMessage,
         postResendVerification,
         postSupport,
         deleteAccount,
@@ -399,8 +388,6 @@ export function AuthProvider({ children }) {
         postChangePassword,
         resetPassword,
         forgotPassword,
-        setConfirmationMessage,
-        setIsMenuOpen,
         verifyEmail,
         login,
         logout,

@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 .env
+# Workspace dependencies and generated Expo output
+**/node_modules/
+**/.expo/
+**/dist-check/
+**/.env

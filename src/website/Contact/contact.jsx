@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import BackButton from "../../components/BackButton/BackButton";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import "./contact.scss";
-import { useAuth } from "../../context/useAuth";
+import { useAuth } from "../../context/auth/useAuth";
 import { toast } from "react-toastify";
 import ReCAPTCHA from "react-google-recaptcha";
 import PreLoader from "../../components/PreLoader/PreLoader";

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Logo from "../../../components/Logo/logo";
 
 import styles from "./header-customer.module.scss";
-import { useAuth } from "../../../context/useAuth";
+import { useAuth } from "../../../context/auth/useAuth";
 import DialogCustomer from "../DialogCustomer/dialog-customer";
 
 function HeaderCustomer() {

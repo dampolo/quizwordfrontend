@@ -1,9 +1,9 @@
-import useQuiz from "../../../../context/useQuiz";
+import useQuiz from "../../../../context/quiz/useQuiz";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import styles from "./all-quiz-words.module.scss";
-import useDialog from "../../../../context/DialogContext/useDialog";
+import useDialog from "../../../../context/dialog/useDialog";
 import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";

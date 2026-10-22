@@ -1,7 +1,7 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import styles from "./learn-quiz.module.scss";
 import { useEffect, useState } from "react";
-import useQuiz from "../../../../context/useQuiz";
+import useQuiz from "../../../../context/quiz/useQuiz";
 import { Link } from "react-router-dom";
 
 function LearnQuiz() {

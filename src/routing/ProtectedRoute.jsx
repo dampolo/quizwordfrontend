@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import  { useAuth }  from "./useAuth";
+import  { useAuth }  from "../context/auth/useAuth";
 import PreLoader from "../components/PreLoader/PreLoader";
 
 export default function ProtectedRoute() {

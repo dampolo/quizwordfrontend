@@ -2,10 +2,10 @@ import { afterEach, expect, it, vi } from "vitest";
 import { act, cleanup, renderHook } from "@testing-library/react";
 import { toast } from "react-toastify";
 import { apiFetch } from "../../services/apiFetch";
-import { TranslationProvider } from "./TranslationContext";
-import useTranslation from "./UseTranslation";
+import { TranslationProvider } from "./TranslationProvider";
+import useTranslation from "./useTranslation";
 
-vi.mock("../ApiContext", () => ({ default: () => "/api/" }));
+vi.mock("../api/useApi", () => ({ default: () => "/api/" }));
 vi.mock("../../services/apiFetch", () => ({ apiFetch: vi.fn() }));
 vi.mock("react-toastify", () => ({ toast: { error: vi.fn() } }));
 afterEach(() => { cleanup(); vi.resetAllMocks(); });

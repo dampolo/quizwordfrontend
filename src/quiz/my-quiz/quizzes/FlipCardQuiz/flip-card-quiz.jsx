@@ -1,9 +1,9 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import styles from "./flip-card-quiz.module.scss";
 import { useEffect, useState } from "react";
-import useQuiz from "../../../../context/useQuiz";
+import useQuiz from "../../../../context/quiz/useQuiz";
 import SpeakButton from "../../../../components/SpeakButton/SpeakButton";
-import useVocabulary from "../../../../context/useVocabulary";
+import useVocabulary from "../../../../context/vocabulary/useVocabulary";
 
 function FlipCardQuiz() {
   const [quiz, setQuiz] = useState(null);

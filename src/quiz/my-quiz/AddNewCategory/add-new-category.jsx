@@ -1,6 +1,6 @@
 import styles from "./add-new-category.module.scss";
 import { Link, useNavigate } from "react-router-dom";
-import useVocabulary from "../../../context/useVocabulary";
+import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import { useState } from "react";
 import BackButton from "../../../components/BackButton/BackButton";
 import PreLoader from "../../../components/PreLoader/PreLoader";

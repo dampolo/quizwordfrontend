@@ -9,10 +9,10 @@ import Login from "./quiz/auth/LoginQuiz/login-quiz";
 import MyQuiz from "./layouts/MyQuiz";
 import AllWords from "./quiz/my-quiz/AllWords/all-words";
 import RandomRepeadWords from "./quiz/my-quiz/AllWords/RandomRepeadWords/random-repead-words";
-import ProtectedRoute from "./context/ProtectedRoute";
-import { VocabularyProvider } from "./context/VocabularyContext";
-import { QuizProvider } from "./context/QuizContext";
-import { DialogProvider } from "./context/DialogContext/DialogContext";
+import ProtectedRoute from "./routing/ProtectedRoute";
+import { VocabularyProvider } from "./context/vocabulary/VocabularyProvider";
+import { QuizProvider } from "./context/quiz/QuizProvider";
+import { DialogProvider } from "./context/dialog/DialogProvider";
 import { Outlet } from "react-router-dom";
 import EditWord from "./quiz/my-quiz/EditWord/edit-word";
 import ShowWord from "./quiz/my-quiz/ShowWord/show-word";
@@ -51,7 +51,7 @@ import ChangeProfileImage from "./quiz/my-quiz/Profile/ChangeProfileImage/change
 import Contact from "./website/Contact/contact";
 import FlipCardQuiz from "./quiz/my-quiz/quizzes/FlipCardQuiz/flip-card-quiz";
 import Translation from "./quiz/my-quiz/Translate/Translation";
-import { TranslationProvider } from "./context/TranslationContex/TranslationContext";
+import { TranslationProvider } from "./context/translation/TranslationProvider";
 
 function App() {
   return (

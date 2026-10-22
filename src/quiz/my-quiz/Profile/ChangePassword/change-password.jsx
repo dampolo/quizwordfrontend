@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import styles from "./change-password.module.scss";
-import { useAuth } from "../../../../context/useAuth";
+import { useAuth } from "../../../../context/auth/useAuth";
 import { toast } from "react-toastify";
 import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";

@@ -3,11 +3,11 @@ import { cleanup, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAuth } from "../../../context/useAuth";
+import { useAuth } from "../../../context/auth/useAuth";
 import CreateAccount from "./create-account";
 
 // Replace authentication so the tests never call the real backend.
-vi.mock("../../../context/useAuth", () => ({ useAuth: vi.fn() }));
+vi.mock("../../../context/auth/useAuth", () => ({ useAuth: vi.fn() }));
 vi.mock("react-toastify", () => ({ toast: { error: vi.fn() } }));
 
 // Keep real router components, but record navigation requests.

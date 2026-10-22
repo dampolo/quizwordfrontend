@@ -1,11 +1,9 @@
-import { createContext, useCallback, useEffect, useState } from "react";
-import useApi from "./ApiContext";
+import { useCallback, useEffect, useState } from "react";
+import useApi from "../api/useApi";
 import { useNavigate } from "react-router-dom";
-import { apiFetch } from "../services/apiFetch";
+import { apiFetch } from "../../services/apiFetch";
 
-const VocabularyContext = createContext();
-
-export default VocabularyContext;
+import VocabularyContext from "./VocabularyContext";
 
 export function VocabularyProvider({ children }) {
   const api = useApi();

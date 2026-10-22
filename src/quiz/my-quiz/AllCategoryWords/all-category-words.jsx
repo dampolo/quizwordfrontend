@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Link, useParams } from "react-router-dom";
-import useVocabulary from "../../../context/useVocabulary";
+import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import BackButton from "../../../components/BackButton/BackButton";
 import PageTitle from "../../../components/PageTitle/PageTitle";
 import PreLoader from "../../../components/PreLoader/PreLoader";

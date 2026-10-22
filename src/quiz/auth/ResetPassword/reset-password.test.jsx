@@ -3,11 +3,11 @@ import { cleanup, render, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes, useNavigate } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { toast } from "react-toastify";
-import { useAuth } from "../../../context/useAuth";
+import { useAuth } from "../../../context/auth/useAuth";
 import ResetPassword from "./reset-password";
 
 // Replace authentication so this test never calls the backend.
-vi.mock("../../../context/useAuth", () => ({ useAuth: vi.fn() }));
+vi.mock("../../../context/auth/useAuth", () => ({ useAuth: vi.fn() }));
 vi.mock("react-toastify", () => ({ toast: { error: vi.fn() } }));
 
 vi.mock("react-router-dom", async (importOriginal) => ({

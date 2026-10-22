@@ -1,6 +1,6 @@
 import { NavLink, useSearchParams } from "react-router-dom";
 import styles from "./navbar-customer.module.scss";
-import useVocabulary from "../../../context/useVocabulary";
+import useVocabulary from "../../../context/vocabulary/useVocabulary";
 
 function NavbarCustomer() {
   const { userLanguages = [] } = useVocabulary();

@@ -1,9 +1,9 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import useQuiz from "../../../../context/useQuiz";
+import useQuiz from "../../../../context/quiz/useQuiz";
 import { toast } from "react-toastify";
 import styles from "./hear-quiz.module.scss";
-import useVocabulary from "../../../../context/useVocabulary";
+import useVocabulary from "../../../../context/vocabulary/useVocabulary";
 import SpeakButton from "../../../../components/SpeakButton/SpeakButton";
 
 function HearQuiz() {

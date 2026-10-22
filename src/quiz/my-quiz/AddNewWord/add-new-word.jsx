@@ -1,11 +1,11 @@
-import useVocabulary from "../../../context/useVocabulary";
+import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import { useState, useEffect, useEffectEvent } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import FormDialog from "../../../components/FormDialog/FormDialog";
 import BackButton from "../../../components/BackButton/BackButton";
 import PreLoader from "../../../components/PreLoader/PreLoader";
 import { toast } from "react-toastify";
-import useDialog from "../../../context/DialogContext/useDialog";
+import useDialog from "../../../context/dialog/useDialog";
 import { useTranslation } from "react-i18next";
 import Tooltip from "@mui/material/Tooltip";
 

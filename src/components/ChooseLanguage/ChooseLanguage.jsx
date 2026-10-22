@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./ChooseLanguages.scss";
-import useVocabulary from "../../context/useVocabulary";
+import useVocabulary from "../../context/vocabulary/useVocabulary";
 import LanguageForm from "./LanguageForm";
 
 function ChooseLanguages() {

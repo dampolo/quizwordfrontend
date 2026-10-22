@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import useQuiz from "../../context/useQuiz";
+import useQuiz from "../../context/quiz/useQuiz";
 import styles from "./play-last-quiz.module.scss";
 
 function PlayLastQuiz({ redirect = false }) {

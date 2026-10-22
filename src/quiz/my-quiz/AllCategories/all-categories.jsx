@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useVocabulary from "../../../context/useVocabulary";
+import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import { Link, useSearchParams } from "react-router-dom";
 import PreLoader from "../../../components/PreLoader/PreLoader";
 

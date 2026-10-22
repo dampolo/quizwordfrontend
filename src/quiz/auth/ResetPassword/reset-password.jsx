@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import "./reset-password.scss";
-import { useAuth } from "../../../context/useAuth";
+import { useAuth } from "../../../context/auth/useAuth";
 import { toast } from "react-toastify";
 import PageTitle from "../../../components/PageTitle/PageTitle";
 

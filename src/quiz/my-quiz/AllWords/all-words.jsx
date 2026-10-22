@@ -1,10 +1,10 @@
 import PlayLastQuiz from "../../../components/PlayLastQuiz/PlayLastQuiz";
 import styles from "./all-words.module.scss";
-import useVocabulary from "../../../context/useVocabulary";
+import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import FormDialog from "../../../components/FormDialog/FormDialog";
-import useQuiz from "../../../context/useQuiz";
+import useQuiz from "../../../context/quiz/useQuiz";
 import PreLoader from "../../../components/PreLoader/PreLoader";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";

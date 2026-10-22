@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 import styles from "./change-profile-image.module.scss";
-import { useAuth } from "../../../../context/useAuth";
+import { useAuth } from "../../../../context/auth/useAuth";
 import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
 

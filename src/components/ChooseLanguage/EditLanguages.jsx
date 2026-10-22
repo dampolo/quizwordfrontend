@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import "./ChooseLanguages.scss";
-import useVocabulary from "../../context/useVocabulary";
+import useVocabulary from "../../context/vocabulary/useVocabulary";
 import LanguageForm from "./LanguageForm";
 import BackButton from "../BackButton/BackButton";
 import { toast } from "react-toastify";

@@ -1,4 +1,4 @@
-import useVocabulary from "../../../context/useVocabulary";
+import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import { useEffect, useState } from "react";
 import {
   Link,
@@ -6,7 +6,7 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import useDialog from "../../../context/DialogContext/useDialog";
+import useDialog from "../../../context/dialog/useDialog";
 import BackButton from "../../../components/BackButton/BackButton";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";

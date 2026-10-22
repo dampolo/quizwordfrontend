@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import useQuiz from "../../../../context/useQuiz";
+import useQuiz from "../../../../context/quiz/useQuiz";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
 import styles from "./word-audio-loop.module.scss";
 import useScreenWakeLock from "../../../../hooks/useScreenWakeLock";

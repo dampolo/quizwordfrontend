@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import useVocabulary from "../../context/useVocabulary";
-import { useAuth } from "../../context/useAuth";
+import useVocabulary from "../../context/vocabulary/useVocabulary";
+import { useAuth } from "../../context/auth/useAuth";
 import styles from "./Search.module.scss";
 
 function Search() {

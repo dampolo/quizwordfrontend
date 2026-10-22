@@ -1,4 +1,4 @@
-import { createContext, useState, forwardRef } from "react";
+import { useState, forwardRef } from "react";
 import Slide from "@mui/material/Slide";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -7,9 +7,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 
-const DialogContext = createContext();
-
-export default DialogContext;
+import DialogContext from "./DialogContext";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;

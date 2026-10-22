@@ -2,14 +2,14 @@ import { afterEach, expect, it, vi } from "vitest";
 import { cleanup, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, useNavigate } from "react-router-dom";
-import { useAuth } from "../../../context/useAuth";
+import { useAuth } from "../../../context/auth/useAuth";
 import { toast } from "react-toastify";
 import ResendNewLink from "./resend-new-link";
 
 vi.mock("react-toastify", () => ({ toast: { error: vi.fn() } }));
 
 // Replace authentication so the test never calls the real backend.
-vi.mock("../../../context/useAuth", () => ({ useAuth: vi.fn() }));
+vi.mock("../../../context/auth/useAuth", () => ({ useAuth: vi.fn() }));
 
 vi.mock("react-router-dom", async (importOriginal) => ({
   ...(await importOriginal()),

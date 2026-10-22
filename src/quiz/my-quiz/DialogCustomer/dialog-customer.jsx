@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import AuthContext from "../../../context/AuthContext";
+import AuthContext from "../../../context/auth/AuthContext";
 import "./dialog-customer.scss";
 import { useContext } from "react";
 

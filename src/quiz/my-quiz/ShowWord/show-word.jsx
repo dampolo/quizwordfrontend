@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import useVocabulary from "../../../context/useVocabulary";
+import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import BackButton from "../../../components/BackButton/BackButton";
 import EditButton from "../../../components/EditButton/EditButton";
 

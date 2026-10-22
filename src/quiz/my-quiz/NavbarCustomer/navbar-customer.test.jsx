@@ -1,10 +1,10 @@
 import { afterEach, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import useVocabulary from "../../../context/useVocabulary";
+import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import NavbarCustomer from "./navbar-customer";
 
-vi.mock("../../../context/useVocabulary", () => ({ default: vi.fn() }));
+vi.mock("../../../context/vocabulary/useVocabulary", () => ({ default: vi.fn() }));
 
 afterEach(cleanup);
 

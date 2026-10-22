@@ -2,11 +2,11 @@ import { afterEach, expect, it, vi } from "vitest";
 import { act, cleanup, fireEvent, render, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { toast } from "react-toastify";
-import useQuiz from "../../../../context/useQuiz";
+import useQuiz from "../../../../context/quiz/useQuiz";
 import WordAudioLoop from "./word-audio-loop";
 import WordAudioLoopReverse from "../WordAudioLoopReverse/word-audio-loop-reverse";
 
-vi.mock("../../../../context/useQuiz", () => ({ default: vi.fn() }));
+vi.mock("../../../../context/quiz/useQuiz", () => ({ default: vi.fn() }));
 vi.mock("react-toastify", () => ({ toast: { error: vi.fn() } }));
 
 afterEach(() => {

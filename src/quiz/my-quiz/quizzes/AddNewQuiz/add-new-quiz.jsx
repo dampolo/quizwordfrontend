@@ -1,7 +1,7 @@
 import styles from "./add-new-quiz.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import useQuiz from "../../../../context/useQuiz";
+import useQuiz from "../../../../context/quiz/useQuiz";
 import BackButton from "../../../../components/BackButton/BackButton";
 
 function AddNewQuiz() {

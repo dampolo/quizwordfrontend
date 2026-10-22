@@ -1,11 +1,9 @@
-import { createContext, useState } from "react";
-import useApi from "../ApiContext";
+import { useState } from "react";
+import useApi from "../api/useApi";
 import { apiFetch } from "../../services/apiFetch";
 import { toast } from "react-toastify";
 
-const TranslationContext = createContext();
-
-export default TranslationContext;
+import TranslationContext from "./TranslationContext";
 
 export function TranslationProvider({ children }) {
   const api = useApi();

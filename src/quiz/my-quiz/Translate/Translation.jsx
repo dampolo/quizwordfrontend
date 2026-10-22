@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UseTranslation from "../../../context/TranslationContex/UseTranslation";
-import useVocabulary from "../../../context/useVocabulary";
+import useTranslation from "../../../context/translation/useTranslation";
+import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import styles from "./Translation.module.scss";
 
 function Translation() {
@@ -38,7 +38,7 @@ function Translation() {
     languageOptions.find((language) => String(language.id) === targetId),
   );
 
-  const { translate, translatedText, loading, error } = UseTranslation();
+  const { translate, translatedText, loading, error } = useTranslation();
 
   async function handleSubmit(event) {
     event.preventDefault();

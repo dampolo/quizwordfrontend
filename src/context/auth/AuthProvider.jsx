@@ -1,10 +1,8 @@
-import { createContext, useEffect, useState } from "react";
-import useApi from "./ApiContext";
-import { apiFetch } from "../services/apiFetch";
+import { useEffect, useState } from "react";
+import useApi from "../api/useApi";
+import { apiFetch } from "../../services/apiFetch";
 
-const AuthContext = createContext();
-
-export default AuthContext;
+import AuthContext from "./AuthContext";
 
 export function AuthProvider({ children }) {
   const api = useApi();

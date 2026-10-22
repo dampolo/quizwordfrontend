@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import useVocabulary from "../../../../context/useVocabulary";
+import useVocabulary from "../../../../context/vocabulary/useVocabulary";
 import useScreenWakeLock from "../../../../hooks/useScreenWakeLock";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
 import styles from "./random-repead-words.module.scss";

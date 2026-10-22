@@ -4,7 +4,7 @@ import InvalidLink from "../../quiz/auth/InvalidLink/invalid-link";
 import BackButton from "../BackButton/BackButton";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import styles from "./confirmation.module.scss";
-import { useAuth } from "../../context/useAuth";
+import { useAuth } from "../../context/auth/useAuth";
 
 function Confirmation() {
   const [invalidLink, setInvalidLink] = useState(false);

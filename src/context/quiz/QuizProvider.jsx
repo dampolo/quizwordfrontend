@@ -1,11 +1,9 @@
-import { createContext, useState } from "react";
-import useApi from "./ApiContext";
-import { apiFetch } from "../services/apiFetch";
+import { useState } from "react";
+import useApi from "../api/useApi";
+import { apiFetch } from "../../services/apiFetch";
 import { toast } from "react-toastify";
 
-const QuizContext = createContext();
-
-export default QuizContext;
+import QuizContext from "./QuizContext";
 
 export function QuizProvider({ children }) {
   const api = useApi();

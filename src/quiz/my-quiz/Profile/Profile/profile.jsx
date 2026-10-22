@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../../context/useAuth";
-import useVocabulary from "../../../../context/useVocabulary";
+import { useAuth } from "../../../../context/auth/useAuth";
+import useVocabulary from "../../../../context/vocabulary/useVocabulary";
 import styles from "./profile.module.scss";
 import EditButton from "../../../../components/EditButton/EditButton";
 import BackButton from "../../../../components/BackButton/BackButton";

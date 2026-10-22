@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./forgot-password.scss";
 import { Link, useNavigate } from "react-router-dom";
 import BackButton from "../../../components/BackButton/BackButton";
-import { useAuth } from "../../../context/useAuth";
+import { useAuth } from "../../../context/auth/useAuth";
 import PreLoader from "../../../components/PreLoader/PreLoader";
 import PageTitle from "../../../components/PageTitle/PageTitle";
 

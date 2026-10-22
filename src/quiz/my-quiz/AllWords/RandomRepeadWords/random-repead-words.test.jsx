@@ -1,11 +1,11 @@
 import { afterEach, expect, it, vi } from "vitest";
 import { act, cleanup, fireEvent, render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import useVocabulary from "../../../../context/useVocabulary";
+import useVocabulary from "../../../../context/vocabulary/useVocabulary";
 import { toast } from "react-toastify";
 import RandomRepeadWords from "./random-repead-words";
 
-vi.mock("../../../../context/useVocabulary", () => ({ default: vi.fn() }));
+vi.mock("../../../../context/vocabulary/useVocabulary", () => ({ default: vi.fn() }));
 vi.mock("../../../../hooks/useScreenWakeLock", () => ({ default: () => false }));
 vi.mock("react-toastify", () => ({ toast: { error: vi.fn() } }));
 

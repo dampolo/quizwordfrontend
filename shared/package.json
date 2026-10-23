@@ -27,6 +27,6 @@
     "./i18n": "./src/i18n/i18n.js"
   },
   "peerDependencies": {
-    "react": "19.2.3"
+    "react": "^19.2.3"
   }
 }

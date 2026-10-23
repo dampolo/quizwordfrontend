@@ -184,24 +184,27 @@ export function AuthProvider({ children, api, session, onProfileError = console.
 
   async function forgotPassword(payload) {
     setLoading(true);
-    const response = await request(`${api}forgot-password/`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
+    try {
+      const response = await request(`${api}forgot-password/`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!response.ok) {
-      const error = new Error("Changed password failed");
-      error.response = { data };
-      throw error;
+      if (!response.ok) {
+        const error = new Error("Changed password failed");
+        error.response = { data };
+        throw error;
+      }
+      return data;
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
-    return data;
   }
 
   async function resetPassword(password, uid, token) {

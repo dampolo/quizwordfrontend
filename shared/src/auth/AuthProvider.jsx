@@ -9,6 +9,7 @@ export function AuthProvider({ children, api, session, onProfileError = console.
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(Boolean(api));
   const [profile, setProfile] = useState(false);
+  const [confirmationMessage, setConfirmationMessage] = useState("");
 
   const getProfile = useCallback(async () => {
     try {
@@ -383,6 +384,8 @@ export function AuthProvider({ children, api, session, onProfileError = console.
         user,
         loading,
         profile,
+        confirmationMessage,
+        setConfirmationMessage,
         postResendVerification,
         postSupport,
         deleteAccount,

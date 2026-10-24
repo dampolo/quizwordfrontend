@@ -74,14 +74,11 @@ export default function LoginQuiz() {
 
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
-    const regexPassword =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%+\-/*?&#])[A-Za-z\d@$!%+\-/*?&#]{10,}$/;
-
     if (!values.email || !regexEmail.test(values.email.trim())) {
       errors.email = "Dein E-Mail ist unvollständig/inkorrekt.";
     }
 
-    if (!values.password || !regexPassword.test(values.password)) {
+    if (!values.password) {
       errors.password = "Dein Passwort ist nicht korrekt.";
     }
 

@@ -1,7 +1,19 @@
-// export { default } from '../website/Website';
+import { Redirect } from "expo-router";
+import { useAuth } from "../context/auth/useAuth";
+import PreLoader from "../components/PreLoader/pre-loader";
 
-import { Redirect} from "expo-router"
+export default function Index() {
+  const { loading, isAuthenticated } = useAuth();
 
-export default function Index(){
-    return <Redirect href="/quiz/(auth)/login-quiz"/>
+  if (loading) return <PreLoader />;
+
+  return (
+    <Redirect
+      href={
+        isAuthenticated
+          ? "/my-quiz/all-words"
+          : "/quiz/(auth)/login-quiz"
+      }
+    />
+  );
 }

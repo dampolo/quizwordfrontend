@@ -13,7 +13,7 @@ export default function Header() {
     <View style={header.header}>
       <View style={[styles.container, compact && header.mobileContainer]}>
         <View style={header.row}>
-          <Link href="/" asChild>
+          <Link href="/website" asChild>
             <Pressable accessibilityRole="link" accessibilityLabel={t('MOBILE.HOME_LABEL')} style={header.brandLink}>
               <Logo size={compact ? 80 : 56} />
               {!compact && <Text style={header.brand}>Quiz Word</Text>}
@@ -24,7 +24,7 @@ export default function Header() {
           </Link>
         </View>
         {!compact && <View style={header.navigation}>
-          <Link href="/" style={header.link}>{t('MOBILE.HOME')}</Link>
+          <Link href="/website" style={header.link}>{t('MOBILE.HOME')}</Link>
           <Link href="/price" style={header.link}>{t('HEADER.PRICE')}</Link>
           <Link href="/help-desk" style={header.link}>{t('FOOTER.FAQ')}</Link>
           <Link href="/contact" style={header.link}>{t('FOOTER.CONTACT')}</Link>

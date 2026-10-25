@@ -5,6 +5,8 @@ import AddIcon from "../../../assets/icons/add.svg";
 import QuizIcon from "../../../assets/icons/quiz-icon.svg";
 import TranslateIcon from "../../../assets/icons/translate.svg";
 import { styles, tabColors } from "../../styles/my-quiz-tabs";
+import { Pressable } from "react-native";
+import { colors } from "../../styles/basic";
 
 export default function MyQuizLayout() {
   return (
@@ -20,6 +22,15 @@ export default function MyQuizLayout() {
         tabBarStyle: styles.tabBar,
         tabBarItemStyle: styles.tabBarItem,
         tabBarLabelStyle: styles.tabBarLabel,
+        tabBarButton: (props) => (
+          <Pressable
+            {...props}
+            android_ripple={{
+              color: colors.qwSixth,
+              borderless: false,
+            }}
+          />
+        ),
       }}
     >
       <Tabs.Screen
@@ -27,7 +38,13 @@ export default function MyQuizLayout() {
         options={{
           title: "Kategorien",
           tabBarIcon: ({ color, size }) => (
-            <CategoriesIcon width={size} height={size} color={color} accessible={false} aria-hidden />
+            <CategoriesIcon
+              width={size}
+              height={size}
+              color={color}
+              accessible={false}
+              aria-hidden
+            />
           ),
         }}
       />
@@ -36,7 +53,13 @@ export default function MyQuizLayout() {
         options={{
           title: "Wörter",
           tabBarIcon: ({ color, size }) => (
-            <WordsIcon width={size} height={size} color={color} accessible={false} aria-hidden />
+            <WordsIcon
+              width={size}
+              height={size}
+              color={color}
+              accessible={false}
+              aria-hidden
+            />
           ),
         }}
       />
@@ -45,7 +68,13 @@ export default function MyQuizLayout() {
         options={{
           title: "Neu",
           tabBarIcon: ({ color, size }) => (
-            <AddIcon width={size} height={size} color={color} accessible={false} aria-hidden />
+            <AddIcon
+              width={size}
+              height={size}
+              color={color}
+              accessible={false}
+              aria-hidden
+            />
           ),
         }}
       />
@@ -54,7 +83,13 @@ export default function MyQuizLayout() {
         options={{
           title: "Quizze",
           tabBarIcon: ({ color, size }) => (
-            <QuizIcon width={size} height={size} color={color} accessible={false} aria-hidden />
+            <QuizIcon
+              width={size}
+              height={size}
+              color={color}
+              accessible={false}
+              aria-hidden
+            />
           ),
         }}
       />
@@ -63,7 +98,13 @@ export default function MyQuizLayout() {
         options={{
           title: "Übersetzer",
           tabBarIcon: ({ color, size }) => (
-            <TranslateIcon width={size} height={size} color={color} accessible={false} aria-hidden />
+            <TranslateIcon
+              width={size}
+              height={size}
+              color={color}
+              accessible={false}
+              aria-hidden
+            />
           ),
         }}
       />

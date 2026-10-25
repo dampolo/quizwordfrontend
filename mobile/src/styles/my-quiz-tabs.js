@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
   },
   tabBarItem: {
     borderRadius: 12,
+    overflow: "hidden",
   },
   tabBarLabel: {
     fontSize: 10,

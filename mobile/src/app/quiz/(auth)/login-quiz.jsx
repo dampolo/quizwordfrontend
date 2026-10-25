@@ -63,6 +63,8 @@ export default function LoginQuiz() {
       setFormErrors({
         message: typeof detail === "string" ? detail : "Login Fehler",
       });
+      setSubmitting(false);
+      
     } finally {
       submittingRef.current = false;
       setSubmitting(false);

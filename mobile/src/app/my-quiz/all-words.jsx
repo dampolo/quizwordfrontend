@@ -18,6 +18,7 @@ export default function AllWords() {
       router.replace("/quiz/(auth)/login-quiz");
     } catch {
       Alert.alert("Logout failed", "Please try again.");
+      
     } finally {
       setLoggingOut(false);
     }

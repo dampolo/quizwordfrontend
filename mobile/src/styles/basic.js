@@ -5,6 +5,7 @@ export const colors = {
   qwThird: "#e5e9fd",
   qwFourth: "#ffffff",
   qwFifth: "#eff4ff",
+  qwSixth: "#bed2ff",
   qwColorHeading: "#111827",
   qwBodyTextColor: "#4b5563",
   qwBorderColor: "#e5e7eb",

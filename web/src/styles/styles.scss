@@ -133,7 +133,7 @@ button[type="submit"]:disabled {
   width: 100%;
   opacity: 1;
   visibility: visible;
-  z-index: 1000;
+  z-index: 5;
   pointer-events: auto;
   // overflow-y: scroll;
 }

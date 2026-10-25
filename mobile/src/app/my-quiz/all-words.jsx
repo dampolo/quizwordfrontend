@@ -100,23 +100,26 @@ export default function AllWords() {
           ? <ActivityIndicator accessibilityLabel="Wörter werden geladen" />
           : <Text style={styles.message}>Du hast hier keine Wörter.</Text>}
         renderItem={({ item: word }) => {
-          const [source, target] = word.translations ?? [];
           return (
             <View style={styles.listRow} testID={`word-${word.id}`}>
               <View style={styles.checkColumn}>
                 <Checkbox
+                  style={styles.checkbox}
                   testID={`word-checkbox-${word.id}`}
-                  accessibilityLabel={`${source?.word ?? "Wort"} auswählen`}
+                  accessibilityLabel={`${word.translations[0].word} auswählen`}
                   value={selectedWordIds.includes(word.id)}
                   onValueChange={(checked) => handleCheckboxChange(word.id, checked)}
-                  color={tabColors.active}
+                  color={selectedWordIds.includes(word.id) ? tabColors.active : "#8b929b"}
                   hitSlop={12}
                 />
               </View>
-              <Text style={[styles.rankText, styles.rankColumn]}>#{target?.rank ?? "–"}</Text>
+              <Text style={[styles.rankText, styles.rankColumn]}>#{word.translations[1].rank}</Text>
               <View style={styles.wordColumn}>
-                <Text style={styles.sourceWord}>{source?.word ?? "–"}</Text>
-                <Text style={styles.translation}>» {target?.word ?? "–"}</Text>
+                <Text style={styles.translation}>
+                  <Text style={styles.sourceWord}>{word.translations[0].word}</Text>
+                  <Text style={styles.translationArrow}> » </Text>
+                  {word.translations[1].word}
+                </Text>
               </View>
               <Pressable
                 style={styles.actionsColumn}

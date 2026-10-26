@@ -71,6 +71,6 @@ const headerStyles = StyleSheet.create({
     textAlign: "center",
     fontSize: 18,
     fontWeight: "600",
-    color: colors.qwColorHeading,
+    color: colors.qwPrimary,
   },
 });

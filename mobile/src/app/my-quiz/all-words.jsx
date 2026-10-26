@@ -3,14 +3,7 @@ import PreLoader from "../../components/PreLoader/pre-loader";
 import Search from "../../components/Search/search";
 import useQuiz from "@quizword/shared/quiz/useQuiz";
 import { useRef, useState } from "react";
-import {
-  Alert,
-  Button,
-  FlatList,
-  Pressable,
-  Text,
-  View,
-} from "react-native";
+import { Alert, Button, FlatList, Pressable, Text, View } from "react-native";
 import { Checkbox } from "expo-checkbox";
 import EditIcon from "../../../assets/icons/edit.svg";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -26,7 +19,15 @@ export default function AllWords() {
   const { logout } = useAuth();
   const [loggingOut, setLoggingOut] = useState(false);
   const { language } = useLocalSearchParams();
-  const { userLanguages, loading, words, getFiltredConcepts, getConcepts, nextPage, previousPage } = useVocabulary();
+  const {
+    userLanguages,
+    loading,
+    words,
+    getFiltredConcepts,
+    getConcepts,
+    nextPage,
+    previousPage,
+  } = useVocabulary();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedWordIds, setSelectedWordIds] = useState([]);
   const activeLanguage = Array.isArray(language) ? language[0] : language;
@@ -109,8 +110,8 @@ export default function AllWords() {
 
   return (
     <SafeAreaView
-    style={allWordsStyles.screen}
-    edges={['top', 'right', 'bottom', 'left']}
+      style={allWordsStyles.screen}
+      edges={["top", "right", "left"]}
     >
       <FlatList
         contentContainerStyle={allWordsStyles.content}
@@ -120,7 +121,10 @@ export default function AllWords() {
         extraData={selectedWordIds}
         ListHeaderComponent={
           <View>
-            <ScreenHeaderCustomer title="Wörter" style={allWordsStyles.screenHeader} />
+            <ScreenHeaderCustomer
+              title="Wörter"
+              style={allWordsStyles.screenHeader}
+            />
             <View style={allWordsStyles.vocabularyHeader}>
               <Text style={allWordsStyles.title} accessibilityRole="header">
                 Deine Vokabeln
@@ -162,45 +166,41 @@ export default function AllWords() {
                   </Pressable>
                 </Link>
               </View>
-
             </View>
 
-              <View
-                style={allWordsStyles.languages}
-                accessibilityRole="tablist"
-              >
-                {userLanguages.map((lang) => {
-                  const selected = String(lang.id) === activeLanguage;
-                  return (
-                    <Pressable
-                      key={lang.id}
-                      testID={`language-${lang.id}`}
-                      accessibilityRole="tab"
-                      accessibilityState={{ selected }}
-                      onPress={() => selectLanguage(lang.id)}
-                      style={({ pressed }) => [
-                        allWordsStyles.language,
-                        selected && allWordsStyles.languageActive,
-                        pressed && allWordsStyles.languagePressed,
+            <View style={allWordsStyles.languages} accessibilityRole="tablist">
+              {userLanguages.map((lang) => {
+                const selected = String(lang.id) === activeLanguage;
+                return (
+                  <Pressable
+                    key={lang.id}
+                    testID={`language-${lang.id}`}
+                    accessibilityRole="tab"
+                    accessibilityState={{ selected }}
+                    onPress={() => selectLanguage(lang.id)}
+                    style={({ pressed }) => [
+                      allWordsStyles.language,
+                      selected && allWordsStyles.languageActive,
+                      pressed && allWordsStyles.languagePressed,
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        allWordsStyles.languageText,
+                        selected && allWordsStyles.languageTextActive,
                       ]}
                     >
-                      <Text
-                        style={[
-                          allWordsStyles.languageText,
-                          selected && allWordsStyles.languageTextActive,
-                        ]}
-                      >
-                        {lang.language_name}
-                      </Text>
-                    </Pressable>
-                  );
-                })}
-                {!loading && userLanguages.length === 0 && (
-                  <Text style={allWordsStyles.message}>
-                    Noch keine Lernsprachen vorhanden.
-                  </Text>
-                )}
-              </View>
+                      {lang.language_name}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+              {!loading && userLanguages.length === 0 && (
+                <Text style={allWordsStyles.message}>
+                  Noch keine Lernsprachen vorhanden.
+                </Text>
+              )}
+            </View>
 
             <View style={allWordsStyles.listHead}>
               <Text
@@ -282,7 +282,9 @@ export default function AllWords() {
         ListFooterComponent={
           <View>
             <View style={allWordsStyles.pagination}>
-              <Text style={allWordsStyles.paginationCount}>{words?.count ?? 0} Wörter</Text>
+              <Text style={allWordsStyles.paginationCount}>
+                {words?.count ?? 0} Wörter
+              </Text>
               <View style={allWordsStyles.pages}>
                 <Pressable
                   testID="previous-page"
@@ -291,11 +293,27 @@ export default function AllWords() {
                   accessibilityState={{ disabled: loading || !previousPage }}
                   disabled={loading || !previousPage}
                   onPress={() => changePage(currentPage - 1)}
-                  style={[allWordsStyles.paginationButton, (loading || !previousPage) && styles.buttonDisabled]}
+                  style={[
+                    allWordsStyles.paginationButton,
+                    (loading || !previousPage) && styles.buttonDisabled,
+                  ]}
                 >
-                  <Text style={[allWordsStyles.paginationButtonText, (loading || !previousPage) && styles.buttonTextDisabled]}>{"<"}</Text>
+                  <Text
+                    style={[
+                      allWordsStyles.paginationButtonText,
+                      (loading || !previousPage) && styles.buttonTextDisabled,
+                    ]}
+                  >
+                    {"<"}
+                  </Text>
                 </Pressable>
-                <Text style={allWordsStyles.pageNumber} accessibilityLabel={`Seite ${currentPage}`} accessibilityLiveRegion="polite">{currentPage}</Text>
+                <Text
+                  style={allWordsStyles.pageNumber}
+                  accessibilityLabel={`Seite ${currentPage}`}
+                  accessibilityLiveRegion="polite"
+                >
+                  {currentPage}
+                </Text>
                 <Pressable
                   testID="next-page"
                   accessibilityRole="button"
@@ -303,9 +321,19 @@ export default function AllWords() {
                   accessibilityState={{ disabled: loading || !nextPage }}
                   disabled={loading || !nextPage}
                   onPress={() => changePage(currentPage + 1)}
-                  style={[allWordsStyles.paginationButton, (loading || !nextPage) && styles.buttonDisabled]}
+                  style={[
+                    allWordsStyles.paginationButton,
+                    (loading || !nextPage) && styles.buttonDisabled,
+                  ]}
                 >
-                  <Text style={[allWordsStyles.paginationButtonText, (loading || !nextPage) && styles.buttonTextDisabled]}>{">"}</Text>
+                  <Text
+                    style={[
+                      allWordsStyles.paginationButtonText,
+                      (loading || !nextPage) && styles.buttonTextDisabled,
+                    ]}
+                  >
+                    {">"}
+                  </Text>
                 </Pressable>
               </View>
             </View>

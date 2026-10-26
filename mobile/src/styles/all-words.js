@@ -9,6 +9,7 @@ export const allWordsStyles = StyleSheet.create({
   },
   content: {
     padding: 16,
+    paddingTop: 0,
   },
   screenHeader: {
     marginHorizontal: -16,

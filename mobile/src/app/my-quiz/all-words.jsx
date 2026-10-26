@@ -25,7 +25,8 @@ export default function AllWords() {
   const { logout } = useAuth();
   const [loggingOut, setLoggingOut] = useState(false);
   const { language } = useLocalSearchParams();
-  const { userLanguages, loading, words, getFiltredConcepts } = useVocabulary();
+  const { userLanguages, loading, words, getFiltredConcepts, getConcepts, nextPage, previousPage } = useVocabulary();
+  const [currentPage, setCurrentPage] = useState(1);
   const [selectedWordIds, setSelectedWordIds] = useState([]);
   const activeLanguage = Array.isArray(language) ? language[0] : language;
 
@@ -44,9 +45,20 @@ export default function AllWords() {
   }
 
   function selectLanguage(id) {
+    setCurrentPage(1);
     setSelectedWordIds([]);
     router.setParams({ language: String(id) });
     void getFiltredConcepts(id);
+  }
+
+  function changePage(page) {
+    if (loading || page < 1) return;
+    setCurrentPage(page);
+    if (activeLanguage) {
+      void getFiltredConcepts(activeLanguage, page);
+    } else {
+      void getConcepts(page);
+    }
   }
 
   async function handleCreateQuiz() {
@@ -266,11 +278,41 @@ export default function AllWords() {
           );
         }}
         ListFooterComponent={
-          <Button
-            title={loggingOut ? "Logging out…" : "Log out"}
-            onPress={handleLogout}
-            disabled={loggingOut}
-          />
+          <View>
+            <View style={allWordsStyles.pagination}>
+              <Text style={allWordsStyles.paginationCount}>{words?.count ?? 0} Wörter</Text>
+              <View style={allWordsStyles.pages}>
+                <Pressable
+                  testID="previous-page"
+                  accessibilityRole="button"
+                  accessibilityLabel="Vorherige Seite"
+                  accessibilityState={{ disabled: loading || !previousPage }}
+                  disabled={loading || !previousPage}
+                  onPress={() => changePage(currentPage - 1)}
+                  style={[allWordsStyles.paginationButton, (loading || !previousPage) && styles.buttonDisabled]}
+                >
+                  <Text style={[allWordsStyles.paginationButtonText, (loading || !previousPage) && styles.buttonTextDisabled]}>{"<"}</Text>
+                </Pressable>
+                <Text style={allWordsStyles.pageNumber} accessibilityLabel={`Seite ${currentPage}`} accessibilityLiveRegion="polite">{currentPage}</Text>
+                <Pressable
+                  testID="next-page"
+                  accessibilityRole="button"
+                  accessibilityLabel="Nächste Seite"
+                  accessibilityState={{ disabled: loading || !nextPage }}
+                  disabled={loading || !nextPage}
+                  onPress={() => changePage(currentPage + 1)}
+                  style={[allWordsStyles.paginationButton, (loading || !nextPage) && styles.buttonDisabled]}
+                >
+                  <Text style={[allWordsStyles.paginationButtonText, (loading || !nextPage) && styles.buttonTextDisabled]}>{">"}</Text>
+                </Pressable>
+              </View>
+            </View>
+            <Button
+              title={loggingOut ? "Logging out…" : "Log out"}
+              onPress={handleLogout}
+              disabled={loggingOut}
+            />
+          </View>
         }
       />
       <CreateQuizModal

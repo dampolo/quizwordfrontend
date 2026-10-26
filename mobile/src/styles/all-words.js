@@ -174,4 +174,41 @@ export const allWordsStyles = StyleSheet.create({
     fontWeight: "700",
     color: colors.qwFourth,
   },
+  pagination: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 12,
+    paddingVertical: 16,
+  },
+  paginationCount: {
+    fontSize: 14,
+    color: colors.qwBodyTextColor,
+  },
+  pages: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  paginationButton: {
+    minWidth: 26,
+    minHeight: 26,
+    padding: 6,
+    borderRadius: 10,
+    backgroundColor: colors.qwPrimary,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  paginationButtonText: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: colors.qwFourth,
+  },
+  pageNumber: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: colors.qwColorHeading,
+    textAlign: "center",
+  },
 });

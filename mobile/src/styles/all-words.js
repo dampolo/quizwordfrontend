@@ -10,6 +10,9 @@ export const allWordsStyles = StyleSheet.create({
   content: {
     padding: 16,
   },
+  screenHeader: {
+    marginHorizontal: -16,
+  },
   languages: {
     flexDirection: "row",
     flexWrap: "wrap",

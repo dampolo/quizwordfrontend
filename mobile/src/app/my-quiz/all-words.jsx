@@ -20,6 +20,7 @@ import { useAuth } from "../../context/auth/useAuth";
 import { allWordsStyles } from "../../styles/all-words";
 import { styles } from "../../styles/styles";
 import { colors } from "../../styles/basic";
+import ScreenHeaderCustomer from "../../components/ScreenHeaderCustomer/ScreenHeaderCustomer";
 
 export default function AllWords() {
   const { logout } = useAuth();
@@ -108,8 +109,8 @@ export default function AllWords() {
 
   return (
     <SafeAreaView
-      style={allWordsStyles.screen}
-      edges={["top", "left", "right"]}
+    style={allWordsStyles.screen}
+    edges={['top', 'right', 'bottom', 'left']}
     >
       <FlatList
         contentContainerStyle={allWordsStyles.content}
@@ -119,6 +120,7 @@ export default function AllWords() {
         extraData={selectedWordIds}
         ListHeaderComponent={
           <View>
+            <ScreenHeaderCustomer title="Wörter" style={allWordsStyles.screenHeader} />
             <View style={allWordsStyles.vocabularyHeader}>
               <Text style={allWordsStyles.title} accessibilityRole="header">
                 Deine Vokabeln

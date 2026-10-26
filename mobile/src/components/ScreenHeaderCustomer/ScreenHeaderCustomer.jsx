@@ -1,11 +1,16 @@
-import { router } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import ArrowLeft from '../../../assets/icons/arrow-left.svg';
-import { colors } from '../../styles/basic';
-import Logo from '../Logo/logo';
+import { router } from "expo-router";
+import { useTranslation } from "react-i18next";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import ArrowLeft from "../../../assets/icons/arrow-left.svg";
+import { colors } from "../../styles/basic";
+import Logo from "../Logo/logo";
 
-export default function ScreenHeaderCustomer({ title, fallbackHref = '/my-quiz', titleStyle, style }) {
+export default function ScreenHeaderCustomer({
+  title,
+  fallbackHref = "/my-quiz",
+  titleStyle,
+  style,
+}) {
   const { t } = useTranslation();
 
   function goBack() {
@@ -17,21 +22,29 @@ export default function ScreenHeaderCustomer({ title, fallbackHref = '/my-quiz',
     <View style={[headerStyles.container, style]}>
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel={t('MOBILE.GO_BACK')}
+        accessibilityLabel={t("MOBILE.GO_BACK")}
         hitSlop={12}
-        style={({ hovered, pressed }) => [headerStyles.action, { opacity: hovered || pressed ? 0.6 : 1 }]}
+        style={({ hovered, pressed }) => [
+          headerStyles.action,
+          { opacity: hovered || pressed ? 0.6 : 1 },
+        ]}
         onPress={goBack}
       >
         <ArrowLeft width={32} height={32} />
       </Pressable>
 
-      <Text accessibilityRole="header" style={[headerStyles.title, titleStyle]}>{title}</Text>
+      <Text accessibilityRole="header" style={[headerStyles.title, titleStyle]}>
+        {title}
+      </Text>
       <Pressable
         accessibilityRole="link"
-        accessibilityLabel={t('MOBILE.HOME_LABEL')}
+        accessibilityLabel={t("MOBILE.HOME_LABEL")}
         hitSlop={6}
-        onPress={() => router.navigate('/website')}
-        style={({ hovered, pressed }) => [headerStyles.action, { opacity: hovered || pressed ? 0.6 : 1 }]}
+        onPress={() => router.navigate("/website")}
+        style={({ hovered, pressed }) => [
+          headerStyles.action,
+          { opacity: hovered || pressed ? 0.6 : 1 },
+        ]}
       >
         <Logo size={40} />
       </Pressable>
@@ -41,8 +54,8 @@ export default function ScreenHeaderCustomer({ title, fallbackHref = '/my-quiz',
 
 const headerStyles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: colors.qwThird,
     paddingVertical: 8,
     marginBottom: 16,
@@ -50,14 +63,14 @@ const headerStyles = StyleSheet.create({
   action: {
     minWidth: 48,
     minHeight: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     flex: 1,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
     color: colors.qwColorHeading,
   },
 });

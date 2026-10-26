@@ -177,4 +177,12 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.regular,
     marginBottom: 10,
   },
+  showContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    opacity: 1,
+    visibility: "visible",
+    zIndex: 5,
+  },
 });

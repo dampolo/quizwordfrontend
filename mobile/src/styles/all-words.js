@@ -65,8 +65,10 @@ export const allWordsStyles = StyleSheet.create({
     paddingVertical: 10,
     minHeight: 64,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.qwBorderColor,
     backgroundColor: colors.qwFourth
+  },
+  loadingRow: {
+    justifyContent: "center",
   },
   checkColumn: {
     width: 30,
@@ -171,23 +173,5 @@ export const allWordsStyles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "700",
     color: colors.qwFourth,
-  },
-  dialogBackdrop: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.45)",
-  },
-  dialogScroll: {
-    flexGrow: 1,
-    justifyContent: "center",
-    padding: 24,
-  },
-  dialog: {
-    width: "100%",
-    maxWidth: 480,
-    alignSelf: "center",
-    padding: 24,
-    gap: 16,
-    borderRadius: 16,
-    backgroundColor: colors.qwFourth,
   },
 });

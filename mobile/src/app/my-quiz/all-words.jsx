@@ -1,23 +1,18 @@
+import CreateQuizModal from "../../components/CreateQuizModal/create-quiz-modal";
+import PreLoader from "../../components/PreLoader/pre-loader";
 import Search from "../../components/Search/search";
 import useQuiz from "@quizword/shared/quiz/useQuiz";
 import { useRef, useState } from "react";
 import {
-  ActivityIndicator,
   Alert,
   Button,
   FlatList,
-  KeyboardAvoidingView,
-  Modal,
-  Platform,
   Pressable,
-  ScrollView,
   Text,
-  TextInput,
   View,
 } from "react-native";
 import { Checkbox } from "expo-checkbox";
 import EditIcon from "../../../assets/icons/edit.svg";
-import { tabColors } from "../../styles/my-quiz-tabs";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import useVocabulary from "@quizword/shared/vocabulary/useVocabulary";
@@ -153,65 +148,9 @@ export default function AllWords() {
                   </Pressable>
                 </Link>
               </View>
-              <Modal
-                visible={dialogOpen}
-                transparent
-                animationType="fade"
-                onRequestClose={() => {
-                  if (!submitting) setDialogOpen(false);
-                }}
-              >
-                <KeyboardAvoidingView
-                  style={allWordsStyles.dialogBackdrop}
-                  behavior={Platform.OS === "ios" ? "padding" : "height"}
-                >
-                  <ScrollView
-                    contentContainerStyle={allWordsStyles.dialogScroll}
-                    keyboardShouldPersistTaps="handled"
-                  >
-                    <View
-                      style={allWordsStyles.dialog}
-                      accessibilityViewIsModal
-                    >
-                      <Text
-                        style={allWordsStyles.title}
-                        accessibilityRole="header"
-                      >
-                        Erstelle dein Quiz
-                      </Text>
-                      <Text style={allWordsStyles.description}>
-                        {selectedWordIds.length} Wörter ausgewählt
-                      </Text>
-                      <TextInput
-                        style={allWordsStyles.searchInput}
-                        accessibilityLabel="Quizname"
-                        placeholder="Quizname (mindestens 3 Zeichen)"
-                        testID="quiz-name"
-                        value={quizName}
-                        onChangeText={setQuizName}
-                        editable={!submitting}
-                      />
-                      <Button
-                        title={
-                          submitting ? "Wird erstellt …" : "Quiz erstellen"
-                        }
-                        onPress={handleCreateQuiz}
-                        disabled={submitting || quizName.trim().length < 3}
-                      />
-                      <Button
-                        title="Abbrechen"
-                        onPress={() => setDialogOpen(false)}
-                        disabled={submitting}
-                      />
-                    </View>
-                  </ScrollView>
-                </KeyboardAvoidingView>
-              </Modal>
+
             </View>
 
-            {loading ? (
-              <ActivityIndicator accessibilityLabel="Sprachen werden geladen" />
-            ) : (
               <View
                 style={allWordsStyles.languages}
                 accessibilityRole="tablist"
@@ -242,13 +181,12 @@ export default function AllWords() {
                     </Pressable>
                   );
                 })}
-                {userLanguages.length === 0 && (
+                {!loading && userLanguages.length === 0 && (
                   <Text style={allWordsStyles.message}>
                     Noch keine Lernsprachen vorhanden.
                   </Text>
                 )}
               </View>
-            )}
 
             <View style={allWordsStyles.listHead}>
               <Text
@@ -272,7 +210,9 @@ export default function AllWords() {
         }
         ListEmptyComponent={
           loading ? (
-            <ActivityIndicator accessibilityLabel="Wörter werden geladen" />
+            <View style={[allWordsStyles.listRow, allWordsStyles.loadingRow]}>
+              <PreLoader />
+            </View>
           ) : (
             <Text style={allWordsStyles.message}>
               Du hast hier keine Wörter.
@@ -332,6 +272,15 @@ export default function AllWords() {
             disabled={loggingOut}
           />
         }
+      />
+      <CreateQuizModal
+        visible={dialogOpen}
+        quizName={quizName}
+        selectedWordsCount={selectedWordIds.length}
+        submitting={submitting}
+        onQuizNameChange={setQuizName}
+        onSubmit={handleCreateQuiz}
+        onClose={() => setDialogOpen(false)}
       />
     </SafeAreaView>
   );

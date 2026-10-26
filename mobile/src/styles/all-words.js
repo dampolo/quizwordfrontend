@@ -2,10 +2,10 @@ import { StyleSheet } from "react-native";
 import { colors } from "./basic";
 import { tabColors } from "./my-quiz-tabs";
 
-export const styles = StyleSheet.create({
+export const allWordsStyles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: colors.qwFourth,
+    backgroundColor: colors.qwBgQuiz,
   },
   content: {
     padding: 16,
@@ -66,6 +66,7 @@ export const styles = StyleSheet.create({
     minHeight: 64,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.qwBorderColor,
+    backgroundColor: colors.qwFourth
   },
   checkColumn: {
     width: 30,
@@ -84,7 +85,6 @@ export const styles = StyleSheet.create({
   },
   actionsColumn: {
     width: 72,
-    minHeight: 44,
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
@@ -112,5 +112,82 @@ export const styles = StyleSheet.create({
     height: 16,
     borderWidth: 1,
     borderRadius: 3,
+  },
+  vocabularyHeader: {
+    gap: 16,
+    marginBottom: 8,
+  },
+  title: {
+    fontSize: 28,
+    lineHeight: 36,
+    fontWeight: "700",
+    color: colors.qwColorHeading,
+  },
+  description: {
+    fontSize: 14,
+    lineHeight: 22,
+    color: colors.qwBodyTextColor,
+  },
+  search: {
+    gap: 12,
+  },
+  searchInput: {
+    minHeight: 48,
+    borderWidth: 1,
+    borderColor: colors.qwBorderColor,
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    fontSize: 16,
+    color: colors.qwColorHeading,
+    backgroundColor: colors.qwFourth,
+  },
+  searchResults: {
+    gap: 8,
+    padding: 12,
+    backgroundColor: colors.qwFifth,
+    borderRadius: 10,
+  },
+  searchResult: {
+    paddingVertical: 8,
+    gap: 4,
+  },
+  createButtons: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 12,
+  },
+  createButton: {
+    flexGrow: 1,
+    minHeight: 48,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.qwPrimary,
+  },
+  createButtonText: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: colors.qwFourth,
+  },
+  dialogBackdrop: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.45)",
+  },
+  dialogScroll: {
+    flexGrow: 1,
+    justifyContent: "center",
+    padding: 24,
+  },
+  dialog: {
+    width: "100%",
+    maxWidth: 480,
+    alignSelf: "center",
+    padding: 24,
+    gap: 16,
+    borderRadius: 16,
+    backgroundColor: colors.qwFourth,
   },
 });

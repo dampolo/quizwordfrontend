@@ -19,6 +19,7 @@ export default function MyQuizLayout() {
       <QuizProvider api={process.env.EXPO_PUBLIC_API_URL}>
         <Tabs
           initialRouteName="all-words"
+          backBehavior="history"
           screenOptions={{
             headerShown: false,
             tabBarHideOnKeyboard: true,

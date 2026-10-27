@@ -276,29 +276,22 @@ export default function AllWords() {
                 </Text>
               </View>
               <Pressable
-                style={({ pressed }) => [
-                  allWordsStyles.actionsColumn,
-                  allWordsStyles.editButton,
-                  pressed && styles.pressed,
-                ]}
-                hitSlop={8}
+                style={allWordsStyles.actionsColumn}
                 testID={`edit-word-${word.id}`}
                 onPress={() =>
-                  router.push({
+                  router.navigate({
                     pathname: "/my-quiz/edit-word",
                     params: {
                       id: String(word.id),
-                      targetWord: String(word.translations[1].id),
                       language: String(word.translations[1].language),
+                      targetWord: String(word.translations[1].id),
                     },
                   })
                 }
                 accessibilityRole="button"
                 accessibilityLabel="Wort bearbeiten"
               >
-                <View pointerEvents="none" accessible={false}>
-                  <EditIcon width={19} height={19} accessible={false} />
-                </View>
+                <EditIcon width={19} height={19} accessible={false} />
               </Pressable>
             </View>
           );

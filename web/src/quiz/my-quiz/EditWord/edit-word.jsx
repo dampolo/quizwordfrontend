@@ -39,6 +39,7 @@ export default function EditWord() {
   const {
     getConcept,
     updateWord,
+    getFiltredConcepts,
     deleteWord,
     categories,
     getFiltredCategories,
@@ -88,9 +89,7 @@ export default function EditWord() {
     try {
       await updateWord(Number(id), formData);
       toast.success(`Wort "${formData.translations[1].word}" wurde geändert!`);
-      navigate(
-        `/my-quiz/all-words?language=${formData.translations[1].language}`,
-      );
+      finishSave();
     } catch (err) {
       console.error(err);
 
@@ -98,6 +97,13 @@ export default function EditWord() {
 
       toast.error(message);
     }
+  }
+
+  function finishSave() {
+    void getFiltredConcepts(formData.translations[1].language);
+    navigate(
+      `/my-quiz/all-words?language=${formData.translations[1].language}`,
+    );
   }
 
   function updateTranslation(index, changes) {

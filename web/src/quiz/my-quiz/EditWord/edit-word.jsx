@@ -2,6 +2,7 @@ import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import { useEffect, useState } from "react";
 import {
   Link,
+  useLocation,
   useNavigate,
   useParams,
   useSearchParams,
@@ -39,7 +40,6 @@ export default function EditWord() {
   const {
     getConcept,
     updateWord,
-    getFiltredConcepts,
     deleteWord,
     categories,
     getFiltredCategories,
@@ -57,6 +57,12 @@ export default function EditWord() {
   const targetWord = searchParams.get("target-word");
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const returnParams = new URLSearchParams(
+    location.state?.wordsSearch ?? searchParams.toString(),
+  );
+  returnParams.delete("target-word");
+  const returnTo = `/my-quiz/all-words?${returnParams.toString()}`;
 
   const [moreSource, setMoreSource] = useState(false);
   const [moreTarget, setMoreTarget] = useState(false);
@@ -100,10 +106,7 @@ export default function EditWord() {
   }
 
   function finishSave() {
-    void getFiltredConcepts(formData.translations[1].language);
-    navigate(
-      `/my-quiz/all-words?language=${formData.translations[1].language}`,
-    );
+    navigate(returnTo);
   }
 
   function updateTranslation(index, changes) {
@@ -209,7 +212,13 @@ export default function EditWord() {
 
   return (
     <section className={styles["add-word-page"]}>
-      <BackButton to={`/my-quiz/all-words?language=${languageId}`} />
+      <BackButton
+        to={returnTo}
+        onClick={(event) => {
+          event.preventDefault();
+          finishSave();
+        }}
+      />
       <header className={styles["page-header"]}>
         <div>
           <h1>Edit Dein Word</h1>
@@ -447,7 +456,11 @@ export default function EditWord() {
           </button>
 
           <Link
-            to={`/my-quiz/all-words?language=${formData.translations[1].language}`}
+            to={returnTo}
+            onClick={(event) => {
+              event.preventDefault();
+              finishSave();
+            }}
             className={`${styles["main-quiz-button-cancel"]} ${styles["cancel-btn"]}`}
           >
             {t("BUTTONS.CANCEL")}

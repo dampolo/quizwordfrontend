@@ -31,7 +31,10 @@ function AllWords() {
   const filterDialogRef = useRef(null);
   const { createQuiz, getLastFlipCard, postRandomQuiz } =
     useQuiz();
-  const [currentPage, setCurrentPage] = useState(1);
+  const requestedPage = Number(searchParams.get("page") || 1);
+  const currentPage = Number.isSafeInteger(requestedPage) && requestedPage > 0
+    ? requestedPage
+    : 1;
   const [message, setMessage] = useState("");
 
   const filterDate = searchParams.get("created_at__date") || "";
@@ -93,16 +96,23 @@ function AllWords() {
     } else {
       params.delete("created_at__date");
     }
-    setCurrentPage(1);
+    params.set("page", "1");
     setSelectedWordIds([]);
     setSearchParams(params);
   }
 
   function selectLanguage(languageId) {
     setSelectedWordIds([]);
-    setCurrentPage(1);
     const params = new URLSearchParams(searchParams);
     params.set("language", languageId);
+    params.set("page", "1");
+    setSearchParams(params);
+  }
+
+  function changePage(page) {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", String(page));
+    setSelectedWordIds([]);
     setSearchParams(params);
   }
 
@@ -262,6 +272,7 @@ function AllWords() {
               <div className={styles["actions"]}>
                 <Link
                   to={`/my-quiz/${word.id}/edit-word?target-word=${word.translations[1].id}&language=${word.translations[1].language}`}
+                  state={{ wordsSearch: searchParams.toString() }}
                 >
                   <img src="/assets/edit.svg" alt="edit" />
                 </Link>
@@ -278,7 +289,7 @@ function AllWords() {
               type="button"
               className={`main-quiz-button ${styles["btn-pagination"]}`}
               disabled={!previousPage}
-              onClick={() => setCurrentPage((prev) => prev - 1)}
+              onClick={() => changePage(currentPage - 1)}
             >
               &lt;
             </button>
@@ -286,7 +297,7 @@ function AllWords() {
             <button
               className={`main-quiz-button ${styles["btn-pagination"]}`}
               disabled={!nextPage}
-              onClick={() => setCurrentPage((prev) => prev + 1)}
+              onClick={() => changePage(currentPage + 1)}
             >
               &gt;
             </button>

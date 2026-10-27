@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { router } from "expo-router";
 import {
   FlatList,
   Modal,
+  Platform,
   Pressable,
   ScrollView,
   Text,
@@ -43,6 +44,58 @@ export default function AddNewWord() {
   const submittingRef = useRef(false);
   const categoriesLoadingRef = useRef(false);
   const pendingSave = useRef(false);
+  const scrollRef = useRef(null);
+  const contentRef = useRef(null);
+  const sourceWordRef = useRef(null);
+  const targetWordRef = useRef(null);
+  const targetLanguageRef = useRef(null);
+  const [requiredError, setRequiredError] = useState(null);
+
+  useLayoutEffect(() => {
+    if (!requiredError) return;
+    const fieldRef =
+      requiredError.field === "source-word"
+        ? sourceWordRef
+        : requiredError.field === "target-word"
+          ? targetWordRef
+          : targetLanguageRef;
+    let active = true;
+
+    if (requiredError.field === "target-language") {
+      sourceWordRef.current?.blur();
+      targetWordRef.current?.blur();
+    } else if (Platform.OS === "web") {
+      fieldRef.current?.focus({ preventScroll: true });
+    } else {
+      fieldRef.current?.focus();
+    }
+
+    contentRef.current?.measure(
+      (
+        contentX,
+        contentY,
+        contentWidth,
+        contentHeight,
+        contentPageX,
+        contentPageY,
+      ) => {
+        fieldRef.current?.measure(
+          (fieldX, fieldY, fieldWidth, fieldHeight, fieldPageX, fieldPageY) => {
+            if (active) {
+              scrollRef.current?.scrollTo({
+                y: Math.max(0, fieldPageY - contentPageY - 24),
+                animated: true,
+              });
+            }
+          },
+        );
+      },
+    );
+
+    return () => {
+      active = false;
+    };
+  }, [requiredError]);
 
   useEffect(() => {
     clearCategories();
@@ -72,14 +125,19 @@ export default function AddNewWord() {
       ? formData.translations[1].language
       : formData.category;
   const busy = submitting || loading || categoriesLoading || Boolean(notice);
-  const canSave = Boolean(
-    nativeLanguage?.id &&
-    formData.translations[0].word.trim() &&
-    formData.translations[1].word.trim() &&
-    formData.translations[1].language,
-  );
 
   function updateTranslation(index, changes) {
+    if (changes.word?.trim()) {
+      const field = index === 0 ? "source-word" : "target-word";
+      setRequiredError((previous) =>
+        previous?.field === field ? null : previous,
+      );
+    }
+    if (index === 1 && changes.language) {
+      setRequiredError((previous) =>
+        previous?.field === "target-language" ? null : previous,
+      );
+    }
     setFormData((previous) => {
       const translations = [...previous.translations];
       translations[index] = { ...translations[index], ...changes };
@@ -111,14 +169,14 @@ export default function AddNewWord() {
   function getSubmitStyle({ pressed }) {
     return [
       styles.button,
-      pressed && !busy && canSave && styles.pressed,
-      (busy || !canSave) && styles.buttonDisabled,
+      pressed && !busy && styles.pressed,
+      busy && styles.buttonDisabled,
     ];
   }
 
   const submitTextStyle = [
     styles.buttonText,
-    (busy || !canSave) && styles.buttonTextDisabled,
+    busy && styles.buttonTextDisabled,
   ];
 
   function finishSave() {
@@ -150,8 +208,30 @@ export default function AddNewWord() {
   }
 
   async function saveWord(addAnother, allowNewMeaning = false) {
-    if (submittingRef.current || !canSave || categoriesLoadingRef.current)
+    if (submittingRef.current || loading || categoriesLoadingRef.current)
       return;
+    if (!formData.translations[0].word.trim()) {
+      setRequiredError({ field: "source-word" });
+      return;
+    }
+    if (!formData.translations[1].word.trim()) {
+      setRequiredError({ field: "target-word" });
+      return;
+    }
+    if (!formData.translations[1].language) {
+      setRequiredError({ field: "target-language" });
+      setSelection("language");
+      return;
+    }
+    setRequiredError(null);
+    if (!nativeLanguage?.id) {
+      setNotice({
+        title: "Sprache fehlt",
+        message:
+          "Deine Muttersprache konnte nicht geladen werden. Bitte versuche es erneut.",
+      });
+      return;
+    }
     submittingRef.current = true;
     setSubmitting(true);
     pendingSave.current = addAnother;
@@ -207,261 +287,319 @@ export default function AddNewWord() {
       edges={["top", "right", "left"]}
     >
       <ScrollView
+        ref={scrollRef}
         contentContainerStyle={addNewWordStyles.content}
         keyboardShouldPersistTaps="handled"
       >
-        <ScreenHeaderCustomer
-          title="Neues Wort"
-          style={addNewWordStyles.screenHeader}
-        />
+        <View ref={contentRef} collapsable={false}>
+          <ScreenHeaderCustomer
+            title="Neues Wort"
+            style={addNewWordStyles.screenHeader}
+          />
 
-        <View style={addNewWordStyles.pageHeader}>
-          <Text style={createQuizModalStyles.title} accessibilityRole="header">
-            Neues Wort hinzufügen
-          </Text>
-          <Text style={createQuizModalStyles.description}>
-            Erweitere deinen Wortschatz mit Kontext und Eselsbrücken.
-          </Text>
-        </View>
-
-        <View style={addNewWordStyles.card}>
-          <View style={addNewWordStyles.field}>
-            <Text style={addNewWordStyles.label}>Kategorie</Text>
-            <Pressable
-              testID="word-category"
-              style={addNewWordStyles.select}
-              accessibilityRole="button"
-              accessibilityLabel="Kategorie auswählen"
-              disabled={busy || !formData.translations[1].language}
-              onPress={() => setSelection("category")}
-            >
-              <Text style={addNewWordStyles.inputText}>
-                {categoriesLoading
-                  ? "Kategorien werden geladen …"
-                  : selectedCategory?.label || "Wähle Kategorie"}
-              </Text>
-              <Text style={addNewWordStyles.inputText}>⌄</Text>
-            </Pressable>
-          </View>
-
-          <View style={addNewWordStyles.panel}>
+          <View style={addNewWordStyles.pageHeader}>
             <Text
-              style={addNewWordStyles.panelTitle}
+              style={createQuizModalStyles.title}
               accessibilityRole="header"
             >
-              Ausgangswort
+              Neues Wort hinzufügen
             </Text>
-            <Text style={addNewWordStyles.label}>Begriff *</Text>
-            <TextInput
-              testID="source-word"
-              value={formData.translations[0].word}
-              onChangeText={(word) => updateTranslation(0, { word })}
-              editable={!busy}
-              accessibilityLabel="Ausgangswort: Begriff"
-              style={createQuizModalStyles.input}
-              placeholder="z. B. Resilience"
-            />
-            <Text style={addNewWordStyles.label}>Sprache</Text>
-            <View style={addNewWordStyles.select}>
-              <Text style={addNewWordStyles.inputText}>
-                {nativeLanguage?.language_name || "Muttersprache"}
-              </Text>
-            </View>
-            {moreSource && (
-              <View style={addNewWordStyles.field}>
-                <Text style={addNewWordStyles.label}>Tipp (Optional)</Text>
-                <TextInput
-                  testID="source-tip"
-                  value={formData.translations[0].tip}
-                  onChangeText={(tip) => updateTranslation(0, { tip })}
-                  editable={!busy}
-                  accessibilityLabel="Ausgangswort: Tipp"
-                  style={createQuizModalStyles.input}
-                  placeholder="Stell dir eine Feder vor, die zurückspringt"
-                />
-                <Text style={addNewWordStyles.label}>
-                  Beispielsatz (Optional)
-                </Text>
-                <TextInput
-                  testID="source-sentence"
-                  value={formData.translations[0].sentence}
-                  onChangeText={(sentence) =>
-                    updateTranslation(0, { sentence })
-                  }
-                  editable={!busy}
-                  accessibilityLabel="Ausgangswort: Beispielsatz"
-                  style={[
-                    createQuizModalStyles.input,
-                    addNewWordStyles.textarea,
-                  ]}
-                  placeholder="Verwende den Begriff in einem Satz."
-                  multiline
-                  textAlignVertical="top"
-                />
-              </View>
-            )}
-            <Pressable
-              testID="source-more"
-              accessibilityRole="button"
-              accessibilityLabel={
-                moreSource ? "Ausgangswort: weniger" : "Ausgangswort: mehr"
-              }
-              accessibilityState={{ expanded: moreSource, disabled: busy }}
-              disabled={busy}
-              onPress={() => setMoreSource((previous) => !previous)}
-              style={addNewWordStyles.moreButton}
-            >
-              <Text style={addNewWordStyles.moreText}>
-                {moreSource ? "weniger" : "mehr"}
-              </Text>
-            </Pressable>
-          </View>
-
-          <View style={[addNewWordStyles.panel, addNewWordStyles.targetPanel]}>
-            <Text
-              style={[
-                addNewWordStyles.panelTitle,
-                addNewWordStyles.targetTitle,
-              ]}
-              accessibilityRole="header"
-            >
-              Zielwort
-            </Text>
-            <Text style={addNewWordStyles.label}>Begriff *</Text>
-            <TextInput
-              testID="target-word"
-              value={formData.translations[1].word}
-              onChangeText={(word) => updateTranslation(1, { word })}
-              editable={!busy}
-              accessibilityLabel="Zielwort: Begriff"
-              style={createQuizModalStyles.input}
-              placeholder="z. B. Resiliencia"
-            />
-            <Text style={addNewWordStyles.label}>Sprache</Text>
-            <Pressable
-              testID="target-language"
-              style={addNewWordStyles.select}
-              accessibilityRole="button"
-              accessibilityLabel="Zielsprache auswählen"
-              disabled={busy}
-              onPress={() => setSelection("language")}
-            >
-              <Text style={addNewWordStyles.inputText}>
-                {selectedLanguage?.label || "Wähle Sprache"}
-              </Text>
-              <Text style={addNewWordStyles.inputText}>⌄</Text>
-            </Pressable>
-            {moreTarget && (
-              <View style={addNewWordStyles.field}>
-                <Text style={addNewWordStyles.label}>Tipp (Optional)</Text>
-                <TextInput
-                  testID="target-tip"
-                  value={formData.translations[1].tip}
-                  onChangeText={(tip) => updateTranslation(1, { tip })}
-                  editable={!busy}
-                  accessibilityLabel="Zielwort: Tipp"
-                  style={createQuizModalStyles.input}
-                  placeholder="Stell dir eine Feder vor, die zurückspringt"
-                />
-                <Text style={addNewWordStyles.label}>
-                  Beispielsatz (Optional)
-                </Text>
-                <TextInput
-                  testID="target-sentence"
-                  value={formData.translations[1].sentence}
-                  onChangeText={(sentence) =>
-                    updateTranslation(1, { sentence })
-                  }
-                  editable={!busy}
-                  accessibilityLabel="Zielwort: Beispielsatz"
-                  style={[
-                    createQuizModalStyles.input,
-                    addNewWordStyles.textarea,
-                  ]}
-                  placeholder="Verwende den Begriff in einem Satz."
-                  multiline
-                  textAlignVertical="top"
-                />
-              </View>
-            )}
-            <Pressable
-              testID="target-more"
-              accessibilityRole="button"
-              accessibilityLabel={
-                moreTarget ? "Zielwort: weniger" : "Zielwort: mehr"
-              }
-              accessibilityState={{ expanded: moreTarget, disabled: busy }}
-              disabled={busy}
-              onPress={() => setMoreTarget((previous) => !previous)}
-              style={addNewWordStyles.moreButton}
-            >
-              <Text style={addNewWordStyles.moreText}>
-                {moreTarget ? "weniger" : "mehr"}
-              </Text>
-            </Pressable>
-          </View>
-
-          <View style={addNewWordStyles.proTip}>
-            <Text style={addNewWordStyles.panelTitle}>💡 Profi-Tipp</Text>
             <Text style={createQuizModalStyles.description}>
-              Ein Beispielsatz hilft unserer KI dabei, bessere
-              Karteikartenvarianten für deine nächste Lerneinheit zu erstellen.
+              Erweitere deinen Wortschatz mit Kontext und Eselsbrücken.
             </Text>
           </View>
 
-          <View style={createQuizModalStyles.dialogActions}>
-            <Pressable
-              testID="cancel-add-word"
-              disabled={busy}
-              onPress={() => router.replace("/my-quiz/all-words")}
-              accessibilityRole="button"
-              style={[
-                createQuizModalStyles.dialogButton,
-                createQuizModalStyles.dialogCancelButton,
-              ]}
+          <View style={addNewWordStyles.card}>
+            <View style={addNewWordStyles.field}>
+              <Text style={addNewWordStyles.label}>Kategorie</Text>
+              <Pressable
+                testID="word-category"
+                style={addNewWordStyles.select}
+                accessibilityRole="button"
+                accessibilityLabel="Kategorie auswählen"
+                disabled={busy || !formData.translations[1].language}
+                onPress={() => setSelection("category")}
+              >
+                <Text style={addNewWordStyles.inputText}>
+                  {categoriesLoading
+                    ? "Kategorien werden geladen …"
+                    : selectedCategory?.label || "Wähle Kategorie"}
+                </Text>
+                <Text style={addNewWordStyles.inputText}>⌄</Text>
+              </Pressable>
+            </View>
+
+            <View style={addNewWordStyles.panel}>
+              <Text
+                style={addNewWordStyles.panelTitle}
+                accessibilityRole="header"
+              >
+                Ausgangswort
+              </Text>
+              <Text style={addNewWordStyles.label}>Begriff *</Text>
+              <TextInput
+                testID="source-word"
+                ref={sourceWordRef}
+                accessibilityHint={
+                  requiredError?.field === "source-word"
+                    ? "Fülle dieses Feld aus."
+                    : undefined
+                }
+                value={formData.translations[0].word}
+                onChangeText={(word) => updateTranslation(0, { word })}
+                editable={!busy}
+                accessibilityLabel="Ausgangswort: Begriff"
+                style={[
+                  createQuizModalStyles.input,
+                  requiredError?.field === "source-word" &&
+                    addNewWordStyles.invalidField,
+                ]}
+                placeholder="z. B. Resilience"
+              />
+              {requiredError?.field === "source-word" && (
+                <Text
+                  testID="source-word-error"
+                  accessibilityLiveRegion="polite"
+                  style={addNewWordStyles.requiredError}
+                >
+                  Fülle dieses Feld aus.
+                </Text>
+              )}
+              <Text style={addNewWordStyles.label}>Sprache</Text>
+              <View style={addNewWordStyles.select}>
+                <Text style={addNewWordStyles.inputText}>
+                  {nativeLanguage?.language_name || "Muttersprache"}
+                </Text>
+              </View>
+              {moreSource && (
+                <View style={addNewWordStyles.field}>
+                  <Text style={addNewWordStyles.label}>Tipp (Optional)</Text>
+                  <TextInput
+                    testID="source-tip"
+                    value={formData.translations[0].tip}
+                    onChangeText={(tip) => updateTranslation(0, { tip })}
+                    editable={!busy}
+                    accessibilityLabel="Ausgangswort: Tipp"
+                    style={createQuizModalStyles.input}
+                    placeholder="Stell dir eine Feder vor, die zurückspringt"
+                  />
+                  <Text style={addNewWordStyles.label}>
+                    Beispielsatz (Optional)
+                  </Text>
+                  <TextInput
+                    testID="source-sentence"
+                    value={formData.translations[0].sentence}
+                    onChangeText={(sentence) =>
+                      updateTranslation(0, { sentence })
+                    }
+                    editable={!busy}
+                    accessibilityLabel="Ausgangswort: Beispielsatz"
+                    style={[
+                      createQuizModalStyles.input,
+                      addNewWordStyles.textarea,
+                    ]}
+                    placeholder="Verwende den Begriff in einem Satz."
+                    multiline
+                    textAlignVertical="top"
+                  />
+                </View>
+              )}
+              <Pressable
+                testID="source-more"
+                accessibilityRole="button"
+                accessibilityLabel={
+                  moreSource ? "Ausgangswort: weniger" : "Ausgangswort: mehr"
+                }
+                accessibilityState={{ expanded: moreSource, disabled: busy }}
+                disabled={busy}
+                onPress={() => setMoreSource((previous) => !previous)}
+                style={addNewWordStyles.moreButton}
+              >
+                <Text style={addNewWordStyles.moreText}>
+                  {moreSource ? "weniger" : "mehr"}
+                </Text>
+              </Pressable>
+            </View>
+
+            <View
+              style={[addNewWordStyles.panel, addNewWordStyles.targetPanel]}
             >
               <Text
                 style={[
-                  createQuizModalStyles.dialogButtonText,
-                  createQuizModalStyles.dialogCancelText,
+                  addNewWordStyles.panelTitle,
+                  addNewWordStyles.targetTitle,
+                ]}
+                accessibilityRole="header"
+              >
+                Zielwort
+              </Text>
+              <Text style={addNewWordStyles.label}>Begriff *</Text>
+              <TextInput
+                testID="target-word"
+                ref={targetWordRef}
+                accessibilityHint={
+                  requiredError?.field === "target-word"
+                    ? "Fülle dieses Feld aus."
+                    : undefined
+                }
+                value={formData.translations[1].word}
+                onChangeText={(word) => updateTranslation(1, { word })}
+                editable={!busy}
+                accessibilityLabel="Zielwort: Begriff"
+                style={[
+                  createQuizModalStyles.input,
+                  requiredError?.field === "target-word" &&
+                    addNewWordStyles.invalidField,
+                ]}
+                placeholder="z. B. Resiliencia"
+              />
+              {requiredError?.field === "target-word" && (
+                <Text
+                  testID="target-word-error"
+                  accessibilityLiveRegion="polite"
+                  style={addNewWordStyles.requiredError}
+                >
+                  Fülle dieses Feld aus.
+                </Text>
+              )}
+              <Text style={addNewWordStyles.label}>Sprache</Text>
+              <Pressable
+                testID="target-language"
+                ref={targetLanguageRef}
+                accessibilityHint={
+                  requiredError?.field === "target-language"
+                    ? "Wähle eine Sprache aus."
+                    : undefined
+                }
+                style={[
+                  addNewWordStyles.select,
+                  requiredError?.field === "target-language" &&
+                    addNewWordStyles.invalidField,
+                ]}
+                accessibilityRole="button"
+                accessibilityLabel="Zielsprache auswählen"
+                disabled={busy}
+                onPress={() => setSelection("language")}
+              >
+                <Text style={addNewWordStyles.inputText}>
+                  {selectedLanguage?.label || "Wähle Sprache"}
+                </Text>
+                <Text style={addNewWordStyles.inputText}>⌄</Text>
+              </Pressable>
+              {requiredError?.field === "target-language" && (
+                <Text
+                  testID="target-language-error"
+                  accessibilityLiveRegion="polite"
+                  style={addNewWordStyles.requiredError}
+                >
+                  Wähle eine Sprache aus.
+                </Text>
+              )}
+              {moreTarget && (
+                <View style={addNewWordStyles.field}>
+                  <Text style={addNewWordStyles.label}>Tipp (Optional)</Text>
+                  <TextInput
+                    testID="target-tip"
+                    value={formData.translations[1].tip}
+                    onChangeText={(tip) => updateTranslation(1, { tip })}
+                    editable={!busy}
+                    accessibilityLabel="Zielwort: Tipp"
+                    style={createQuizModalStyles.input}
+                    placeholder="Stell dir eine Feder vor, die zurückspringt"
+                  />
+                  <Text style={addNewWordStyles.label}>
+                    Beispielsatz (Optional)
+                  </Text>
+                  <TextInput
+                    testID="target-sentence"
+                    value={formData.translations[1].sentence}
+                    onChangeText={(sentence) =>
+                      updateTranslation(1, { sentence })
+                    }
+                    editable={!busy}
+                    accessibilityLabel="Zielwort: Beispielsatz"
+                    style={[
+                      createQuizModalStyles.input,
+                      addNewWordStyles.textarea,
+                    ]}
+                    placeholder="Verwende den Begriff in einem Satz."
+                    multiline
+                    textAlignVertical="top"
+                  />
+                </View>
+              )}
+              <Pressable
+                testID="target-more"
+                accessibilityRole="button"
+                accessibilityLabel={
+                  moreTarget ? "Zielwort: weniger" : "Zielwort: mehr"
+                }
+                accessibilityState={{ expanded: moreTarget, disabled: busy }}
+                disabled={busy}
+                onPress={() => setMoreTarget((previous) => !previous)}
+                style={addNewWordStyles.moreButton}
+              >
+                <Text style={addNewWordStyles.moreText}>
+                  {moreTarget ? "weniger" : "mehr"}
+                </Text>
+              </Pressable>
+            </View>
+
+            <View style={addNewWordStyles.proTip}>
+              <Text style={addNewWordStyles.panelTitle}>💡 Profi-Tipp</Text>
+              <Text style={createQuizModalStyles.description}>
+                Ein Beispielsatz hilft unserer KI dabei, bessere
+                Karteikartenvarianten für deine nächste Lerneinheit zu
+                erstellen.
+              </Text>
+            </View>
+
+            <View style={createQuizModalStyles.dialogActions}>
+              <Pressable
+                testID="cancel-add-word"
+                disabled={busy}
+                onPress={() => router.replace("/my-quiz/all-words")}
+                accessibilityRole="button"
+                style={[
+                  createQuizModalStyles.dialogButton,
+                  createQuizModalStyles.dialogCancelButton,
                 ]}
               >
-                Abbrechen
-              </Text>
-            </Pressable>
-            <Pressable
-              testID="save-word"
-              disabled={busy || !canSave}
-              onPress={() => saveWord(false)}
-              accessibilityRole="button"
-              style={getSubmitStyle}
-            >
-              <Text
-                style={submitTextStyle}
+                <Text
+                  style={[
+                    createQuizModalStyles.dialogButtonText,
+                    createQuizModalStyles.dialogCancelText,
+                  ]}
+                >
+                  Abbrechen
+                </Text>
+              </Pressable>
+              <Pressable
+                testID="save-word"
+                disabled={busy}
+                onPress={() => saveWord(false)}
+                accessibilityRole="button"
+                style={getSubmitStyle}
               >
-                {submitting ? "Wird gespeichert …" : "Speichern"}
-              </Text>
-            </Pressable>
-            <Pressable
-              testID="save-another-word"
-              disabled={busy || !canSave}
-              onPress={() => saveWord(true)}
-              accessibilityRole="button"
-              accessibilityLabel="Speichern und neues Wort hinzufügen"
-              style={getSubmitStyle}
-            >
-              <Text
-                style={submitTextStyle}
+                <Text style={submitTextStyle}>
+                  {submitting ? "Wird gespeichert …" : "Speichern"}
+                </Text>
+              </Pressable>
+              <Pressable
+                testID="save-another-word"
+                disabled={busy}
+                onPress={() => saveWord(true)}
+                accessibilityRole="button"
+                accessibilityLabel="Speichern und neues Wort hinzufügen"
+                style={getSubmitStyle}
               >
-                Speichern +
-              </Text>
-            </Pressable>
+                <Text style={submitTextStyle}>Speichern +</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
       </ScrollView>
 
-
-      
       <Modal
         visible={Boolean(selection)}
         transparent
@@ -540,7 +678,6 @@ export default function AddNewWord() {
           </View>
         </View>
       </Modal>
-
 
       <Modal
         visible={Boolean(notice)}

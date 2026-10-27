@@ -30,6 +30,8 @@ export const addNewWordStyles = StyleSheet.create({
     backgroundColor: colors.qwFourth,
   },
   field: { gap: 10 },
+  invalidField: { borderColor: "#b91c1c" },
+  requiredError: { color: "#b91c1c" },
   label: { fontSize: 14, fontWeight: "600", color: colors.qwColorHeading },
   panel: {
     padding: 16,

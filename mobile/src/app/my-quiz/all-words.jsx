@@ -7,7 +7,7 @@ import { Alert, Button, FlatList, Pressable, Text, View } from "react-native";
 import { Checkbox } from "expo-checkbox";
 import EditIcon from "../../../assets/icons/edit.svg";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Link, router, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import useVocabulary from "@quizword/shared/vocabulary/useVocabulary";
 import { useAuth } from "../../context/auth/useAuth";
 import { allWordsStyles } from "../../styles/all-words";
@@ -93,6 +93,18 @@ export default function AllWords() {
     }
   }
 
+  function getSubmitStyle({ pressed }) {
+    return [styles.button, pressed && styles.pressed];
+  }
+
+  function getSubmitStyleQuiz({ pressed }) {
+    return [
+      styles.button,
+      pressed && selectedWordIds.length >= 3 && styles.pressed,
+      selectedWordIds.length < 3 && styles.buttonDisabled,
+    ];
+  }
+
   async function handleLogout() {
     if (loggingOut) return;
 
@@ -143,10 +155,7 @@ export default function AllWords() {
                   accessibilityState={{ disabled: selectedWordIds.length < 3 }}
                   disabled={selectedWordIds.length < 3}
                   onPress={() => setDialogOpen(true)}
-                  style={[
-                    allWordsStyles.createButton,
-                    selectedWordIds.length < 3 && styles.buttonDisabled,
-                  ]}
+                  style={getSubmitStyleQuiz}
                 >
                   <Text
                     style={[
@@ -157,14 +166,13 @@ export default function AllWords() {
                     + Quiz
                   </Text>
                 </Pressable>
-                <Link href="/my-quiz/add-new-word" asChild>
-                  <Pressable
-                    style={allWordsStyles.createButton}
-                    testID="add-word"
-                  >
-                    <Text style={allWordsStyles.createButtonText}>+ Wort</Text>
-                  </Pressable>
-                </Link>
+                <Pressable
+                  style={getSubmitStyle}
+                  testID="add-word"
+                  onPress={() => router.navigate("/my-quiz/add-new-word")}
+                >
+                  <Text style={styles.buttonText}>+ Wort</Text>
+                </Pressable>
               </View>
             </View>
 

@@ -163,16 +163,6 @@ export const allWordsStyles = StyleSheet.create({
     flexWrap: "wrap",
     gap: 12,
   },
-  createButton: {
-    flexGrow: 1,
-    minHeight: 48,
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.qwPrimary,
-  },
   createButtonText: {
     fontSize: 16,
     fontWeight: "700",

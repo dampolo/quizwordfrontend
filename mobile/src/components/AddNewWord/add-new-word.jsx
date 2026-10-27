@@ -174,10 +174,10 @@ export default function AddNewWord() {
     ];
   }
 
-  const submitTextStyle = [
-    styles.buttonText,
-    busy && styles.buttonTextDisabled,
-  ];
+  function submitTextStyle(){
+    return [styles.buttonText,
+    busy && styles.buttonTextDisabled]
+  } 
 
   function finishSave() {
     if (pendingSave.current) {

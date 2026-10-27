@@ -131,6 +131,7 @@ export default function AllWords() {
         data={loading ? [] : (words?.results ?? [])}
         keyExtractor={(word) => String(word.id)}
         extraData={selectedWordIds}
+        ListHeaderComponentStyle={allWordsStyles.listHeader}
         ListHeaderComponent={
           <View>
             <ScreenHeaderCustomer

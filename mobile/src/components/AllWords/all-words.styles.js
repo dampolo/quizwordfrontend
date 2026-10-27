@@ -136,7 +136,11 @@ export const allWordsStyles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 3,
   },
+  listHeader: {
+    zIndex: 1,
+  },
   vocabularyHeader: {
+    zIndex: 1,
     gap: 16,
     marginBottom: 8,
   },
@@ -150,30 +154,6 @@ export const allWordsStyles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 22,
     color: colors.qwBodyTextColor,
-  },
-  search: {
-    gap: 12,
-  },
-  searchInput: {
-    minHeight: 48,
-    borderWidth: 1,
-    borderColor: colors.qwBorderColor,
-    borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    fontSize: 16,
-    color: colors.qwColorHeading,
-    backgroundColor: colors.qwFourth,
-  },
-  searchResults: {
-    gap: 8,
-    padding: 12,
-    backgroundColor: colors.qwFifth,
-    borderRadius: 10,
-  },
-  searchResult: {
-    paddingVertical: 8,
-    gap: 4,
   },
   createButtons: {
     flexDirection: "row",

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { router } from "expo-router";
 import { ActivityIndicator, Alert, Pressable, Text, TextInput, View } from "react-native";
 import useVocabulary from "@quizword/shared/vocabulary/useVocabulary";
-import { allWordsStyles } from "../AllWords/all-words.styles";
+import { searchStyles } from "./search.styles";
 
 export default function Search() {
   const { searchVocabulary, userLanguages, languages } = useVocabulary();
@@ -48,9 +48,9 @@ export default function Search() {
   }, [query, searchVocabulary]);
 
   return (
-    <View style={allWordsStyles.search}>
+    <View style={searchStyles.search}>
       <TextInput
-        style={allWordsStyles.searchInput}
+        style={searchStyles.searchInput}
         testID="vocabulary-search"
         accessibilityLabel="Wörter und Übersetzungen suchen"
         placeholder="Wörter und Übersetzungen suchen …"
@@ -61,24 +61,24 @@ export default function Search() {
         returnKeyType="search"
       />
       {Boolean(query) && (
-        <View style={allWordsStyles.searchResults} accessibilityLiveRegion="polite">
+        <View style={searchStyles.searchResults} accessibilityLiveRegion="polite">
           {searchState.query !== query || searchState.loading
             ? <ActivityIndicator accessibilityLabel="Suche läuft" />
             : searchState.error
-              ? <Text style={allWordsStyles.description}>{searchState.error}</Text>
+              ? <Text style={searchStyles.description}>{searchState.error}</Text>
               : searchState.results.length === 0
-                ? <Text style={allWordsStyles.description}>Keine Wörter gefunden.</Text>
+                ? <Text style={searchStyles.description}>Keine Wörter gefunden.</Text>
                 : searchState.results.map((word) => (
                   <Pressable
                     key={`${word.concept_id}-${word.target_language}-${word.target_word}`}
-                    style={allWordsStyles.searchResult}
+                    style={searchStyles.searchResult}
                     testID={`search-result-${word.concept_id}-${word.target_language}`}
                     accessibilityRole="link"
                     accessibilityLabel={`${word.native_word} – ${word.target_word} ansehen`}
                     onPress={() => openSearchResult(word)}
                   >
-                    <Text style={allWordsStyles.translation}>{word.native_word} » {word.target_word}</Text>
-                    <Text style={allWordsStyles.description}>{word.native_language} → {word.target_language}</Text>
+                    <Text style={searchStyles.translation}>{word.native_word} » {word.target_word}</Text>
+                    <Text style={searchStyles.description}>{word.native_language} → {word.target_language}</Text>
                   </Pressable>
                 ))}
         </View>

@@ -122,6 +122,9 @@
     z-index: 1;
     font-size: clamp(1.3rem, 0.1556rem + 3.5556vw, 3rem);
   }
+  &__sound-button {
+    width: fit-content;
+  }
 }
 
 .buttons-flip {
@@ -145,6 +148,10 @@
 
 .play-quiz {
   perspective: 760px;
+}
+
+.sound-button {
+  width: fit-content;
 }
 
 .flip-card-inner {

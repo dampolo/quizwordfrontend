@@ -50,6 +50,7 @@ import DeleteAccount from "./quiz/my-quiz/Profile/DeleteAccount/delete-account";
 import ChangeProfileImage from "./quiz/my-quiz/Profile/ChangeProfileImage/change-profile-image";
 import Contact from "./website/Contact/contact";
 import FlipCardQuiz from "./quiz/my-quiz/quizzes/FlipCardQuiz/flip-card-quiz";
+import FlipCardQuizReverse from "./quiz/my-quiz/quizzes/FlipCardQuizReverse/flip-card-quiz-reverse";
 import Translation from "./quiz/my-quiz/Translate/Translation";
 import { TranslationProvider } from "./context/translation/TranslationProvider";
 
@@ -132,6 +133,7 @@ function App() {
               <Route path=":id/play-quiz" element={<PlayQuiz />} />
               <Route path=":id/hear-quiz" element={<HearQuiz />} />
               <Route path=":id/flip-card-quiz" element={<FlipCardQuiz />} />
+              <Route path=":id/flip-card-quiz-reverse" element={<FlipCardQuizReverse />} />
               <Route path=":id/learn-quiz" element={<LearnQuiz />} />
               <Route path=":id/word-audio-loop" element={<WordAudioLoop />} />
               <Route path=":id/word-audio-loop-reverse" element={<WordAudioLoopReverse />} />

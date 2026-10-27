@@ -5,7 +5,9 @@ import useQuiz from "../../../../context/quiz/useQuiz";
 import SpeakButton from "../../../../components/SpeakButton/SpeakButton";
 import useVocabulary from "../../../../context/vocabulary/useVocabulary";
 
-function FlipCardQuiz() {
+function FlipCardQuiz({ reverse = false }) {
+  const firstTranslation = reverse ? 1 : 0;
+  const secondTranslation = reverse ? 0 : 1;
   const [quiz, setQuiz] = useState(null);
   const { id } = useParams();
   const { getQuizWords } = useQuiz();
@@ -109,11 +111,11 @@ function FlipCardQuiz() {
           <span className={styles["quiz-name"]}>{quiz?.quiz_name}</span>
 
           {/* Sound */}
-          <button type="button"
+          <button className={styles["sound-button"]} type="button"
             onClick={() =>
               speakWord(
-                quiz?.concepts[currentQuestion].translations[0].word,
-                quiz?.concepts[currentQuestion].translations[0].language_code,
+                quiz?.concepts[currentQuestion].translations[firstTranslation].word,
+                quiz?.concepts[currentQuestion].translations[firstTranslation].language_code,
               )
             }
           >
@@ -122,8 +124,8 @@ function FlipCardQuiz() {
           {/* Sound Ende */}
 
           <span className={styles["languages"]}>
-            {quiz?.concepts[currentQuestion].translations[0].language_name} →{" "}
-            {quiz?.concepts[currentQuestion].translations[1].language_name}
+            {quiz?.concepts[currentQuestion].translations[firstTranslation].language_name} →{" "}
+            {quiz?.concepts[currentQuestion].translations[secondTranslation].language_name}
           </span>
 
           <button
@@ -138,7 +140,7 @@ function FlipCardQuiz() {
             <h1
               className={`${styles["quiz-card__title-learn"]} ${styles["flip-title"]}`}
             >
-              {quiz?.concepts[currentQuestion].translations[0].word}
+              {quiz?.concepts[currentQuestion].translations[firstTranslation].word}
             </h1>
           </div>
 
@@ -209,15 +211,15 @@ function FlipCardQuiz() {
         {/* Back */}
         <div className={styles["flip-card-back"]}>
           <span className={styles["languages"]}>
-            {quiz?.concepts[currentQuestion].translations[1].language_name}
+            {quiz?.concepts[currentQuestion].translations[secondTranslation].language_name}
           </span>
 
           {/* Sound */}
           <button
             onClick={() =>
               speakWord(
-                quiz?.concepts[currentQuestion].translations[1].word,
-                quiz?.concepts[currentQuestion].translations[1].language_code,
+                quiz?.concepts[currentQuestion].translations[secondTranslation].word,
+                quiz?.concepts[currentQuestion].translations[secondTranslation].language_code,
               )
             }
           >
@@ -240,7 +242,7 @@ function FlipCardQuiz() {
             <h1
               className={`${styles["quiz-card__answer-wrapper-learn"]} ${styles["flip-title"]}`}
             >
-              {quiz?.concepts[currentQuestion].translations[1].word}
+              {quiz?.concepts[currentQuestion].translations[secondTranslation].word}
             </h1>
           </div>
 
@@ -302,7 +304,7 @@ function FlipCardQuiz() {
             </button>
           </div>
           <span>
-            {quiz?.concepts[currentQuestion].translations[1].sentence}
+            {quiz?.concepts[currentQuestion].translations[secondTranslation].sentence}
           </span>
           {/* Buttons ENDE */}
         </div>

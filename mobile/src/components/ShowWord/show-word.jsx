@@ -1,8 +1,8 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { Alert, Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import * as Speech from "expo-speech";
+import { stopSpeaking } from "../../services/speech";
 import useVocabulary from "@quizword/shared/vocabulary/useVocabulary";
 import EditIcon from "../../../assets/icons/edit.svg";
 import HearIcon from "../../../assets/icons/hear.svg";
@@ -16,14 +16,19 @@ export default function ShowWord() {
   const language = Array.isArray(params.language)
     ? params.language[0]
     : params.language;
-  const { getConcept } = useVocabulary();
+  const {
+    getConcept,
+    languages,
+    nativeLanguage,
+    userLanguages,
+    speakWord,
+    speakActive,
+    activeSpeechId,
+  } = useVocabulary();
   const [concept, setConcept] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [attempt, setAttempt] = useState(0);
-  const [speaking, setSpeaking] = useState(null);
-  const speechRequest = useRef(0);
-
   useFocusEffect(
     useCallback(() => {
       void attempt;
@@ -47,9 +52,7 @@ export default function ShowWord() {
       void loadWord();
       return () => {
         active = false;
-        speechRequest.current += 1;
-        void Speech.stop();
-        setSpeaking(null);
+        void stopSpeaking();
       };
     }, [id, language, attempt, getConcept]),
   );
@@ -57,30 +60,17 @@ export default function ShowWord() {
   const source = concept?.translations?.[0];
   const target = concept?.translations?.[1];
 
-  async function pronounce(translation) {
-    const request = ++speechRequest.current;
-    try {
-      await Speech.stop();
-      if (request !== speechRequest.current) return;
-      setSpeaking(translation.id);
-      const finish = () => {
-        if (request === speechRequest.current) setSpeaking(null);
-      };
-      Speech.speak(translation.word, {
-        language: translation.language_code,
-        onDone: finish,
-        onStopped: finish,
-        onError: () => {
-          if (request !== speechRequest.current) return;
-          finish();
-          Alert.alert("Aussprache fehlgeschlagen", "Bitte versuche es erneut.");
-        },
-      });
-    } catch {
-      if (request !== speechRequest.current) return;
-      setSpeaking(null);
-      Alert.alert("Aussprache fehlgeschlagen", "Bitte versuche es erneut.");
-    }
+  function getLanguageCode(translation) {
+    const languageDetails = [
+      nativeLanguage,
+      ...languages,
+      ...userLanguages,
+    ].find((entry) => String(entry?.id) === String(translation.language));
+    return (
+      translation.language_code ||
+      languageDetails?.language_code ||
+      languageDetails?.code
+    );
   }
 
   return (
@@ -153,11 +143,17 @@ export default function ShowWord() {
                     testID="speak-source-word"
                     accessibilityRole="button"
                     accessibilityLabel="Wort vorlesen"
-                    accessibilityState={{ busy: speaking === source.id }}
-                    onPress={() => pronounce(source)}
+                    accessibilityState={{
+                      busy: speakActive && activeSpeechId === source.id,
+                    }}
+                    onPress={() =>
+                      speakWord(source.word, getLanguageCode(source), source.id)
+                    }
                     style={[
                       showWordStyles.action,
-                      speaking === source.id && showWordStyles.speaking,
+                      speakActive &&
+                        activeSpeechId === source.id &&
+                        showWordStyles.speaking,
                     ]}
                   >
                     <HearIcon width={24} height={24} />
@@ -193,11 +189,17 @@ export default function ShowWord() {
                     testID="speak-target-word"
                     accessibilityRole="button"
                     accessibilityLabel="Wort vorlesen"
-                    accessibilityState={{ busy: speaking === target.id }}
-                    onPress={() => pronounce(target)}
+                    accessibilityState={{
+                      busy: speakActive && activeSpeechId === target.id,
+                    }}
+                    onPress={() =>
+                      speakWord(target.word, getLanguageCode(target), target.id)
+                    }
                     style={[
                       showWordStyles.action,
-                      speaking === target.id && showWordStyles.speaking,
+                      speakActive &&
+                        activeSpeechId === target.id &&
+                        showWordStyles.speaking,
                     ]}
                   >
                     <HearIcon width={24} height={24} />

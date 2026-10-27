@@ -10,10 +10,12 @@ import TranslateIcon from "../../../assets/icons/translate.svg";
 import { styles, tabColors } from "../../styles/my-quiz-tabs";
 import { Alert, Pressable } from "react-native";
 import { colors } from "../../styles/basic";
+import { speak } from "../../services/speech";
 
 export default function MyQuizLayout() {
   return (
     <VocabularyProvider
+      speak={speak}
       api={process.env.EXPO_PUBLIC_API_URL}
       onError={(message) =>
         Alert.alert("Vokabeln konnten nicht geladen werden", message)
@@ -145,3 +147,4 @@ export default function MyQuizLayout() {
     </VocabularyProvider>
   );
 }
+

@@ -276,13 +276,29 @@ export default function AllWords() {
                 </Text>
               </View>
               <Pressable
-                style={allWordsStyles.actionsColumn}
-                disabled
+                style={({ pressed }) => [
+                  allWordsStyles.actionsColumn,
+                  allWordsStyles.editButton,
+                  pressed && styles.pressed,
+                ]}
+                hitSlop={8}
+                testID={`edit-word-${word.id}`}
+                onPress={() =>
+                  router.push({
+                    pathname: "/my-quiz/edit-word",
+                    params: {
+                      id: String(word.id),
+                      language: String(word.translations[1].language),
+                      targetWord: String(word.translations[1].id),
+                    },
+                  })
+                }
                 accessibilityRole="button"
-                accessibilityLabel="Wort bearbeiten (bald verfügbar)"
-                accessibilityState={{ disabled: true }}
+                accessibilityLabel="Wort bearbeiten"
               >
-                <EditIcon width={19} height={19} accessible={false} />
+                <View pointerEvents="none" accessible={false}>
+                  <EditIcon width={19} height={19} accessible={false} />
+                </View>
               </Pressable>
             </View>
           );
@@ -361,10 +377,18 @@ export default function AllWords() {
         accessibilityState={{ disabled: selectedWordIds.length < 3 }}
         disabled={selectedWordIds.length < 3}
         onPress={() => setDialogOpen(true)}
-        style={getSubmitStyleQuiz}
+        style={({ pressed }) => [
+          styles.button,
+          allWordsStyles.floatingButton,
+          pressed && selectedWordIds.length >= 3 && styles.pressed,
+          selectedWordIds.length < 3 && styles.buttonDisabled,
+        ]}
       >
         <Text
-          style={styles.buttonText}
+          style={[
+            styles.buttonText,
+            selectedWordIds.length < 3 && styles.buttonTextDisabled,
+          ]}
         >
           +
         </Text>

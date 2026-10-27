@@ -16,6 +16,9 @@ export const styles = StyleSheet.create({
     borderRadius: 12,
     overflow: "hidden",
   },
+  editWordTabItem: {
+    display: "none",
+  },
   tabBarLabel: {
     fontSize: 10,
     fontWeight: "700",

@@ -108,6 +108,10 @@ export const allWordsStyles = StyleSheet.create({
     alignItems: "center",
     textAlign: "center",
   },
+  editButton: {
+    minHeight: 48,
+    alignSelf: "stretch",
+  },
   rankText: {
     fontSize: 14,
     fontWeight: "700",

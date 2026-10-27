@@ -107,6 +107,13 @@ export default function MyQuizLayout() {
               }}
             />
             <Tabs.Screen
+              name="edit-word"
+              options={{
+                tabBarButton: () => null,
+                tabBarItemStyle: styles.editWordTabItem,
+              }}
+            />
+            <Tabs.Screen
               name="translate"
               options={{
                 title: "Übersetzer",

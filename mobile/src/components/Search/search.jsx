@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, Text, TextInput, View } from "react-native";
 import useVocabulary from "@quizword/shared/vocabulary/useVocabulary";
-import { allWordsStyles } from "../../styles/all-words";
+import { allWordsStyles } from "../AllWords/all-words.styles";
 
 export default function Search() {
   const { searchVocabulary } = useVocabulary();

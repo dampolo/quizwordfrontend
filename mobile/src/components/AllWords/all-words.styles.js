@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
-import { colors } from "./basic";
-import { tabColors } from "./my-quiz-tabs";
+import { colors } from "../../styles/basic";
+import { tabColors } from "../../styles/my-quiz-tabs";
 
 export const allWordsStyles = StyleSheet.create({
   screen: {

@@ -1,0 +1,27 @@
+import { StyleSheet } from "react-native";
+
+// Native dimensions are density-independent units, matching the mobile web design.
+export const showWordStyles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: "#f8f8ff" },
+  content: { padding: 16, paddingTop: 0, paddingBottom: 32 },
+  screenHeader: { marginHorizontal: -16 },
+  actions: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+  action: { minWidth: 48, minHeight: 48, padding: 8, borderRadius: 10, backgroundColor: "#e5e9fd", alignItems: "center", justifyContent: "center" },
+  disabled: { opacity: 0.4 },
+  speaking: { backgroundColor: "#bed2ff" },
+  title: { color: "#071b36", fontSize: 26, fontWeight: "700", marginVertical: 24 },
+  grid: { width: "100%", maxWidth: 1070, alignSelf: "center", gap: 16 },
+  card: { minWidth: 0, padding: 20, backgroundColor: "#ffffff", borderWidth: 1, borderColor: "#e0e2f0", borderRadius: 12, gap: 12 },
+  header: { marginBottom: 6, paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: "#f0f1f7" },
+  languageRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 8 },
+  language: { flexShrink: 1, paddingVertical: 3, paddingHorizontal: 10, backgroundColor: "#eeebff", borderWidth: 1, borderColor: "#d3cbff", borderRadius: 999, color: "#4f46e5", fontSize: 12, fontWeight: "700" },
+  greenBadge: { backgroundColor: "#e5f3ef", borderColor: "#c4e2d8", color: "#047857" },
+  word: { marginTop: 16, color: "#4f46e5", fontSize: 30, lineHeight: 39, fontWeight: "800" },
+  detail: { paddingVertical: 14, paddingHorizontal: 16, backgroundColor: "#f5f7ff", borderWidth: 1, borderColor: "#eceefa", borderRadius: 7, gap: 6 },
+  label: { color: "#4f46e5", fontSize: 12, fontWeight: "700" },
+  greenText: { color: "#047857" },
+  body: { color: "#071b36", fontSize: 14, lineHeight: 23 },
+  sentence: { backgroundColor: "#f8f7ff" },
+  italic: { fontStyle: "italic" },
+  retry: { minHeight: 48, justifyContent: "center" },
+});

@@ -15,12 +15,16 @@ export default function MyQuizLayout() {
   return (
     <VocabularyProvider
       api={process.env.EXPO_PUBLIC_API_URL}
-      onError={(message) => Alert.alert("Vokabeln konnten nicht geladen werden", message)}
+      onError={(message) =>
+        Alert.alert("Vokabeln konnten nicht geladen werden", message)
+      }
     >
       <QuizProvider api={process.env.EXPO_PUBLIC_API_URL}>
         <TranslationProvider
           api={process.env.EXPO_PUBLIC_API_URL}
-          onError={(message) => Alert.alert("Übersetzung fehlgeschlagen", message)}
+          onError={(message) =>
+            Alert.alert("Übersetzung fehlgeschlagen", message)
+          }
         >
           <Tabs
             initialRouteName="all-words"
@@ -108,6 +112,13 @@ export default function MyQuizLayout() {
             />
             <Tabs.Screen
               name="edit-word"
+              options={{
+                tabBarButton: () => null,
+                tabBarItemStyle: styles.editWordTabItem,
+              }}
+            />
+            <Tabs.Screen
+              name="show-word"
               options={{
                 tabBarButton: () => null,
                 tabBarItemStyle: styles.editWordTabItem,

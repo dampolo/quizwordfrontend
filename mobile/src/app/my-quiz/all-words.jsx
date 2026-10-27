@@ -243,8 +243,17 @@ export default function AllWords() {
         }
         renderItem={({ item: word }) => {
           return (
-            <View style={allWordsStyles.listRow} testID={`word-${word.id}`}>
-              <View style={allWordsStyles.checkColumn}>
+            <Pressable
+              style={allWordsStyles.listRow}
+              testID={`word-${word.id}`}
+              accessibilityRole="link"
+              accessibilityLabel={`${word.translations[0].word} – ${word.translations[1].word} ansehen`}
+              onPress={() => router.navigate({
+                pathname: "/my-quiz/show-word",
+                params: { id: String(word.id), language: String(word.translations[1].language) },
+              })}
+            >
+              <Pressable style={allWordsStyles.checkColumn} onPress={(event) => event.stopPropagation()}>
                 <Checkbox
                   style={allWordsStyles.checkbox}
                   testID={`word-checkbox-${word.id}`}
@@ -260,7 +269,7 @@ export default function AllWords() {
                   }
                   hitSlop={12}
                 />
-              </View>
+              </Pressable>
               <Text
                 style={[allWordsStyles.rankText, allWordsStyles.rankColumn]}
               >
@@ -278,7 +287,8 @@ export default function AllWords() {
               <Pressable
                 style={allWordsStyles.actionsColumn}
                 testID={`edit-word-${word.id}`}
-                onPress={() =>
+                onPress={(event) => {
+                  event.stopPropagation();
                   router.navigate({
                     pathname: "/my-quiz/edit-word",
                     params: {
@@ -286,14 +296,14 @@ export default function AllWords() {
                       language: String(word.translations[1].language),
                       targetWord: String(word.translations[1].id),
                     },
-                  })
-                }
+                  });
+                }}
                 accessibilityRole="button"
                 accessibilityLabel="Wort bearbeiten"
               >
                 <EditIcon width={19} height={19} accessible={false} />
               </Pressable>
-            </View>
+            </Pressable>
           );
         }}
         ListFooterComponent={

@@ -288,8 +288,8 @@ export default function AllWords() {
                     pathname: "/my-quiz/edit-word",
                     params: {
                       id: String(word.id),
-                      language: String(word.translations[1].language),
                       targetWord: String(word.translations[1].id),
+                      language: String(word.translations[1].language),
                     },
                   })
                 }

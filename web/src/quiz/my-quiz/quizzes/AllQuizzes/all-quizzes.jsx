@@ -262,6 +262,22 @@ function Quizzes() {
                 </Tooltip>
                 {/* HEAR Card end*/}
 
+                {/* Flip Card */}
+                <Tooltip title="Karteikarten" placement="top" arrow>
+                  <Link
+                    className={styles["action-button__icon"]}
+                    to={`/my-quiz/${quiz.quiz_id}/flip-card-quiz?language=${quiz?.target_language}&redirect=true`}
+                  >
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/flip-card-reverse.svg"
+                      alt="look"
+                    />
+                  </Link>
+                </Tooltip>
+                {/* Flip Card end*/}
+
                 {/* Audio loop reverse */}
                 <Tooltip title="Lernen and hören" placement="bottom" arrow>
                   <Link

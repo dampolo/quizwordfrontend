@@ -353,6 +353,22 @@ export default function AllWords() {
           </View>
         }
       />
+      <Pressable
+        testID="create-quiz-floating"
+        accessibilityRole="button"
+        accessibilityLabel="Quiz erstellen"
+        accessibilityHint="Wähle mindestens drei Wörter aus"
+        accessibilityState={{ disabled: selectedWordIds.length < 3 }}
+        disabled={selectedWordIds.length < 3}
+        onPress={() => setDialogOpen(true)}
+        style={getSubmitStyleQuiz}
+      >
+        <Text
+          style={styles.buttonText}
+        >
+          +
+        </Text>
+      </Pressable>
       <CreateQuizModal
         visible={dialogOpen}
         quizName={quizName}

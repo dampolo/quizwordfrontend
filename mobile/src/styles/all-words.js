@@ -10,6 +10,19 @@ export const allWordsStyles = StyleSheet.create({
   content: {
     padding: 16,
     paddingTop: 0,
+    paddingBottom: 88,
+  },
+  floatingButton: {
+    position: "absolute",
+    right: 16,
+    bottom: 16,
+    width: 56,
+    height: 56,
+    minHeight: 56,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+    borderRadius: 28,
+    zIndex: 1,
   },
   screenHeader: {
     marginHorizontal: -16,

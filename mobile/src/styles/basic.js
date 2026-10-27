@@ -9,7 +9,8 @@ export const colors = {
   qwColorHeading: "#111827",
   qwBodyTextColor: "#4b5563",
   qwBorderColor: "#e5e7eb",
-  qwBgQuiz: "#fafbff"
+  qwBgQuiz: "#fafbff",
+  qwRequired: "#ff0000",
 };
 
 // Native styles use density-independent numbers rather than CSS units.

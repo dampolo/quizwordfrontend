@@ -11,42 +11,79 @@ export async function stopSpeaking() {
   await Speech.stop();
 }
 
-export async function speak(word, language, { onStart, onEnd }) {
+function normalizeLanguage(language) {
+  return String(language || "").trim().replace(/_/g, "-").toLowerCase();
+}
+
+function selectVoice(voices, languageCode) {
+  const baseLanguage = languageCode.split("-")[0];
+  let selectedVoice;
+  let bestScore = -1;
+
+  for (const voice of voices) {
+    const voiceLanguage = normalizeLanguage(voice.language);
+    if (voiceLanguage.split("-")[0] !== baseLanguage) continue;
+    const score =
+      (voiceLanguage === languageCode ? 2 : 0) +
+      (voice.quality === Speech.VoiceQuality.Enhanced ? 1 : 0);
+    if (score > bestScore) {
+      selectedVoice = voice;
+      bestScore = score;
+    }
+  }
+
+  return selectedVoice;
+}
+
+function createSpeechSession(onEnd) {
   endCurrentSpeech?.();
   const request = ++speechRequest;
   endCurrentSpeech = undefined;
   let finished = false;
-  const finish = () => {
+  function finish() {
     if (request !== speechRequest || finished) return;
     finished = true;
     endCurrentSpeech = undefined;
     onEnd();
-  };
+  }
   endCurrentSpeech = finish;
+  return { request, finish };
+}
+
+function handleSpeechError(request, finish) {
+  if (request !== speechRequest) return;
+  finish();
+  Alert.alert("Aussprache fehlgeschlagen", "Bitte versuche es erneut.");
+}
+
+function startSpeaking(word, voice, onStart, request, finish) {
+  onStart();
+  Speech.speak(word, {
+    language: voice.language,
+    voice: voice.identifier,
+    onDone: finish,
+    onStopped: finish,
+    onError: () => handleSpeechError(request, finish),
+  });
+}
+
+export async function speak(word, language, { onStart, onEnd }) {
+  const { request, finish } = createSpeechSession(onEnd);
   try {
     await Speech.stop();
     if (request !== speechRequest) return;
-    const languageCode = String(language || "").trim().replace(/_/g, "-").toLowerCase();
+    const languageCode = normalizeLanguage(language);
     if (!languageCode) {
       finish();
-      Alert.alert("Aussprache nicht verfügbar", "Für dieses Wort fehlt der Sprachcode.");
+      Alert.alert(
+        "Aussprache nicht verfügbar",
+        "Für dieses Wort fehlt der Sprachcode.",
+      );
       return;
     }
     const voices = await Speech.getAvailableVoicesAsync();
     if (request !== speechRequest) return;
-    const baseLanguage = languageCode.split("-")[0];
-    let selectedVoice;
-    let bestScore = -1;
-    for (const voice of voices) {
-      const voiceLanguage = voice.language.trim().replace(/_/g, "-").toLowerCase();
-      if (voiceLanguage.split("-")[0] !== baseLanguage) continue;
-      const score = (voiceLanguage === languageCode ? 2 : 0) +
-        (voice.quality === Speech.VoiceQuality.Enhanced ? 1 : 0);
-      if (score > bestScore) {
-        selectedVoice = voice;
-        bestScore = score;
-      }
-    }
+    const selectedVoice = selectVoice(voices, languageCode);
     if (!selectedVoice) {
       finish();
       Alert.alert(
@@ -56,21 +93,8 @@ export async function speak(word, language, { onStart, onEnd }) {
       return;
     }
 
-    onStart();
-    Speech.speak(word, {
-      language: selectedVoice.language,
-      voice: selectedVoice.identifier,
-      onDone: finish,
-      onStopped: finish,
-      onError: () => {
-        if (request !== speechRequest) return;
-        finish();
-        Alert.alert("Aussprache fehlgeschlagen", "Bitte versuche es erneut.");
-      },
-    });
+    startSpeaking(word, selectedVoice, onStart, request, finish);
   } catch {
-    if (request !== speechRequest) return;
-    finish();
-    Alert.alert("Aussprache fehlgeschlagen", "Bitte versuche es erneut.");
+    handleSpeechError(request, finish);
   }
 }

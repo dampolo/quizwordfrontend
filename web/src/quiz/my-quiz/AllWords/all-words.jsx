@@ -26,9 +26,10 @@ function AllWords() {
   } = useVocabulary();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [selectedWordIds, setSelectedWordIds] = useState([]);
+  const [selectedWords, setSelectedWords] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const filterDialogRef = useRef(null);
+  const selectedWordsDialogRef = useRef(null);
   const { createQuiz, getLastFlipCard, postRandomQuiz } = useQuiz();
   const requestedPage = Number(searchParams.get("page") || 1);
   const currentPage =
@@ -50,23 +51,30 @@ function AllWords() {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  function handleCheckboxChange(id, checked) {
-    setSelectedWordIds((prev) => {
+  function handleCheckboxChange(word, checked) {
+    setSelectedWords((prev) => {
       if (checked) {
-        return [...prev, id];
+        return prev.some((item) => item.id === word.id) ? prev : [...prev, word];
       }
-      return prev.filter((item) => item !== id);
+      return prev.filter((item) => item.id !== word.id);
     });
   }
 
+
   function openDialog() {
+    selectedWordsDialogRef.current?.showModal();
+  }
+
+
+  function openCreateQuizDialog() {
+    selectedWordsDialogRef.current?.close();
     setDialogOpen(true);
   }
 
   async function handleCreateQuiz(quizName) {
     const payload = {
       quiz_name: quizName,
-      concepts: selectedWordIds,
+      concepts: selectedWords.map((word) => word.id),
       target_language: language,
     };
 
@@ -74,7 +82,7 @@ function AllWords() {
       await createQuiz(payload);
       toast.success(`Quiz "${quizName}" wurde erstellt!`);
       setDialogOpen(false);
-      setSelectedWordIds([]);
+      setSelectedWords([]);
       navigate(`/my-quiz/all-words/?${searchParams.toString()}`);
     } catch (error) {
       const message = error.response?.detail || "Error";
@@ -99,12 +107,12 @@ function AllWords() {
       params.delete("created_at__date");
     }
     params.set("page", "1");
-    setSelectedWordIds([]);
+    setSelectedWords([]);
     setSearchParams(params);
   }
 
   function selectLanguage(languageId) {
-    setSelectedWordIds([]);
+    setSelectedWords([]);
     const params = new URLSearchParams(searchParams);
     params.set("language", languageId);
     params.set("page", "1");
@@ -114,7 +122,7 @@ function AllWords() {
   function changePage(page) {
     const params = new URLSearchParams(searchParams);
     params.set("page", String(page));
-    setSelectedWordIds([]);
+    setSelectedWords([]);
     setSearchParams(params);
   }
 
@@ -172,7 +180,7 @@ function AllWords() {
             type="submit"
             onClick={openDialog}
             className={`main-quiz-button ${styles["create-quiz"]}`}
-            disabled={selectedWordIds.length < 3}
+            disabled={selectedWords.length < 3}
           >
             + Quiz
           </button>
@@ -240,9 +248,9 @@ function AllWords() {
               <div className={styles["checkbox"]}>
                 <input
                   type="checkbox"
-                  checked={selectedWordIds.includes(word.id)}
+                  checked={selectedWords.some((item) => item.id === word.id)}
                   onChange={(e) =>
-                    handleCheckboxChange(word.id, e.target.checked)
+                    handleCheckboxChange(word, e.target.checked)
                   }
                 />
               </div>
@@ -363,7 +371,7 @@ function AllWords() {
         type="submit"
         onClick={openDialog}
         className={`main-quiz-button ${styles["create-quiz-small"]}`}
-        disabled={selectedWordIds.length < 3}
+        disabled={selectedWords.length < 3}
       >
         <svg
           width={25}
@@ -377,9 +385,41 @@ function AllWords() {
             fill="currentColor"
           />
         </svg>
-        {selectedWordIds.length !== 0 ? selectedWordIds.length : ""}
+        {selectedWords.length !== 0 ? selectedWords.length : ""}
       </button>
 
+      <dialog
+        ref={selectedWordsDialogRef}
+        className={styles["selected-words-dialog"]}
+        aria-labelledby="selected-words-dialog-title"
+      >
+        <button
+          type="button"
+          className={styles["selected-words-dialog__close"]}
+          aria-label="Schließen"
+          onClick={() => selectedWordsDialogRef.current?.close()}
+        >
+          <img width={25} height={25} src="/assets/xbox.svg" alt="" />
+        </button>
+        <div className={styles["selected-words-dialog__list"]}>
+          <h2 id="selected-words-dialog-title">Wort & Übersetzung</h2>
+          {selectedWords.map((word) => (
+            <div className={styles["selected-words-dialog__row"]} key={word.id}>
+              <h3>{word.translations[0].word}</h3>
+              <span>»</span>
+              <p>{word.translations[1].word}</p>
+            </div>
+          ))}
+        </div>
+        <button
+          type="button"
+          className="main-quiz-button"
+          onClick={openCreateQuizDialog}
+          disabled={selectedWords.length < 3}
+        >
+          Quiz erstellen
+        </button>
+      </dialog>
       {/* dialog Filter */}
 
       <dialog
@@ -434,7 +474,7 @@ function AllWords() {
 
       <FormDialog
         open={dialogOpen}
-        selectedWordsCount={selectedWordIds.length}
+        selectedWordsCount={selectedWords.length}
         onClose={() => setDialogOpen(false)}
         message={message}
         onSubmit={handleCreateQuiz}

@@ -36,7 +36,7 @@
     right: 0.5rem;
     max-width: 2.5rem;
     height: 2.5rem;
-    padding: 0.3rem;
+    padding-right: 0.3rem;
     margin: 0;
     gap: 0;
   }
@@ -448,20 +448,68 @@
   }
 }
 
-@media (max-width: 46rem) {
-  .vocabulary :global(.main-quiz-button) {
-    &.create-quiz-small {
-      display: flex;
-      position: fixed;
-      bottom: 4.1rem;
-      right: 0.5rem;
-      max-width: 2.5rem;
-      height: 2.5rem;
-      padding: 0;
+
+.selected-words-dialog {
+  margin: auto;
+  width: min(50rem, calc(100% - 2rem));
+  max-height: calc(100% - 5.5rem);
+  padding: 4rem 1rem 1rem;
+  border: 0.0625rem solid basic.$qw-border-color;
+  border-radius: basic.$qw-border-radius;
+  background: basic.$qw-fourth;
+  color: basic.$qw-body-text-color;
+  overflow-y: auto;
+
+  &::backdrop {
+    background: rgba(52, 33, 214, 0.4);
+  }
+
+  &__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border: 0.0625rem solid basic.$qw-border-color;
+    border-radius: 50%;
+    background: basic.$qw-fourth;
+
+    &:hover {
+      background: basic.$qw-fifth;
+    }
+  }
+
+  &__list {
+    margin-bottom: 1rem;
+    overflow-wrap: anywhere;
+
+    h2 {
+      margin: 0;
+      padding: 1rem;
+      background: basic.$qw-fifth;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+    }
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    padding: 1rem;
+    border-top: 0.0625rem solid basic.$qw-border-color;
+
+    h3 {
+      margin: 0;
+      color: basic.$qw-primary;
+      font-size: 1rem;
+    }
+
+    p {
       margin: 0;
     }
-    &:hover {
-      color: basic.$qw-primary;
+
+    span {
+      font-size: 1.2rem;
     }
   }
 }

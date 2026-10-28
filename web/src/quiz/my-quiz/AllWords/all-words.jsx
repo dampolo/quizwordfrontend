@@ -122,7 +122,6 @@ function AllWords() {
   function changePage(page) {
     const params = new URLSearchParams(searchParams);
     params.set("page", String(page));
-    setSelectedWords([]);
     setSearchParams(params);
   }
 
@@ -385,7 +384,10 @@ function AllWords() {
             fill="currentColor"
           />
         </svg>
+        <small>
+
         {selectedWords.length !== 0 ? selectedWords.length : ""}
+        </small>
       </button>
 
       <dialog

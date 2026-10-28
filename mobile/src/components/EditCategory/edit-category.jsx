@@ -34,6 +34,11 @@ function languageInputStyle({ pressed }) {
 }
 
 
+function keepDialogOpen(event) {
+  event.stopPropagation();
+}
+
+
 export default function EditCategory() {
   const params = useLocalSearchParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
@@ -337,8 +342,15 @@ export default function EditCategory() {
         animationType="fade"
         onRequestClose={closeDialog}
       >
-        <View style={editCategoryStyles.backdrop}>
-          <View style={editCategoryStyles.dialog} accessibilityViewIsModal>
+        <Pressable
+            testID="edit-category-modal-backdrop"
+            accessibilityRole="button"
+            accessibilityLabel="Dialog schließen"
+            disabled={busy}
+            onPress={closeDialog}
+            style={editCategoryStyles.backdrop}
+        >
+          <Pressable style={editCategoryStyles.dialog} accessibilityViewIsModal accessible={false} onPress={keepDialogOpen}>
             <Text style={editCategoryStyles.title} accessibilityRole="header">
               {dialog === "languages"
                 ? "Sprache auswählen"
@@ -385,8 +397,8 @@ export default function EditCategory() {
                 Abbrechen
               </Text>
             </Pressable>
-          </View>
-        </View>
+          </Pressable>
+        </Pressable>
       </Modal>
     </SafeAreaView>
   );

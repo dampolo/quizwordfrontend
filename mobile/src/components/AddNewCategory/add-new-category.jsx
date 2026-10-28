@@ -33,6 +33,11 @@ function languageKey(item) {
 }
 
 
+function keepDialogOpen(event) {
+  event.stopPropagation();
+}
+
+
 export default function AddNewCategory() {
   const { createCategory, userLanguages } = useVocabulary();
   const [name, setName] = useState("");
@@ -156,8 +161,14 @@ export default function AddNewCategory() {
         </ScrollView>
       </KeyboardAvoidingView>
       <Modal visible={dialogOpen} transparent animationType="fade" onRequestClose={closeLanguages}>
-        <View style={editCategoryStyles.backdrop}>
-          <View style={editCategoryStyles.dialog} accessibilityViewIsModal>
+        <Pressable
+            testID="new-category-modal-backdrop"
+            accessibilityRole="button"
+            accessibilityLabel="Dialog schließen"
+            onPress={closeLanguages}
+            style={editCategoryStyles.backdrop}
+        >
+          <Pressable style={editCategoryStyles.dialog} accessibilityViewIsModal accessible={false} onPress={keepDialogOpen}>
             <Text style={editCategoryStyles.title} accessibilityRole="header">Sprache auswählen</Text>
             <FlatList
               data={userLanguages}
@@ -169,8 +180,8 @@ export default function AddNewCategory() {
             <Pressable testID="close-new-category-languages" accessibilityRole="button" onPress={closeLanguages} style={secondaryStyle}>
               <Text style={[styles.buttonText, styles.secondaryText]}>Abbrechen</Text>
             </Pressable>
-          </View>
-        </View>
+          </Pressable>
+        </Pressable>
       </Modal>
     </SafeAreaView>
   );

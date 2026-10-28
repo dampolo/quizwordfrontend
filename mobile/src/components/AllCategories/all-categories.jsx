@@ -94,8 +94,8 @@ export default function AllCategories() {
       });
     }
     function editCategory() {
-      router.navigate({
-        pathname: "/my-quiz/all-categories/[id]/edit-category",
+      router.push({
+        pathname: "/my-quiz/(all-categories)/edit-category",
         params: {
           id: String(item.category_id),
           language: activeLanguage || "",
@@ -119,7 +119,7 @@ export default function AllCategories() {
             accessibilityRole="button"
             accessibilityLabel={`${item.category_name} bearbeiten`}
             onPress={editCategory}
-            style={allCategoriesStyles.editButton}
+            style={({ pressed }) => [allCategoriesStyles.editButton, pressed && styles.pressed]}
           >
             <EditIcon width={20} height={20} accessible={false} />
           </Pressable>

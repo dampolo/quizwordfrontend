@@ -53,7 +53,7 @@ export default function MyQuizLayout() {
             }}
           >
             <Tabs.Screen
-              name="all-categories"
+              name="(all-categories)"
               options={{
                 title: "Kategorien",
                 tabBarIcon: ({ color, size }) => (
@@ -133,4 +133,3 @@ export default function MyQuizLayout() {
     </VocabularyProvider>
   );
 }
-

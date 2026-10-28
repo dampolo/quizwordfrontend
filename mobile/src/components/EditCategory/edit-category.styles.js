@@ -1,0 +1,20 @@
+import { StyleSheet } from "react-native";
+import { colors } from "../../styles/basic";
+
+export const editCategoryStyles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: colors.qwBgQuiz },
+  content: { padding: 16, paddingTop: 0, paddingBottom: 32 },
+  header: { marginHorizontal: -16 },
+  card: { width: "100%", maxWidth: 720, alignSelf: "center", padding: 20, gap: 20, borderRadius: 16, borderWidth: 1, borderColor: colors.qwBorderColor, backgroundColor: colors.qwFourth },
+  title: { fontSize: 26, fontWeight: "700", color: colors.qwColorHeading },
+  description: { fontSize: 14, lineHeight: 22, color: colors.qwBodyTextColor },
+  field: { gap: 8 },
+  label: { fontSize: 16, fontWeight: "600", color: colors.qwColorHeading },
+  input: { minHeight: 52, borderWidth: 1, borderColor: colors.qwBorderColor, borderRadius: 10, padding: 14, fontSize: 16, color: colors.qwColorHeading, backgroundColor: colors.qwFourth },
+  error: { color: colors.qwRequired, fontSize: 14, lineHeight: 22 },
+  actions: { gap: 12 },
+  backdrop: { flex: 1, justifyContent: "center", padding: 24, backgroundColor: colors.qwThird },
+  dialog: { maxHeight: "80%", width: "100%", maxWidth: 480, alignSelf: "center", padding: 20, gap: 16, borderRadius: 16, backgroundColor: colors.qwFourth },
+  option: { minHeight: 48, justifyContent: "center", padding: 12, borderRadius: 10 },
+  selected: { backgroundColor: colors.qwThird },
+});

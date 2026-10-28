@@ -15,7 +15,7 @@ function buttonStyle({ pressed }) {
   return [styles.button, pressed && styles.pressed];
 }
 function addCategory() {
-  router.navigate("/my-quiz/add-new-category");
+  router.push("/my-quiz/(all-categories)/add-new-category");
 }
 
 export default function AllCategories() {

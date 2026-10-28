@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import {
   FlatList,
   Modal,
@@ -18,6 +18,8 @@ import { addNewWordStyles } from "./add-new-word.styles";
 import { styles } from "../../styles/styles";
 
 export default function AddNewWord() {
+  const { sourceWord, targetWord, targetLanguage, translationId } = useLocalSearchParams();
+  const appliedTranslation = useRef(null);
   const {
     categories,
     loading,
@@ -100,6 +102,35 @@ export default function AddNewWord() {
   useEffect(() => {
     clearCategories();
   }, [clearCategories]);
+
+  useEffect(() => {
+    if (
+      typeof translationId !== "string" ||
+      appliedTranslation.current === translationId ||
+      typeof sourceWord !== "string" ||
+      typeof targetWord !== "string" ||
+      typeof targetLanguage !== "string" ||
+      !nativeLanguage?.id ||
+      !userLanguages.some((language) => String(language.id) === targetLanguage)
+    ) return;
+    appliedTranslation.current = translationId;
+    setFormData({
+      category: "",
+      translations: [
+        { language: nativeLanguage.id, word: sourceWord, tip: "", sentence: "" },
+        { language: targetLanguage, word: targetWord, tip: "", sentence: "" },
+      ],
+    });
+    setRequiredError(null);
+    clearCategories();
+    categoriesLoadingRef.current = true;
+    setCategoriesLoading(true);
+    void getFiltredCategories(targetLanguage).finally(() => {
+      categoriesLoadingRef.current = false;
+      setCategoriesLoading(false);
+    });
+    router.setParams({ sourceWord: undefined, targetWord: undefined, targetLanguage: undefined, translationId: undefined });
+  }, [translationId, sourceWord, targetWord, targetLanguage, nativeLanguage?.id, userLanguages, clearCategories, getFiltredCategories]);
 
   const languageOptions = [];
   for (const language of userLanguages) {

@@ -29,7 +29,7 @@ export default function MyQuizLayout() {
           }
         >
           <Tabs
-            initialRouteName="all-words"
+            initialRouteName="(all-words)"
             backBehavior="history"
             screenOptions={{
               headerShown: false,
@@ -68,7 +68,7 @@ export default function MyQuizLayout() {
               }}
             />
             <Tabs.Screen
-              name="all-words"
+              name="(all-words)"
               options={{
                 title: "Wörter",
                 tabBarIcon: ({ color, size }) => (
@@ -110,20 +110,6 @@ export default function MyQuizLayout() {
                     aria-hidden
                   />
                 ),
-              }}
-            />
-            <Tabs.Screen
-              name="edit-word"
-              options={{
-                tabBarButton: () => null,
-                tabBarItemStyle: styles.editWordTabItem,
-              }}
-            />
-            <Tabs.Screen
-              name="show-word"
-              options={{
-                tabBarButton: () => null,
-                tabBarItemStyle: styles.editWordTabItem,
               }}
             />
             <Tabs.Screen

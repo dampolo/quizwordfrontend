@@ -106,9 +106,9 @@ export default function AddNewCategory() {
     const selected = String(item.id) === languageId;
 
 
-    function select() {
+    function select(event) {
+      event.stopPropagation();
       setLanguageId(String(item.id));
-      closeLanguages();
     }
 
 

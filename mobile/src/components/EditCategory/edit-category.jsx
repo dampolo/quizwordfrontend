@@ -178,14 +178,20 @@ export default function EditCategory() {
   }
 
 
+  function confirmLanguage(event) {
+    event.stopPropagation();
+    closeDialog();
+  }
+
+
   function renderLanguage({ item }) {
     const selected = String(item.id) === languageId;
 
 
-    function select() {
+    function select(event) {
+      event.stopPropagation();
       setLanguageId(String(item.id));
       setLanguageName(item.language_name);
-      closeDialog();
     }
 
 
@@ -385,6 +391,17 @@ export default function EditCategory() {
                   </Text>
                 </Pressable>
               </View>
+            )}
+            {dialog === "languages" && (
+              <Pressable
+                testID="confirm-category-language"
+                accessibilityRole="button"
+                disabled={busy || !languageId}
+                onPress={confirmLanguage}
+                style={saveStyle}
+              >
+                <Text style={styles.buttonText}>Speichern</Text>
+              </Pressable>
             )}
             <Pressable
               testID="close-category-dialog"

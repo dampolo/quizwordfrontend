@@ -65,6 +65,21 @@ export default function AddNewCategory() {
   }
 
 
+  function confirmLanguage(event) {
+    event.stopPropagation();
+    closeLanguages();
+  }
+
+
+  function confirmLanguageStyle({ pressed }) {
+    return [
+      styles.button,
+      pressed && languageId && styles.pressed,
+      !languageId && styles.buttonDisabled,
+    ];
+  }
+
+
   function cancel() {
     if (submittingRef.current) return;
     router.navigate("/my-quiz/all-categories");
@@ -177,6 +192,16 @@ export default function AddNewCategory() {
               renderItem={renderLanguage}
               ListEmptyComponent={<Text style={editCategoryStyles.description}>Keine Lernsprachen vorhanden.</Text>}
             />
+            <Pressable
+              testID="confirm-new-category-language"
+              accessibilityRole="button"
+              accessibilityState={{ disabled: !languageId }}
+              disabled={!languageId}
+              onPress={confirmLanguage}
+              style={confirmLanguageStyle}
+            >
+              <Text style={[styles.buttonText, !languageId && styles.buttonTextDisabled]}>Speichern</Text>
+            </Pressable>
             <Pressable testID="close-new-category-languages" accessibilityRole="button" onPress={closeLanguages} style={secondaryStyle}>
               <Text style={[styles.buttonText, styles.secondaryText]}>Abbrechen</Text>
             </Pressable>

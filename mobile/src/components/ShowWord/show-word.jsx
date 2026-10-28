@@ -10,6 +10,7 @@ import PreLoader from "../PreLoader/pre-loader";
 import { showWordStyles } from "./show-word.styles";
 import ScreenHeaderCustomer from "../ScreenHeaderCustomer/ScreenHeaderCustomer";
 
+
 export default function ShowWord() {
   const params = useLocalSearchParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
@@ -36,6 +37,8 @@ export default function ShowWord() {
       setLoading(true);
       setConcept(null);
       setError("");
+
+
       async function loadWord() {
         try {
           if (!id || !language) throw new Error("Missing word parameters");
@@ -49,6 +52,8 @@ export default function ShowWord() {
           if (active) setLoading(false);
         }
       }
+
+
       void loadWord();
       return () => {
         active = false;
@@ -59,6 +64,7 @@ export default function ShowWord() {
 
   const source = concept?.translations?.[0];
   const target = concept?.translations?.[1];
+
 
   function getLanguageCode(translation) {
     const languageDetails = [
@@ -72,6 +78,7 @@ export default function ShowWord() {
       languageDetails?.code
     );
   }
+
 
   return (
     <SafeAreaView

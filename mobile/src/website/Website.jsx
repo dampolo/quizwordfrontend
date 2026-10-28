@@ -9,6 +9,7 @@ import { colors } from "../styles/basic";
 import World from "../../assets/icons/world.svg";
 import Progress from "../../assets/icons/progress.svg";
 
+
 export default function Website() {
   const { t } = useTranslation();
   const { width, height } = useWindowDimensions();

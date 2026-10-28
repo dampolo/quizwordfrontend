@@ -4,6 +4,7 @@ import PreLoader from "../components/PreLoader/pre-loader";
 import { styles } from '../styles/styles';
 import { View } from 'react-native';
 
+
 export default function Index() {
   const { loading, isAuthenticated } = useAuth();
 

@@ -3,6 +3,7 @@ import { styles } from "../styles/styles";
 import { colors, radius } from "../styles/basic";
 import { fonts } from "../assets/fonts";
 
+
 export function createWebsiteStyles(width, height) {
   const mobile = width <= 600;
   const compact = width <= 992;

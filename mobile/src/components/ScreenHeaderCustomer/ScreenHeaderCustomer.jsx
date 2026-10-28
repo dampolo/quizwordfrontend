@@ -5,6 +5,7 @@ import ArrowLeft from "../../../assets/icons/arrow-left.svg";
 import { colors } from "../../styles/basic";
 import Logo from "../Logo/logo";
 
+
 export default function ScreenHeaderCustomer({
   title,
   fallbackHref = "/my-quiz",
@@ -13,10 +14,12 @@ export default function ScreenHeaderCustomer({
 }) {
   const { t } = useTranslation();
 
+
   function goBack() {
     if (router.canGoBack()) router.back();
     else router.replace(fallbackHref);
   }
+
 
   return (
     <View style={[headerStyles.container, style]}>
@@ -51,6 +54,7 @@ export default function ScreenHeaderCustomer({
     </View>
   );
 }
+
 
 const headerStyles = StyleSheet.create({
   container: {

@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 
+
 export default function AllCategoriesLayout() {
   return (
     <Stack initialRouteName="all-categories" screenOptions={{ headerShown: false }}>

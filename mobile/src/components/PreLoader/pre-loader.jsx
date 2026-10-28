@@ -3,6 +3,7 @@ import { Animated, Easing, Platform, StyleSheet, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import Logo from "../Logo/logo";
 
+
 export default function PreLoader({ size = 40, style }) {
   const [rotation] = useState(() => new Animated.Value(0));
   const { t } = useTranslation();
@@ -50,6 +51,7 @@ export default function PreLoader({ size = 40, style }) {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

@@ -4,11 +4,13 @@ import { ActivityIndicator, Alert, Pressable, Text, TextInput, View } from "reac
 import useVocabulary from "@quizword/shared/vocabulary/useVocabulary";
 import { searchStyles } from "./search.styles";
 
+
 export default function Search() {
   const { searchVocabulary, userLanguages, languages } = useVocabulary();
   const [search, setSearch] = useState("");
   const [searchState, setSearchState] = useState({ query: "", results: [], loading: false, error: "" });
   const query = search.trim();
+
 
   function openSearchResult(word) {
     const targetLanguage = [
@@ -26,6 +28,7 @@ export default function Search() {
       params: { id: String(word.concept_id), language: String(targetLanguage.id) },
     });
   }
+
 
   useEffect(() => {
     if (!query) return;

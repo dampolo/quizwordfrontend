@@ -4,6 +4,7 @@ import Header from '../components/Header/header';
 import Footer from '../components/Footer/footer';
 import { resets } from '../styles/resets';
 
+
 export default function PublicLayout({ children, showHeader = true }) {
   return (
     <SafeAreaView

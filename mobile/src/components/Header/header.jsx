@@ -5,6 +5,7 @@ import Logo from '../Logo/logo';
 import { styles } from '../../styles/styles';
 import { header } from './header.styles';
 
+
 export default function Header() {
   const { t, i18n } = useTranslation();
   const compact = useWindowDimensions().width <= 992;

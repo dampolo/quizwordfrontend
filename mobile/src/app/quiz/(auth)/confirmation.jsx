@@ -7,6 +7,7 @@ import { auth, authCompact, authCompactWidth } from "../../../styles/auth";
 import { resets } from "../../../styles/resets";
 import { styles } from "../../../styles/styles";
 
+
 export default function Confirmation() {
   const { confirmationMessage } = useAuth();
   const compact = useWindowDimensions().width <= authCompactWidth;
@@ -16,9 +17,11 @@ export default function Confirmation() {
     compact && authCompact.mainContentCustomer,
   ];
 
+
   function getButtonStyle({ pressed }) {
     return [styles.button, pressed && auth.pressed];
   }
+
 
   return (
     <SafeAreaView style={resets.screen} edges={["bottom"]}>

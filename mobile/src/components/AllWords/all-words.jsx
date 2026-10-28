@@ -15,6 +15,7 @@ import { styles } from "../../styles/styles";
 import { colors } from "../../styles/basic";
 import ScreenHeaderCustomer from "../ScreenHeaderCustomer/ScreenHeaderCustomer";
 
+
 export default function AllWords() {
   const { logout } = useAuth();
   const [loggingOut, setLoggingOut] = useState(false);
@@ -38,6 +39,7 @@ export default function AllWords() {
   const [submitting, setSubmitting] = useState(false);
   const submittingRef = useRef(false);
 
+
   function handleCheckboxChange(id, checked) {
     setSelectedWordIds((previous) =>
       checked
@@ -46,12 +48,14 @@ export default function AllWords() {
     );
   }
 
+
   function selectLanguage(id) {
     setCurrentPage(1);
     setSelectedWordIds([]);
     router.setParams({ language: String(id) });
     void getFiltredConcepts(id);
   }
+
 
   function changePage(page) {
     if (loading || page < 1) return;
@@ -62,6 +66,7 @@ export default function AllWords() {
       void getConcepts(page);
     }
   }
+
 
   async function handleCreateQuiz() {
     if (
@@ -93,9 +98,11 @@ export default function AllWords() {
     }
   }
 
+
   function getSubmitStyle({ pressed }) {
     return [styles.button, pressed && styles.pressed];
   }
+
 
   function getSubmitStyleQuiz({ pressed }) {
     return [
@@ -104,6 +111,7 @@ export default function AllWords() {
       selectedWordIds.length < 3 && styles.buttonDisabled,
     ];
   }
+
 
   async function handleLogout() {
     if (loggingOut) return;
@@ -119,6 +127,7 @@ export default function AllWords() {
       setLoggingOut(false);
     }
   }
+
 
   return (
     <SafeAreaView

@@ -12,6 +12,7 @@ import { Alert, Pressable } from "react-native";
 import { colors } from "../../styles/basic";
 import { speak } from "../../services/speech";
 
+
 export default function MyQuizLayout() {
   return (
     <VocabularyProvider

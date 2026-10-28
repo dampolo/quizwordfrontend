@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import ScreenHeader from '../ScreenHeader/screen-header';
 import { imprint } from './imprint.styles';
 
+
 export default function Imprint() {
   return (
     <SafeAreaView style={imprint.screen} edges={['right', 'bottom', 'left']}>

@@ -6,6 +6,7 @@ import PublicLayout from '../layouts/PublicLayout';
 import { styles } from '../styles/styles';
 import { resets } from '../styles/resets';
 
+
 export default function Contact() {
   const { t } = useTranslation();
   return (

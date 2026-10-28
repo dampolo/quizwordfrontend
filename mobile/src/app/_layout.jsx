@@ -9,6 +9,7 @@ import { fontAssets } from "../assets/fonts";
 import PreLoader from "../components/PreLoader/pre-loader";
 import { resets } from "../styles/resets";
 
+
 export default function RootLayout() {
   const [fontsLoaded] = useFonts(fontAssets);
 

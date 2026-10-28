@@ -22,6 +22,7 @@ import EyeIcon from "../../../../assets/icons/eye.svg";
 import EyeOffIcon from "../../../../assets/icons/eye-off.svg";
 import ScreenHeader from "../../../components/ScreenHeader/screen-header";
 
+
 export default function LoginQuiz() {
   const initialValues = { email: "", password: "" };
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -36,9 +37,11 @@ export default function LoginQuiz() {
   const busy = loading || submitting;
   const PasswordIcon = isPasswordVisible ? EyeIcon : EyeOffIcon;
 
+
   function handleChange(name, value) {
     setFormValues((previousValues) => ({ ...previousValues, [name]: value }));
   }
+
 
   async function handleSubmit() {
     if (loading || submittingRef.current) return;
@@ -47,6 +50,7 @@ export default function LoginQuiz() {
     if (Object.keys(errors).length > 0) return;
     await loginWithEmailAndPassword();
   }
+
 
   async function loginWithEmailAndPassword() {
     submittingRef.current = true;
@@ -71,6 +75,7 @@ export default function LoginQuiz() {
     }
   }
 
+
   function validate(values) {
     const errors = {};
 
@@ -87,41 +92,51 @@ export default function LoginQuiz() {
     return errors;
   }
 
+
   function handleEmailChange(value) {
     handleChange("email", value);
   }
+
 
   function handlePasswordChange(value) {
     handleChange("password", value);
   }
 
+
   function handleEmailFocus() {
     setFocusedField("email");
   }
+
 
   function handlePasswordFocus() {
     setFocusedField("password");
   }
 
+
   function handleBlur() {
     setFocusedField(null);
   }
+
 
   function focusPassword() {
     passwordRef.current?.focus();
   }
 
+
   function togglePasswordVisibility() {
     setIsPasswordVisible((visible) => !visible);
   }
+
 
   function getEyeButtonStyle({ pressed }) {
     return [auth.eyeButton, pressed && auth.pressed];
   }
 
+
   function getSubmitStyle({ pressed }) {
     return [styles.button, pressed && !busy && auth.pressed, busy && styles.buttonDisabled];
   }
+
 
   const keyboardBehavior = Platform.OS === "ios" ? "padding" : "height";
   const mainAuthStyle = [auth.mainAuth, compact && authCompact.mainAuth];

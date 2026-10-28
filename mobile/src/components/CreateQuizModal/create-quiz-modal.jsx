@@ -2,6 +2,7 @@ import { Pressable, KeyboardAvoidingView, Modal, Platform, ScrollView, Text, Tex
 import { styles } from "../../styles/styles";
 import { createQuizModalStyles } from "./create-quiz-modal.styles";
 
+
 export default function CreateQuizModal({
   visible,
   quizName,

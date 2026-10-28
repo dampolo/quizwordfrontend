@@ -17,6 +17,7 @@ import { createQuizModalStyles } from "../CreateQuizModal/create-quiz-modal.styl
 import { editWordStyles } from "./edit-word.styles";
 import { styles } from "../../styles/styles";
 
+
 export default function EditWord() {
   const {
     categories,
@@ -111,6 +112,8 @@ export default function EditWord() {
 
   useFocusEffect(useCallback(() => {
     let active = true;
+
+
     async function loadWord() {
       setLoadingWord(true);
       setLoadedWord(false);
@@ -133,6 +136,8 @@ export default function EditWord() {
         );
         const source = translations.find((translation) => translation !== target);
         if (!source || !target) throw new Error("Translation not found");
+
+
         function normalize(translation) {
           return {
             id: translation.id,
@@ -143,6 +148,8 @@ export default function EditWord() {
             category_id: translation.category_id ?? "",
           };
         }
+
+
         setFormData({
           category: target.category_id ?? "",
           translations: [normalize(source), normalize(target)],
@@ -157,6 +164,8 @@ export default function EditWord() {
         if (active) setLoadingWord(false);
       }
     }
+
+
     void loadWord();
     return () => { active = false; };
   // The retry counter intentionally reloads the same route after a load failure.
@@ -188,6 +197,7 @@ export default function EditWord() {
       : formData.category;
   const busy = submitting || loading || loadingWord || !loadedWord || categoriesLoading || Boolean(notice);
 
+
   function updateTranslation(index, changes) {
     if (changes.word?.trim()) {
       const field = index === 0 ? "source-word" : "target-word";
@@ -206,6 +216,7 @@ export default function EditWord() {
       return { ...previous, translations };
     });
   }
+
 
   async function selectOption(value) {
     setSelection(null);
@@ -231,6 +242,7 @@ export default function EditWord() {
     }
   }
 
+
   function getSubmitStyle({ pressed }) {
     return [
       styles.button,
@@ -239,9 +251,11 @@ export default function EditWord() {
     ];
   }
 
+
   function submitTextStyle() {
     return [styles.buttonText, busy && styles.buttonTextDisabled];
   }
+
 
   function returnToWords() {
     router.replace({
@@ -250,10 +264,12 @@ export default function EditWord() {
     });
   }
 
+
   function finishSave() {
     void getFiltredConcepts(formData.translations[1].language);
     returnToWords();
   }
+
 
   async function saveWord() {
     if (submittingRef.current || busy || categoriesLoadingRef.current) return;
@@ -301,10 +317,12 @@ export default function EditWord() {
     }
   }
 
+
   function closeNotice() {
     if (notice?.saved) finishSave();
     setNotice(null);
   }
+
 
   return (
     <SafeAreaView

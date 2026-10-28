@@ -131,6 +131,7 @@ export default function AddNewCategory() {
       return [editCategoryStyles.option, selected && editCategoryStyles.selected, pressed && styles.pressed];
     }
 
+
     return (
       <Pressable
         testID={`new-category-language-${item.id}`}
@@ -143,6 +144,7 @@ export default function AddNewCategory() {
       </Pressable>
     );
   }
+
 
   return (
     <SafeAreaView style={editCategoryStyles.screen} edges={["top", "right", "left"]}>

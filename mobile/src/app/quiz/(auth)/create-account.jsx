@@ -24,6 +24,7 @@ import EyeIcon from "../../../../assets/icons/eye.svg";
 import EyeOffIcon from "../../../../assets/icons/eye-off.svg";
 import { colors } from "../../../styles/basic";
 
+
 export default function CreateAccount() {
   const initialValues = {
     email: "",
@@ -53,6 +54,7 @@ export default function CreateAccount() {
 
   const isFormValid = Object.keys(validateInput(formValues)).length === 0;
 
+
   async function handleSubmit() {
     if (busy || submittingRef.current || registered) return;
 
@@ -66,6 +68,7 @@ export default function CreateAccount() {
 
     await submitAccount(formValues);
   }
+
 
   async function submitAccount(values) {
     submittingRef.current = true;
@@ -88,12 +91,14 @@ export default function CreateAccount() {
     }
   }
 
+
   function handleChange(name, value) {
     setFormValues((previousValues) => ({
       ...previousValues,
       [name]: value,
     }));
   }
+
 
   function handleBlur(name) {
     setFocusedField(null);
@@ -106,6 +111,7 @@ export default function CreateAccount() {
     setTouched(newTouched);
     setFormErrors(validateInput(formValues, newTouched));
   }
+
 
   function validateInput(
     values,
@@ -141,6 +147,7 @@ export default function CreateAccount() {
     return errors;
   }
 
+
   const disabled = !isFormValid || busy;
   const keyboardBehavior = Platform.OS === "ios" ? "padding" : "height";
   const mainAuthStyle = [auth.mainAuth, compact && authCompact.mainAuth];
@@ -166,6 +173,8 @@ export default function CreateAccount() {
   const inputsEditable = !busy;
   const passwordHidden = !isPasswordTopVisible;
   const repeatedPasswordHidden = !isPasswordBottomVisible;
+
+
   function getInputStyle(name) {
     return [
       auth.inputField,
@@ -173,56 +182,91 @@ export default function CreateAccount() {
       focusedField === name && auth.inputFieldFocus,
     ];
   }
+
+
   const emailInputStyle = getInputStyle("email");
+
+
   function handleEmailChange(value) {
     handleChange("email", value);
   }
+
+
   function handleEmailFocus() {
     setFocusedField("email");
   }
+
+
   function handleEmailBlur() {
     handleBlur("email");
   }
+
+
   const passwordInputStyle = getInputStyle("password");
+
+
   function handlePasswordChange(value) {
     handleChange("password", value);
   }
+
+
   function handlePasswordFocus() {
     setFocusedField("password");
   }
+
+
   function handlePasswordBlur() {
     handleBlur("password");
   }
+
+
   function setPasswordRef(input) {
     inputRefs.current.password = input;
   }
+
+
   const repeatedPasswordInputStyle = getInputStyle("repeated_password");
+
+
   function handleRepeatedPasswordChange(value) {
     handleChange("repeated_password", value);
   }
+
+
   function handleRepeatedPasswordFocus() {
     setFocusedField("repeated_password");
   }
+
+
   function handleRepeatedPasswordBlur() {
     handleBlur("repeated_password");
   }
+
+
   function setRepeatedPasswordRef(input) {
     inputRefs.current.repeated_password = input;
   }
+
+
   function focusPassword() {
     inputRefs.current.password?.focus();
   }
+
+
   function focusRepeatedPassword() {
     inputRefs.current.repeated_password?.focus();
   }
+
 
   function handlePasswordVisibility() {
     togglePasswordVisibilityTop((previous) => !previous);
   }
 
+
   function handleRepeatedPasswordVisibility() {
     togglePasswordVisibilityBottom((previous) => !previous);
   }
+
 
   function handleConsentChange(checked) {
     handleChange("checked", checked);
@@ -232,9 +276,11 @@ export default function CreateAccount() {
     );
   }
 
+
   function getEyeButtonStyle({ pressed }) {
     return [auth.eyeButton, pressed && auth.pressed];
   }
+
 
   function getSubmitStyle({ pressed }) {
     return [
@@ -243,6 +289,7 @@ export default function CreateAccount() {
       disabled && styles.buttonDisabled,
     ];
   }
+
 
   return (
     <SafeAreaView style={resets.screen} edges={["bottom"]}>

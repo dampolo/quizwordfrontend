@@ -89,6 +89,8 @@ export default function EditCategory() {
         if (active) setLoading(false);
       }
     }
+
+
     void load();
     return () => {
       active = false;
@@ -203,6 +205,7 @@ export default function EditCategory() {
       ];
     }
 
+
     return (
       <Pressable
         testID={`edit-category-language-${item.id}`}
@@ -215,6 +218,8 @@ export default function EditCategory() {
       </Pressable>
     );
   }
+
+
   const selectedLanguage = userLanguages.find(
     (item) => String(item.id) === languageId,
   );

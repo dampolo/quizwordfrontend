@@ -11,12 +11,17 @@ import { allWordsStyles } from "../AllWords/all-words.styles";
 import { allCategoriesStyles } from "./all-categories.styles";
 
 const allLanguages = { id: "all", language_name: "All" };
+
+
 function buttonStyle({ pressed }) {
   return [styles.button, pressed && styles.pressed];
 }
+
+
 function addCategory() {
   router.push("/my-quiz/(all-categories)/add-new-category");
 }
+
 
 export default function AllCategories() {
   const { language } = useLocalSearchParams();
@@ -33,6 +38,8 @@ export default function AllCategories() {
     useCallback(() => {
       let current = true;
       setLoading(true);
+
+
       async function loadCategories() {
         try {
           if (activeLanguage)
@@ -42,6 +49,8 @@ export default function AllCategories() {
           if (current) setLoading(false);
         }
       }
+
+
       void loadCategories();
       return () => {
         current = false;
@@ -49,14 +58,19 @@ export default function AllCategories() {
     }, [activeLanguage]),
   );
 
+
   function renderLanguage({ item }) {
     const selected =
       item.id === "all"
         ? activeLanguage === null
         : String(item.id) === activeLanguage;
+
+
     function selectLanguage() {
       router.setParams({ language: item.id === "all" ? "" : String(item.id) });
     }
+
+
     function filterStyle({ pressed }) {
       return [
         allWordsStyles.language,
@@ -64,6 +78,8 @@ export default function AllCategories() {
         pressed && styles.pressed,
       ];
     }
+
+
     return (
       <Pressable
         testID={`category-language-${item.id}`}
@@ -83,6 +99,8 @@ export default function AllCategories() {
       </Pressable>
     );
   }
+
+
   function renderCategory({ item }) {
     function openWords() {
       router.push({
@@ -93,6 +111,8 @@ export default function AllCategories() {
         },
       });
     }
+
+
     function editCategory() {
       router.push({
         pathname: "/my-quiz/(all-categories)/edit-category",
@@ -102,6 +122,8 @@ export default function AllCategories() {
         },
       });
     }
+
+
     return (
       <View
         style={allCategoriesStyles.card}
@@ -143,6 +165,8 @@ export default function AllCategories() {
       </View>
     );
   }
+
+
   return (
     <SafeAreaView
       style={allWordsStyles.screen}

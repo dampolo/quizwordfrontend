@@ -72,6 +72,7 @@ export default function AllCategoryWords() {
       }
     }
 
+
     void loadWords();
     return () => { active = false; };
   }, [id, pagination]));
@@ -141,6 +142,7 @@ export default function AllCategoryWords() {
       });
     }
 
+
     return (
       <Pressable testID={`category-word-${item.id}`} accessibilityRole="link" accessibilityLabel={`${source?.word ?? ""} – ${target?.word ?? ""} ansehen`} disabled={!target} onPress={openWord} style={rowStyle}>
         <Text style={[allWordsStyles.rankText, allWordsStyles.rankColumn]}>#{target?.rank ?? "—"}</Text>
@@ -173,6 +175,7 @@ export default function AllCategoryWords() {
     }
     return <Text style={allWordsStyles.message}>Du hast in dieser Kategorie noch keine Wörter.</Text>;
   }
+
 
   return (
     <SafeAreaView style={allWordsStyles.screen} edges={["top", "right", "left"]}>

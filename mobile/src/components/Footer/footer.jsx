@@ -8,10 +8,12 @@ import { colors } from '../../styles/basic';
 import { styles } from '../../styles/styles';
 import { footer } from './footer.styles';
 
+
 export default function Footer() {
   const { t } = useTranslation();
   const compact = useWindowDimensions().width <= 992;
   const [feedback, setFeedback] = useState('');
+
 
   async function handleShare() {
     setFeedback('');
@@ -26,6 +28,7 @@ export default function Footer() {
       if (error?.name !== 'AbortError') setFeedback(t('MOBILE.SHARE_ERROR'));
     }
   }
+
 
   return (
     <View style={footer.footer}>

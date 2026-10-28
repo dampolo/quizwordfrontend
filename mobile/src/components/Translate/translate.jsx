@@ -18,15 +18,18 @@ import { colors } from "../../styles/basic";
 import { styles } from "../../styles/styles";
 import { translateStyles } from "./translate.styles";
 
+
 function getCode(language) {
   const code = (language?.language_code || language?.code || "").trim();
   const baseCode = code.toLowerCase().split(/[-_]/)[0];
   return ["de", "en", "es", "fr"].includes(baseCode) ? baseCode : code;
 }
 
+
 function languageKey(language) {
   return String(language.id);
 }
+
 
 export default function Translate() {
   const { nativeLanguage, userLanguages = [] } = useVocabulary();
@@ -69,6 +72,7 @@ export default function Translate() {
     includesNativeLanguage &&
     submitted.sourceId !== submitted.targetId;
 
+
   async function handleSubmit() {
     if (!canSubmit || submitting.current) return;
     submitting.current = true;
@@ -81,16 +85,19 @@ export default function Translate() {
     }
   }
 
+
   function switchLanguages() {
     setSource(targetId);
     setTarget(sourceId);
   }
+
 
   function selectLanguage(language) {
     if (selection === "source") setSource(String(language.id));
     else setTarget(String(language.id));
     setSelection(null);
   }
+
 
   function handleAdd() {
     if (!canAdd) return;
@@ -108,6 +115,7 @@ export default function Translate() {
     });
   }
 
+
   function submitStyle({ pressed }) {
     return [
       styles.button,
@@ -116,6 +124,7 @@ export default function Translate() {
     ];
   }
 
+
   function addStyle({ pressed }) {
     return [
       styles.button,
@@ -123,6 +132,7 @@ export default function Translate() {
       pressed && canAdd && styles.pressed,
     ];
   }
+
 
   function renderLanguage({ item }) {
     const selected =
@@ -142,6 +152,7 @@ export default function Translate() {
       </Pressable>
     );
   }
+
 
   return (
     <SafeAreaView

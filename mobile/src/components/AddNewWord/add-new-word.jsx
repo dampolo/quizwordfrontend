@@ -17,6 +17,7 @@ import { createQuizModalStyles } from "../CreateQuizModal/create-quiz-modal.styl
 import { addNewWordStyles } from "./add-new-word.styles";
 import { styles } from "../../styles/styles";
 
+
 export default function AddNewWord() {
   const { sourceWord, targetWord, targetLanguage, translationId } = useLocalSearchParams();
   const appliedTranslation = useRef(null);
@@ -157,6 +158,7 @@ export default function AddNewWord() {
       : formData.category;
   const busy = submitting || loading || categoriesLoading || Boolean(notice);
 
+
   function updateTranslation(index, changes) {
     if (changes.word?.trim()) {
       const field = index === 0 ? "source-word" : "target-word";
@@ -175,6 +177,7 @@ export default function AddNewWord() {
       return { ...previous, translations };
     });
   }
+
 
   async function selectOption(value) {
     setSelection(null);
@@ -197,6 +200,7 @@ export default function AddNewWord() {
     }
   }
 
+
   function getSubmitStyle({ pressed }) {
     return [
       styles.button,
@@ -205,10 +209,12 @@ export default function AddNewWord() {
     ];
   }
 
+
   function submitTextStyle(){
     return [styles.buttonText,
     busy && styles.buttonTextDisabled]
-  } 
+  }
+
 
   function finishSave() {
     if (pendingSave.current) {
@@ -237,6 +243,7 @@ export default function AddNewWord() {
       });
     }
   }
+
 
   async function saveWord(addAnother, allowNewMeaning = false) {
     if (submittingRef.current || loading || categoriesLoadingRef.current)
@@ -307,10 +314,12 @@ export default function AddNewWord() {
     }
   }
 
+
   function closeNotice() {
     if (notice?.saved) finishSave();
     setNotice(null);
   }
+
 
   return (
     <SafeAreaView

@@ -19,6 +19,7 @@ import { resets } from "../../../styles/resets";
 import { styles } from "../../../styles/styles";
 import MailIcon from "../../../../assets/icons/mail-icon-input-field.svg";
 
+
 export default function ForgotPassword() {
   const { forgotPassword, setConfirmationMessage, loading } = useAuth();
   const initialValues = { email: "" };
@@ -50,6 +51,7 @@ export default function ForgotPassword() {
     disabled && styles.buttonTextDisabled,
   ];
 
+
   async function recoveryForm() {
     if (busy || submittingRef.current) return;
     const errors = validateInput(formValues);
@@ -78,11 +80,13 @@ export default function ForgotPassword() {
     }
   }
 
+
   function handleChange(name, value) {
     const updatedValues = { ...formValues, [name]: value };
     setFormValues(updatedValues);
     setFormErrors(validateInput(updatedValues));
   }
+
 
   function validateInput(values) {
     const errors = {};
@@ -92,17 +96,21 @@ export default function ForgotPassword() {
     return errors;
   }
 
+
   function handleEmailChange(value) {
     handleChange("email", value);
   }
+
 
   function handleEmailFocus() {
     setFocusedField("email");
   }
 
+
   function handleBlur() {
     setFocusedField(null);
   }
+
 
   function getSubmitStyle({ pressed }) {
     return [
@@ -111,6 +119,7 @@ export default function ForgotPassword() {
       disabled && styles.buttonDisabled,
     ];
   }
+
 
   function renderMessage() {
     if (!formErrors.message) return null;
@@ -125,10 +134,12 @@ export default function ForgotPassword() {
     );
   }
 
+
   function renderLoader() {
     if (!busy) return null;
     return <PreLoader />;
   }
+
 
   return (
     <SafeAreaView style={resets.screen} edges={["bottom"]}>

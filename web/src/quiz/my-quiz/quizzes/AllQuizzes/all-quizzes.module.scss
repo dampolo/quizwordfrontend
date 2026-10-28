@@ -169,13 +169,24 @@
   }
 
   .quiz-overview {
-    display: none;
+    margin: auto;
+    width: min(50rem, calc(100% - 2rem));
+    max-height: calc(100% - 5.5rem);
+    padding: 4rem 1rem 1rem;
+    border: 0.0625rem solid basic.$qw-border-color;
+    border-radius: basic.$qw-border-radius;
+    background: basic.$qw-fourth;
+    overflow-y: auto;
+
+    &::backdrop {
+      background: rgba(52, 33, 214, 0.4);
+    }
 
     &__close {
       position: absolute;
       top: 1rem;
       right: 1rem;
-      border: 1px solid #dddded;
+      border: 0.0625rem solid #dddded;
       border-radius: 50%;
       background: basic.$qw-fourth;
       font-size: 1rem;
@@ -186,21 +197,6 @@
         background: #f6f6fb;
       }
     }
-  }
-
-  .show-quiz-overview {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(52, 33, 214, 0.4);
-    padding: 4.5rem 1rem 1rem;
   }
 
   .quiz-overview__list {

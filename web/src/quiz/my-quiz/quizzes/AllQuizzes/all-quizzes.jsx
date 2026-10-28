@@ -1,5 +1,5 @@
 import PlayLastQuiz from "../../../../components/PlayLastQuiz/PlayLastQuiz";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./all-quizzes.module.scss";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import useQuiz from "../../../../context/quiz/useQuiz";
@@ -28,7 +28,7 @@ function Quizzes() {
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogDescription, setDialogDescription] = useState("");
-  const [quizOverview, setQuizOverview] = useState(false);
+  const quizOverviewRef = useRef(null);
   const [quiz, setQuiz] = useState(null);
   const [loadingWords, setLoadingWords] = useState(false);
   const navigate = useNavigate();
@@ -47,8 +47,9 @@ function Quizzes() {
     }
   }
 
+
   async function getOverview(id) {
-    setQuizOverview(true);
+    quizOverviewRef.current?.showModal();
     setLoadingWords(true);
 
     try {
@@ -62,6 +63,7 @@ function Quizzes() {
       setLoadingWords(false);
     }
   }
+
 
   function selectLanguage(languageId) {
     if (languageId === null) {
@@ -77,8 +79,9 @@ function Quizzes() {
     setDialogOpen(true);
   }
 
+
   function setQuizWords() {
-    setQuizOverview(false);
+    quizOverviewRef.current?.close();
   }
 
   useEffect(() => {
@@ -342,8 +345,10 @@ function Quizzes() {
         message={message}
         onSubmit={handleEditQuiz}
       />
-      <section
-        className={`${styles["quiz-overview"]} ${quizOverview ? styles["show-quiz-overview"] : ""}`}
+      <dialog
+        ref={quizOverviewRef}
+        className={styles["quiz-overview"]}
+        aria-labelledby="quiz-overview-title"
       >
         <button
           type="button"
@@ -354,7 +359,7 @@ function Quizzes() {
         </button>
         <div className={styles["quiz-overview__list"]}>
           <div className={styles["quiz-overview__head"]}>
-            <div className={styles["quiz-overview__word"]}>
+            <div className={styles["quiz-overview__word"]} id="quiz-overview-title">
               Wort & Übersetzung
             </div>
             <div className={styles["quiz-overview__actions"]}>Aktionen</div>
@@ -384,7 +389,7 @@ function Quizzes() {
             ))
           )}
         </div>
-      </section>
+      </dialog>
     </section>
   );
 }

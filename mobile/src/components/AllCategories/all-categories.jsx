@@ -85,8 +85,8 @@ export default function AllCategories() {
   }
   function renderCategory({ item }) {
     function openWords() {
-      router.navigate({
-        pathname: "/my-quiz/[id]/all-category-words",
+      router.push({
+        pathname: "/my-quiz/(all-categories)/all-category-words",
         params: {
           id: String(item.category_id),
           language: String(item.language_id),

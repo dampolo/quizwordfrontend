@@ -29,12 +29,12 @@ function AllWords() {
   const [selectedWordIds, setSelectedWordIds] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const filterDialogRef = useRef(null);
-  const { createQuiz, getLastFlipCard, postRandomQuiz } =
-    useQuiz();
+  const { createQuiz, getLastFlipCard, postRandomQuiz } = useQuiz();
   const requestedPage = Number(searchParams.get("page") || 1);
-  const currentPage = Number.isSafeInteger(requestedPage) && requestedPage > 0
-    ? requestedPage
-    : 1;
+  const currentPage =
+    Number.isSafeInteger(requestedPage) && requestedPage > 0
+      ? requestedPage
+      : 1;
   const [message, setMessage] = useState("");
 
   const filterDate = searchParams.get("created_at__date") || "";
@@ -42,8 +42,10 @@ function AllWords() {
 
   const language = searchParams.get("language");
   const active = language ? Number(language) : null;
-  
-  const language_name = userLanguages?.find((lang) => Number(lang.id) === active)?.language_name;
+
+  const language_name = userLanguages?.find(
+    (lang) => Number(lang.id) === active,
+  )?.language_name;
 
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -86,9 +88,9 @@ function AllWords() {
   }
 
   function removefilter() {
-    setDate("")
+    setDate("");
   }
-  
+
   function submit() {
     const params = new URLSearchParams(searchParams);
     if (date) {
@@ -153,6 +155,7 @@ function AllWords() {
   return (
     <div className={styles["vocabulary"]}>
       <PageTitle title="Alle Wörter" />
+
       <div className={styles["vocabulary__header"]}>
         <div>
           <h1>Deine Vokabeln</h1>
@@ -308,8 +311,18 @@ function AllWords() {
       <div className={styles["cards"]}>
         <div className={`${styles["card"]} ${styles["random"]}`}>
           <h3>Zufällige Wörter wiederholen</h3>
-          <p>Höre beide Übersetzungen({language_name ? ` auf ${language_name}` : ""}) und wiederhole danach das nächste Wort.</p>
-          <button type="button" disabled={!language} onClick={() => navigate(`/my-quiz/random-repeat-words?language=${language}`)}>
+          <p>
+            Höre beide Übersetzungen(
+            {language_name ? ` auf ${language_name}` : ""}) und wiederhole
+            danach das nächste Wort.
+          </p>
+          <button
+            type="button"
+            disabled={!language}
+            onClick={() =>
+              navigate(`/my-quiz/random-repeat-words?language=${language}`)
+            }
+          >
             Start
           </button>
         </div>
@@ -327,8 +340,8 @@ function AllWords() {
         <div className={`${styles["card"]} ${styles["random"]}`}>
           <h3>Random Quiz</h3>
           <p>
-            Erstelle ein Quiz{language_name ? ` auf ${language_name}` : ""} aus 5
-            gemischten Wörtern.
+            Erstelle ein Quiz{language_name ? ` auf ${language_name}` : ""} aus
+            5 gemischten Wörtern.
           </p>
 
           <button onClick={createRandomQuiz}>Start</button>
@@ -364,6 +377,7 @@ function AllWords() {
             fill="currentColor"
           />
         </svg>
+        {selectedWordIds.length !== 0 ? selectedWordIds.length : ""}
       </button>
 
       {/* dialog Filter */}

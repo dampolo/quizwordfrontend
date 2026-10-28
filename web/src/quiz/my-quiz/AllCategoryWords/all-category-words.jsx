@@ -73,11 +73,14 @@ export default function AllCategoryWords() {
             return (
               <div className={styles["list-row"]} key={concept.id}>
                 <div className={styles["rank"]}>#{target?.rank ?? "—"}</div>
-                <div className={styles["word"]}>
+                <Link
+                  className={styles["word"]}
+                  to={target ? `/my-quiz/${concept.id}/show-word?target-word=${target.id}&language=${target.language}` : undefined}
+                >
                   <h3>{source?.word ?? "—"}</h3>
                   <span>»</span>
                   <p>{target?.word ?? "—"}</p>
-                </div>
+                </Link>
                 <div className={styles["category"]}><span className={styles["badge"]}>{target?.category_name ?? category.category_name}</span></div>
                 <div className={styles["streak"]}>🔥 <strong>{target?.streak ?? 0}</strong> <span>Days</span></div>
                 <div className={styles["actions"]}>

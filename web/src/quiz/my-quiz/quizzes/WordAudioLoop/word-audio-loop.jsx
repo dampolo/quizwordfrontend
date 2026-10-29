@@ -39,6 +39,8 @@ function WordAudioLoop({ reverse = false }) {
       setPlaying(false);
       try {
         const data = await loadQuiz.current(id);
+        console.log(data);
+        
         if (mounted) setQuiz(data);
       } catch {
         if (mounted) toast.error("Das Quiz konnte nicht geladen werden.");
@@ -56,12 +58,14 @@ function WordAudioLoop({ reverse = false }) {
     };
   }, [id]);
 
+
   function stop() {
     playback.current.active = false;
     clearTimeout(playback.current.timer);
     window.speechSynthesis?.cancel();
     setPlaying(false);
   }
+
 
   function togglePlayback() {
     if (playing) {
@@ -79,6 +83,7 @@ function WordAudioLoop({ reverse = false }) {
     window.speechSynthesis.cancel();
     setPlaying(true);
 
+
     function speak(index, translationIndex) {
       if (!session.active) return;
       setCurrentQuestion(index);
@@ -92,8 +97,12 @@ function WordAudioLoop({ reverse = false }) {
         if (!session.active) return;
         session.timer = setTimeout(() => {
           speak(
-            translationIndex === firstTranslation ? index : (index + 1) % concepts.length,
-            translationIndex === firstTranslation ? secondTranslation : firstTranslation,
+            translationIndex === firstTranslation
+              ? index
+              : (index + 1) % concepts.length,
+            translationIndex === firstTranslation
+              ? secondTranslation
+              : firstTranslation,
           );
         }, 700);
       };
@@ -111,6 +120,7 @@ function WordAudioLoop({ reverse = false }) {
     speak(currentQuestion, firstTranslation);
   }
 
+
   function cancel() {
     stop();
     navigate(
@@ -120,6 +130,7 @@ function WordAudioLoop({ reverse = false }) {
     );
   }
 
+
   return (
     <section className="play-quiz">
       <div className={`${styles["quiz-card"]} ${styles["learn-card"]}`}>
@@ -127,6 +138,10 @@ function WordAudioLoop({ reverse = false }) {
           {current?.translations[firstTranslation].language_name} →{" "}
           {current?.translations[secondTranslation].language_name}
         </span>
+        <span className={styles["counter"]}>
+          {current ? currentQuestion + 1 : 0} / {quiz?.concepts_count ?? 0}
+        </span>
+
         <span className={styles["quiz-card__quiz-name"]}>
           {quiz?.quiz_name}
         </span>
@@ -143,32 +158,37 @@ function WordAudioLoop({ reverse = false }) {
             <PreLoader />
           ) : (
             <h1 className={styles["quiz-card__title-learn"]}>
-              {current?.translations[firstTranslation].word || "Keine Wörter vorhanden."}
+              {current?.translations[firstTranslation].word ||
+                "Keine Wörter vorhanden."}
             </h1>
           )}
         </div>
         <div className={styles["quiz-card__form"]}>
-          {answerHidden && <div className={styles["overlay"]} aria-hidden="true" />}
+          {answerHidden && (
+            <div className={styles["overlay"]} aria-hidden="true" />
+          )}
           <span className={styles["quiz-card__line"]}></span>
           <span className={styles["quiz-card__answer-wrapper-learn"]}>
             {current?.translations[secondTranslation].word}
           </span>
-        <button
-          type="button"
-          name="toggle-answer"
-          className={styles["quiz-card__toggle-answer"]}
-          onClick={() => setAnswerHidden((hidden) => !hidden)}
-          aria-label={answerHidden ? "Antwort anzeigen" : "Antwort ausblenden"}
-          aria-pressed={answerHidden}
-          disabled={loading || !current}
-        >
-          <img
-            width={24}
-            height={24}
-            src={answerHidden ? "/assets/eye.svg" : "/assets/eye-off.svg"}
-            alt=""
-          />
-        </button>
+          <button
+            type="button"
+            name="toggle-answer"
+            className={styles["quiz-card__toggle-answer"]}
+            onClick={() => setAnswerHidden((hidden) => !hidden)}
+            aria-label={
+              answerHidden ? "Antwort anzeigen" : "Antwort ausblenden"
+            }
+            aria-pressed={answerHidden}
+            disabled={loading || !current}
+          >
+            <img
+              width={24}
+              height={24}
+              src={answerHidden ? "/assets/eye.svg" : "/assets/eye-off.svg"}
+              alt=""
+            />
+          </button>
         </div>
         <button
           type="button"
@@ -181,11 +201,11 @@ function WordAudioLoop({ reverse = false }) {
           <span>{playing ? "Stoppen" : "Starten"}</span>
         </button>
       </div>
-        {screenAwake && (
-          <p role="status" className={styles["quiz-card__wake-lock-message"]}>
-            Der Bildschirm bleibt während der Wiedergabe eingeschaltet.
-          </p>
-        )}
+      {screenAwake && (
+        <p role="status" className={styles["quiz-card__wake-lock-message"]}>
+          Der Bildschirm bleibt während der Wiedergabe eingeschaltet.
+        </p>
+      )}
     </section>
   );
 }

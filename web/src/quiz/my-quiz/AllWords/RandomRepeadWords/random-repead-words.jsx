@@ -168,6 +168,9 @@ function RandomRepeadWords() {
         <span className={styles.languages}>
           {current?.translations[0].language_name} → {current?.translations[1].language_name}
         </span>
+        <span className={styles.counter}>
+          {current ? conceptIndex + 1 : 0} / {concepts.length}
+        </span>
         <h1 id={titleId} className="visually-hidden">Zufällige Wörter wiederholen</h1>
         <button type="button" name="close" className={styles["quiz-card__cancel"]}
           aria-label="Zurück zu allen Wörtern" onClick={() => navigate(`/my-quiz/all-words?${params}`)}>

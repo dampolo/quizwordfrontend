@@ -14,7 +14,8 @@ import { speak } from "../../services/speech";
 
 export default function MyQuizLayout() {
   const segments = useSegments();
-  const isLearning = segments[segments.length - 1] === "learn-quiz";
+  const currentScreen = segments[segments.length - 1];
+  const isQuizOpen = currentScreen === "learn-quiz" || currentScreen === "play-test-quiz";
   return (
     <VocabularyProvider
       speak={speak}
@@ -40,7 +41,7 @@ export default function MyQuizLayout() {
               tabBarActiveTintColor: tabColors.active,
               tabBarInactiveTintColor: tabColors.inactive,
               tabBarActiveBackgroundColor: tabColors.activeBackground,
-              tabBarStyle: [styles.tabBar, isLearning && { display: "none" }],
+              tabBarStyle: [styles.tabBar, isQuizOpen && { display: "none" }],
               tabBarItemStyle: styles.tabBarItem,
               tabBarLabelStyle: styles.tabBarLabel,
               tabBarButton: (props) => (

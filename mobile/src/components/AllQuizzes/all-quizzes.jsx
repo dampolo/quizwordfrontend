@@ -54,6 +54,18 @@ function renderQuiz({ item }) {
   }
 
 
+  function openPlayTestQuiz() {
+    router.push({
+      pathname: "/my-quiz/(all-quizzes)/play-test-quiz",
+      params: {
+        id: String(item.quiz_id),
+        language: item.target_language == null ? "" : String(item.target_language),
+        redirect: "true",
+      },
+    });
+  }
+
+
   return (
     <View style={allQuizzesStyles.card} testID={`quiz-${item.quiz_id}`}>
       <View style={allQuizzesStyles.cardHeader}>
@@ -92,6 +104,7 @@ function renderQuiz({ item }) {
           <Tooltip title="Test schreiben">
             <Pressable
               testID="quiz-action-write"
+              onPress={openPlayTestQuiz}
               accessibilityRole="button"
               accessibilityLabel="Test schreiben"
               style={allQuizzesStyles.action}

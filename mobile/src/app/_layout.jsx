@@ -8,6 +8,7 @@ import { View } from "react-native";
 import { fontAssets } from "../assets/fonts";
 import PreLoader from "../components/PreLoader/pre-loader";
 import { resets } from "../styles/resets";
+import { PaperProvider } from "react-native-paper";
 
 
 export default function RootLayout() {
@@ -24,8 +25,10 @@ export default function RootLayout() {
   return (
     <AuthProvider>
       <SafeAreaProvider>
-        <StatusBar style="dark" />
-        <Stack screenOptions={{ headerShown: false }} />
+        <PaperProvider>
+          <StatusBar style="dark" />
+          <Stack screenOptions={{ headerShown: false }} />
+        </PaperProvider>
       </SafeAreaProvider>
     </AuthProvider>
   );

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
+import { Tooltip } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import useQuiz from "@quizword/shared/quiz/useQuiz";
@@ -9,13 +10,19 @@ import ScreenHeaderCustomer from "../ScreenHeaderCustomer/ScreenHeaderCustomer";
 import { allWordsStyles } from "../AllWords/all-words.styles";
 import { allQuizzesStyles } from "./all-quizzes.styles";
 import { styles } from "../../styles/styles";
+import { colors } from "../../styles/basic";
+import { allCategoriesStyles } from "../AllCategories/all-categories.styles";
+import EditIcon from "../../../assets/icons/edit.svg";
+import LearnIcon from "../../../assets/icons/learn-quiz.svg";
+import WriteIcon from "../../../assets/icons/write.svg";
+import LookIcon from "../../../assets/icons/look-quiz.svg";
+import FlipCardIcon from "../../../assets/icons/flip-card.svg";
+import RepeatIcon from "../../../assets/icons/repead.svg";
+import HearIcon from "../../../assets/icons/hear.svg";
+import FlipCardReverseIcon from "../../../assets/icons/flip-card-reverse.svg";
+import RepeatReverseIcon from "../../../assets/icons/repead-reverse.svg";
 
 const allLanguages = { id: "all", language_name: "All" };
-const quizActions = [
-  "Lernen", "Test schreiben", "Vorschau", "Karteikarten",
-  "Lernen und hören", "Hören", "Karteikarten rückwärts",
-  "Lernen und hören rückwärts",
-];
 
 
 function languageKey(item) {
@@ -28,76 +35,160 @@ function quizKey(item) {
 }
 
 
-function actionKey(item) {
-  return item;
-}
-
-
-// Enable each action when its mobile screen or dialog is implemented.
-function renderAction({ item }) {
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityState={{ disabled: true }}
-      disabled
-      style={[styles.button, styles.buttonDisabled, allQuizzesStyles.action]}
-    >
-      <Text style={[styles.buttonText, styles.buttonTextDisabled]}>{item}</Text>
-    </Pressable>
-  );
-}
-
-
 function renderQuiz({ item }) {
   const createdAt = new Date(item.created_at);
-  const date = Number.isNaN(createdAt.getTime()) ? "–" : createdAt.toLocaleDateString("de-DE");
+  const date = Number.isNaN(createdAt.getTime())
+    ? "–"
+    : createdAt.toLocaleDateString("de-DE");
 
   return (
     <View style={allQuizzesStyles.card} testID={`quiz-${item.quiz_id}`}>
       <View style={allQuizzesStyles.cardHeader}>
-        <Text style={allQuizzesStyles.cardTitle} accessibilityRole="header">{item.quiz_name}</Text>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Quiz bearbeiten"
-          accessibilityState={{ disabled: true }}
-          disabled
-          style={[styles.button, styles.buttonDisabled]}
-        >
-          <Text style={[styles.buttonText, styles.buttonTextDisabled]}>Bearbeiten</Text>
-        </Pressable>
+        <Text style={allQuizzesStyles.cardTitle} accessibilityRole="header">
+          {item.quiz_name}
+        </Text>
+        <Tooltip title="Quiz bearbeiten">
+          <Pressable
+            testID={`edit-quiz-${item.quiz_id}`}
+            accessibilityRole="button"
+            accessibilityLabel="Quiz bearbeiten"
+            style={allCategoriesStyles.editButton}
+          >
+            <EditIcon width={20} height={20} accessible={false} />
+          </Pressable>
+        </Tooltip>
       </View>
-      <FlatList
-        horizontal
-        data={quizActions}
-        keyExtractor={actionKey}
-        renderItem={renderAction}
-        contentContainerStyle={allQuizzesStyles.actions}
-      />
+      <View style={allQuizzesStyles.actions}>
+        <View style={allQuizzesStyles.actionRow}>
+          <Tooltip title="Lernen">
+            <Pressable
+              testID="quiz-action-learn"
+              accessibilityRole="button"
+              accessibilityLabel="Lernen"
+              style={allQuizzesStyles.action}
+            >
+              <LearnIcon
+                width={40}
+                height={40}
+                color={colors.qwColorHeading}
+                accessible={false}
+              />
+            </Pressable>
+          </Tooltip>
+          <Tooltip title="Test schreiben">
+            <Pressable
+              testID="quiz-action-write"
+              accessibilityRole="button"
+              accessibilityLabel="Test schreiben"
+              style={allQuizzesStyles.action}
+            >
+              <WriteIcon
+                width={40}
+                height={40}
+                color={colors.qwColorHeading}
+                accessible={false}
+              />
+            </Pressable>
+          </Tooltip>
+          <Tooltip title="Vorschau">
+            <Pressable
+              testID="quiz-action-preview"
+              accessibilityRole="button"
+              accessibilityLabel="Vorschau"
+              style={allQuizzesStyles.action}
+            >
+              <LookIcon
+                width={40}
+                height={40}
+                color={colors.qwColorHeading}
+                accessible={false}
+              />
+            </Pressable>
+          </Tooltip>
+          <Tooltip title="Karteikarten">
+            <Pressable
+              testID="quiz-action-flip-card"
+              accessibilityRole="button"
+              accessibilityLabel="Karteikarten"
+              style={allQuizzesStyles.action}
+            >
+              <FlipCardIcon
+                width={40}
+                height={40}
+                color={colors.qwColorHeading}
+                accessible={false}
+              />
+            </Pressable>
+          </Tooltip>
+        </View>
+        <View style={allQuizzesStyles.actionRow}>
+          <Tooltip title="Lernen und hören">
+            <Pressable
+              testID="quiz-action-audio-loop"
+              accessibilityRole="button"
+              accessibilityLabel="Lernen und hören"
+              style={allQuizzesStyles.action}
+            >
+              <RepeatIcon
+                width={40}
+                height={40}
+                color={colors.qwColorHeading}
+                accessible={false}
+              />
+            </Pressable>
+          </Tooltip>
+          <Tooltip title="Hören">
+            <Pressable
+              testID="quiz-action-hear"
+              accessibilityRole="button"
+              accessibilityLabel="Hören"
+              style={allQuizzesStyles.action}
+            >
+              <HearIcon
+                width={40}
+                height={40}
+                color={colors.qwColorHeading}
+                accessible={false}
+              />
+            </Pressable>
+          </Tooltip>
+          <Tooltip title="Karteikarten rückwärts">
+            <Pressable
+              testID="quiz-action-flip-card-reverse"
+              accessibilityRole="button"
+              accessibilityLabel="Karteikarten rückwärts"
+              style={allQuizzesStyles.action}
+            >
+              <FlipCardReverseIcon
+                width={40}
+                height={40}
+                color={colors.qwColorHeading}
+                accessible={false}
+              />
+            </Pressable>
+          </Tooltip>
+          <Tooltip title="Lernen und hören rückwärts">
+            <Pressable
+              testID="quiz-action-audio-loop-reverse"
+              accessibilityRole="button"
+              accessibilityLabel="Lernen und hören rückwärts"
+              style={allQuizzesStyles.action}
+            >
+              <RepeatReverseIcon
+                width={40}
+                height={40}
+                color={colors.qwColorHeading}
+                accessible={false}
+              />
+            </Pressable>
+          </Tooltip>
+        </View>
+      </View>
       <View style={allQuizzesStyles.cardFooter}>
-        <Text style={allQuizzesStyles.metadata}>{item.concepts_count} Wörter</Text>
+        <Text style={allQuizzesStyles.metadata}>
+          {item.concepts_count} Wörter
+        </Text>
         <Text style={allQuizzesStyles.metadata}>Erstellt: {date}</Text>
-      </View>
-    </View>
-  );
-}
-
-
-function QuizFooter() {
-  return (
-    <View style={allQuizzesStyles.footer}>
-      <View style={allQuizzesStyles.card}>
-        <Text style={allQuizzesStyles.cardTitle} accessibilityRole="header">Zufällige Karteikarten</Text>
-        <Text style={allQuizzesStyles.metadata}>Starte die Karteikarten eines zufälligen Quizzes.</Text>
-        <Pressable accessibilityRole="button" disabled accessibilityState={{ disabled: true }} style={[styles.button, styles.buttonDisabled]}>
-          <Text style={[styles.buttonText, styles.buttonTextDisabled]}>Start</Text>
-        </Pressable>
-      </View>
-      <View style={allQuizzesStyles.card}>
-        <Text style={allQuizzesStyles.cardTitle} accessibilityRole="header">Letztes Quiz</Text>
-        <Text style={allQuizzesStyles.metadata}>Setze deinen Lernfortschritt fort.</Text>
-        <Pressable accessibilityRole="button" disabled accessibilityState={{ disabled: true }} style={[styles.button, styles.buttonDisabled]}>
-          <Text style={[styles.buttonText, styles.buttonTextDisabled]}>Fortsetzen</Text>
-        </Pressable>
       </View>
     </View>
   );
@@ -106,7 +197,8 @@ function QuizFooter() {
 
 export default function AllQuizzes() {
   const { language } = useLocalSearchParams();
-  const activeLanguage = (Array.isArray(language) ? language[0] : language) || null;
+  const activeLanguage =
+    (Array.isArray(language) ? language[0] : language) || null;
   const { userLanguages } = useVocabulary();
   const { quizzes, loading, getQuizzes, getFiltredQuizzes } = useQuiz();
   const actions = useRef({ getQuizzes, getFiltredQuizzes });
@@ -115,16 +207,20 @@ export default function AllQuizzes() {
     actions.current = { getQuizzes, getFiltredQuizzes };
   }, [getQuizzes, getFiltredQuizzes]);
 
-  useFocusEffect(useCallback(() => {
-    if (activeLanguage) void actions.current.getFiltredQuizzes(activeLanguage);
-    else void actions.current.getQuizzes();
-  }, [activeLanguage]));
+  useFocusEffect(
+    useCallback(() => {
+      if (activeLanguage)
+        void actions.current.getFiltredQuizzes(activeLanguage);
+      else void actions.current.getQuizzes();
+    }, [activeLanguage]),
+  );
 
 
   function renderLanguage({ item }) {
-    const selected = item.id === "all"
-      ? activeLanguage === null
-      : String(item.id) === activeLanguage;
+    const selected =
+      item.id === "all"
+        ? activeLanguage === null
+        : String(item.id) === activeLanguage;
 
 
     function selectLanguage() {
@@ -140,7 +236,6 @@ export default function AllQuizzes() {
       ];
     }
 
-
     return (
       <Pressable
         testID={`quiz-language-${item.id}`}
@@ -149,16 +244,23 @@ export default function AllQuizzes() {
         onPress={selectLanguage}
         style={filterStyle}
       >
-        <Text style={[allWordsStyles.languageText, selected && allWordsStyles.languageTextActive]}>
+        <Text
+          style={[
+            allWordsStyles.languageText,
+            selected && allWordsStyles.languageTextActive,
+          ]}
+        >
           {item.language_name}
         </Text>
       </Pressable>
     );
   }
 
-
   return (
-    <SafeAreaView style={allQuizzesStyles.screen} edges={["top", "right", "left"]}>
+    <SafeAreaView
+      style={allQuizzesStyles.screen}
+      edges={["top", "right", "left"]}
+    >
       <FlatList
         data={loading ? [] : quizzes}
         keyExtractor={quizKey}
@@ -166,11 +268,18 @@ export default function AllQuizzes() {
         contentContainerStyle={allQuizzesStyles.content}
         ListHeaderComponent={
           <View>
-            <ScreenHeaderCustomer title="Quizze" style={allWordsStyles.screenHeader} />
+            <ScreenHeaderCustomer
+              title="Quizze"
+              style={allWordsStyles.screenHeader}
+            />
             <View style={allWordsStyles.vocabularyHeader}>
-              <Text style={allWordsStyles.title} accessibilityRole="header">Aktive Quizze</Text>
+              <Text style={allWordsStyles.title} accessibilityRole="header">
+                Aktive Quizze
+              </Text>
               <Text style={allWordsStyles.description}>
-                Setze deinen Lernfortschritt fort. Teste dein Wissen mit kürzlich hinzugefügten Vokabeln oder konzentriere dich auf deine Schwachstellen.
+                Setze deinen Lernfortschritt fort. Teste dein Wissen mit
+                kürzlich hinzugefügten Vokabeln oder konzentriere dich auf deine
+                Schwachstellen.
               </Text>
             </View>
             <FlatList
@@ -185,8 +294,61 @@ export default function AllQuizzes() {
             />
           </View>
         }
-        ListEmptyComponent={loading ? <PreLoader /> : <Text style={allWordsStyles.message}>Du hast hier kein Quiz erstellt.</Text>}
-        ListFooterComponent={QuizFooter}
+        ListEmptyComponent={
+          loading ? (
+            <PreLoader />
+          ) : (
+            <Text style={allWordsStyles.message}>
+              Du hast hier kein Quiz erstellt.
+            </Text>
+          )
+        }
+        ListFooterComponent={
+          <View style={allQuizzesStyles.footer}>
+            <View style={allQuizzesStyles.card}>
+              <Text
+                style={allQuizzesStyles.cardTitle}
+                accessibilityRole="header"
+              >
+                Zufällige Karteikarten
+              </Text>
+              <Text style={allQuizzesStyles.metadata}>
+                Starte die Karteikarten eines zufälligen Quizzes.
+              </Text>
+              <Pressable
+                accessibilityRole="button"
+                disabled
+                accessibilityState={{ disabled: true }}
+                style={[styles.button, styles.buttonDisabled]}
+              >
+                <Text style={[styles.buttonText, styles.buttonTextDisabled]}>
+                  Start
+                </Text>
+              </Pressable>
+            </View>
+            <View style={allQuizzesStyles.card}>
+              <Text
+                style={allQuizzesStyles.cardTitle}
+                accessibilityRole="header"
+              >
+                Letztes Quiz
+              </Text>
+              <Text style={allQuizzesStyles.metadata}>
+                Setze deinen Lernfortschritt fort.
+              </Text>
+              <Pressable
+                accessibilityRole="button"
+                disabled
+                accessibilityState={{ disabled: true }}
+                style={[styles.button, styles.buttonDisabled]}
+              >
+                <Text style={[styles.buttonText, styles.buttonTextDisabled]}>
+                  Fortsetzen
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+        }
       />
     </SafeAreaView>
   );

@@ -138,9 +138,12 @@ function WordAudioLoop({ reverse = false }) {
           {current?.translations[firstTranslation].language_name} →{" "}
           {current?.translations[secondTranslation].language_name}
         </span>
-        <span className={styles["counter"]}>
-          {current ? currentQuestion + 1 : 0} / {quiz?.concepts_count ?? 0}
-        </span>
+        <div className={styles.progress} role="progressbar"
+          aria-label="Fortschritt der Wiederholung" aria-valuemin={0}
+          aria-valuemax={concepts.length || 1} aria-valuenow={current ? currentQuestion + 1 : 0}>
+          <span className={styles["progress__fill"]}
+            style={{ width: `${current ? ((currentQuestion + 1) / concepts.length) * 100 : 0}%` }} />
+        </div>
 
         <span className={styles["quiz-card__quiz-name"]}>
           {quiz?.quiz_name}

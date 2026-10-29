@@ -168,9 +168,12 @@ function RandomRepeadWords() {
         <span className={styles.languages}>
           {current?.translations[0].language_name} → {current?.translations[1].language_name}
         </span>
-        <span className={styles.counter}>
-          {current ? conceptIndex + 1 : 0} / {concepts.length}
-        </span>
+        <div className={styles.progress} role="progressbar"
+          aria-label="Fortschritt der Wiederholung" aria-valuemin={0}
+          aria-valuemax={concepts.length || 1} aria-valuenow={current ? conceptIndex + 1 : 0}>
+          <span className={styles["progress__fill"]}
+            style={{ width: `${current ? ((conceptIndex + 1) / concepts.length) * 100 : 0}%` }} />
+        </div>
         <h1 id={titleId} className="visually-hidden">Zufällige Wörter wiederholen</h1>
         <button type="button" name="close" className={styles["quiz-card__cancel"]}
           aria-label="Zurück zu allen Wörtern" onClick={() => navigate(`/my-quiz/all-words?${params}`)}>

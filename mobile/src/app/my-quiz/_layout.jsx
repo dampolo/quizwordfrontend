@@ -1,7 +1,7 @@
 import { QuizProvider } from "@quizword/shared/quiz/provider";
 import { VocabularyProvider } from "@quizword/shared/vocabulary/provider";
 import { TranslationProvider } from "@quizword/shared/translation/provider";
-import { Tabs } from "expo-router";
+import { Tabs, useSegments } from "expo-router";
 import CategoriesIcon from "../../../assets/icons/categories-icon.svg";
 import WordsIcon from "../../../assets/icons/words.svg";
 import AddIcon from "../../../assets/icons/add.svg";
@@ -12,8 +12,9 @@ import { Alert, Pressable } from "react-native";
 import { colors } from "../../styles/basic";
 import { speak } from "../../services/speech";
 
-
 export default function MyQuizLayout() {
+  const segments = useSegments();
+  const isLearning = segments[segments.length - 1] === "learn-quiz";
   return (
     <VocabularyProvider
       speak={speak}
@@ -39,7 +40,7 @@ export default function MyQuizLayout() {
               tabBarActiveTintColor: tabColors.active,
               tabBarInactiveTintColor: tabColors.inactive,
               tabBarActiveBackgroundColor: tabColors.activeBackground,
-              tabBarStyle: styles.tabBar,
+              tabBarStyle: [styles.tabBar, isLearning && { display: "none" }],
               tabBarItemStyle: styles.tabBarItem,
               tabBarLabelStyle: styles.tabBarLabel,
               tabBarButton: (props) => (

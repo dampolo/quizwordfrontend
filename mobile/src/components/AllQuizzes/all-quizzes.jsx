@@ -41,6 +41,19 @@ function renderQuiz({ item }) {
     ? "–"
     : createdAt.toLocaleDateString("de-DE");
 
+
+  function openLearnQuiz() {
+    router.push({
+      pathname: "/my-quiz/(all-quizzes)/learn-quiz",
+      params: {
+        id: String(item.quiz_id),
+        language: item.target_language == null ? "" : String(item.target_language),
+        redirect: "true",
+      },
+    });
+  }
+
+
   return (
     <View style={allQuizzesStyles.card} testID={`quiz-${item.quiz_id}`}>
       <View style={allQuizzesStyles.cardHeader}>
@@ -63,6 +76,7 @@ function renderQuiz({ item }) {
           <Tooltip title="Lernen">
             <Pressable
               testID="quiz-action-learn"
+              onPress={openLearnQuiz}
               accessibilityRole="button"
               accessibilityLabel="Lernen"
               style={allQuizzesStyles.action}

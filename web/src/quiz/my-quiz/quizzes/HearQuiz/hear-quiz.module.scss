@@ -186,6 +186,28 @@
   }
 }
 
+.progress {
+  position: absolute;
+  inset: -0.0625rem;
+  pointer-events: none;
+  clip-path: inset(0 round basic.$qw-border-radius);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 0.4rem;
+    background: basic.$qw-third;
+  }
+
+  &__fill {
+    position: relative;
+    display: block;
+    height: 0.4rem;
+    background: basic.$qw-primary;
+  }
+}
+
 .hide-hint {
   display: none;
 }

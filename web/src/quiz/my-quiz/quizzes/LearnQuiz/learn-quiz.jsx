@@ -13,6 +13,8 @@ function LearnQuiz() {
   const [searchParams] = useSearchParams();
   const redirect = searchParams.get("redirect") === "true";
   const language = searchParams.get("language");
+  const totalQuestions = quiz?.concepts?.length ?? 0;
+  const questionNumber = totalQuestions ? currentQuestion + 1 : 0;
 
   // You can learn in the infinity loop.
   // I leave the code commented out and wait for user feedback.
@@ -53,6 +55,12 @@ function LearnQuiz() {
   return (
     <section className="play-quiz">
       <div className={`${styles["quiz-card"]} ${styles["learn-card"]}`}>
+        <div className={styles.progress} role="progressbar"
+          aria-label="Quizfortschritt" aria-valuemin={0}
+          aria-valuemax={totalQuestions || 1} aria-valuenow={questionNumber}>
+          <span className={styles["progress__fill"]}
+            style={{ width: `${totalQuestions ? (questionNumber / totalQuestions) * 100 : 0}%` }} />
+        </div>
         <span className={styles["quiz-card__quiz-name"]}>
                     {quiz?.quiz_name}
                   </span>

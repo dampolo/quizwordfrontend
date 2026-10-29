@@ -14,6 +14,8 @@ function PlayQuiz() {
   const [hint, setHint] = useState(false);
   const redirect = searchParams.get("redirect") === "true";
   const language = searchParams.get("language");
+  const totalQuestions = quiz?.concepts?.length ?? 0;
+  const questionNumber = totalQuestions ? currentQuestion + 1 : 0;
 
   const [formData, setFormData] = useState({
     answer: "",
@@ -103,6 +105,12 @@ function PlayQuiz() {
   return (
     <section className="play-quiz">
       <div className={styles["quiz-card"]}>
+        <div className={styles.progress} role="progressbar"
+          aria-label="Quizfortschritt" aria-valuemin={0}
+          aria-valuemax={totalQuestions || 1} aria-valuenow={questionNumber}>
+          <span className={styles["progress__fill"]}
+            style={{ width: `${totalQuestions ? (questionNumber / totalQuestions) * 100 : 0}%` }} />
+        </div>
         <span className={styles["quiz-card__languages"]}>
           {quiz?.concepts[currentQuestion].translations[0].language_name} →{" "}
           {quiz?.concepts[currentQuestion].translations[1].language_name}

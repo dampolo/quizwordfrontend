@@ -18,6 +18,20 @@ function FlipCardQuiz({ reverse = false }) {
   const redirect = searchParams.get("redirect") === "true";
   const language = searchParams.get("language");
   const [isFlipped, setIsFlipped] = useState(false);
+  const totalQuestions = quiz?.concepts?.length ?? 0;
+  const questionNumber = totalQuestions ? currentQuestion + 1 : 0;
+
+
+  const progressBar = (hidden) => (
+    <div className={styles.progress} role="progressbar"
+      aria-hidden={hidden}
+      aria-label="Quizfortschritt" aria-valuemin={0}
+      aria-valuemax={totalQuestions || 1} aria-valuenow={questionNumber}>
+      <span className={styles["progress__fill"]}
+        style={{ width: `${totalQuestions ? (questionNumber / totalQuestions) * 100 : 0}%` }} />
+    </div>
+  );
+
 
   function toggleFlipped() {
     setIsFlipped((prev) => !prev);
@@ -108,6 +122,7 @@ function FlipCardQuiz({ reverse = false }) {
       >
         {/* FRONT */}
         <div className={styles["flip-card-front"]}>
+          {progressBar(isFlipped)}
           <span className={styles["quiz-name"]}>{quiz?.quiz_name}</span>
 
           {/* Sound */}
@@ -210,6 +225,7 @@ function FlipCardQuiz({ reverse = false }) {
 
         {/* Back */}
         <div className={styles["flip-card-back"]}>
+          {progressBar(!isFlipped)}
           <span className={styles["languages"]}>
             {quiz?.concepts[currentQuestion].translations[secondTranslation].language_name}
           </span>

@@ -75,6 +75,9 @@ export default function LearnQuiz() {
 
   const concepts = quiz?.concepts ?? [];
   const word = concepts[currentQuestion];
+  const totalQuestions = concepts.length;
+  const questionNumber = !loading && !error && word ? currentQuestion + 1 : 0;
+  const progress = totalQuestions ? (questionNumber / totalQuestions) * 100 : 0;
 
   function nextWord() {
     if (loading || !concepts.length) return;
@@ -103,6 +106,23 @@ export default function LearnQuiz() {
     >
       <ScrollView contentContainerStyle={learnQuizStyles.content}>
         <View style={learnQuizStyles.card}>
+          <View
+            testID="learn-quiz-progress"
+            style={learnQuizStyles.progress}
+            pointerEvents="none"
+            accessible
+            accessibilityRole="progressbar"
+            accessibilityLabel="Quizfortschritt"
+            accessibilityValue={{
+              min: 0,
+              max: totalQuestions || 1,
+              now: questionNumber,
+            }}
+          >
+            <View
+              style={[learnQuizStyles.progressFill, { width: `${progress}%` }]}
+            />
+          </View>
           <View style={learnQuizStyles.header}>
             <Text style={learnQuizStyles.quizName} accessibilityRole="header">
               {quiz?.quiz_name || "Lernen"}

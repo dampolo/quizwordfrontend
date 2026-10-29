@@ -20,6 +20,21 @@ export const learnQuizStyles = StyleSheet.create({
     borderRadius: radius,
     backgroundColor: colors.qwFourth,
   },
+  progress: {
+    position: "absolute",
+    top: -1,
+    left: -1,
+    right: -1,
+    height: 7,
+    borderTopLeftRadius: radius,
+    borderTopRightRadius: radius,
+    overflow: "hidden",
+    backgroundColor: colors.qwThird,
+  },
+  progressFill: {
+    height: "100%",
+    backgroundColor: colors.qwPrimary,
+  },
   header: {
     flexDirection: "row",
     justifyContent: "flex-end",

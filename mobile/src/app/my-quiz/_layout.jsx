@@ -99,7 +99,7 @@ export default function MyQuizLayout() {
               }}
             />
             <Tabs.Screen
-              name="(quizzes)"
+              name="(all-quizzes)"
               options={{
                 title: "Quizze",
                 tabBarIcon: ({ color, size }) => (

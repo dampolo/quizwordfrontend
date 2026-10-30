@@ -28,7 +28,7 @@ function Quizzes() {
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [dialogTitle, setDialogTitle] = useState("");
   const [dialogDescription, setDialogDescription] = useState("");
-  const quizOverviewRef = useRef(null);
+  const previewQuizRef = useRef(null);
   const [quiz, setQuiz] = useState(null);
   const [loadingWords, setLoadingWords] = useState(false);
   const navigate = useNavigate();
@@ -48,8 +48,9 @@ function Quizzes() {
   }
 
 
-  async function getOverview(id) {
-    quizOverviewRef.current?.showModal();
+  async function openPreviewQuiz(id) {
+    setQuiz(null);
+    previewQuizRef.current?.showModal();
     setLoadingWords(true);
 
     try {
@@ -57,7 +58,7 @@ function Quizzes() {
       setQuiz(quizData);
     } catch (error) {
       console.error(error);
-      toast.error("Failed to load quiz overview.");
+      toast.error("Die Quizvorschau konnte nicht geladen werden.");
       setQuiz(null);
     } finally {
       setLoadingWords(false);
@@ -80,8 +81,8 @@ function Quizzes() {
   }
 
 
-  function setQuizWords() {
-    quizOverviewRef.current?.close();
+  function closePreviewQuiz() {
+    previewQuizRef.current?.close();
   }
 
   useEffect(() => {
@@ -205,14 +206,14 @@ function Quizzes() {
                 <Tooltip title="Vorschau" placement="top" arrow>
                   <button
                     type="button"
-                    onClick={() => getOverview(quiz.quiz_id)}
+                    onClick={() => openPreviewQuiz(quiz.quiz_id)}
                     className={styles["action-button__icon"]}
                   >
                     <img
                       width={40}
                       height={40}
-                      src="/assets/look-quiz.svg"
-                      alt="look"
+                      src="/assets/preview-quiz.svg"
+                      alt="Vorschau"
                     />
                   </button>
                 </Tooltip>
@@ -346,23 +347,24 @@ function Quizzes() {
         onSubmit={handleEditQuiz}
       />
       <dialog
-        ref={quizOverviewRef}
-        className={styles["quiz-overview"]}
-        aria-labelledby="quiz-overview-title"
+        ref={previewQuizRef}
+        className={styles["preview-quiz"]}
+        aria-labelledby="preview-quiz-title"
       >
         <button
           type="button"
-          onClick={setQuizWords}
-          className={styles["quiz-overview__close"]}
+          onClick={closePreviewQuiz}
+          aria-label="Vorschau schließen"
+          className={styles["preview-quiz__close"]}
         >
           <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
         </button>
-        <div className={styles["quiz-overview__list"]}>
-          <div className={styles["quiz-overview__head"]}>
-            <div className={styles["quiz-overview__word"]} id="quiz-overview-title">
+        <div className={styles["preview-quiz__list"]}>
+          <div className={styles["preview-quiz__head"]}>
+            <h2 id="preview-quiz-title">
               Wort & Übersetzung
-            </div>
-            <div className={styles["quiz-overview__actions"]}>Aktionen</div>
+            </h2>
+            <div className={styles["preview-quiz__actions"]}>Aktionen</div>
           </div>
 
           {loadingWords ? (
@@ -370,16 +372,18 @@ function Quizzes() {
               <PreLoader />
             </div>
           ) : (
-            quiz?.concepts.map((concept) => (
-              <div className={styles["quiz-overview__row"]} key={concept.id}>
-                <div className={styles["quiz-overview__word"]}>
+            quiz?.concepts?.map((concept) => (
+              <div className={styles["preview-quiz__row"]} key={concept.id}>
+                <div className={styles["preview-quiz__word"]}>
                   <h3>{concept.translations[0].word}</h3>
                   <span>»</span>
                   <p>{concept.translations[1].word}</p>
                 </div>
 
-                <div className={styles["quiz-overview__actions"]}>
+                <div className={styles["preview-quiz__actions"]}>
                   <Link
+                    aria-label="Wort bearbeiten"
+                    onClick={closePreviewQuiz}
                     to={`/my-quiz/${concept.id}/edit-word?target-word=${concept.translations[1].id}&language=${concept.translations[1].language}`}
                   >
                     <img src="/assets/edit.svg" alt="edit" />

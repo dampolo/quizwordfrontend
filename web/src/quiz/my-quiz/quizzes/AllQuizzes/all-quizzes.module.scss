@@ -168,7 +168,7 @@
     }
   }
 
-  .quiz-overview {
+  .preview-quiz {
     margin: auto;
     width: min(50rem, calc(100% - 2rem));
     max-height: calc(100% - 5.5rem);
@@ -186,7 +186,7 @@
       position: absolute;
       top: 1rem;
       right: 1rem;
-      border: 0.0625rem solid #dddded;
+      border: 0.0625rem solid basic.$qw-border-color;
       border-radius: 50%;
       background: basic.$qw-fourth;
       font-size: 1rem;
@@ -194,12 +194,12 @@
       transition: 0.2s;
 
       &:hover {
-        background: #f6f6fb;
+        background: basic.$qw-fifth;
       }
     }
   }
 
-  .quiz-overview__list {
+  .preview-quiz__list {
     width: 100%;
     max-width: 50rem;
     max-height: 100%;
@@ -209,11 +209,11 @@
     background: basic.$qw-fourth;
     border-radius: basic.$qw-border-radius;
     overflow-y: auto;
-    border: 1px solid #ececec;
+    border: 0.0625rem solid basic.$qw-border-color;
   }
 
-  .quiz-overview__head,
-  .quiz-overview__row {
+  .preview-quiz__head,
+  .preview-quiz__row {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 5rem;
     gap: 1rem;
@@ -221,20 +221,25 @@
 
     align-items: center;
   }
-  .quiz-overview__row {
-    border-top: 1px solid #efefef;
+  .preview-quiz__row {
+    border-top: 0.0625rem solid basic.$qw-border-color;
   }
 
-  .quiz-overview__head {
-    background: #eef5ff;
+  .preview-quiz__head {
+    background: basic.$qw-fifth;
     padding: 1rem;
     font-size: 0.85rem;
     text-transform: uppercase;
     font-weight: 600;
-    color: #888;
+    color: basic.$qw-body-text-color;
   }
 
-  .quiz-overview__word {
+  .preview-quiz__head h2 {
+    margin: 0;
+    font-size: inherit;
+  }
+
+  .preview-quiz__word {
     min-width: 0;
     overflow-wrap: anywhere;
     display: flex;
@@ -244,7 +249,7 @@
     gap: 0.3rem;
 
     h3 {
-      color: #4738d6;
+      color: basic.$qw-primary;
       margin: 0;
       font-size: 1rem;
     }
@@ -260,12 +265,12 @@
     }
   }
 
-  .quiz-overview__actions {
+  .preview-quiz__actions {
     display: flex;
     justify-content: center;
   }
 
-  .quiz-overview__actions a {
+  .preview-quiz__actions a {
     padding: 0.5rem;
     border-radius: basic.$qw-border-radius;
     margin: 0;

@@ -73,6 +73,18 @@ function QuizCard({ item }) {
   }
 
 
+  function openHearQuiz() {
+    router.push({
+      pathname: "/my-quiz/(all-quizzes)/hear-quiz",
+      params: {
+        id: String(item.quiz_id),
+        language: item.target_language == null ? "" : String(item.target_language),
+        redirect: "true",
+      },
+    });
+  }
+
+
   function openFlipCardQuiz() {
     router.push({
       pathname: "/my-quiz/(all-quizzes)/flip-card-quiz",
@@ -225,6 +237,7 @@ function QuizCard({ item }) {
           <Tooltip title="Hören">
             <Pressable
               testID="quiz-action-hear"
+                onPress={openHearQuiz}
               accessibilityRole="button"
               accessibilityLabel="Hören"
               style={allQuizzesStyles.action}

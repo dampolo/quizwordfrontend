@@ -54,16 +54,6 @@ export const learnQuizStyles = StyleSheet.create({
     color: colors.qwBodyTextColor,
     transform: [{ rotate: "-90deg" }],
   },
-  closeButton: {
-    width: 48,
-    height: 48,
-    borderWidth: 1,
-    borderColor: colors.qwBorderColor,
-    borderRadius: 24,
-    backgroundColor: colors.qwFourth,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   words: { gap: 28 },
   source: {
     fontSize: 20,

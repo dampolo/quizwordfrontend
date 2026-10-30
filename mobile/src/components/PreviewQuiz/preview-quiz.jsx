@@ -56,7 +56,7 @@ export default function PreviewQuiz({ quizId, onClose }) {
   }, [quizId, attempt]);
 
   function closeStyle({ pressed }) {
-    return [previewQuizStyles.closeButton, pressed && styles.pressed];
+    return [styles.closeButton, pressed && styles.pressed];
   }
 
   function retry() {

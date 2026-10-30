@@ -13,7 +13,7 @@ function buttonStyle({ pressed }) {
 }
 
 function closeStyle({ pressed }) {
-  return [learnQuizStyles.closeButton, pressed && styles.pressed];
+  return [styles.closeButton, pressed && styles.pressed];
 }
 
 export default function LearnQuiz() {

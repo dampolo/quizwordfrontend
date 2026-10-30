@@ -200,7 +200,7 @@ export default function PlayTestQuiz() {
 
   function closeStyle({ pressed }) {
     return [
-      playTestQuizStyles.closeButton,
+      styles.closeButton,
       pressed && styles.pressed,
       submitting && styles.buttonDisabled,
     ];

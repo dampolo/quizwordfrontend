@@ -19,16 +19,6 @@ export const previewQuizStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.qwBorderColor,
   },
-  closeButton: {
-    width: 48,
-    height: 48,
-    borderWidth: 1,
-    borderColor: colors.qwBorderColor,
-    borderRadius: 24,
-    backgroundColor: colors.qwFourth,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   header: {
     flexDirection: "row",
     alignItems: "center",

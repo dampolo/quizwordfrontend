@@ -13,7 +13,6 @@ import {
 import useVocabulary from "@quizword/shared/vocabulary/useVocabulary";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ScreenHeaderCustomer from "../ScreenHeaderCustomer/ScreenHeaderCustomer";
-import { quizModalStyles } from "../QuizModal/quiz-modal.styles";
 import { editWordStyles } from "./edit-word.styles";
 import { styles } from "../../styles/styles";
 
@@ -342,12 +341,12 @@ export default function EditWord() {
 
           <View style={editWordStyles.pageHeader}>
             <Text
-              style={quizModalStyles.title}
+              style={editWordStyles.title}
               accessibilityRole="header"
             >
               Wort bearbeiten
             </Text>
-            <Text style={quizModalStyles.description}>
+            <Text style={editWordStyles.description}>
               Bearbeite dein Wort, die Übersetzung und deine Eselsbrücken.
             </Text>
           </View>
@@ -402,7 +401,7 @@ export default function EditWord() {
                 editable={!busy}
                 accessibilityLabel="Ausgangswort: Begriff"
                 style={[
-                  quizModalStyles.input,
+                  editWordStyles.input,
                   requiredError?.field === "source-word" &&
                     editWordStyles.invalidField,
                 ]}
@@ -432,7 +431,7 @@ export default function EditWord() {
                     onChangeText={(tip) => updateTranslation(0, { tip })}
                     editable={!busy}
                     accessibilityLabel="Ausgangswort: Tipp"
-                    style={quizModalStyles.input}
+                    style={editWordStyles.input}
                     placeholder="Stell dir eine Feder vor, die zurückspringt"
                   />
                   <Text style={editWordStyles.label}>
@@ -447,7 +446,7 @@ export default function EditWord() {
                     editable={!busy}
                     accessibilityLabel="Ausgangswort: Beispielsatz"
                     style={[
-                      quizModalStyles.input,
+                      editWordStyles.input,
                       editWordStyles.textarea,
                     ]}
                     placeholder="Verwende den Begriff in einem Satz."
@@ -499,7 +498,7 @@ export default function EditWord() {
                 editable={!busy}
                 accessibilityLabel="Zielwort: Begriff"
                 style={[
-                  quizModalStyles.input,
+                  editWordStyles.input,
                   requiredError?.field === "target-word" &&
                     editWordStyles.invalidField,
                 ]}
@@ -556,7 +555,7 @@ export default function EditWord() {
                     onChangeText={(tip) => updateTranslation(1, { tip })}
                     editable={!busy}
                     accessibilityLabel="Zielwort: Tipp"
-                    style={quizModalStyles.input}
+                    style={editWordStyles.input}
                     placeholder="Stell dir eine Feder vor, die zurückspringt"
                   />
                   <Text style={editWordStyles.label}>
@@ -571,7 +570,7 @@ export default function EditWord() {
                     editable={!busy}
                     accessibilityLabel="Zielwort: Beispielsatz"
                     style={[
-                      quizModalStyles.input,
+                      editWordStyles.input,
                       editWordStyles.textarea,
                     ]}
                     placeholder="Verwende den Begriff in einem Satz."
@@ -599,28 +598,28 @@ export default function EditWord() {
 
             <View style={editWordStyles.proTip}>
               <Text style={editWordStyles.panelTitle}>💡 Profi-Tipp</Text>
-              <Text style={quizModalStyles.description}>
+              <Text style={editWordStyles.description}>
                 Ein Beispielsatz hilft unserer KI dabei, bessere
                 Karteikartenvarianten für deine nächste Lerneinheit zu
                 erstellen.
               </Text>
             </View>
 
-            <View style={quizModalStyles.dialogActions}>
+            <View style={editWordStyles.dialogActions}>
               <Pressable
                 testID="cancel-edit-word"
                 disabled={submitting}
                 onPress={returnToWords}
                 accessibilityRole="button"
                 style={[
-                  quizModalStyles.dialogButton,
-                  quizModalStyles.dialogCancelButton,
+                  editWordStyles.dialogButton,
+                  editWordStyles.dialogCancelButton,
                 ]}
               >
                 <Text
                   style={[
-                    quizModalStyles.dialogButtonText,
-                    quizModalStyles.dialogCancelText,
+                    editWordStyles.dialogButtonText,
+                    editWordStyles.dialogCancelText,
                   ]}
                 >
                   Abbrechen
@@ -651,7 +650,7 @@ export default function EditWord() {
         <View style={editWordStyles.modalBackdrop}>
           <View style={editWordStyles.optionDialog} accessibilityViewIsModal>
             <Text
-              style={quizModalStyles.title}
+              style={editWordStyles.title}
               accessibilityRole="header"
             >
               {selection === "language" ? "Sprache" : "Kategorie"}
@@ -667,14 +666,14 @@ export default function EditWord() {
                     disabled
                     accessibilityRole="button"
                     style={[
-                      quizModalStyles.dialogButton,
-                      quizModalStyles.dialogCancelButton,
+                      editWordStyles.dialogButton,
+                      editWordStyles.dialogCancelButton,
                     ]}
                   >
                     <Text
                       style={[
-                        quizModalStyles.dialogButtonText,
-                        quizModalStyles.dialogCancelText,
+                        editWordStyles.dialogButtonText,
+                        editWordStyles.dialogCancelText,
                       ]}
                     >
                       + Kategorie hinzufügen
@@ -704,14 +703,14 @@ export default function EditWord() {
               accessibilityRole="button"
               onPress={() => setSelection(null)}
               style={[
-                quizModalStyles.dialogButton,
-                quizModalStyles.dialogCancelButton,
+                editWordStyles.dialogButton,
+                editWordStyles.dialogCancelButton,
               ]}
             >
               <Text
                 style={[
-                  quizModalStyles.dialogButtonText,
-                  quizModalStyles.dialogCancelText,
+                  editWordStyles.dialogButtonText,
+                  editWordStyles.dialogCancelText,
                 ]}
               >
                 Schließen
@@ -728,28 +727,28 @@ export default function EditWord() {
         onRequestClose={closeNotice}
       >
         <View style={editWordStyles.modalBackdrop}>
-          <View style={quizModalStyles.dialog} accessibilityViewIsModal>
+          <View style={editWordStyles.dialog} accessibilityViewIsModal>
             <Text
-              style={quizModalStyles.title}
+              style={editWordStyles.title}
               accessibilityRole="header"
             >
               {notice?.title}
             </Text>
-            <Text style={quizModalStyles.description}>
+            <Text style={editWordStyles.description}>
               {notice?.message}
             </Text>
             <Pressable
               accessibilityRole="button"
               onPress={closeNotice}
               style={[
-                quizModalStyles.dialogButton,
-                quizModalStyles.dialogCancelButton,
+                editWordStyles.dialogButton,
+                editWordStyles.dialogCancelButton,
               ]}
             >
               <Text
                 style={[
-                  quizModalStyles.dialogButtonText,
-                  quizModalStyles.dialogCancelText,
+                  editWordStyles.dialogButtonText,
+                  editWordStyles.dialogCancelText,
                 ]}
               >
                 OK

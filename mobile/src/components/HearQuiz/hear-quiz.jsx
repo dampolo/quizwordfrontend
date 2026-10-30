@@ -27,7 +27,6 @@ function buttonStyle({ pressed }) {
   return [styles.button, pressed && styles.pressed];
 }
 
-
 export default function HearQuiz() {
   const params = useLocalSearchParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
@@ -38,7 +37,14 @@ export default function HearQuiz() {
     (Array.isArray(params.redirect) ? params.redirect[0] : params.redirect) ===
     "true";
   const { getQuizWords, postQuizAnswers } = useQuiz();
-  const { speakWord, speakActive, activeSpeechId, languages, userLanguages, nativeLanguage } = useVocabulary();
+  const {
+    speakWord,
+    speakActive,
+    activeSpeechId,
+    languages,
+    userLanguages,
+    nativeLanguage,
+  } = useVocabulary();
   const actions = useRef({ getQuizWords, postQuizAnswers });
   const session = useRef(0);
   const advancing = useRef(false);
@@ -77,7 +83,6 @@ export default function HearQuiz() {
       setHint(false);
       setSubmitting(false);
       setResult(null);
-
 
       async function loadQuiz() {
         try {
@@ -139,23 +144,19 @@ export default function HearQuiz() {
     Boolean(question) &&
     answer.trim().length >= 2;
 
-
   function retry() {
     void stopSpeaking().catch(() => {});
     setAttempt((previous) => previous + 1);
   }
-
 
   function changeAnswer(value) {
     setAnswer(value);
     setSubmitError("");
   }
 
-
   function toggleHint() {
     setHint((previous) => !previous);
   }
-
 
   function cancel() {
     if (submitting) {
@@ -172,7 +173,6 @@ export default function HearQuiz() {
       params: { language: language || "" },
     });
   }
-
 
   async function nextQuestion() {
     if (!canContinue || advancing.current) {
@@ -219,21 +219,29 @@ export default function HearQuiz() {
     }
   }
 
-
   function pronounce() {
     if (!target || submitting || result) {
       return;
     }
-    const details = [nativeLanguage, ...(languages ?? []), ...(userLanguages ?? [])].find((entry) => String(entry?.id) === String(target.language));
-    const code = target.language_code || details?.language_code || details?.code;
+    const details = [
+      nativeLanguage,
+      ...(languages ?? []),
+      ...(userLanguages ?? []),
+    ].find((entry) => String(entry?.id) === String(target.language));
+    const code =
+      target.language_code || details?.language_code || details?.code;
     speakWord(target.word, code, speechId);
   }
 
-
   function soundStyle({ pressed }) {
-    return [styles.closeButton, hearQuizStyles.soundButton, speaking && hearQuizStyles.speaking, pressed && styles.pressed, submitting && styles.buttonDisabled];
+    return [
+      styles.closeButton,
+      hearQuizStyles.soundButton,
+      speaking && hearQuizStyles.speaking,
+      pressed && styles.pressed,
+      submitting && styles.buttonDisabled,
+    ];
   }
-
 
   function continueStyle({ pressed }) {
     return [
@@ -243,7 +251,6 @@ export default function HearQuiz() {
     ];
   }
 
-
   function closeStyle({ pressed }) {
     return [
       styles.closeButton,
@@ -251,7 +258,6 @@ export default function HearQuiz() {
       submitting && styles.buttonDisabled,
     ];
   }
-
 
   function helpStyle({ pressed }) {
     return [
@@ -352,14 +358,24 @@ export default function HearQuiz() {
                     testID="speak-hear-quiz"
                     accessibilityRole="button"
                     accessibilityLabel="Wort vorlesen"
-                    accessibilityState={{ disabled: submitting, busy: speaking }}
+                    accessibilityState={{
+                      disabled: submitting,
+                      busy: speaking,
+                    }}
                     disabled={submitting}
                     onPress={pronounce}
                     style={soundStyle}
                   >
-                    <HearIcon width={64} height={64} color={colors.qwPrimary} accessible={false} />
+                    <HearIcon
+                      width={64}
+                      height={64}
+                      color={colors.qwPrimary}
+                      accessible={false}
+                    />
                   </Pressable>
-                  <Text style={hearQuizStyles.subtitle}>Schreibe das Wort:</Text>
+                  <Text style={hearQuizStyles.subtitle}>
+                    Schreibe das Wort:
+                  </Text>
                   {hint && (
                     <Text
                       testID="hear-word-hint"

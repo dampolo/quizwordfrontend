@@ -25,7 +25,9 @@ function selectVoice(voices, languageCode) {
 
   for (const voice of voices) {
     const voiceLanguage = normalizeLanguage(voice.language);
-    if (voiceLanguage.split("-")[0] !== baseLanguage) continue;
+    if (voiceLanguage.split("-")[0] !== baseLanguage) {
+      continue;
+    }
     const score =
       (voiceLanguage === languageCode ? 2 : 0) +
       (voice.quality === Speech.VoiceQuality.Enhanced ? 1 : 0);
@@ -47,7 +49,9 @@ function createSpeechSession(onEnd) {
 
 
   function finish() {
-    if (request !== speechRequest || finished) return;
+    if (request !== speechRequest || finished) {
+      return;
+    }
     finished = true;
     endCurrentSpeech = undefined;
     onEnd();
@@ -60,29 +64,39 @@ function createSpeechSession(onEnd) {
 
 
 function handleSpeechError(request, finish) {
-  if (request !== speechRequest) return;
+  if (request !== speechRequest) {
+    return;
+  }
   finish();
   Alert.alert("Aussprache fehlgeschlagen", "Bitte versuche es erneut.");
 }
 
 
-function startSpeaking(word, voice, onStart, request, finish) {
+function startSpeaking(word, voice, onStart, onDone, request, finish) {
   onStart();
   Speech.speak(word, {
     language: voice.language,
     voice: voice.identifier,
-    onDone: finish,
+    onDone: () => {
+      if (request !== speechRequest) {
+        return;
+      }
+      onDone?.();
+      finish();
+    },
     onStopped: finish,
     onError: () => handleSpeechError(request, finish),
   });
 }
 
 
-export async function speak(word, language, { onStart, onEnd }) {
+export async function speak(word, language, { onStart, onEnd, onDone }) {
   const { request, finish } = createSpeechSession(onEnd);
   try {
     await Speech.stop();
-    if (request !== speechRequest) return;
+    if (request !== speechRequest) {
+      return;
+    }
     const languageCode = normalizeLanguage(language);
     if (!languageCode) {
       finish();
@@ -93,7 +107,9 @@ export async function speak(word, language, { onStart, onEnd }) {
       return;
     }
     const voices = await Speech.getAvailableVoicesAsync();
-    if (request !== speechRequest) return;
+    if (request !== speechRequest) {
+      return;
+    }
     const selectedVoice = selectVoice(voices, languageCode);
     if (!selectedVoice) {
       finish();
@@ -104,7 +120,7 @@ export async function speak(word, language, { onStart, onEnd }) {
       return;
     }
 
-    startSpeaking(word, selectedVoice, onStart, request, finish);
+    startSpeaking(word, selectedVoice, onStart, onDone, request, finish);
   } catch {
     handleSpeechError(request, finish);
   }

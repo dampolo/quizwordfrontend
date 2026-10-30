@@ -97,6 +97,30 @@ function QuizCard({ item }) {
   }
 
 
+  function openWordAudioLoop() {
+    router.push({
+      pathname: "/my-quiz/(all-quizzes)/word-audio-loop",
+      params: {
+        id: String(item.quiz_id),
+        language: item.target_language == null ? "" : String(item.target_language),
+        redirect: "true",
+      },
+    });
+  }
+
+
+  function openReverseWordAudioLoop() {
+    router.push({
+      pathname: "/my-quiz/(all-quizzes)/word-audio-loop-reverse",
+      params: {
+        id: String(item.quiz_id),
+        language: item.target_language == null ? "" : String(item.target_language),
+        redirect: "true",
+      },
+    });
+  }
+
+
   return (
     <View style={allQuizzesStyles.card} testID={`quiz-${item.quiz_id}`}>
       <View style={allQuizzesStyles.cardHeader}>
@@ -185,6 +209,7 @@ function QuizCard({ item }) {
           <Tooltip title="Lernen und hören">
             <Pressable
               testID="quiz-action-audio-loop"
+              onPress={openWordAudioLoop}
               accessibilityRole="button"
               accessibilityLabel="Lernen und hören"
               style={allQuizzesStyles.action}
@@ -231,6 +256,7 @@ function QuizCard({ item }) {
           <Tooltip title="Lernen und hören rückwärts">
             <Pressable
               testID="quiz-action-audio-loop-reverse"
+              onPress={openReverseWordAudioLoop}
               accessibilityRole="button"
               accessibilityLabel="Lernen und hören rückwärts"
               style={allQuizzesStyles.action}

@@ -127,43 +127,6 @@ export default function AllQuizWords() {
     }
   }
 
-  function renderAttempt(score) {
-    return (
-      <View key={score.id} style={allQuizWordsStyles.detailsRow}>
-        <Text
-          style={[allQuizWordsStyles.rankText, allQuizWordsStyles.wordColumn]}
-        >
-          #{score.score}
-        </Text>
-        <Text
-          style={[
-            allQuizWordsStyles.translation,
-            allQuizWordsStyles.wordColumn,
-          ]}
-        >
-          {score.direction}
-        </Text>
-        <Text
-          style={[
-            allQuizWordsStyles.description,
-            allQuizWordsStyles.wordColumn,
-          ]}
-        >
-          {new Date(score.finished_at).toLocaleDateString("de-DE")}
-        </Text>
-        <Pressable
-          testID={`attempt-details-${score.id}`}
-          accessibilityRole="button"
-          accessibilityLabel="Einzelheiten anzeigen"
-          onPress={() => openAttemptDetails(score.id)}
-          style={allQuizWordsStyles.detailsAction}
-        >
-          <Text>🔍</Text>
-        </Pressable>
-      </View>
-    );
-  }
-
   function renderAnswer(answer) {
     return (
       <View
@@ -173,16 +136,19 @@ export default function AllQuizWords() {
           !answer.is_correct && allQuizWordsStyles.resultWrongRow,
         ]}
       >
-        <Text
+        <View
           accessibilityLabel={answer.is_correct ? "Richtig" : "Falsch"}
-          style={
+          style={[
+            allQuizWordsStyles.resultStatus,
             answer.is_correct
-              ? allQuizWordsStyles.resultCorrect
-              : allQuizWordsStyles.resultIncorrect
-          }
+              ? allQuizWordsStyles.resultStatusCorrect
+              : allQuizWordsStyles.resultStatusIncorrect,
+          ]}
         >
-          {answer.is_correct ? "✓" : "✕"}
-        </Text>
+          <Text style={allQuizWordsStyles.resultStatusSymbol}>
+            {answer.is_correct ? "✓" : "✕"}
+          </Text>
+        </View>
         <View style={allQuizWordsStyles.resultColumn}>
           <Text style={allQuizWordsStyles.resultLabel}>Wort</Text>
           <Text style={allQuizWordsStyles.resultWord}>
@@ -202,7 +168,12 @@ export default function AllQuizWords() {
         </View>
         <View style={allQuizWordsStyles.resultColumn}>
           <Text style={allQuizWordsStyles.resultLabel}>Richtig</Text>
-          <Text style={allQuizWordsStyles.resultCorrect}>
+          <Text
+            style={[
+              allQuizWordsStyles.resultAnswer,
+              allQuizWordsStyles.resultCorrect,
+            ]}
+          >
             {answer.correct_answer}
           </Text>
         </View>
@@ -276,14 +247,14 @@ export default function AllQuizWords() {
       edges={["top", "left", "right"]}
     >
       <ScrollView contentContainerStyle={allQuizWordsStyles.content}>
-      <ScreenHeaderCustomer
-      style={allQuizWordsStyles.screenHeader}
-        title={quiz?.quiz_name ? `Quiz: ${quiz.quiz_name}` : "Quizwörter"}
-        fallbackHref={{
-          pathname: "/my-quiz/(all-quizzes)/all-quizzes",
-          params: { language: quiz?.target_language ?? language ?? "" },
-        }}
-      />
+        <ScreenHeaderCustomer
+          style={allQuizWordsStyles.screenHeader}
+          title={quiz?.quiz_name ? `Quiz: ${quiz.quiz_name}` : "Quizwörter"}
+          fallbackHref={{
+            pathname: "/my-quiz/(all-quizzes)/all-quizzes",
+            params: { language: quiz?.target_language ?? language ?? "" },
+          }}
+        />
         <View style={allQuizWordsStyles.listHead}>
           <Text
             style={[allQuizWordsStyles.heading, allQuizWordsStyles.rankColumn]}
@@ -340,22 +311,77 @@ export default function AllQuizWords() {
             </Text>
             <View>
               <View style={allQuizWordsStyles.detailsHeader}>
-                {["Punktzahl", "Richtung", "Datum", "Einzelheiten"].map(
-                  (heading) => (
+                <Text
+                  style={[
+                    allQuizWordsStyles.heading,
+                    allQuizWordsStyles.wordColumn,
+                  ]}
+                >
+                  Punktzahl
+                </Text>
+                <Text
+                  style={[
+                    allQuizWordsStyles.heading,
+                    allQuizWordsStyles.wordColumn,
+                  ]}
+                >
+                  Richtung
+                </Text>
+                <Text
+                  style={[
+                    allQuizWordsStyles.heading,
+                    allQuizWordsStyles.wordColumn,
+                  ]}
+                >
+                  Datum
+                </Text>
+                <Text
+                  style={[
+                    allQuizWordsStyles.heading,
+                    allQuizWordsStyles.wordColumn,
+                  ]}
+                >
+                  Einzelheiten
+                </Text>
+              </View>
+              {attempts.length ? (
+                attempts.map((score) => (
+                  <View key={score.id} style={allQuizWordsStyles.detailsRow}>
                     <Text
-                      key={heading}
                       style={[
-                        allQuizWordsStyles.heading,
+                        allQuizWordsStyles.rankText,
                         allQuizWordsStyles.wordColumn,
                       ]}
                     >
-                      {heading}
+                      #{score.score}
                     </Text>
-                  ),
-                )}
-              </View>
-              {attempts.length ? (
-                attempts.map(renderAttempt)
+                    <Text
+                      style={[
+                        allQuizWordsStyles.translation,
+                        allQuizWordsStyles.wordColumn,
+                      ]}
+                    >
+                      {score.direction}
+                    </Text>
+                    <Text
+                      style={[
+                        allQuizWordsStyles.description,
+                        allQuizWordsStyles.wordColumn,
+                      ]}
+                    >
+                      {new Date(score.finished_at).toLocaleDateString("de-DE")}
+                    </Text>
+                    <Pressable
+                      testID={`attempt-details-${score.id}`}
+                      accessibilityRole="button"
+                      accessibilityLabel="Einzelheiten anzeigen"
+                      onPress={() => openAttemptDetails(score.id)}
+                      style={allQuizWordsStyles.detailsAction}
+                    >
+                      <Text>🔍</Text>
+                    </Pressable>
+                  </View>
+                ))
               ) : (
                 <Text style={allQuizWordsStyles.message}>
                   Du hast bis jetzt keine Quizversuche gemacht.

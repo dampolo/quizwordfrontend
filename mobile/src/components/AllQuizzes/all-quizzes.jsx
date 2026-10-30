@@ -45,10 +45,6 @@ function QuizCard({ item, onEdit }) {
     onEdit(item);
   }
 
-  function editStyle({ pressed }) {
-    return [allCategoriesStyles.editButton, pressed && styles.pressed];
-  }
-
   function openLearnQuiz() {
     router.push({
       pathname: "/my-quiz/(all-quizzes)/learn-quiz",
@@ -158,9 +154,13 @@ function QuizCard({ item, onEdit }) {
             accessibilityRole="button"
             accessibilityLabel="Quiz bearbeiten"
             onPress={editQuiz}
-            style={editStyle}
+            style={allCategoriesStyles.editButton}
           >
-            <EditIcon width={20} height={20} accessible={false} />
+            {({ pressed }) => (
+              <View style={pressed && styles.pressed}>
+                <EditIcon width={20} height={20} accessible={false} />
+              </View>
+            )}
           </Pressable>
         </Tooltip>
       </View>

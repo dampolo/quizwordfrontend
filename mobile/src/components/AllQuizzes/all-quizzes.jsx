@@ -26,16 +26,13 @@ import RepeatReverseIcon from "../../../assets/icons/repead-reverse.svg";
 
 const allLanguages = { id: "all", language_name: "All" };
 
-
 function languageKey(item) {
   return String(item.id);
 }
 
-
 function quizKey(item) {
   return String(item.quiz_id);
 }
-
 
 function QuizCard({ item, onEdit }) {
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -44,100 +41,110 @@ function QuizCard({ item, onEdit }) {
     ? "–"
     : createdAt.toLocaleDateString("de-DE");
 
-
   function editQuiz() {
     onEdit(item);
   }
 
-
   function editStyle({ pressed }) {
     return [allCategoriesStyles.editButton, pressed && styles.pressed];
   }
-
 
   function openLearnQuiz() {
     router.push({
       pathname: "/my-quiz/(all-quizzes)/learn-quiz",
       params: {
         id: String(item.quiz_id),
-        language: item.target_language == null ? "" : String(item.target_language),
+        language:
+          item.target_language == null ? "" : String(item.target_language),
         redirect: "true",
       },
     });
   }
-
 
   function openPlayTestQuiz() {
     router.push({
       pathname: "/my-quiz/(all-quizzes)/play-test-quiz",
       params: {
         id: String(item.quiz_id),
-        language: item.target_language == null ? "" : String(item.target_language),
+        language:
+          item.target_language == null ? "" : String(item.target_language),
         redirect: "true",
       },
     });
   }
-
 
   function openHearQuiz() {
     router.push({
       pathname: "/my-quiz/(all-quizzes)/hear-quiz",
       params: {
         id: String(item.quiz_id),
-        language: item.target_language == null ? "" : String(item.target_language),
+        language:
+          item.target_language == null ? "" : String(item.target_language),
         redirect: "true",
       },
     });
   }
-
 
   function openFlipCardQuiz() {
     router.push({
       pathname: "/my-quiz/(all-quizzes)/flip-card-quiz",
       params: {
         id: String(item.quiz_id),
-        language: item.target_language == null ? "" : String(item.target_language),
+        language:
+          item.target_language == null ? "" : String(item.target_language),
         redirect: "true",
       },
     });
   }
-
 
   function openReverseFlipCardQuiz() {
     router.push({
       pathname: "/my-quiz/(all-quizzes)/flip-card-quiz-reverse",
       params: {
         id: String(item.quiz_id),
-        language: item.target_language == null ? "" : String(item.target_language),
+        language:
+          item.target_language == null ? "" : String(item.target_language),
         redirect: "true",
       },
     });
   }
-
 
   function openWordAudioLoop() {
     router.push({
       pathname: "/my-quiz/(all-quizzes)/word-audio-loop",
       params: {
         id: String(item.quiz_id),
-        language: item.target_language == null ? "" : String(item.target_language),
+        language:
+          item.target_language == null ? "" : String(item.target_language),
         redirect: "true",
       },
     });
   }
-
 
   function openReverseWordAudioLoop() {
     router.push({
       pathname: "/my-quiz/(all-quizzes)/word-audio-loop-reverse",
       params: {
         id: String(item.quiz_id),
-        language: item.target_language == null ? "" : String(item.target_language),
+        language:
+          item.target_language == null ? "" : String(item.target_language),
         redirect: "true",
       },
     });
   }
 
+  
+  function openAllQuizWords() {
+    router.push({
+      pathname: "/my-quiz/(all-quizzes)/all-quiz-words",
+      params: {
+        id: String(item.quiz_id),
+        language:
+          item.target_language == null ? "" : String(item.target_language),
+        redirect: "true",
+      },
+    });
+  }
 
   return (
     <View style={allQuizzesStyles.card} testID={`quiz-${item.quiz_id}`}>
@@ -244,7 +251,7 @@ function QuizCard({ item, onEdit }) {
           <Tooltip title="Hören">
             <Pressable
               testID="quiz-action-hear"
-                onPress={openHearQuiz}
+              onPress={openHearQuiz}
               accessibilityRole="button"
               accessibilityLabel="Hören"
               style={allQuizzesStyles.action}
@@ -292,25 +299,30 @@ function QuizCard({ item, onEdit }) {
         </View>
       </View>
       <View style={allQuizzesStyles.cardFooter}>
-        <Text style={allQuizzesStyles.metadata}>
-          {item.concepts_count} Wörter
-        </Text>
+        <Pressable onPress={openAllQuizWords}>
+          <Text style={allQuizzesStyles.metadata}>
+            {item.concepts_count} Wörter
+          </Text>
+        </Pressable>
         <Text style={allQuizzesStyles.metadata}>Erstellt: {date}</Text>
       </View>
       {previewOpen && (
-        <PreviewQuiz quizId={item.quiz_id} onClose={() => setPreviewOpen(false)} />
+        <PreviewQuiz
+          quizId={item.quiz_id}
+          onClose={() => setPreviewOpen(false)}
+        />
       )}
     </View>
   );
 }
-
 
 export default function AllQuizzes() {
   const { language } = useLocalSearchParams();
   const activeLanguage =
     (Array.isArray(language) ? language[0] : language) || null;
   const { userLanguages } = useVocabulary();
-  const { quizzes, loading, getQuizzes, getFiltredQuizzes, putQuiz } = useQuiz();
+  const { quizzes, loading, getQuizzes, getFiltredQuizzes, putQuiz } =
+    useQuiz();
   const actions = useRef({ getQuizzes, getFiltredQuizzes });
   const saving = useRef(false);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
@@ -334,7 +346,6 @@ export default function AllQuizzes() {
     }, [activeLanguage]),
   );
 
-
   function openEditQuiz(quiz) {
     if (saving.current) {
       return;
@@ -344,7 +355,6 @@ export default function AllQuizzes() {
     setEditError("");
   }
 
-
   function closeEditQuiz() {
     if (!saving.current) {
       setSelectedQuiz(null);
@@ -352,12 +362,10 @@ export default function AllQuizzes() {
     }
   }
 
-
   function changeQuizName(value) {
     setQuizName(value);
     setEditError("");
   }
-
 
   async function saveQuiz() {
     if (!selectedQuiz || quizName.trim().length < 3 || saving.current) {
@@ -375,7 +383,8 @@ export default function AllQuizzes() {
         await actions.current.getQuizzes();
       }
     } catch {
-      const message = "Der Quizname konnte nicht gespeichert werden. Bitte versuche es erneut.";
+      const message =
+        "Der Quizname konnte nicht gespeichert werden. Bitte versuche es erneut.";
       setEditError(message);
       Alert.alert("Quiz konnte nicht geändert werden", message);
     } finally {
@@ -384,11 +393,9 @@ export default function AllQuizzes() {
     }
   }
 
-
   function renderQuiz({ item }) {
     return <QuizCard item={item} onEdit={openEditQuiz} />;
   }
-
 
   function renderLanguage({ item }) {
     const selected =
@@ -396,11 +403,9 @@ export default function AllQuizzes() {
         ? activeLanguage === null
         : String(item.id) === activeLanguage;
 
-
     function selectLanguage() {
       router.setParams({ language: item.id === "all" ? "" : String(item.id) });
     }
-
 
     function filterStyle({ pressed }) {
       return [

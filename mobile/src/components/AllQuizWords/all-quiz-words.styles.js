@@ -3,6 +3,46 @@ import { colors, radius } from "../../styles/basic";
 import { fonts } from "../../assets/fonts";
 
 export const allQuizWordsStyles = StyleSheet.create({
+  deleteButton: {
+    minWidth: 48,
+    minHeight: 48,
+    alignSelf: "flex-end",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: radius,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.qwBorderColor,
+    backgroundColor: colors.qwFourth,
+  },
+  deleteActions: {
+    flexDirection: "column",
+    gap: 12,
+  },
+  cancelDeleteButton: {
+    minHeight: 48,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#dfe3ef",
+    backgroundColor: "transparent",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cancelDeleteText: {
+    fontSize: 16,
+    fontWeight: "600",
+    textTransform: "uppercase",
+    textAlign: "center",
+    color: "#5B5CE2",
+  },
+  deleteButtonDisabled: {
+    borderWidth: 1,
+    borderColor: "#cccccc",
+    backgroundColor: "#ccc",
+    cursor: "auto",
+  },
+  deleteButtonTextDisabled: { color: "#666" },
   actionsColumn: {
     width: 72,
     justifyContent: "center",

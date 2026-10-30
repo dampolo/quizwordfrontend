@@ -4,6 +4,7 @@ import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useQuiz from "@quizword/shared/quiz/useQuiz";
 import EditIcon from "../../../assets/icons/edit.svg";
+import TrashIcon from "../../../assets/icons/trash.svg";
 import { allQuizWordsStyles } from "./all-quiz-words.styles";
 import CloseIcon from "../../../assets/icons/xbox.svg";
 import ScreenHeaderCustomer from "../ScreenHeaderCustomer/ScreenHeaderCustomer";
@@ -23,7 +24,11 @@ export default function AllQuizWords() {
   const language = Array.isArray(params.language)
     ? params.language[0]
     : params.language;
-  const { getQuizWords, getAttemptQuizScore, getAttemptDetails } = useQuiz();
+  const { getQuizWords, getAttemptQuizScore, getAttemptDetails, deleteQuiz } = useQuiz();
+  const deletingRef = useRef(false);
+  const [deleteVisible, setDeleteVisible] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
   const actions = useRef({
     getQuizWords,
     getAttemptQuizScore,
@@ -96,6 +101,45 @@ export default function AllQuizWords() {
   function retry() {
     setAttempt((previous) => previous + 1);
   }
+
+
+  function handleDelete() {
+    setDeleteError("");
+    setDeleteVisible(true);
+  }
+
+
+  function closeDelete() {
+    if (!deletingRef.current) {
+      setDeleteVisible(false);
+    }
+  }
+
+
+  async function deleteCurrentQuiz() {
+    if (!id || deletingRef.current) {
+      return;
+    }
+    deletingRef.current = true;
+    setDeleting(true);
+    setDeleteError("");
+    try {
+      await deleteQuiz(id);
+      setDeleteVisible(false);
+      router.replace({
+        pathname: "/my-quiz/(all-quizzes)/all-quizzes",
+        params: { language: quiz?.target_language ?? language ?? "" },
+      });
+    } catch {
+      const message = "Das Quiz konnte nicht gelöscht werden. Bitte versuche es erneut.";
+      setDeleteError(message);
+      Alert.alert("Quiz löschen", message);
+    } finally {
+      deletingRef.current = false;
+      setDeleting(false);
+    }
+  }
+
 
   function closeDetails() {
     detailRequest.current += 1;
@@ -390,7 +434,42 @@ export default function AllQuizWords() {
             </View>
           </View>
         )}
+        {!loading && !error && quiz && (
+          <Pressable
+            testID="delete-quiz"
+            accessibilityRole="button"
+            accessibilityLabel="Quiz löschen"
+            onPress={handleDelete}
+            disabled={deleting}
+            style={({ pressed }) => [allQuizWordsStyles.deleteButton, pressed && allQuizWordsStyles.pressed]}
+          >
+            <TrashIcon width={24} height={24} accessible={false} />
+          </Pressable>
+        )}
       </ScrollView>
+      <Modal visible={deleteVisible} transparent animationType="fade" onRequestClose={closeDelete}>
+        <SafeAreaView style={allQuizWordsStyles.detailsBackdrop}>
+          <View style={allQuizWordsStyles.detailsDialog} accessibilityViewIsModal>
+            <View style={allQuizWordsStyles.detailsHeader}>
+              <Text style={allQuizWordsStyles.detailsTitle} accessibilityRole="header">Quiz löschen?</Text>
+            </View>
+            <View style={allQuizWordsStyles.detailsMessage}>
+              <Text style={allQuizWordsStyles.description}>
+                Quiz „{quiz?.quiz_name}“ löschen? Diese Aktion kann nicht rückgängig gemacht werden.
+              </Text>
+              {!!deleteError && <Text accessibilityRole="alert" style={allQuizWordsStyles.description}>{deleteError}</Text>}
+              <View style={allQuizWordsStyles.deleteActions}>
+                <Pressable testID="cancel-delete-quiz" accessibilityRole="button" accessibilityState={{ disabled: deleting }} disabled={deleting} onPress={closeDelete} style={({ pressed }) => [allQuizWordsStyles.cancelDeleteButton, pressed && !deleting && allQuizWordsStyles.pressed, deleting && allQuizWordsStyles.deleteButtonDisabled]}>
+                  <Text style={[allQuizWordsStyles.cancelDeleteText, deleting && allQuizWordsStyles.deleteButtonTextDisabled]}>Abbrechen</Text>
+                </Pressable>
+                <Pressable testID="confirm-delete-quiz" accessibilityRole="button" accessibilityState={{ disabled: deleting, busy: deleting }} disabled={deleting} onPress={deleteCurrentQuiz} style={({ pressed }) => [allQuizWordsStyles.button, pressed && !deleting && allQuizWordsStyles.pressed, deleting && allQuizWordsStyles.deleteButtonDisabled]}>
+                  <Text style={[allQuizWordsStyles.buttonText, deleting && allQuizWordsStyles.deleteButtonTextDisabled]}>{deleting ? "Wird gelöscht…" : "Löschen"}</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+        </SafeAreaView>
+      </Modal>
       <Modal
         visible={detailsVisible}
         transparent

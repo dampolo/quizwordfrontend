@@ -23,7 +23,6 @@ function buttonStyle({ pressed }) {
   return [styles.button, pressed && styles.pressed];
 }
 
-
 export default function PlayTestQuiz() {
   const params = useLocalSearchParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
@@ -173,7 +172,9 @@ export default function PlayTestQuiz() {
         direction: "FORWARD",
         answers: updatedAnswers,
       });
-      if (session.current === currentSession) setResult(response || {});
+      if (session.current === currentSession) {
+        setResult(response || {});
+      }
     } catch {
       if (session.current === currentSession) {
         const message =

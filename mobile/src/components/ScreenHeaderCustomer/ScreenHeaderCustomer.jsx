@@ -33,7 +33,7 @@ export default function ScreenHeaderCustomer({
         ]}
         onPress={goBack}
       >
-        <ArrowLeft width={32} height={32} />
+        <ArrowLeft width={32} height={32} style={[headerStyles.icon]} />
       </Pressable>
 
       <Text accessibilityRole="header" style={[headerStyles.title, titleStyle]}>
@@ -77,4 +77,7 @@ const headerStyles = StyleSheet.create({
     fontWeight: "600",
     color: colors.qwPrimary,
   },
+  icon: {
+    color: colors.qwPrimary,
+  }
 });

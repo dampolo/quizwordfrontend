@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../../styles/basic";
 
-export const createQuizModalStyles = StyleSheet.create({
+export const quizModalStyles = StyleSheet.create({
   title: {
     fontSize: 28,
     lineHeight: 36,

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { FlatList, Pressable, Text, View } from "react-native";
+import { Alert, FlatList, Pressable, Text, View } from "react-native";
 import { Tooltip } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
@@ -17,6 +17,7 @@ import LearnIcon from "../../../assets/icons/learn-quiz.svg";
 import WriteIcon from "../../../assets/icons/write.svg";
 import PreviewIcon from "../../../assets/icons/preview-quiz.svg";
 import PreviewQuiz from "../PreviewQuiz/preview-quiz";
+import QuizModal from "../QuizModal/quiz-modal";
 import FlipCardIcon from "../../../assets/icons/flip-card.svg";
 import RepeatIcon from "../../../assets/icons/repead.svg";
 import HearIcon from "../../../assets/icons/hear.svg";
@@ -36,17 +37,22 @@ function quizKey(item) {
 }
 
 
-function renderQuiz({ item }) {
-  return <QuizCard item={item} />;
-}
-
-
-function QuizCard({ item }) {
+function QuizCard({ item, onEdit }) {
   const [previewOpen, setPreviewOpen] = useState(false);
   const createdAt = new Date(item.created_at);
   const date = Number.isNaN(createdAt.getTime())
     ? "–"
     : createdAt.toLocaleDateString("de-DE");
+
+
+  function editQuiz() {
+    onEdit(item);
+  }
+
+
+  function editStyle({ pressed }) {
+    return [allCategoriesStyles.editButton, pressed && styles.pressed];
+  }
 
 
   function openLearnQuiz() {
@@ -144,7 +150,8 @@ function QuizCard({ item }) {
             testID={`edit-quiz-${item.quiz_id}`}
             accessibilityRole="button"
             accessibilityLabel="Quiz bearbeiten"
-            style={allCategoriesStyles.editButton}
+            onPress={editQuiz}
+            style={editStyle}
           >
             <EditIcon width={20} height={20} accessible={false} />
           </Pressable>
@@ -303,20 +310,84 @@ export default function AllQuizzes() {
   const activeLanguage =
     (Array.isArray(language) ? language[0] : language) || null;
   const { userLanguages } = useVocabulary();
-  const { quizzes, loading, getQuizzes, getFiltredQuizzes } = useQuiz();
+  const { quizzes, loading, getQuizzes, getFiltredQuizzes, putQuiz } = useQuiz();
   const actions = useRef({ getQuizzes, getFiltredQuizzes });
+  const saving = useRef(false);
+  const [selectedQuiz, setSelectedQuiz] = useState(null);
+  const [quizName, setQuizName] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [editError, setEditError] = useState("");
+  const currentLanguage = useRef(activeLanguage);
 
   useEffect(() => {
     actions.current = { getQuizzes, getFiltredQuizzes };
-  }, [getQuizzes, getFiltredQuizzes]);
+    currentLanguage.current = activeLanguage;
+  }, [getQuizzes, getFiltredQuizzes, activeLanguage]);
 
   useFocusEffect(
     useCallback(() => {
-      if (activeLanguage)
+      if (activeLanguage) {
         void actions.current.getFiltredQuizzes(activeLanguage);
-      else void actions.current.getQuizzes();
+      } else {
+        void actions.current.getQuizzes();
+      }
     }, [activeLanguage]),
   );
+
+
+  function openEditQuiz(quiz) {
+    if (saving.current) {
+      return;
+    }
+    setSelectedQuiz(quiz);
+    setQuizName(quiz.quiz_name || "");
+    setEditError("");
+  }
+
+
+  function closeEditQuiz() {
+    if (!saving.current) {
+      setSelectedQuiz(null);
+      setEditError("");
+    }
+  }
+
+
+  function changeQuizName(value) {
+    setQuizName(value);
+    setEditError("");
+  }
+
+
+  async function saveQuiz() {
+    if (!selectedQuiz || quizName.trim().length < 3 || saving.current) {
+      return;
+    }
+    saving.current = true;
+    setSubmitting(true);
+    setEditError("");
+    try {
+      await putQuiz({ quiz_name: quizName.trim() }, selectedQuiz.quiz_id);
+      setSelectedQuiz(null);
+      if (currentLanguage.current) {
+        await actions.current.getFiltredQuizzes(currentLanguage.current);
+      } else {
+        await actions.current.getQuizzes();
+      }
+    } catch {
+      const message = "Der Quizname konnte nicht gespeichert werden. Bitte versuche es erneut.";
+      setEditError(message);
+      Alert.alert("Quiz konnte nicht geändert werden", message);
+    } finally {
+      saving.current = false;
+      setSubmitting(false);
+    }
+  }
+
+
+  function renderQuiz({ item }) {
+    return <QuizCard item={item} onEdit={openEditQuiz} />;
+  }
 
 
   function renderLanguage({ item }) {
@@ -452,6 +523,16 @@ export default function AllQuizzes() {
             </View>
           </View>
         }
+      />
+      <QuizModal
+        visible={Boolean(selectedQuiz)}
+        mode="edit"
+        quizName={quizName}
+        submitting={submitting}
+        error={editError}
+        onQuizNameChange={changeQuizName}
+        onSubmit={saveQuiz}
+        onClose={closeEditQuiz}
       />
     </SafeAreaView>
   );

@@ -13,7 +13,7 @@ import {
 import useVocabulary from "@quizword/shared/vocabulary/useVocabulary";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ScreenHeaderCustomer from "../ScreenHeaderCustomer/ScreenHeaderCustomer";
-import { createQuizModalStyles } from "../CreateQuizModal/create-quiz-modal.styles";
+import { quizModalStyles } from "../QuizModal/quiz-modal.styles";
 import { addNewWordStyles } from "./add-new-word.styles";
 import { styles } from "../../styles/styles";
 
@@ -339,12 +339,12 @@ export default function AddNewWord() {
 
           <View style={addNewWordStyles.pageHeader}>
             <Text
-              style={createQuizModalStyles.title}
+              style={quizModalStyles.title}
               accessibilityRole="header"
             >
               Neues Wort hinzufügen
             </Text>
-            <Text style={createQuizModalStyles.description}>
+            <Text style={quizModalStyles.description}>
               Erweitere deinen Wortschatz mit Kontext und Eselsbrücken.
             </Text>
           </View>
@@ -390,7 +390,7 @@ export default function AddNewWord() {
                 editable={!busy}
                 accessibilityLabel="Ausgangswort: Begriff"
                 style={[
-                  createQuizModalStyles.input,
+                  quizModalStyles.input,
                   requiredError?.field === "source-word" &&
                     addNewWordStyles.invalidField,
                 ]}
@@ -420,7 +420,7 @@ export default function AddNewWord() {
                     onChangeText={(tip) => updateTranslation(0, { tip })}
                     editable={!busy}
                     accessibilityLabel="Ausgangswort: Tipp"
-                    style={createQuizModalStyles.input}
+                    style={quizModalStyles.input}
                     placeholder="Stell dir eine Feder vor, die zurückspringt"
                   />
                   <Text style={addNewWordStyles.label}>
@@ -435,7 +435,7 @@ export default function AddNewWord() {
                     editable={!busy}
                     accessibilityLabel="Ausgangswort: Beispielsatz"
                     style={[
-                      createQuizModalStyles.input,
+                      quizModalStyles.input,
                       addNewWordStyles.textarea,
                     ]}
                     placeholder="Verwende den Begriff in einem Satz."
@@ -487,7 +487,7 @@ export default function AddNewWord() {
                 editable={!busy}
                 accessibilityLabel="Zielwort: Begriff"
                 style={[
-                  createQuizModalStyles.input,
+                  quizModalStyles.input,
                   requiredError?.field === "target-word" &&
                     addNewWordStyles.invalidField,
                 ]}
@@ -544,7 +544,7 @@ export default function AddNewWord() {
                     onChangeText={(tip) => updateTranslation(1, { tip })}
                     editable={!busy}
                     accessibilityLabel="Zielwort: Tipp"
-                    style={createQuizModalStyles.input}
+                    style={quizModalStyles.input}
                     placeholder="Stell dir eine Feder vor, die zurückspringt"
                   />
                   <Text style={addNewWordStyles.label}>
@@ -559,7 +559,7 @@ export default function AddNewWord() {
                     editable={!busy}
                     accessibilityLabel="Zielwort: Beispielsatz"
                     style={[
-                      createQuizModalStyles.input,
+                      quizModalStyles.input,
                       addNewWordStyles.textarea,
                     ]}
                     placeholder="Verwende den Begriff in einem Satz."
@@ -587,28 +587,28 @@ export default function AddNewWord() {
 
             <View style={addNewWordStyles.proTip}>
               <Text style={addNewWordStyles.panelTitle}>💡 Profi-Tipp</Text>
-              <Text style={createQuizModalStyles.description}>
+              <Text style={quizModalStyles.description}>
                 Ein Beispielsatz hilft unserer KI dabei, bessere
                 Karteikartenvarianten für deine nächste Lerneinheit zu
                 erstellen.
               </Text>
             </View>
 
-            <View style={createQuizModalStyles.dialogActions}>
+            <View style={quizModalStyles.dialogActions}>
               <Pressable
                 testID="cancel-add-word"
                 disabled={busy}
                 onPress={() => router.replace("/my-quiz/all-words")}
                 accessibilityRole="button"
                 style={[
-                  createQuizModalStyles.dialogButton,
-                  createQuizModalStyles.dialogCancelButton,
+                  quizModalStyles.dialogButton,
+                  quizModalStyles.dialogCancelButton,
                 ]}
               >
                 <Text
                   style={[
-                    createQuizModalStyles.dialogButtonText,
-                    createQuizModalStyles.dialogCancelText,
+                    quizModalStyles.dialogButtonText,
+                    quizModalStyles.dialogCancelText,
                   ]}
                 >
                   Abbrechen
@@ -649,7 +649,7 @@ export default function AddNewWord() {
         <View style={addNewWordStyles.modalBackdrop}>
           <View style={addNewWordStyles.optionDialog} accessibilityViewIsModal>
             <Text
-              style={createQuizModalStyles.title}
+              style={quizModalStyles.title}
               accessibilityRole="header"
             >
               {selection === "language" ? "Sprache" : "Kategorie"}
@@ -665,14 +665,14 @@ export default function AddNewWord() {
                     disabled
                     accessibilityRole="button"
                     style={[
-                      createQuizModalStyles.dialogButton,
-                      createQuizModalStyles.dialogCancelButton,
+                      quizModalStyles.dialogButton,
+                      quizModalStyles.dialogCancelButton,
                     ]}
                   >
                     <Text
                       style={[
-                        createQuizModalStyles.dialogButtonText,
-                        createQuizModalStyles.dialogCancelText,
+                        quizModalStyles.dialogButtonText,
+                        quizModalStyles.dialogCancelText,
                       ]}
                     >
                       + Kategorie hinzufügen
@@ -702,14 +702,14 @@ export default function AddNewWord() {
               accessibilityRole="button"
               onPress={() => setSelection(null)}
               style={[
-                createQuizModalStyles.dialogButton,
-                createQuizModalStyles.dialogCancelButton,
+                quizModalStyles.dialogButton,
+                quizModalStyles.dialogCancelButton,
               ]}
             >
               <Text
                 style={[
-                  createQuizModalStyles.dialogButtonText,
-                  createQuizModalStyles.dialogCancelText,
+                  quizModalStyles.dialogButtonText,
+                  quizModalStyles.dialogCancelText,
                 ]}
               >
                 Schließen
@@ -726,14 +726,14 @@ export default function AddNewWord() {
         onRequestClose={closeNotice}
       >
         <View style={addNewWordStyles.modalBackdrop}>
-          <View style={createQuizModalStyles.dialog} accessibilityViewIsModal>
+          <View style={quizModalStyles.dialog} accessibilityViewIsModal>
             <Text
-              style={createQuizModalStyles.title}
+              style={quizModalStyles.title}
               accessibilityRole="header"
             >
               {notice?.title}
             </Text>
-            <Text style={createQuizModalStyles.description}>
+            <Text style={quizModalStyles.description}>
               {notice?.message}
             </Text>
             {notice?.confirm && (
@@ -745,14 +745,14 @@ export default function AddNewWord() {
                   void saveWord(pendingSave.current, true);
                 }}
                 style={[
-                  createQuizModalStyles.dialogButton,
-                  createQuizModalStyles.dialogSaveButton,
+                  quizModalStyles.dialogButton,
+                  quizModalStyles.dialogSaveButton,
                 ]}
               >
                 <Text
                   style={[
-                    createQuizModalStyles.dialogButtonText,
-                    createQuizModalStyles.dialogSaveText,
+                    quizModalStyles.dialogButtonText,
+                    quizModalStyles.dialogSaveText,
                   ]}
                 >
                   Hinzufügen
@@ -763,14 +763,14 @@ export default function AddNewWord() {
               accessibilityRole="button"
               onPress={closeNotice}
               style={[
-                createQuizModalStyles.dialogButton,
-                createQuizModalStyles.dialogCancelButton,
+                quizModalStyles.dialogButton,
+                quizModalStyles.dialogCancelButton,
               ]}
             >
               <Text
                 style={[
-                  createQuizModalStyles.dialogButtonText,
-                  createQuizModalStyles.dialogCancelText,
+                  quizModalStyles.dialogButtonText,
+                  quizModalStyles.dialogCancelText,
                 ]}
               >
                 {notice?.confirm ? "Abbrechen" : "OK"}

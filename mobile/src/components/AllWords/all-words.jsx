@@ -1,4 +1,4 @@
-import CreateQuizModal from "../CreateQuizModal/create-quiz-modal";
+import QuizModal from "../QuizModal/quiz-modal";
 import PreLoader from "../PreLoader/pre-loader";
 import Search from "../Search/search";
 import useQuiz from "@quizword/shared/quiz/useQuiz";
@@ -406,7 +406,7 @@ export default function AllWords() {
           +
         </Text>
       </Pressable>
-      <CreateQuizModal
+      <QuizModal
         visible={dialogOpen}
         quizName={quizName}
         selectedWordsCount={selectedWordIds.length}

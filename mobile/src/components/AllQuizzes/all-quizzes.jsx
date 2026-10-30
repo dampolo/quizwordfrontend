@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
 import { Tooltip } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,7 +15,8 @@ import { allCategoriesStyles } from "../AllCategories/all-categories.styles";
 import EditIcon from "../../../assets/icons/edit.svg";
 import LearnIcon from "../../../assets/icons/learn-quiz.svg";
 import WriteIcon from "../../../assets/icons/write.svg";
-import LookIcon from "../../../assets/icons/look-quiz.svg";
+import PreviewIcon from "../../../assets/icons/preview-quiz.svg";
+import PreviewQuiz from "../PreviewQuiz/preview-quiz";
 import FlipCardIcon from "../../../assets/icons/flip-card.svg";
 import RepeatIcon from "../../../assets/icons/repead.svg";
 import HearIcon from "../../../assets/icons/hear.svg";
@@ -36,6 +37,12 @@ function quizKey(item) {
 
 
 function renderQuiz({ item }) {
+  return <QuizCard item={item} />;
+}
+
+
+function QuizCard({ item }) {
+  const [previewOpen, setPreviewOpen] = useState(false);
   const createdAt = new Date(item.created_at);
   const date = Number.isNaN(createdAt.getTime())
     ? "–"
@@ -120,11 +127,12 @@ function renderQuiz({ item }) {
           <Tooltip title="Vorschau">
             <Pressable
               testID="quiz-action-preview"
+              onPress={() => setPreviewOpen(true)}
               accessibilityRole="button"
               accessibilityLabel="Vorschau"
               style={allQuizzesStyles.action}
             >
-              <LookIcon
+              <PreviewIcon
                 width={40}
                 height={40}
                 color={colors.qwColorHeading}
@@ -217,6 +225,9 @@ function renderQuiz({ item }) {
         </Text>
         <Text style={allQuizzesStyles.metadata}>Erstellt: {date}</Text>
       </View>
+      {previewOpen && (
+        <PreviewQuiz quizId={item.quiz_id} onClose={() => setPreviewOpen(false)} />
+      )}
     </View>
   );
 }

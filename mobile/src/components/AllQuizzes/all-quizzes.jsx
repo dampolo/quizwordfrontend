@@ -299,9 +299,16 @@ function QuizCard({ item, onEdit }) {
         </View>
       </View>
       <View style={allQuizzesStyles.cardFooter}>
-        <Pressable onPress={openAllQuizWords}>
+        <Pressable
+          testID={`quiz-words-${item.quiz_id}`}
+          accessibilityRole="link"
+          accessibilityLabel={`${item.concepts_count} Wörter ansehen`}
+          onPress={openAllQuizWords}
+            style={({ pressed }) => [allQuizzesStyles.wordsLinkContainer, pressed && styles.pressed]}
+        >
           <Text style={allQuizzesStyles.metadata}>
-            {item.concepts_count} Wörter
+            <Text accessible={false}>▦ </Text>
+            <Text style={allQuizzesStyles.wordsLink}>{item.concepts_count} Wörter</Text>
           </Text>
         </Pressable>
         <Text style={allQuizzesStyles.metadata}>Erstellt: {date}</Text>

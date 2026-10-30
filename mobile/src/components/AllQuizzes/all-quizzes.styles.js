@@ -36,5 +36,11 @@ export const allQuizzesStyles = StyleSheet.create({
     borderTopColor: colors.qwBorderColor,
   },
   metadata: { fontSize: 14, lineHeight: 22, color: colors.qwBodyTextColor },
+  wordsLinkContainer: {
+    alignSelf: "flex-start",
+    borderBottomWidth: 1,
+    borderBottomColor: colors.qwBodyTextColor,
+  },
+  wordsLink: { fontWeight: "700" },
   footer: { marginTop: 8 },
 });

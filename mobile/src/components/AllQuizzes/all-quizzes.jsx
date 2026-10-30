@@ -73,6 +73,30 @@ function QuizCard({ item }) {
   }
 
 
+  function openFlipCardQuiz() {
+    router.push({
+      pathname: "/my-quiz/(all-quizzes)/flip-card-quiz",
+      params: {
+        id: String(item.quiz_id),
+        language: item.target_language == null ? "" : String(item.target_language),
+        redirect: "true",
+      },
+    });
+  }
+
+
+  function openReverseFlipCardQuiz() {
+    router.push({
+      pathname: "/my-quiz/(all-quizzes)/flip-card-quiz-reverse",
+      params: {
+        id: String(item.quiz_id),
+        language: item.target_language == null ? "" : String(item.target_language),
+        redirect: "true",
+      },
+    });
+  }
+
+
   return (
     <View style={allQuizzesStyles.card} testID={`quiz-${item.quiz_id}`}>
       <View style={allQuizzesStyles.cardHeader}>
@@ -143,6 +167,7 @@ function QuizCard({ item }) {
           <Tooltip title="Karteikarten">
             <Pressable
               testID="quiz-action-flip-card"
+              onPress={openFlipCardQuiz}
               accessibilityRole="button"
               accessibilityLabel="Karteikarten"
               style={allQuizzesStyles.action}
@@ -190,6 +215,7 @@ function QuizCard({ item }) {
           <Tooltip title="Karteikarten rückwärts">
             <Pressable
               testID="quiz-action-flip-card-reverse"
+              onPress={openReverseFlipCardQuiz}
               accessibilityRole="button"
               accessibilityLabel="Karteikarten rückwärts"
               style={allQuizzesStyles.action}

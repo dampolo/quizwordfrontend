@@ -15,7 +15,7 @@ import { speak } from "../../services/speech";
 export default function MyQuizLayout() {
   const segments = useSegments();
   const currentScreen = segments[segments.length - 1];
-  const isQuizOpen = currentScreen === "learn-quiz" || currentScreen === "play-test-quiz";
+  const isQuizOpen = currentScreen === "learn-quiz" || currentScreen === "play-test-quiz" || currentScreen === "flip-card-quiz" || currentScreen === "flip-card-quiz-reverse";
   return (
     <VocabularyProvider
       speak={speak}

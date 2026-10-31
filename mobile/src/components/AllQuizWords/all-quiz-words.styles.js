@@ -111,8 +111,8 @@ export const allQuizWordsStyles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 20,
     backgroundColor: colors.qwFifth,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
+    borderTopLeftRadius: radius,
+    borderTopRightRadius: radius,
   },
   heading: {
     fontSize: 11,
@@ -141,6 +141,7 @@ export const allQuizWordsStyles = StyleSheet.create({
     gap: 12,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderTopColor: colors.qwBorderColor,
+    backgroundColor: colors.qwFourth,
   },
   detailsAction: {
     minWidth: 48,
@@ -156,7 +157,8 @@ export const allQuizWordsStyles = StyleSheet.create({
     padding: 12,
     gap: 8,
     backgroundColor: colors.qwFifth,
-    borderRadius: radius,
+    borderTopLeftRadius: radius,
+    borderTopRightRadius: radius,
   },
   detailsBackdrop: {
     flex: 1,

@@ -77,6 +77,9 @@ export const allQuizWordsStyles = StyleSheet.create({
     minWidth: 0,
     paddingHorizontal: 8,
   },
+  wordDetail: {
+    textAlign: "right",
+  },
   translation: {
     fontSize: 16,
     lineHeight: 24,
@@ -97,7 +100,8 @@ export const allQuizWordsStyles = StyleSheet.create({
   },
   rankColumn: {
     width: 48,
-    textAlign: "center",
+    textAlign: "left",
+    marginLeft: 4,
     color: colors.qwPrimary,
   },
   sourceWord: {
@@ -153,6 +157,16 @@ export const allQuizWordsStyles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderTopColor: colors.qwBorderColor,
     backgroundColor: colors.qwFourth,
+  },
+  attemptsTable: {
+    minWidth: 500,
+    flexGrow: 1,
+  },
+  attemptRow: {
+    gap: 8,
+  },
+  attemptCenteredColumn: {
+    textAlign: "center",
   },
   detailsAction: {
     minWidth: 48,

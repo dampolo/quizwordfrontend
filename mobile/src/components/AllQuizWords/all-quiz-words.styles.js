@@ -4,15 +4,27 @@ import { fonts } from "../../assets/fonts";
 
 export const allQuizWordsStyles = StyleSheet.create({
   quizActions: { gap: 8, marginBottom: 16 },
-  quizActionRow: { flexDirection: "row", gap: 8, justifyContent: "center" },
+  quizActionRow: { flexDirection: "row", flexWrap: "wrap", gap: 8, justifyContent: "center" },
   quizAction: {
     flex: 1,
+    flexBasis: "45%",
     minHeight: 64,
     minWidth: 64,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,
     backgroundColor: colors.qwThird,
+  },
+  quizActionContent: {
+    width: "100%",
+    alignItems: "center",
+    gap: 6,
+    padding: 8,
+  },
+  quizActionLabel: {
+    fontSize: 12,
+    textAlign: "center",
+    color: colors.qwColorHeading,
   },
   deleteButton: {
     minWidth: 48,

@@ -4,7 +4,7 @@ import { fonts } from "../../assets/fonts";
 
 export const allQuizWordsStyles = StyleSheet.create({
   quizActions: { gap: 8, marginBottom: 16 },
-  quizActionRow: { flexDirection: "row", gap: 8 },
+  quizActionRow: { flexDirection: "row", gap: 8, justifyContent: "center" },
   quizAction: {
     flex: 1,
     minHeight: 64,

@@ -9,10 +9,12 @@ import QuizIcon from "../../../assets/icons/quiz-icon.svg";
 import TranslateIcon from "../../../assets/icons/translate.svg";
 import { styles, tabColors } from "../../styles/my-quiz-tabs";
 import { Alert, Pressable } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { colors } from "../../styles/basic";
 import { speak } from "../../services/speech";
 
 export default function MyQuizLayout() {
+  const insets = useSafeAreaInsets();
   const segments = useSegments();
   const currentScreen = segments[segments.length - 1];
   const isQuizOpen = currentScreen === "hear-quiz" || currentScreen === "learn-quiz" || currentScreen === "play-test-quiz" || currentScreen === "flip-card-quiz" || currentScreen === "flip-card-quiz-reverse" || currentScreen === "word-audio-loop" || currentScreen === "word-audio-loop-reverse";
@@ -41,7 +43,11 @@ export default function MyQuizLayout() {
               tabBarActiveTintColor: tabColors.active,
               tabBarInactiveTintColor: tabColors.inactive,
               tabBarActiveBackgroundColor: tabColors.activeBackground,
-              tabBarStyle: [styles.tabBar, isQuizOpen && { display: "none" }],
+              tabBarStyle: [
+                styles.tabBar,
+                { height: 54 + insets.bottom },
+                isQuizOpen && { display: "none" },
+              ],
               tabBarItemStyle: styles.tabBarItem,
               tabBarLabelStyle: styles.tabBarLabel,
               tabBarButton: (props) => (

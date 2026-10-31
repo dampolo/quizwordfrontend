@@ -3,6 +3,17 @@ import { colors, radius } from "../../styles/basic";
 import { fonts } from "../../assets/fonts";
 
 export const allQuizWordsStyles = StyleSheet.create({
+  quizActions: { gap: 8, marginBottom: 16 },
+  quizActionRow: { flexDirection: "row", gap: 8 },
+  quizAction: {
+    flex: 1,
+    minHeight: 64,
+    minWidth: 64,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+    backgroundColor: colors.qwThird,
+  },
   deleteButton: {
     minWidth: 48,
     minHeight: 48,

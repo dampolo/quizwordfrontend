@@ -9,6 +9,17 @@ import { allQuizWordsStyles } from "./all-quiz-words.styles";
 import CloseIcon from "../../../assets/icons/xbox.svg";
 import ScreenHeaderCustomer from "../ScreenHeaderCustomer/ScreenHeaderCustomer";
 import PreLoader from "../PreLoader/pre-loader";
+import { Tooltip } from "react-native-paper";
+import { colors } from "../../styles/basic";
+import PreviewQuiz from "../PreviewQuiz/preview-quiz";
+import LearnIcon from "../../../assets/icons/learn-quiz.svg";
+import WriteIcon from "../../../assets/icons/write.svg";
+import PreviewIcon from "../../../assets/icons/preview-quiz.svg";
+import FlipCardIcon from "../../../assets/icons/flip-card.svg";
+import RepeatIcon from "../../../assets/icons/repead.svg";
+import HearIcon from "../../../assets/icons/hear.svg";
+import FlipCardReverseIcon from "../../../assets/icons/flip-card-reverse.svg";
+import RepeatReverseIcon from "../../../assets/icons/repead-reverse.svg";
 
 function editStyle({ pressed }) {
   return [
@@ -42,6 +53,7 @@ export default function AllQuizWords() {
   const [detailsError, setDetailsError] = useState("");
   const [selectedAttemptId, setSelectedAttemptId] = useState(null);
   const [quiz, setQuiz] = useState(null);
+  const [previewOpen, setPreviewOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [attempt, setAttempt] = useState(0);
@@ -92,6 +104,7 @@ export default function AllQuizWords() {
         active = false;
         detailRequest.current += 1;
         setDetailsVisible(false);
+        setPreviewOpen(false);
       };
       // The attempt counter deliberately reloads the same quiz after a failed request.
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -299,6 +312,183 @@ export default function AllQuizWords() {
             params: { language: quiz?.target_language ?? language ?? "" },
           }}
         />
+        {!loading && !error && quiz && (
+          <View style={allQuizWordsStyles.quizActions}>
+            <View style={allQuizWordsStyles.quizActionRow}>
+              <Tooltip title="Lernen">
+                <Pressable
+                  testID="quiz-action-learn"
+                  accessibilityRole="button"
+                  accessibilityLabel="Lernen"
+                  onPress={() => router.push({
+                      pathname: "/my-quiz/(all-quizzes)/learn-quiz",
+                      params: {
+                        id: String(id),
+                        language: String(quiz.target_language ?? language ?? ""),
+                        redirect: "true",
+                      },
+                    })}
+                  style={allQuizWordsStyles.quizAction}
+                >
+                  {({ pressed }) => (
+                    <View style={pressed && allQuizWordsStyles.pressed}>
+                      <LearnIcon width={40} height={40} color={colors.qwColorHeading} accessible={false} />
+                    </View>
+                  )}
+                </Pressable>
+              </Tooltip>
+              <Tooltip title="Test schreiben">
+                <Pressable
+                  testID="quiz-action-write"
+                  accessibilityRole="button"
+                  accessibilityLabel="Test schreiben"
+                  onPress={() => router.push({
+                      pathname: "/my-quiz/(all-quizzes)/play-test-quiz",
+                      params: {
+                        id: String(id),
+                        language: String(quiz.target_language ?? language ?? ""),
+                        redirect: "true",
+                      },
+                    })}
+                  style={allQuizWordsStyles.quizAction}
+                >
+                  {({ pressed }) => (
+                    <View style={pressed && allQuizWordsStyles.pressed}>
+                      <WriteIcon width={40} height={40} color={colors.qwColorHeading} accessible={false} />
+                    </View>
+                  )}
+                </Pressable>
+              </Tooltip>
+              <Tooltip title="Vorschau">
+                <Pressable
+                  testID="quiz-action-preview"
+                  accessibilityRole="button"
+                  accessibilityLabel="Vorschau"
+                  onPress={() => setPreviewOpen(true)}
+                  style={allQuizWordsStyles.quizAction}
+                >
+                  {({ pressed }) => (
+                    <View style={pressed && allQuizWordsStyles.pressed}>
+                      <PreviewIcon width={40} height={40} color={colors.qwColorHeading} accessible={false} />
+                    </View>
+                  )}
+                </Pressable>
+              </Tooltip>
+              <Tooltip title="Karteikarten">
+                <Pressable
+                  testID="quiz-action-flip-card"
+                  accessibilityRole="button"
+                  accessibilityLabel="Karteikarten"
+                  onPress={() => router.push({
+                      pathname: "/my-quiz/(all-quizzes)/flip-card-quiz",
+                      params: {
+                        id: String(id),
+                        language: String(quiz.target_language ?? language ?? ""),
+                        redirect: "true",
+                      },
+                    })}
+                  style={allQuizWordsStyles.quizAction}
+                >
+                  {({ pressed }) => (
+                    <View style={pressed && allQuizWordsStyles.pressed}>
+                      <FlipCardIcon width={40} height={40} color={colors.qwColorHeading} accessible={false} />
+                    </View>
+                  )}
+                </Pressable>
+              </Tooltip>
+            </View>
+            <View style={allQuizWordsStyles.quizActionRow}>
+              <Tooltip title="Lernen und hören">
+                <Pressable
+                  testID="quiz-action-audio-loop"
+                  accessibilityRole="button"
+                  accessibilityLabel="Lernen und hören"
+                  onPress={() => router.push({
+                      pathname: "/my-quiz/(all-quizzes)/word-audio-loop",
+                      params: {
+                        id: String(id),
+                        language: String(quiz.target_language ?? language ?? ""),
+                        redirect: "true",
+                      },
+                    })}
+                  style={allQuizWordsStyles.quizAction}
+                >
+                  {({ pressed }) => (
+                    <View style={pressed && allQuizWordsStyles.pressed}>
+                      <RepeatIcon width={40} height={40} color={colors.qwColorHeading} accessible={false} />
+                    </View>
+                  )}
+                </Pressable>
+              </Tooltip>
+              <Tooltip title="Hören">
+                <Pressable
+                  testID="quiz-action-hear"
+                  accessibilityRole="button"
+                  accessibilityLabel="Hören"
+                  onPress={() => router.push({
+                      pathname: "/my-quiz/(all-quizzes)/hear-quiz",
+                      params: {
+                        id: String(id),
+                        language: String(quiz.target_language ?? language ?? ""),
+                        redirect: "true",
+                      },
+                    })}
+                  style={allQuizWordsStyles.quizAction}
+                >
+                  {({ pressed }) => (
+                    <View style={pressed && allQuizWordsStyles.pressed}>
+                      <HearIcon width={40} height={40} color={colors.qwColorHeading} accessible={false} />
+                    </View>
+                  )}
+                </Pressable>
+              </Tooltip>
+              <Tooltip title="Karteikarten rückwärts">
+                <Pressable
+                  testID="quiz-action-flip-card-reverse"
+                  accessibilityRole="button"
+                  accessibilityLabel="Karteikarten rückwärts"
+                  onPress={() => router.push({
+                      pathname: "/my-quiz/(all-quizzes)/flip-card-quiz-reverse",
+                      params: {
+                        id: String(id),
+                        language: String(quiz.target_language ?? language ?? ""),
+                        redirect: "true",
+                      },
+                    })}
+                  style={allQuizWordsStyles.quizAction}
+                >
+                  {({ pressed }) => (
+                    <View style={pressed && allQuizWordsStyles.pressed}>
+                      <FlipCardReverseIcon width={40} height={40} color={colors.qwColorHeading} accessible={false} />
+                    </View>
+                  )}
+                </Pressable>
+              </Tooltip>
+              <Tooltip title="Lernen und hören rückwärts">
+                <Pressable
+                  testID="quiz-action-audio-loop-reverse"
+                  accessibilityRole="button"
+                  accessibilityLabel="Lernen und hören rückwärts"
+                  onPress={() => router.push({
+                      pathname: "/my-quiz/(all-quizzes)/word-audio-loop-reverse",
+                      params: {
+                        id: String(id),
+                        language: String(quiz.target_language ?? language ?? ""),
+                        redirect: "true",
+                      },
+                    })}
+                  style={allQuizWordsStyles.quizAction}
+                >
+                  {({ pressed }) => (
+                    <View style={pressed && allQuizWordsStyles.pressed}>
+                      <RepeatReverseIcon width={40} height={40} color={colors.qwColorHeading} accessible={false} />
+                    </View>
+                  )}
+                </Pressable>
+              </Tooltip>
+            </View>
+          </View>
+        )}
         <View style={allQuizWordsStyles.listHead}>
           <Text
             style={[allQuizWordsStyles.heading, allQuizWordsStyles.rankColumn]}
@@ -447,6 +637,7 @@ export default function AllQuizWords() {
           </Pressable>
         )}
       </ScrollView>
+      {previewOpen && <PreviewQuiz quizId={id} onClose={() => setPreviewOpen(false)} />}
       <Modal visible={deleteVisible} transparent animationType="fade" onRequestClose={closeDelete}>
         <SafeAreaView style={allQuizWordsStyles.detailsBackdrop}>
           <View style={allQuizWordsStyles.detailsDialog} accessibilityViewIsModal>

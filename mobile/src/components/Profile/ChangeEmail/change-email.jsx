@@ -1,3 +1,4 @@
+import { useSnackbar } from "../../../context/snackbar/useSnackbar";
 import { useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -10,7 +11,6 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Snackbar } from "react-native-paper";
 import { useAuth } from "../../../context/auth/useAuth";
 import ScreenHeaderCustomer from "../../ScreenHeaderCustomer/ScreenHeaderCustomer";
 import PreLoader from "../../PreLoader/pre-loader";
@@ -38,7 +38,7 @@ export default function ChangeEmail() {
   const [focusedField, setFocusedField] = useState(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [errors, setErrors] = useState({});
-  const [notice, setNotice] = useState("");
+  const { showSnackbar, hideSnackbar } = useSnackbar();
   const [busy, setBusy] = useState(false);
   const [changed, setChanged] = useState(false);
   const busyRef = useRef(false);
@@ -82,14 +82,14 @@ export default function ChangeEmail() {
       }
       setErrors(validation);
       if (Object.keys(validation).length) {
-        setNotice(validation.new_email || validation.password);
+        showSnackbar(validation.new_email || validation.password);
         (validation.new_email ? emailRef : passwordRef).current?.focus();
         return;
       }
     }
     busyRef.current = true;
     setBusy(true);
-    setNotice("");
+    hideSnackbar();
     try {
       if (!emailChangedRef.current) {
         const result = await postChangeEmail({
@@ -108,7 +108,7 @@ export default function ChangeEmail() {
       router.replace("/quiz/(auth)/confirmation");
     } catch (failure) {
       if (emailChangedRef.current) {
-        setNotice(
+        showSnackbar(
           "Deine E-Mail-Adresse wurde geändert. Die Abmeldung ist fehlgeschlagen. Bitte tippe auf Erneut abmelden.",
         );
       } else {
@@ -118,7 +118,7 @@ export default function ChangeEmail() {
           password: errorText(data?.password),
         };
         setErrors(fieldErrors);
-        setNotice(
+        showSnackbar(
           fieldErrors.new_email ||
             fieldErrors.password ||
             errorText(data?.detail) ||
@@ -286,13 +286,6 @@ export default function ChangeEmail() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-      <Snackbar
-        visible={!!notice}
-        onDismiss={() => setNotice("")}
-        action={{ label: "OK", onPress: () => setNotice("") }}
-      >
-        {notice}
-      </Snackbar>
     </SafeAreaView>
   );
 }

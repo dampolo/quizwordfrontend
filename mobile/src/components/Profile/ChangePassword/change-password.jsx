@@ -1,8 +1,8 @@
+import { useSnackbar } from "../../../context/snackbar/useSnackbar";
 import { useRef, useState } from "react";
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Snackbar } from "react-native-paper";
 import LockIcon from "../../../../assets/icons/pwd-lock-icon-input-field.svg";
 import EyeIcon from "../../../../assets/icons/eye.svg";
 import EyeOffIcon from "../../../../assets/icons/eye-off.svg";
@@ -41,7 +41,7 @@ export default function ChangePassword() {
   const [visible, setVisible] = useState({});
   const [focusedField, setFocusedField] = useState(null);
   const [errors, setErrors] = useState({});
-  const [notice, setNotice] = useState("");
+  const { showSnackbar, hideSnackbar } = useSnackbar();
   const [busy, setBusy] = useState(false);
   const [changed, setChanged] = useState(false);
   const busyRef = useRef(false);
@@ -86,14 +86,14 @@ export default function ChangePassword() {
       const validation = validatePasswords(form);
       setErrors(validation);
       if (Object.keys(validation).length) {
-        setNotice(validation.old_password || validation.new_password || validation.repeated_new_password);
+        showSnackbar(validation.old_password || validation.new_password || validation.repeated_new_password);
         focusError(validation);
         return;
       }
     }
     busyRef.current = true;
     setBusy(true);
-    setNotice("");
+    hideSnackbar();
     try {
       if (!changedRef.current) {
         const result = await postChangePassword(form);
@@ -107,7 +107,7 @@ export default function ChangePassword() {
       router.replace("/quiz/(auth)/confirmation");
     } catch (failure) {
       if (changedRef.current) {
-        setNotice("Dein Passwort wurde geändert. Die Abmeldung ist fehlgeschlagen. Bitte tippe auf Erneut abmelden.");
+        showSnackbar("Dein Passwort wurde geändert. Die Abmeldung ist fehlgeschlagen. Bitte tippe auf Erneut abmelden.");
       } else {
         const data = failure?.response?.data ?? failure?.response;
         const fieldErrors = {
@@ -116,7 +116,7 @@ export default function ChangePassword() {
           repeated_new_password: errorText(data?.repeated_new_password),
         };
         setErrors(fieldErrors);
-        setNotice(fieldErrors.old_password || fieldErrors.new_password || fieldErrors.repeated_new_password || errorText(data?.detail) || errorText(data?.non_field_errors) || "Das Passwort konnte nicht geändert werden. Bitte versuche es erneut.");
+        showSnackbar(fieldErrors.old_password || fieldErrors.new_password || fieldErrors.repeated_new_password || errorText(data?.detail) || errorText(data?.non_field_errors) || "Das Passwort konnte nicht geändert werden. Bitte versuche es erneut.");
         focusError(fieldErrors);
       }
     } finally {
@@ -255,7 +255,6 @@ export default function ChangePassword() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-      <Snackbar visible={!!notice} onDismiss={() => setNotice("")} action={{ label: "OK", onPress: () => setNotice("") }}>{notice}</Snackbar>
     </SafeAreaView>
   );
 }

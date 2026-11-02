@@ -1,3 +1,4 @@
+import { useSnackbar } from "../../../context/snackbar/useSnackbar";
 import { useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -9,7 +10,6 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Snackbar } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import ProfileIcon from "../../../../assets/icons/profile.svg";
 import { useAuth } from "../../../context/auth/useAuth";
@@ -28,13 +28,13 @@ export default function ChangeProfileImage() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
+  const { showSnackbar } = useSnackbar();
   const busyRef = useRef(false);
   const imageUri = selectedImage?.uri || profile?.image;
 
   function showError(message) {
     setError(message);
-    setNotice(message);
+    showSnackbar(message);
   }
 
   async function chooseImage() {
@@ -89,7 +89,7 @@ export default function ChangeProfileImage() {
       }
       await updateProfile(payload);
       setSelectedImage(null);
-      setNotice(
+      showSnackbar(
         remove
           ? "Das Profilbild wurde gelöscht."
           : "Das Profilbild wurde geändert.",
@@ -220,13 +220,6 @@ export default function ChangeProfileImage() {
           </Pressable>
         </View>
       </ScrollView>
-      <Snackbar
-        visible={!!notice}
-        onDismiss={() => setNotice("")}
-        action={{ label: "OK", onPress: () => setNotice("") }}
-      >
-        {notice}
-      </Snackbar>
     </SafeAreaView>
   );
 }

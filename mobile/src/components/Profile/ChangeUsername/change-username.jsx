@@ -1,8 +1,8 @@
+import { useSnackbar } from "../../../context/snackbar/useSnackbar";
 import { useRef, useState } from "react";
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Snackbar } from "react-native-paper";
 import { useAuth } from "../../../context/auth/useAuth";
 import PreLoader from "../../PreLoader/pre-loader";
 import ScreenHeaderCustomer from "../../ScreenHeaderCustomer/ScreenHeaderCustomer";
@@ -15,7 +15,7 @@ export default function ChangeUsername() {
   const [focused, setFocused] = useState(false);
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
+  const { showSnackbar, hideSnackbar } = useSnackbar();
   const [busy, setBusy] = useState(false);
   const busyRef = useRef(false);
   const inputRef = useRef(null);
@@ -42,25 +42,25 @@ export default function ChangeUsername() {
     if (!valid) {
       const message = "Mindestens 4, maximal 10 Zeichen und keine Leerzeichen.";
       setError(message);
-      setNotice(message);
+      showSnackbar(message);
       inputRef.current?.focus();
       return;
     }
     busyRef.current = true;
     setBusy(true);
     setError("");
-    setNotice("");
+    hideSnackbar();
     try {
       await patchChangeUsername({ username });
       await getProfile();
       setUsername("");
-      setNotice("Dein Benutzername wurde geändert!");
+      showSnackbar("Dein Benutzername wurde geändert!");
     } catch (failure) {
       const data = failure?.response?.data ?? failure?.response;
       const detail = data?.username || data?.detail || data?.non_field_errors;
       const message = (Array.isArray(detail) ? detail.filter((item) => typeof item === "string").join("\n") : typeof detail === "string" ? detail : "") || "Der Benutzername konnte nicht geändert werden. Bitte versuche es erneut.";
       setError(message);
-      setNotice(message);
+      showSnackbar(message);
       inputRef.current?.focus();
     } finally {
       busyRef.current = false;
@@ -111,7 +111,6 @@ export default function ChangeUsername() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-      <Snackbar visible={!!notice} onDismiss={() => setNotice("")} action={{ label: "OK", onPress: () => setNotice("") }}>{notice}</Snackbar>
     </SafeAreaView>
   );
 }

@@ -10,6 +10,7 @@ import PreLoader from "../components/PreLoader/pre-loader";
 import { resets } from "../styles/resets";
 import { PaperProvider } from "react-native-paper";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SnackbarProvider } from "../context/snackbar/SnackbarProvider";
 
 
 export default function RootLayout() {
@@ -28,8 +29,10 @@ export default function RootLayout() {
       <AuthProvider>
         <SafeAreaProvider>
           <PaperProvider>
-            <StatusBar style="dark" />
-            <Stack screenOptions={{ headerShown: false }} />
+            <SnackbarProvider>
+              <StatusBar style="dark" />
+              <Stack screenOptions={{ headerShown: false }} />
+            </SnackbarProvider>
           </PaperProvider>
         </SafeAreaProvider>
       </AuthProvider>

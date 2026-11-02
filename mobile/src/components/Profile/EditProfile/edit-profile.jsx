@@ -1,3 +1,4 @@
+import { useSnackbar } from "../../../context/snackbar/useSnackbar";
 import { useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -11,7 +12,6 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Snackbar } from "react-native-paper";
 import { useAuth } from "../../../context/auth/useAuth";
 import PreLoader from "../../PreLoader/pre-loader";
 import ScreenHeaderCustomer from "../../ScreenHeaderCustomer/ScreenHeaderCustomer";
@@ -59,7 +59,7 @@ export default function EditProfile() {
   };
   const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
-  const [notice, setNotice] = useState("");
+  const { showSnackbar, hideSnackbar } = useSnackbar();
   const busyRef = useRef(false);
   const inputsRef = useRef({});
 
@@ -81,10 +81,10 @@ export default function EditProfile() {
     busyRef.current = true;
     setBusy(true);
     setErrors({});
-    setNotice("");
+    hideSnackbar();
     try {
       await updateProfile(form);
-      setNotice("Dein Profil wurde aktualisiert!");
+      showSnackbar("Dein Profil wurde aktualisiert!");
     } catch (failure) {
       const data = failure?.response?.data ?? failure?.response;
       const fieldErrors =
@@ -100,7 +100,7 @@ export default function EditProfile() {
         (typeof data === "string"
           ? data
           : "Das Profil konnte nicht gespeichert werden. Bitte versuche es erneut.");
-      setNotice(message);
+      showSnackbar(message);
       const invalidField = Object.keys(inputsRef.current).find(
         (name) => fieldErrors[name],
       );
@@ -415,13 +415,6 @@ export default function EditProfile() {
             </Pressable>
           </View>
         </ScrollView>
-        <Snackbar
-          visible={!!notice}
-          onDismiss={() => setNotice("")}
-          action={{ label: "OK", onPress: () => setNotice("") }}
-        >
-          {notice}
-        </Snackbar>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

@@ -9,6 +9,7 @@ export default function ProfileLayout() {
       <Stack.Screen name="change-username" />
       <Stack.Screen name="change-email" />
       <Stack.Screen name="change-password" />
+      <Stack.Screen name="edit-languages" />
       <Stack.Screen name="change-profile-image" />
     </Stack>
   );

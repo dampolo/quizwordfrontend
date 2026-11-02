@@ -76,7 +76,7 @@ export default function Profile() {
         <ScreenHeaderCustomer title="Profil" />
         <Text style={profileStyles.previewNotice}>
           Du kannst dein Foto, deine persönlichen Daten, deinen Benutzernamen
-          und deine E-Mail-Adresse bearbeiten sowie dein Passwort ändern. Weitere Änderungen sind derzeit deaktiviert.
+          und deine E-Mail-Adresse bearbeiten sowie dein Passwort und deine Sprachen ändern. Das Löschen des Kontos ist derzeit deaktiviert.
         </Text>
 
         {!profile && (
@@ -148,7 +148,7 @@ export default function Profile() {
           <InfoRow label="Passwort" value="**********" />
         </ProfileSection>
 
-        <ProfileSection title="Deine Sprachen">
+        <ProfileSection title="Deine Sprachen" onEdit={() => router.push("/my-quiz/edit-languages?redirect=true")}>
           <InfoRow
             label="Deine Muttersprache"
             value={nativeLanguage?.language_name}

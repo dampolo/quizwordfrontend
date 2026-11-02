@@ -76,7 +76,7 @@ export default function Profile() {
         <ScreenHeaderCustomer title="Profil" />
         <Text style={profileStyles.previewNotice}>
           Du kannst dein Foto, deine persönlichen Daten, deinen Benutzernamen
-          und deine E-Mail-Adresse bearbeiten sowie dein Passwort und deine Sprachen ändern. Das Löschen des Kontos ist derzeit deaktiviert.
+          und deine E-Mail-Adresse bearbeiten sowie dein Passwort und deine Sprachen ändern.
         </Text>
 
         {!profile && (
@@ -176,7 +176,7 @@ export default function Profile() {
             Kategorien entfernt. Diese Aktion kann nicht rückgängig gemacht
             werden.
           </Text>
-          <PreviewButton label="Konto löschen" destructive />
+          <PreviewButton label="Konto löschen" destructive onPress={() => router.push("/my-quiz/delete-account")} />
         </ProfileSection>
       </ScrollView>
     </SafeAreaView>

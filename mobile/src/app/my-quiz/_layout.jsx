@@ -123,7 +123,7 @@ export default function MyQuizLayout() {
             )}
           >
             <Drawer.Screen name="(tabs)" options={{ title: "Meine Quiz" }} />
-            <Drawer.Screen name="profile" options={{ drawerItemStyle: { display: "none" } }} />
+            <Drawer.Screen name="(profile)" options={{ drawerItemStyle: { display: "none" } }} />
             <Drawer.Screen name="settings" options={{ drawerItemStyle: { display: "none" } }} />
           </Drawer>
         </TranslationProvider>

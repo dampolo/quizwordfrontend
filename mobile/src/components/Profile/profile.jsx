@@ -75,7 +75,7 @@ export default function Profile() {
       <ScrollView contentContainerStyle={profileStyles.content}>
       <ScreenHeaderCustomer title="Profil" />
         <Text style={profileStyles.previewNotice}>
-          Du kannst dein Foto und deine persönlichen Daten bearbeiten. Weitere
+          Du kannst dein Foto, deine persönlichen Daten und deinen Benutzernamen bearbeiten. Weitere
           Änderungen sind derzeit deaktiviert.
         </Text>
 
@@ -130,7 +130,7 @@ export default function Profile() {
           />
         </ProfileSection>
 
-        <ProfileSection title="Benutzername ändern">
+        <ProfileSection title="Benutzername ändern" onEdit={() => router.push("/my-quiz/change-username")}>
           <InfoRow label="Benutzername" value={profile?.username} />
         </ProfileSection>
 

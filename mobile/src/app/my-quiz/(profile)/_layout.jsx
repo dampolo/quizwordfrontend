@@ -6,6 +6,7 @@ export default function ProfileLayout() {
     <Stack initialRouteName="profile" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="profile" />
       <Stack.Screen name="edit-profile" />
+      <Stack.Screen name="change-username" />
       <Stack.Screen name="change-profile-image" />
     </Stack>
   );

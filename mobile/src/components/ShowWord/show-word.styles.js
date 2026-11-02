@@ -5,7 +5,6 @@ import { colors } from "../../styles/basic";
 export const showWordStyles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "#f8f8ff" },
   content: { padding: 16, paddingTop: 0, paddingBottom: 32 },
-  screenHeader: { marginHorizontal: -16 },
   actions: {
     flexDirection: "row",
     alignItems: "center",

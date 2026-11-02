@@ -88,7 +88,6 @@ export default function ShowWord() {
       <ScrollView contentContainerStyle={showWordStyles.content}>
         <ScreenHeaderCustomer
           title="Wort ansehen"
-          style={showWordStyles.screenHeader}
           fallbackHref={{
             pathname: "/my-quiz/all-words",
             params: { language: language || "" },

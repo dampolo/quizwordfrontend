@@ -126,7 +126,6 @@ export default function AllWords() {
           <View>
             <ScreenHeaderCustomer
               title="Wörter"
-              style={allWordsStyles.screenHeader}
             />
             <View style={allWordsStyles.vocabularyHeader}>
               <Text style={allWordsStyles.title} accessibilityRole="header">

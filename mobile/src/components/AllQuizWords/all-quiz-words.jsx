@@ -304,7 +304,6 @@ export default function AllQuizWords() {
     >
       <ScrollView contentContainerStyle={allQuizWordsStyles.content}>
         <ScreenHeaderCustomer
-          style={allQuizWordsStyles.screenHeader}
           title={quiz?.quiz_name ? `Quiz: ${quiz.quiz_name}` : "Quizwörter"}
           fallbackHref={{
             pathname: "/my-quiz/(tabs)/(all-quizzes)/all-quizzes",

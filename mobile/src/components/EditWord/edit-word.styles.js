@@ -14,9 +14,6 @@ export const editWordStyles = StyleSheet.create({
     paddingTop: 0,
     paddingBottom: 32,
   },
-  screenHeader: {
-    marginHorizontal: -16,
-  },
   pageHeader: { gap: 8, marginBottom: 24 },
   card: {
     width: "100%",

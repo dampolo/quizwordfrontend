@@ -72,8 +72,8 @@ export default function Profile() {
       style={profileStyles.screen}
       edges={["top", "left", "right", "bottom"]}
     >
-      <ScreenHeaderCustomer title="Profil" />
       <ScrollView contentContainerStyle={profileStyles.content}>
+      <ScreenHeaderCustomer title="Profil" />
         <Text style={profileStyles.previewNotice}>
           Du kannst dein Foto und deine persönlichen Daten bearbeiten. Weitere
           Änderungen sind derzeit deaktiviert.

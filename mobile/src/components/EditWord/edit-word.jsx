@@ -336,7 +336,6 @@ export default function EditWord() {
         <View ref={contentRef} collapsable={false}>
           <ScreenHeaderCustomer
             title="Wort bearbeiten"
-            style={editWordStyles.screenHeader}
           />
 
           <View style={editWordStyles.pageHeader}>

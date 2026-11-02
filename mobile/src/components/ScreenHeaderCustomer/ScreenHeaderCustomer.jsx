@@ -11,6 +11,7 @@ export default function ScreenHeaderCustomer({
   title,
   fallbackHref = "/my-quiz",
   titleStyle,
+  horizontalInset = 16,
   style,
   onProfilePress,
 }) {
@@ -29,7 +30,7 @@ export default function ScreenHeaderCustomer({
 
 
   return (
-    <View style={[headerStyles.container, style]}>
+    <View style={[headerStyles.container, { marginHorizontal: -horizontalInset }, style]}>
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={t("MOBILE.GO_BACK")}

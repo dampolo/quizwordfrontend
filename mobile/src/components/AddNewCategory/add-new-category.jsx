@@ -150,7 +150,7 @@ export default function AddNewCategory() {
     <SafeAreaView style={editCategoryStyles.screen} edges={["top", "right", "left"]}>
       <KeyboardAvoidingView style={editCategoryStyles.screen} behavior={Platform.OS === "ios" ? "padding" : undefined}>
         <ScrollView contentContainerStyle={editCategoryStyles.content} keyboardShouldPersistTaps="handled">
-          <ScreenHeaderCustomer title="Neue Kategorie" fallbackHref="/my-quiz/all-categories" style={editCategoryStyles.header} />
+          <ScreenHeaderCustomer title="Neue Kategorie" fallbackHref="/my-quiz/all-categories" />
           <View style={editCategoryStyles.card}>
             <Text style={editCategoryStyles.title} accessibilityRole="header">Neue Kategorie hinzufügen</Text>
             <Text style={editCategoryStyles.description}>Erstelle eine individuelle Lernliste und ordne sie einer Sprache zu.</Text>

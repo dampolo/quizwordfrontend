@@ -239,7 +239,6 @@ export default function EditCategory() {
           <ScreenHeaderCustomer
             title="Kategorie bearbeiten"
             fallbackHref="/my-quiz/all-categories"
-            style={editCategoryStyles.header}
           />
           {loading ? (
             <PreLoader />

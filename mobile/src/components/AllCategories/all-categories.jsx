@@ -181,7 +181,6 @@ export default function AllCategories() {
           <View>
             <ScreenHeaderCustomer
               title="Kategorien"
-              style={allWordsStyles.screenHeader}
             />
             <View style={allWordsStyles.vocabularyHeader}>
               <Text style={allWordsStyles.title} accessibilityRole="header">

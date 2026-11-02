@@ -24,9 +24,6 @@ export const allWordsStyles = StyleSheet.create({
     borderRadius: 28,
     zIndex: 1,
   },
-  screenHeader: {
-    marginHorizontal: -16,
-  },
   languages: {
     flexDirection: "row",
     flexWrap: "wrap",

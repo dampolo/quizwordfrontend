@@ -456,7 +456,6 @@ export default function AllQuizzes() {
           <View>
             <ScreenHeaderCustomer
               title="Quizze"
-              style={allWordsStyles.screenHeader}
             />
             <View style={allWordsStyles.vocabularyHeader}>
               <Text style={allWordsStyles.title} accessibilityRole="header">

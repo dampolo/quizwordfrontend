@@ -139,7 +139,7 @@ export default function ChangeProfileImage() {
       style={changeProfileImageStyles.screen}
       edges={["top", "left", "right", "bottom"]}
     >
-      <ScreenHeaderCustomer
+      <ScreenHeaderCustomer horizontalInset={0}
         title="Profilbild ändern"
         fallbackHref="/my-quiz/profile"
       />

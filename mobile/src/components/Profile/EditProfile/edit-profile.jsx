@@ -56,14 +56,12 @@ function EditProfileForm({ profile, updateProfile }) {
   const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
-  const [saved, setSaved] = useState(false);
   const busyRef = useRef(false);
   const inputsRef = useRef({});
 
   function changeField(name, value) {
     setForm((previous) => ({ ...previous, [name]: value }));
     setErrors((previous) => ({ ...previous, [name]: undefined }));
-    setSaved(false);
   }
 
   function returnToProfile() {
@@ -80,10 +78,8 @@ function EditProfileForm({ profile, updateProfile }) {
     setBusy(true);
     setErrors({});
     setNotice("");
-    setSaved(false);
     try {
       await updateProfile(form);
-      setSaved(true);
       setNotice("Dein Profil wurde aktualisiert!");
     } catch (failure) {
       const data = failure?.response?.data ?? failure?.response;
@@ -347,11 +343,7 @@ function EditProfileForm({ profile, updateProfile }) {
                 : null
             }
           />
-          {saved && (
-            <Text accessibilityRole="alert" style={editProfileStyles.body}>
-              Dein Profil wurde aktualisiert!
-            </Text>
-          )}
+
           <Pressable
             testID="save-profile"
             accessibilityRole="button"
@@ -407,9 +399,10 @@ export default function EditProfile() {
       style={editProfileStyles.screen}
       edges={["top", "left", "right", "bottom"]}
     >
-      <ScreenHeaderCustomer
+      <ScreenHeaderCustomer horizontalInset={0}
         title="Profil bearbeiten"
         fallbackHref="/my-quiz/profile"
+        
       />
       {profile ? (
         <EditProfileForm

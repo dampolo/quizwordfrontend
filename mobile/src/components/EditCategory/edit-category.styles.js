@@ -4,7 +4,6 @@ import { colors } from "../../styles/basic";
 export const editCategoryStyles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.qwBgQuiz },
   content: { padding: 16, paddingTop: 0, paddingBottom: 32 },
-  header: { marginHorizontal: -16 },
   card: {
     width: "100%",
     maxWidth: 720,

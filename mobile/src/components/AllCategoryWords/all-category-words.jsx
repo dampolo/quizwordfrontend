@@ -188,7 +188,7 @@ export default function AllCategoryWords() {
         contentContainerStyle={allWordsStyles.content}
         ListHeaderComponent={
           <View>
-            <ScreenHeaderCustomer title="Kategoriewörter" fallbackHref="/my-quiz/all-categories" style={allWordsStyles.screenHeader} />
+            <ScreenHeaderCustomer title="Kategoriewörter" fallbackHref="/my-quiz/all-categories" />
             <View style={allWordsStyles.vocabularyHeader}>
               <Text style={allWordsStyles.title} accessibilityRole="header">Kategorie: {category?.category_name ?? "…"}</Text>
               {!!category?.language_name && <Text style={allWordsStyles.description}>{category.language_name}</Text>}

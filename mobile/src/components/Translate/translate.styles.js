@@ -5,7 +5,6 @@ import { fonts } from "../../assets/fonts";
 export const translateStyles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.qwBgQuiz },
   content: { paddingHorizontal: 16, paddingBottom: 32 },
-  header: { marginHorizontal: -16 },
   card: {
     width: "100%",
     maxWidth: 720,

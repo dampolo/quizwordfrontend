@@ -72,9 +72,6 @@ export const allQuizWordsStyles = StyleSheet.create({
     alignItems: "center",
     textAlign: "center",
   },
-  screenHeader: {
-    marginHorizontal: -16,
-  },
   editButton: {
     minHeight: 48,
     alignSelf: "stretch",

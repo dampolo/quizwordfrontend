@@ -334,7 +334,6 @@ export default function AddNewWord() {
         <View ref={contentRef} collapsable={false}>
           <ScreenHeaderCustomer
             title="Neues Wort"
-            style={addNewWordStyles.screenHeader}
           />
 
           <View style={addNewWordStyles.pageHeader}>

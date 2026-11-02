@@ -166,7 +166,6 @@ export default function Translate() {
       >
         <ScreenHeaderCustomer
           title="Übersetzer"
-          style={translateStyles.header}
         />
         <View style={translateStyles.card}>
           <Text style={styles.subtitle} accessibilityRole="header">

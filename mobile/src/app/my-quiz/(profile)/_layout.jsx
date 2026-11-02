@@ -7,6 +7,7 @@ export default function ProfileLayout() {
       <Stack.Screen name="profile" />
       <Stack.Screen name="edit-profile" />
       <Stack.Screen name="change-username" />
+      <Stack.Screen name="change-email" />
       <Stack.Screen name="change-profile-image" />
     </Stack>
   );

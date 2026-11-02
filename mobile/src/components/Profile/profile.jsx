@@ -73,10 +73,11 @@ export default function Profile() {
       edges={["top", "left", "right", "bottom"]}
     >
       <ScrollView contentContainerStyle={profileStyles.content}>
-      <ScreenHeaderCustomer title="Profil" />
+        <ScreenHeaderCustomer title="Profil" />
         <Text style={profileStyles.previewNotice}>
-          Du kannst dein Foto, deine persönlichen Daten und deinen Benutzernamen bearbeiten. Weitere
-          Änderungen sind derzeit deaktiviert.
+          Du kannst dein Foto, deine persönlichen Daten, deinen Benutzernamen
+          und deine E-Mail-Adresse bearbeiten. Weitere Änderungen sind derzeit
+          deaktiviert.
         </Text>
 
         {!profile && (
@@ -130,11 +131,17 @@ export default function Profile() {
           />
         </ProfileSection>
 
-        <ProfileSection title="Benutzername ändern" onEdit={() => router.push("/my-quiz/change-username")}>
+        <ProfileSection
+          title="Benutzername ändern"
+          onEdit={() => router.push("/my-quiz/change-username")}
+        >
           <InfoRow label="Benutzername" value={profile?.username} />
         </ProfileSection>
 
-        <ProfileSection title="E-Mail-Adresse ändern">
+        <ProfileSection
+          title="E-Mail-Adresse ändern"
+          onEdit={() => router.push("/my-quiz/change-email")}
+        >
           <InfoRow label="E-Mail" value={profile?.email} />
         </ProfileSection>
 

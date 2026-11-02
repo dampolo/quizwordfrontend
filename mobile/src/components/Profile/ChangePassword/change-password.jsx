@@ -129,8 +129,10 @@ export default function ChangePassword() {
   return (
     <SafeAreaView style={changePasswordStyles.screen} edges={["top", "left", "right", "bottom"]}>
       <ScreenHeaderCustomer horizontalInset={0} title="Passwort ändern" fallbackHref="/my-quiz/profile" />
-      <KeyboardAvoidingView style={changePasswordStyles.flex} behavior={Platform.OS === "ios" ? "padding" : undefined}>
-        <ScrollView contentContainerStyle={changePasswordStyles.content} keyboardShouldPersistTaps="handled">
+      <KeyboardAvoidingView style={changePasswordStyles.flex} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+        <ScrollView
+          style={changePasswordStyles.flex}
+          keyboardDismissMode="on-drag" contentContainerStyle={changePasswordStyles.content} keyboardShouldPersistTaps="handled">
           <View style={changePasswordStyles.card}>
             <Text accessibilityRole="header" style={changePasswordStyles.title}>Passwort ändern</Text>
             <Text style={changePasswordStyles.body}>Gib dein aktuelles Passwort und zweimal dein neues Passwort ein. Nach der Änderung wirst du abgemeldet.</Text>

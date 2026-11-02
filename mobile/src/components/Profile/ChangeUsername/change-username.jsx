@@ -72,8 +72,10 @@ export default function ChangeUsername() {
   return (
     <SafeAreaView style={changeUsernameStyles.screen} edges={["top", "left", "right", "bottom"]}>
       <ScreenHeaderCustomer horizontalInset={0} title="Benutzername ändern" fallbackHref="/my-quiz/profile" />
-      <KeyboardAvoidingView style={changeUsernameStyles.flex} behavior={Platform.OS === "ios" ? "padding" : undefined}>
-        <ScrollView contentContainerStyle={changeUsernameStyles.content} keyboardShouldPersistTaps="handled">
+      <KeyboardAvoidingView style={changeUsernameStyles.flex} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+        <ScrollView
+          style={changeUsernameStyles.flex}
+          keyboardDismissMode="on-drag" contentContainerStyle={changeUsernameStyles.content} keyboardShouldPersistTaps="handled">
           <View style={changeUsernameStyles.card}>
             <Text accessibilityRole="header" style={changeUsernameStyles.title}>Benutzername ändern</Text>
             <Text style={changeUsernameStyles.body}>Hier kannst du einen neuen Benutzernamen eingeben.</Text>

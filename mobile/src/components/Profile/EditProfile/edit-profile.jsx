@@ -120,9 +120,11 @@ export default function EditProfile() {
     >
       <KeyboardAvoidingView
         style={editProfileStyles.flex}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView
+          style={editProfileStyles.flex}
+          keyboardDismissMode="on-drag"
           contentContainerStyle={editProfileStyles.content}
           keyboardShouldPersistTaps="handled"
         >

@@ -145,9 +145,11 @@ export default function ChangeEmail() {
       />
       <KeyboardAvoidingView
         style={changeEmailStyles.flex}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView
+          style={changeEmailStyles.flex}
+          keyboardDismissMode="on-drag"
           contentContainerStyle={changeEmailStyles.content}
           keyboardShouldPersistTaps="handled"
         >

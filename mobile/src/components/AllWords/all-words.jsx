@@ -3,7 +3,7 @@ import PreLoader from "../PreLoader/pre-loader";
 import Search from "../Search/search";
 import useQuiz from "@quizword/shared/quiz/useQuiz";
 import { useRef, useState } from "react";
-import { Alert, Button, FlatList, Pressable, Text, View } from "react-native";
+import { Alert, FlatList, Pressable, Text, View } from "react-native";
 import { Checkbox } from "expo-checkbox";
 import EditIcon from "../../../assets/icons/edit.svg";
 import { SafeAreaView } from "react-native-safe-area-context";

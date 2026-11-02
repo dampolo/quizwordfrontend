@@ -8,7 +8,6 @@ import { useAuth } from "../../../context/auth/useAuth";
 import ScreenHeaderCustomer from "../../ScreenHeaderCustomer/ScreenHeaderCustomer";
 import { changeProfileImageStyles } from "./change-profile-image.styles";
 
-const MAX_FILE_SIZE = 2 * 1024 * 1024;
 const imageTypes = { jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp" };
 
 
@@ -42,11 +41,6 @@ export default function ChangeProfileImage() {
       const mimeType = asset.mimeType || imageTypes[extension];
       if (!Object.values(imageTypes).includes(mimeType)) {
         showError("Bitte wähle ein PNG-, JPEG- oder WebP-Bild.");
-        return;
-      }
-      const size = asset.fileSize ?? asset.file?.size;
-      if (size == null || size > MAX_FILE_SIZE) {
-        showError(size == null ? "Die Bildgröße konnte nicht geprüft werden. Bitte wähle ein anderes Bild." : "Das Bild darf maximal 2 MB groß sein.");
         return;
       }
       setSelectedImage({ ...asset, mimeType });
@@ -83,8 +77,9 @@ export default function ChangeProfileImage() {
       setNotice(remove ? "Das Profilbild wurde gelöscht." : "Das Profilbild wurde geändert.");
     } catch (failure) {
       const data = failure?.response?.data;
-      const detail = data?.image || data?.detail;
-      showError((Array.isArray(detail) ? detail[0] : typeof detail === "string" ? detail : null) || "Das Profilbild konnte nicht geändert werden.");
+      const detail = data?.image || data?.detail || data?.non_field_errors || (typeof data === "string" ? data : null);
+      const message = Array.isArray(detail) ? detail.filter((item) => typeof item === "string").join("\n") : detail;
+      showError((typeof message === "string" && message) || "Das Profilbild konnte nicht geändert werden.");
     } finally {
       busyRef.current = false;
       setBusy(false);

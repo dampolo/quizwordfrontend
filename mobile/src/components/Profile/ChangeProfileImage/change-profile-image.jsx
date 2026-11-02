@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { ActivityIndicator, Alert, Image, Platform, Pressable, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, Alert, Image, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Snackbar } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
@@ -62,15 +62,11 @@ export default function ChangeProfileImage() {
       let payload = { image: null };
       if (!remove) {
         payload = new FormData();
-        if (Platform.OS === "web") {
-          payload.append("image", selectedImage.file);
-        } else {
-          payload.append("image", {
-            uri: selectedImage.uri,
-            name: selectedImage.fileName || `profile.${selectedImage.mimeType.split("/")[1]}`,
-            type: selectedImage.mimeType,
-          });
-        }
+        payload.append("image", {
+          uri: selectedImage.uri,
+          name: selectedImage.fileName || `profile.${selectedImage.mimeType.split("/")[1]}`,
+          type: selectedImage.mimeType,
+        });
       }
       await updateProfile(payload);
       setSelectedImage(null);
@@ -92,12 +88,6 @@ export default function ChangeProfileImage() {
       return;
     }
     const message = "Möchtest du dein Profilbild wirklich löschen?";
-    if (Platform.OS === "web") {
-      if (globalThis.confirm(message)) {
-        saveImage(true);
-      }
-      return;
-    }
     Alert.alert("Profilbild löschen", message, [
       { text: "Abbrechen", style: "cancel" },
       { text: "Löschen", style: "destructive", onPress: () => saveImage(true) },

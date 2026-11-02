@@ -53,7 +53,7 @@ export default function ScreenHeaderCustomer({
         hitSlop={6}
         onPress={onProfilePress ?? (() => navigation.openDrawer())}
         style={({ hovered, pressed }) => [
-          headerStyles.action,
+          headerStyles.action, headerStyles.avatar,
           { opacity: hovered || pressed ? 0.6 : 1 },
         ]}
       >
@@ -91,6 +91,7 @@ const headerStyles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
+    paddingRight: 10
   },
   title: {
     flex: 1,

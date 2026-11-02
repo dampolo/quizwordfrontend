@@ -3,6 +3,7 @@ import { colors, radius } from "./basic";
 import { fonts } from "../assets/fonts";
 
 export const styles = StyleSheet.create({
+  inputFieldFocus: { borderColor: colors.qwPrimary },
   container: {
     width: "100%",
     maxWidth: 1100,

@@ -11,6 +11,7 @@ import { changeUsernameStyles } from "./change-username.styles";
 
 export default function ChangeUsername() {
   const { profile, patchChangeUsername, getProfile } = useAuth();
+  const [focused, setFocused] = useState(false);
   const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
@@ -84,13 +85,15 @@ export default function ChangeUsername() {
                 accessibilityLabel="Dein neuer Benutzername"
                 value={username}
                 onChangeText={changeUsername}
+                onFocus={() => setFocused(true)}
+                onBlur={() => setFocused(false)}
                 editable={!busy}
                 autoCapitalize="none"
                 autoCorrect={false}
                 autoComplete="username-new"
                 returnKeyType="done"
                 onSubmitEditing={save}
-                style={[changeUsernameStyles.input, !!error && changeUsernameStyles.invalidInput]}
+                style={[changeUsernameStyles.input, focused && styles.inputFieldFocus, !!error && changeUsernameStyles.invalidInput]}
               />
               <Text style={changeUsernameStyles.hint}>Mindestens 4, maximal 10 Zeichen und keine Leerzeichen.</Text>
               {!!error && <Text accessibilityRole="alert" style={changeUsernameStyles.error}>{error}</Text>}

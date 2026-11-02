@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import { colors, radius } from "../styles/basic";
 import { fonts } from "../assets/fonts";
+import { styles } from "./styles";
 
 // auth.scss converted at 16 logical points per rem. Text styles belong on Text
 // children, since native Views do not inherit typography or foreground colors.
@@ -152,7 +153,7 @@ export const auth = StyleSheet.create({
     fontFamily: fonts.regular,
     fontSize: 16,
   },
-  inputFieldFocus: { borderColor: colors.qwPrimary },
+  inputFieldFocus: styles.inputFieldFocus,
   btnPassword: {
     alignSelf: "center",
     justifyContent: "center",

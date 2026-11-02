@@ -19,7 +19,6 @@ import MailIcon from "../../../../assets/icons/mail-icon-input-field.svg";
 import LockIcon from "../../../../assets/icons/pwd-lock-icon-input-field.svg";
 import EyeIcon from "../../../../assets/icons/eye.svg";
 import EyeOffIcon from "../../../../assets/icons/eye-off.svg";
-import { auth } from "../../../styles/auth";
 import { changeEmailStyles } from "./change-email.styles";
 
 function errorText(value) {
@@ -186,7 +185,7 @@ export default function ChangeEmail() {
                 onSubmitEditing={() => passwordRef.current?.focus()}
                 style={[
                   changeEmailStyles.input,
-                  focusedField === "email" && auth.inputFieldFocus,
+                  focusedField === "email" && styles.inputFieldFocus,
                   !!errors.new_email && changeEmailStyles.invalidInput,
                 ]}
               />
@@ -220,7 +219,7 @@ export default function ChangeEmail() {
                 onSubmitEditing={save}
                 style={[
                   changeEmailStyles.input,
-                  focusedField === "password" && auth.inputFieldFocus,
+                  focusedField === "password" && styles.inputFieldFocus,
                   !!errors.password && changeEmailStyles.invalidInput,
                 ]}
               />

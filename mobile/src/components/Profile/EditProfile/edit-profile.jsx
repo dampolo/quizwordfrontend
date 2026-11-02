@@ -43,6 +43,7 @@ function ReadOnlyRow({ label, value }) {
 
 export default function EditProfile() {
   const { profile, updateProfile } = useAuth();
+  const [focusedField, setFocusedField] = useState(null);
   const [changes, setForm] = useState({});
   const form = {
     title: profile?.title || "",
@@ -178,11 +179,14 @@ export default function EditProfile() {
                 accessibilityLabel="Vorname"
                 value={form.first_name}
                 onChangeText={(value) => changeField("first_name", value)}
+              onFocus={() => setFocusedField("first_name")}
+              onBlur={() => setFocusedField(null)}
                 editable={!busy}
                 autoComplete="given-name"
                 style={[
                   editProfileStyles.input,
-                  !!errors.first_name && editProfileStyles.invalidInput,
+                  focusedField === "first_name" && styles.inputFieldFocus,
+                !!errors.first_name && editProfileStyles.invalidInput,
                 ]}
               />
               {!!errorText(errors.first_name) && (
@@ -201,11 +205,14 @@ export default function EditProfile() {
                 accessibilityLabel="Nachname"
                 value={form.last_name}
                 onChangeText={(value) => changeField("last_name", value)}
+              onFocus={() => setFocusedField("last_name")}
+              onBlur={() => setFocusedField(null)}
                 editable={!busy}
                 autoComplete="family-name"
                 style={[
                   editProfileStyles.input,
-                  !!errors.last_name && editProfileStyles.invalidInput,
+                  focusedField === "last_name" && styles.inputFieldFocus,
+                !!errors.last_name && editProfileStyles.invalidInput,
                 ]}
               />
               {!!errorText(errors.last_name) && (
@@ -224,12 +231,15 @@ export default function EditProfile() {
                 accessibilityLabel="Telefon"
                 value={form.phone}
                 onChangeText={(value) => changeField("phone", value)}
+              onFocus={() => setFocusedField("phone")}
+              onBlur={() => setFocusedField(null)}
                 editable={!busy}
                 autoComplete="tel"
                 keyboardType="phone-pad"
                 style={[
                   editProfileStyles.input,
-                  !!errors.phone && editProfileStyles.invalidInput,
+                  focusedField === "phone" && styles.inputFieldFocus,
+                !!errors.phone && editProfileStyles.invalidInput,
                 ]}
               />
               {!!errorText(errors.phone) && (
@@ -248,11 +258,14 @@ export default function EditProfile() {
                 accessibilityLabel="Straße"
                 value={form.street}
                 onChangeText={(value) => changeField("street", value)}
+              onFocus={() => setFocusedField("street")}
+              onBlur={() => setFocusedField(null)}
                 editable={!busy}
                 autoComplete="street-address"
                 style={[
                   editProfileStyles.input,
-                  !!errors.street && editProfileStyles.invalidInput,
+                  focusedField === "street" && styles.inputFieldFocus,
+                !!errors.street && editProfileStyles.invalidInput,
                 ]}
               />
               {!!errorText(errors.street) && (
@@ -271,10 +284,13 @@ export default function EditProfile() {
                 accessibilityLabel="Hausnummer"
                 value={form.street_number}
                 onChangeText={(value) => changeField("street_number", value)}
+              onFocus={() => setFocusedField("street_number")}
+              onBlur={() => setFocusedField(null)}
                 editable={!busy}
                 style={[
                   editProfileStyles.input,
-                  !!errors.street_number && editProfileStyles.invalidInput,
+                  focusedField === "street_number" && styles.inputFieldFocus,
+                !!errors.street_number && editProfileStyles.invalidInput,
                 ]}
               />
               {!!errorText(errors.street_number) && (
@@ -293,10 +309,13 @@ export default function EditProfile() {
                 accessibilityLabel="Stadt"
                 value={form.city}
                 onChangeText={(value) => changeField("city", value)}
+              onFocus={() => setFocusedField("city")}
+              onBlur={() => setFocusedField(null)}
                 editable={!busy}
                 style={[
                   editProfileStyles.input,
-                  !!errors.city && editProfileStyles.invalidInput,
+                  focusedField === "city" && styles.inputFieldFocus,
+                !!errors.city && editProfileStyles.invalidInput,
                 ]}
               />
               {!!errorText(errors.city) && (
@@ -315,12 +334,15 @@ export default function EditProfile() {
                 accessibilityLabel="Postleitzahl"
                 value={form.postcode}
                 onChangeText={(value) => changeField("postcode", value)}
+              onFocus={() => setFocusedField("postcode")}
+              onBlur={() => setFocusedField(null)}
                 editable={!busy}
                 autoComplete="postal-code"
                 keyboardType="number-pad"
                 style={[
                   editProfileStyles.input,
-                  !!errors.postcode && editProfileStyles.invalidInput,
+                  focusedField === "postcode" && styles.inputFieldFocus,
+                !!errors.postcode && editProfileStyles.invalidInput,
                 ]}
               />
               {!!errorText(errors.postcode) && (

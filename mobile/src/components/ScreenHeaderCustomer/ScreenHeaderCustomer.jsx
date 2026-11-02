@@ -1,10 +1,10 @@
 import { router, useNavigation } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 import ArrowLeft from "../../../assets/icons/arrow-left.svg";
 import ProfileIcon from "../../../assets/icons/profile.svg";
 import { useAuth } from "../../context/auth/useAuth";
-import { colors } from "../../styles/basic";
+import { headerStyles } from "./ScreenHeaderCustomer.styles";
 
 
 export default function ScreenHeaderCustomer({
@@ -37,7 +37,7 @@ export default function ScreenHeaderCustomer({
         hitSlop={12}
         style={({ hovered, pressed }) => [
           headerStyles.action,
-          { opacity: hovered || pressed ? 0.6 : 1 },
+          (hovered || pressed) && headerStyles.pressed,
         ]}
         onPress={goBack}
       >
@@ -54,7 +54,7 @@ export default function ScreenHeaderCustomer({
         onPress={onProfilePress ?? (() => navigation.openDrawer())}
         style={({ hovered, pressed }) => [
           headerStyles.action, headerStyles.avatar,
-          { opacity: hovered || pressed ? 0.6 : 1 },
+          (hovered || pressed) && headerStyles.pressed,
         ]}
       >
         {profile?.image ? (
@@ -71,36 +71,3 @@ export default function ScreenHeaderCustomer({
     </View>
   );
 }
-
-
-const headerStyles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: colors.qwThird,
-    paddingVertical: 8,
-    marginBottom: 16,
-  },
-  action: {
-    minWidth: 48,
-    minHeight: 48,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    paddingRight: 10
-  },
-  title: {
-    flex: 1,
-    textAlign: "center",
-    fontSize: 18,
-    fontWeight: "600",
-    color: colors.qwPrimary,
-  },
-  icon: {
-    color: colors.qwPrimary,
-  }
-});

@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useVocabulary from "@quizword/shared/vocabulary/useVocabulary";
@@ -16,13 +17,14 @@ function InfoRow({ label, value }) {
 }
 
 
-function PreviewButton({ label = "Bearbeiten", destructive = false }) {
+function PreviewButton({ label = "Bearbeiten", destructive = false, onPress }) {
   return (
     <Pressable
-      disabled
+      disabled={!onPress}
+      onPress={onPress}
       accessibilityRole="button"
-      accessibilityState={{ disabled: true }}
-      style={[profileStyles.button, destructive && profileStyles.deleteButton]}
+      accessibilityState={{ disabled: !onPress }}
+      style={[profileStyles.button, destructive && profileStyles.deleteButton, onPress && profileStyles.enabledButton]}
     >
       <Text style={[profileStyles.buttonText, destructive && profileStyles.deleteButtonText]}>
         {label}
@@ -32,13 +34,13 @@ function PreviewButton({ label = "Bearbeiten", destructive = false }) {
 }
 
 
-function ProfileSection({ title, children, editable = true }) {
+function ProfileSection({ title, children, editable = true, onEdit }) {
   return (
     <View style={profileStyles.section}>
       <Text accessibilityRole="header" style={profileStyles.sectionTitle}>{title}</Text>
       <View style={profileStyles.card}>
         {children}
-        {editable && <PreviewButton />}
+        {editable && <PreviewButton onPress={onEdit} />}
       </View>
     </View>
   );
@@ -59,7 +61,7 @@ export default function Profile() {
 
         {!profile && <Text style={profileStyles.body}>Keine Profildaten verfügbar.</Text>}
 
-        <ProfileSection title="Foto">
+        <ProfileSection title="Foto" onEdit={() => router.push("/my-quiz/change-profile-image")}>
           <View style={profileStyles.avatar}>
             {profile?.image ? (
               <Image source={{ uri: profile.image }} style={profileStyles.avatarImage} accessibilityLabel="Profilbild" />

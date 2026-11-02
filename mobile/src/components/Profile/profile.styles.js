@@ -52,6 +52,7 @@ export const profileStyles = StyleSheet.create({
     backgroundColor: colors.qwThird,
     opacity: 0.55,
   },
+  enabledButton: { opacity: 1 },
   buttonText: { color: colors.qwPrimary, fontSize: 16, fontWeight: "600" },
   deleteButton: {
     backgroundColor: colors.qwFourth,

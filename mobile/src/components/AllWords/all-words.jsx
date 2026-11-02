@@ -9,7 +9,6 @@ import EditIcon from "../../../assets/icons/edit.svg";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useLocalSearchParams } from "expo-router";
 import useVocabulary from "@quizword/shared/vocabulary/useVocabulary";
-import { useAuth } from "../../context/auth/useAuth";
 import { allWordsStyles } from "./all-words.styles";
 import { styles } from "../../styles/styles";
 import { colors } from "../../styles/basic";
@@ -17,8 +16,6 @@ import ScreenHeaderCustomer from "../ScreenHeaderCustomer/ScreenHeaderCustomer";
 
 
 export default function AllWords() {
-  const { logout } = useAuth();
-  const [loggingOut, setLoggingOut] = useState(false);
   const { language } = useLocalSearchParams();
   const {
     userLanguages,
@@ -110,22 +107,6 @@ export default function AllWords() {
       pressed && selectedWordIds.length >= 3 && styles.pressed,
       selectedWordIds.length < 3 && styles.buttonDisabled,
     ];
-  }
-
-
-  async function handleLogout() {
-    if (loggingOut) return;
-
-    setLoggingOut(true);
-
-    try {
-      await logout();
-      router.replace("/quiz/(auth)/login-quiz");
-    } catch {
-      Alert.alert("Logout failed", "Please try again.");
-    } finally {
-      setLoggingOut(false);
-    }
   }
 
 
@@ -374,11 +355,6 @@ export default function AllWords() {
                 </Pressable>
               </View>
             </View>
-            <Button
-              title={loggingOut ? "Logging out…" : "Log out"}
-              onPress={handleLogout}
-              disabled={loggingOut}
-            />
           </View>
         }
       />

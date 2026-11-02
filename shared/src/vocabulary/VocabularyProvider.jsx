@@ -131,6 +131,7 @@ export function VocabularyProvider({ children, api: apiOverride, apiFetch: fetch
     }
 
     setUserLanguages(data.learning_languages);
+    setNativeLanguage(data.native_language);
 
     return data;
   }
@@ -156,10 +157,15 @@ export function VocabularyProvider({ children, api: apiOverride, apiFetch: fetch
       body: JSON.stringify(payload),
     });
 
+    const data = await response.json();
     if (!response.ok) {
-      throw new Error("Failed to load languages.");
+      const error = new Error("Failed to save languages.");
+      error.response = { data };
+      throw error;
     }
-    return await response.json();
+    setUserLanguages(data.learning_languages);
+    setNativeLanguage(data.native_language);
+    return data;
   }
 
   async function getCategories() {

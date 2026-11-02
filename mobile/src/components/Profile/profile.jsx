@@ -6,6 +6,7 @@ import { useAuth } from "../../context/auth/useAuth";
 import ProfileIcon from "../../../assets/icons/profile.svg";
 import ScreenHeaderCustomer from "../ScreenHeaderCustomer/ScreenHeaderCustomer";
 import { profileStyles } from "./profile.styles";
+import { styles } from "../../styles/styles";
 
 function InfoRow({ label, value }) {
   return (
@@ -24,7 +25,12 @@ function PreviewButton({ label = "Bearbeiten", destructive = false, onPress }) {
       onPress={onPress}
       accessibilityRole="button"
       accessibilityState={{ disabled: !onPress }}
-      style={[profileStyles.button, destructive && profileStyles.deleteButton, onPress && profileStyles.enabledButton]}
+      style={({ pressed }) => [
+        profileStyles.button,
+        destructive && profileStyles.deleteButton,
+        onPress && profileStyles.enabledButton,
+        pressed && styles.pressed,
+      ]}
     >
       <Text style={[profileStyles.buttonText, destructive && profileStyles.deleteButtonText]}>
         {label}

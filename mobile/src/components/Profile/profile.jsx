@@ -76,8 +76,7 @@ export default function Profile() {
         <ScreenHeaderCustomer title="Profil" />
         <Text style={profileStyles.previewNotice}>
           Du kannst dein Foto, deine persönlichen Daten, deinen Benutzernamen
-          und deine E-Mail-Adresse bearbeiten. Weitere Änderungen sind derzeit
-          deaktiviert.
+          und deine E-Mail-Adresse bearbeiten sowie dein Passwort ändern. Weitere Änderungen sind derzeit deaktiviert.
         </Text>
 
         {!profile && (
@@ -145,7 +144,7 @@ export default function Profile() {
           <InfoRow label="E-Mail" value={profile?.email} />
         </ProfileSection>
 
-        <ProfileSection title="Passwort ändern">
+        <ProfileSection title="Passwort ändern" onEdit={() => router.push("/my-quiz/change-password")}>
           <InfoRow label="Passwort" value="**********" />
         </ProfileSection>
 

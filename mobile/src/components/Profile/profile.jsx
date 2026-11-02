@@ -12,11 +12,16 @@ function InfoRow({ label, value }) {
   return (
     <View style={profileStyles.row}>
       <Text style={profileStyles.label}>{label}</Text>
-      <Text selectable style={profileStyles.value}>{typeof value === "boolean" ? (value ? "Ja" : "Nein") : String(value ?? "").trim() || "–"}</Text>
+      <Text selectable style={profileStyles.value}>
+        {typeof value === "boolean"
+          ? value
+            ? "Ja"
+            : "Nein"
+          : String(value ?? "").trim() || "–"}
+      </Text>
     </View>
   );
 }
-
 
 function PreviewButton({ label = "Bearbeiten", destructive = false, onPress }) {
   return (
@@ -32,18 +37,24 @@ function PreviewButton({ label = "Bearbeiten", destructive = false, onPress }) {
         pressed && styles.pressed,
       ]}
     >
-      <Text style={[profileStyles.buttonText, destructive && profileStyles.deleteButtonText]}>
+      <Text
+        style={[
+          profileStyles.buttonText,
+          destructive && profileStyles.deleteButtonText,
+        ]}
+      >
         {label}
       </Text>
     </Pressable>
   );
 }
 
-
 function ProfileSection({ title, children, editable = true, onEdit }) {
   return (
     <View style={profileStyles.section}>
-      <Text accessibilityRole="header" style={profileStyles.sectionTitle}>{title}</Text>
+      <Text accessibilityRole="header" style={profileStyles.sectionTitle}>
+        {title}
+      </Text>
       <View style={profileStyles.card}>
         {children}
         {editable && <PreviewButton onPress={onEdit} />}
@@ -52,32 +63,51 @@ function ProfileSection({ title, children, editable = true, onEdit }) {
   );
 }
 
-
 export default function Profile() {
   const { profile, user } = useAuth();
   const { userLanguages, nativeLanguage } = useVocabulary();
 
   return (
-    <SafeAreaView style={profileStyles.screen} edges={["top", "left", "right", "bottom"]}>
+    <SafeAreaView
+      style={profileStyles.screen}
+      edges={["top", "left", "right", "bottom"]}
+    >
       <ScreenHeaderCustomer title="Profil" />
       <ScrollView contentContainerStyle={profileStyles.content}>
         <Text style={profileStyles.previewNotice}>
-          Bearbeiten und Löschen sind derzeit deaktiviert.
+          Du kannst dein Foto und deine persönlichen Daten bearbeiten. Weitere
+          Änderungen sind derzeit deaktiviert.
         </Text>
 
-        {!profile && <Text style={profileStyles.body}>Keine Profildaten verfügbar.</Text>}
+        {!profile && (
+          <Text style={profileStyles.body}>Keine Profildaten verfügbar.</Text>
+        )}
 
-        <ProfileSection title="Foto" onEdit={() => router.push("/my-quiz/change-profile-image")}>
+        <ProfileSection
+          title="Foto"
+          onEdit={() => router.push("/my-quiz/change-profile-image")}
+        >
           <View style={profileStyles.avatar}>
             {profile?.image ? (
-              <Image source={{ uri: profile.image }} style={profileStyles.avatarImage} accessibilityLabel="Profilbild" />
+              <Image
+                source={{ uri: profile.image }}
+                style={profileStyles.avatarImage}
+                accessibilityLabel="Profilbild"
+              />
             ) : (
-              <ProfileIcon width={100} height={100} accessibilityLabel="Profilbild" />
+              <ProfileIcon
+                width={100}
+                height={100}
+                accessibilityLabel="Profilbild"
+              />
             )}
           </View>
         </ProfileSection>
 
-        <ProfileSection title="Deine Daten">
+        <ProfileSection
+          title="Deine Daten"
+          onEdit={() => router.push("/my-quiz/edit-profile")}
+        >
           <InfoRow label="Kundennummer" value={profile?.customer_number} />
           <InfoRow label="Anrede" value={profile?.title} />
           <InfoRow label="Vorname" value={profile?.first_name} />
@@ -90,7 +120,14 @@ export default function Profile() {
           <InfoRow label="Abonnement" value={profile?.has_subscription} />
           <InfoRow label="Beschreibung" value={profile?.description} />
           <InfoRow label="Aktiv" value={profile?.is_active} />
-          <InfoRow label="Erstellt am" value={profile?.created_at ? new Date(profile.created_at).toLocaleDateString() : null} />
+          <InfoRow
+            label="Erstellt am"
+            value={
+              profile?.created_at
+                ? new Date(profile.created_at).toLocaleDateString()
+                : null
+            }
+          />
         </ProfileSection>
 
         <ProfileSection title="Benutzername ändern">
@@ -106,23 +143,32 @@ export default function Profile() {
         </ProfileSection>
 
         <ProfileSection title="Deine Sprachen">
-          <InfoRow label="Deine Muttersprache" value={nativeLanguage?.language_name} />
-          <InfoRow label="Deine Lernsprachen" value={userLanguages?.map((language) => language.language_name).join("\n")} />
+          <InfoRow
+            label="Deine Muttersprache"
+            value={nativeLanguage?.language_name}
+          />
+          <InfoRow
+            label="Deine Lernsprachen"
+            value={userLanguages
+              ?.map((language) => language.language_name)
+              .join("\n")}
+          />
         </ProfileSection>
 
         {user?.auth_provider === "email" && (
-        <ProfileSection title="Anmeldung" editable={false}>
-          <Text style={profileStyles.body}>
-            Du bist mit deiner E-Mail-Adresse {profile?.email || "–"} angemeldet.
-          </Text>
-        </ProfileSection>
-
+          <ProfileSection title="Anmeldung" editable={false}>
+            <Text style={profileStyles.body}>
+              Du bist mit deiner E-Mail-Adresse {profile?.email || "–"}{" "}
+              angemeldet.
+            </Text>
+          </ProfileSection>
         )}
 
         <ProfileSection title="Lösche dein Konto" editable={false}>
           <Text style={profileStyles.body}>
-            Wenn du dein Konto löschst, werden alle deine Wörter, Quizze und Kategorien entfernt.
-            Diese Aktion kann nicht rückgängig gemacht werden.
+            Wenn du dein Konto löschst, werden alle deine Wörter, Quizze und
+            Kategorien entfernt. Diese Aktion kann nicht rückgängig gemacht
+            werden.
           </Text>
           <PreviewButton label="Konto löschen" destructive />
         </ProfileSection>

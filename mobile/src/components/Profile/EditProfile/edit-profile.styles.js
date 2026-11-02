@@ -1,0 +1,65 @@
+import { StyleSheet } from "react-native";
+import { colors, radius } from "../../../styles/basic";
+
+export const editProfileStyles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: colors.qwBgQuiz },
+  flex: { flex: 1 },
+  content: {
+    width: "100%",
+    maxWidth: 720,
+    alignSelf: "center",
+    padding: 16,
+    paddingBottom: 32,
+  },
+  card: {
+    padding: 20,
+    gap: 20,
+    borderWidth: 1,
+    borderColor: colors.qwBorderColor,
+    borderRadius: radius,
+    backgroundColor: colors.qwFourth,
+  },
+  title: { fontSize: 24, fontWeight: "700", color: colors.qwColorHeading },
+  field: { gap: 8 },
+  label: {
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight: "600",
+    color: colors.qwColorHeading,
+  },
+  body: { fontSize: 16, lineHeight: 24, color: colors.qwBodyTextColor },
+  input: {
+    minHeight: 52,
+    borderWidth: 1,
+    borderColor: colors.qwBorderColor,
+    borderRadius: radius,
+    padding: 14,
+    fontSize: 16,
+    color: colors.qwColorHeading,
+    backgroundColor: colors.qwFourth,
+  },
+  invalidInput: { borderColor: colors.qwRequired },
+  options: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
+  option: {
+    minHeight: 48,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: colors.qwBorderColor,
+    borderRadius: radius,
+  },
+  selectedOption: {
+    backgroundColor: colors.qwThird,
+    borderColor: colors.qwPrimary,
+  },
+  switchRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 12,
+  },
+  error: { fontSize: 14, lineHeight: 22, color: colors.qwRequired },
+  empty: { padding: 20, fontSize: 16, color: colors.qwBodyTextColor },
+});

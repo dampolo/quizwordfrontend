@@ -84,7 +84,7 @@ export default function EditProfile() {
     hideSnackbar();
     try {
       await updateProfile(form);
-      showSnackbar("Dein Profil wurde aktualisiert!");
+      showSnackbar("Dein Profil wurde aktualisiert!", "success");
     } catch (failure) {
       const data = failure?.response?.data ?? failure?.response;
       const fieldErrors =
@@ -100,7 +100,7 @@ export default function EditProfile() {
         (typeof data === "string"
           ? data
           : "Das Profil konnte nicht gespeichert werden. Bitte versuche es erneut.");
-      showSnackbar(message);
+      showSnackbar(message, "error");
       const invalidField = Object.keys(inputsRef.current).find(
         (name) => fieldErrors[name],
       );

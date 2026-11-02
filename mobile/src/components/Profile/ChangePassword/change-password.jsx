@@ -86,7 +86,7 @@ export default function ChangePassword() {
       const validation = validatePasswords(form);
       setErrors(validation);
       if (Object.keys(validation).length) {
-        showSnackbar(validation.old_password || validation.new_password || validation.repeated_new_password);
+        showSnackbar(validation.old_password || validation.new_password || validation.repeated_new_password, "error");
         focusError(validation);
         return;
       }
@@ -107,7 +107,7 @@ export default function ChangePassword() {
       router.replace("/quiz/(auth)/confirmation");
     } catch (failure) {
       if (changedRef.current) {
-        showSnackbar("Dein Passwort wurde geändert. Die Abmeldung ist fehlgeschlagen. Bitte tippe auf Erneut abmelden.");
+        showSnackbar("Dein Passwort wurde geändert. Die Abmeldung ist fehlgeschlagen. Bitte tippe auf Erneut abmelden.", "error");
       } else {
         const data = failure?.response?.data ?? failure?.response;
         const fieldErrors = {
@@ -116,7 +116,7 @@ export default function ChangePassword() {
           repeated_new_password: errorText(data?.repeated_new_password),
         };
         setErrors(fieldErrors);
-        showSnackbar(fieldErrors.old_password || fieldErrors.new_password || fieldErrors.repeated_new_password || errorText(data?.detail) || errorText(data?.non_field_errors) || "Das Passwort konnte nicht geändert werden. Bitte versuche es erneut.");
+        showSnackbar(fieldErrors.old_password || fieldErrors.new_password || fieldErrors.repeated_new_password || errorText(data?.detail) || errorText(data?.non_field_errors) || "Das Passwort konnte nicht geändert werden. Bitte versuche es erneut.", "error");
         focusError(fieldErrors);
       }
     } finally {

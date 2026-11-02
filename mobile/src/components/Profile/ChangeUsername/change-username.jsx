@@ -42,7 +42,7 @@ export default function ChangeUsername() {
     if (!valid) {
       const message = "Mindestens 4, maximal 10 Zeichen und keine Leerzeichen.";
       setError(message);
-      showSnackbar(message);
+      showSnackbar(message, "error");
       inputRef.current?.focus();
       return;
     }
@@ -54,13 +54,13 @@ export default function ChangeUsername() {
       await patchChangeUsername({ username });
       await getProfile();
       setUsername("");
-      showSnackbar("Dein Benutzername wurde geändert!");
+      showSnackbar("Dein Benutzername wurde geändert!", "success");
     } catch (failure) {
       const data = failure?.response?.data ?? failure?.response;
       const detail = data?.username || data?.detail || data?.non_field_errors;
       const message = (Array.isArray(detail) ? detail.filter((item) => typeof item === "string").join("\n") : typeof detail === "string" ? detail : "") || "Der Benutzername konnte nicht geändert werden. Bitte versuche es erneut.";
       setError(message);
-      showSnackbar(message);
+      showSnackbar(message, "error");
       inputRef.current?.focus();
     } finally {
       busyRef.current = false;

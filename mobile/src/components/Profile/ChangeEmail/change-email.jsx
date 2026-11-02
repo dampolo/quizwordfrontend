@@ -82,7 +82,7 @@ export default function ChangeEmail() {
       }
       setErrors(validation);
       if (Object.keys(validation).length) {
-        showSnackbar(validation.new_email || validation.password);
+        showSnackbar(validation.new_email || validation.password, "error");
         (validation.new_email ? emailRef : passwordRef).current?.focus();
         return;
       }
@@ -109,7 +109,7 @@ export default function ChangeEmail() {
     } catch (failure) {
       if (emailChangedRef.current) {
         showSnackbar(
-          "Deine E-Mail-Adresse wurde geändert. Die Abmeldung ist fehlgeschlagen. Bitte tippe auf Erneut abmelden.",
+          "Deine E-Mail-Adresse wurde geändert. Die Abmeldung ist fehlgeschlagen. Bitte tippe auf Erneut abmelden.", "error",
         );
       } else {
         const data = failure?.response?.data ?? failure?.response;
@@ -123,7 +123,7 @@ export default function ChangeEmail() {
             fieldErrors.password ||
             errorText(data?.detail) ||
             errorText(data?.non_field_errors) ||
-            "Die E-Mail-Adresse konnte nicht geändert werden. Bitte versuche es erneut.",
+            "Die E-Mail-Adresse konnte nicht geändert werden. Bitte versuche es erneut.", "error",
         );
         (fieldErrors.new_email ? emailRef : passwordRef).current?.focus();
       }

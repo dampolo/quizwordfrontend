@@ -34,7 +34,7 @@ export default function ChangeProfileImage() {
 
   function showError(message) {
     setError(message);
-    showSnackbar(message);
+    showSnackbar(message, "error");
   }
 
   async function chooseImage() {
@@ -92,7 +92,7 @@ export default function ChangeProfileImage() {
       showSnackbar(
         remove
           ? "Das Profilbild wurde gelöscht."
-          : "Das Profilbild wurde geändert.",
+          : "Das Profilbild wurde geändert.", "success",
       );
     } catch (failure) {
       const data = failure?.response?.data;

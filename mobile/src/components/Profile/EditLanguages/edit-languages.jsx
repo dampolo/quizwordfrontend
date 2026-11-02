@@ -89,7 +89,7 @@ export default function EditLanguages() {
     }
     if (!valid) {
       showSnackbar(
-        "Wähle deine Muttersprache und mindestens eine andere Sprache zum Lernen.",
+        "Wähle deine Muttersprache und mindestens eine andere Sprache zum Lernen.", "error",
       );
       return;
     }
@@ -103,7 +103,7 @@ export default function EditLanguages() {
         learning_languages_id: selectedLearningIds.map(Number),
       });
       setSaved(true);
-      showSnackbar("Deine Sprachen wurden geändert!");
+      showSnackbar("Deine Sprachen wurden geändert!", "success");
       router.navigate("/my-quiz/profile");
     } catch (failure) {
       const data = failure?.response?.data ?? failure?.response;
@@ -117,7 +117,7 @@ export default function EditLanguages() {
           fieldErrors.learning_languages_id ||
           errorText(data?.detail) ||
           errorText(data?.non_field_errors) ||
-          "Die Sprachen konnten nicht gespeichert werden. Bitte versuche es erneut.",
+          "Die Sprachen konnten nicht gespeichert werden. Bitte versuche es erneut.", "error",
       );
     } finally {
       busyRef.current = false;

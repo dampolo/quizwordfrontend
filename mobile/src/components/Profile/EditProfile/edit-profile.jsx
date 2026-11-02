@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import {
-  ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -14,6 +13,7 @@ import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Snackbar } from "react-native-paper";
 import { useAuth } from "../../../context/auth/useAuth";
+import PreLoader from "../../PreLoader/pre-loader";
 import ScreenHeaderCustomer from "../../ScreenHeaderCustomer/ScreenHeaderCustomer";
 import { styles } from "../../../styles/styles";
 import { editProfileStyles } from "./edit-profile.styles";
@@ -156,7 +156,7 @@ export default function EditProfile() {
                     style={({ pressed }) => [
                       editProfileStyles.option,
                       form.title === title && editProfileStyles.selectedOption,
-                      pressed && styles.pressed,
+                      pressed && !busy && styles.pressed,
                     ]}
                   >
                     <Text style={editProfileStyles.label}>{title}</Text>
@@ -380,6 +380,7 @@ export default function EditProfile() {
               }
             />
 
+            {busy && <PreLoader />}
             <Pressable
               testID="save-profile"
               accessibilityRole="button"
@@ -388,15 +389,11 @@ export default function EditProfile() {
               onPress={save}
               style={({ pressed }) => [
                 styles.button,
-                pressed && styles.pressed,
+                pressed && !busy && styles.pressed,
                 busy && styles.buttonDisabled,
               ]}
             >
-              {busy ? (
-                <ActivityIndicator accessibilityLabel="Profil wird gespeichert" />
-              ) : (
-                <Text style={styles.buttonText}>Speichern</Text>
-              )}
+              <Text style={[styles.buttonText, busy && styles.buttonTextDisabled]}>Speichern</Text>
             </Pressable>
             <Pressable
               testID="cancel-edit-profile"
@@ -406,11 +403,11 @@ export default function EditProfile() {
               style={({ pressed }) => [
                 styles.button,
                 styles.secondary,
-                pressed && styles.pressed,
+                pressed && !busy && styles.pressed,
                 busy && styles.buttonDisabled,
               ]}
             >
-              <Text style={[styles.buttonText, styles.secondaryText]}>
+              <Text style={[styles.buttonText, styles.secondaryText, busy && styles.buttonTextDisabled]}>
                 Zurück zum Profil
               </Text>
             </Pressable>

@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import {
-  ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -14,6 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Snackbar } from "react-native-paper";
 import { useAuth } from "../../../context/auth/useAuth";
 import ScreenHeaderCustomer from "../../ScreenHeaderCustomer/ScreenHeaderCustomer";
+import PreLoader from "../../PreLoader/pre-loader";
 import { styles } from "../../../styles/styles";
 import MailIcon from "../../../../assets/icons/mail-icon-input-field.svg";
 import LockIcon from "../../../../assets/icons/pwd-lock-icon-input-field.svg";
@@ -248,6 +248,7 @@ export default function ChangeEmail() {
                 </Text>
               )}
             </View>
+            {busy && <PreLoader />}
             <Pressable
               testID="save-email"
               accessibilityRole="button"
@@ -256,17 +257,13 @@ export default function ChangeEmail() {
               onPress={save}
               style={({ pressed }) => [
                 styles.button,
-                pressed && styles.pressed,
+                pressed && !busy && styles.pressed,
                 busy && styles.buttonDisabled,
               ]}
             >
-              {busy ? (
-                <ActivityIndicator accessibilityLabel="E-Mail-Adresse wird geändert" />
-              ) : (
-                <Text style={styles.buttonText}>
-                  {changed ? "Erneut abmelden" : "Ändern"}
-                </Text>
-              )}
+              <Text style={[styles.buttonText, busy && styles.buttonTextDisabled]}>
+                {changed ? "Erneut abmelden" : "Ändern"}
+              </Text>
             </Pressable>
             <Pressable
               testID="cancel-change-email"
@@ -280,7 +277,7 @@ export default function ChangeEmail() {
                 (busy || changed) && styles.buttonDisabled,
               ]}
             >
-              <Text style={[styles.buttonText, styles.secondaryText]}>
+              <Text style={[styles.buttonText, styles.secondaryText, (busy || changed) && styles.buttonTextDisabled]}>
                 Zurück zum Profil
               </Text>
             </Pressable>

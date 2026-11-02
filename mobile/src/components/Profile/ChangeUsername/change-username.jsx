@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
-import { ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Snackbar } from "react-native-paper";
 import { useAuth } from "../../../context/auth/useAuth";
+import PreLoader from "../../PreLoader/pre-loader";
 import ScreenHeaderCustomer from "../../ScreenHeaderCustomer/ScreenHeaderCustomer";
 import { styles } from "../../../styles/styles";
 import { changeUsernameStyles } from "./change-username.styles";
@@ -98,11 +99,12 @@ export default function ChangeUsername() {
               <Text style={changeUsernameStyles.hint}>Mindestens 4, maximal 10 Zeichen und keine Leerzeichen.</Text>
               {!!error && <Text accessibilityRole="alert" style={changeUsernameStyles.error}>{error}</Text>}
             </View>
-            <Pressable testID="save-username" accessibilityRole="button" accessibilityState={{ disabled: busy || !valid, busy }} disabled={busy || !valid} onPress={save} style={({ pressed }) => [styles.button, pressed && styles.pressed, (busy || !valid) && styles.buttonDisabled]}>
-              {busy ? <ActivityIndicator accessibilityLabel="Benutzername wird geändert" /> : <Text style={styles.buttonText}>Ändern</Text>}
+            {busy && <PreLoader />}
+            <Pressable testID="save-username" accessibilityRole="button" accessibilityState={{ disabled: busy || !valid, busy }} disabled={busy || !valid} onPress={save} style={({ pressed }) => [styles.button, pressed && !busy && styles.pressed, (busy || !valid) && styles.buttonDisabled]}>
+              <Text style={[styles.buttonText, busy && styles.buttonTextDisabled]}>Ändern</Text>
             </Pressable>
-            <Pressable testID="cancel-change-username" accessibilityRole="button" disabled={busy} onPress={returnToProfile} style={({ pressed }) => [styles.button, styles.secondary, pressed && styles.pressed, busy && styles.buttonDisabled]}>
-              <Text style={[styles.buttonText, styles.secondaryText]}>Zurück zum Profil</Text>
+            <Pressable testID="cancel-change-username" accessibilityRole="button" disabled={busy} onPress={returnToProfile} style={({ pressed }) => [styles.button, styles.secondary, pressed && !busy && styles.pressed, busy && styles.buttonDisabled]}>
+              <Text style={[styles.buttonText, styles.secondaryText, busy && styles.buttonTextDisabled]}>Zurück zum Profil</Text>
             </Pressable>
           </View>
         </ScrollView>

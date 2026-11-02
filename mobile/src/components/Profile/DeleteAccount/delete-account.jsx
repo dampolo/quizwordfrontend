@@ -1,5 +1,14 @@
 import { useRef, useState } from "react";
-import { Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LockIcon from "../../../../assets/icons/pwd-lock-icon-input-field.svg";
@@ -12,11 +21,13 @@ import PreLoader from "../../PreLoader/pre-loader";
 import { styles } from "../../../styles/styles";
 import { deleteAccountStyles } from "./delete-account.styles";
 
-
 function errorText(value) {
-  return Array.isArray(value) ? value.filter((item) => typeof item === "string").join("\n") : typeof value === "string" ? value : "";
+  return Array.isArray(value)
+    ? value.filter((item) => typeof item === "string").join("\n")
+    : typeof value === "string"
+      ? value
+      : "";
 }
-
 
 export default function DeleteAccount() {
   const { deleteAccount, logout, setConfirmationMessage } = useAuth();
@@ -32,19 +43,16 @@ export default function DeleteAccount() {
   const inputRef = useRef(null);
   const PasswordIcon = passwordVisible ? EyeIcon : EyeOffIcon;
 
-
   function changePassword(value) {
     setPassword(value);
     setError("");
   }
-
 
   function returnToProfile() {
     if (!busyRef.current && !deletedRef.current) {
       router.navigate("/my-quiz/profile");
     }
   }
-
 
   async function removeAccount() {
     if (busyRef.current) {
@@ -61,17 +69,26 @@ export default function DeleteAccount() {
         setDeleted(true);
         setPassword("");
         setPasswordVisible(false);
-        setConfirmationMessage(errorText(result?.detail) || "Dein Konto wurde erfolgreich gelöscht.");
+        setConfirmationMessage(
+          errorText(result?.detail) || "Dein Konto wurde erfolgreich gelöscht.",
+        );
       }
       await logout();
       showSnackbar("Dein Konto wurde erfolgreich gelöscht.", "success");
       router.replace("/quiz/(auth)/confirmation");
     } catch (failure) {
       if (deletedRef.current) {
-        showSnackbar("Dein Konto wurde gelöscht. Die Abmeldung ist fehlgeschlagen. Bitte tippe auf Erneut abmelden.", "error");
+        showSnackbar(
+          "Dein Konto wurde gelöscht. Die Abmeldung ist fehlgeschlagen. Bitte tippe auf Erneut abmelden.",
+          "error",
+        );
       } else {
         const data = failure?.response?.data ?? failure?.response ?? failure;
-        const message = errorText(data?.password) || errorText(data?.detail) || errorText(data?.non_field_errors) || "Dein Konto konnte nicht gelöscht werden. Bitte versuche es erneut.";
+        const message =
+          errorText(data?.password) ||
+          errorText(data?.detail) ||
+          errorText(data?.non_field_errors) ||
+          "Dein Konto konnte nicht gelöscht werden. Bitte versuche es erneut.";
         setError(message);
         showSnackbar(message, "error");
         inputRef.current?.focus();
@@ -81,7 +98,6 @@ export default function DeleteAccount() {
       setBusy(false);
     }
   }
-
 
   function confirmDelete() {
     if (busyRef.current) {
@@ -103,22 +119,48 @@ export default function DeleteAccount() {
       "Dein Konto und alle deine Wörter, Quizze und Kategorien werden gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
       [
         { text: "Abbrechen", style: "cancel" },
-        { text: "Endgültig löschen", style: "destructive", onPress: removeAccount },
+        {
+          text: "Endgültig löschen",
+          style: "destructive",
+          onPress: removeAccount,
+        },
       ],
       { cancelable: true },
     );
   }
 
-
   return (
-    <SafeAreaView style={deleteAccountStyles.screen} edges={["top", "left", "right", "bottom"]}>
-      <ScreenHeaderCustomer horizontalInset={0} title="Konto löschen" fallbackHref="/my-quiz/profile" />
-      <KeyboardAvoidingView style={deleteAccountStyles.flex} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-        <ScrollView style={deleteAccountStyles.flex} contentContainerStyle={deleteAccountStyles.content} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
+    <SafeAreaView
+      style={deleteAccountStyles.screen}
+      edges={["top", "left", "right", "bottom"]}
+    >
+      <ScreenHeaderCustomer
+        horizontalInset={0}
+        title="Konto löschen"
+        fallbackHref="/my-quiz/profile"
+      />
+      <KeyboardAvoidingView
+        style={deleteAccountStyles.flex}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView
+          style={deleteAccountStyles.flex}
+          contentContainerStyle={deleteAccountStyles.content}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
+        >
           <View style={deleteAccountStyles.card}>
-            <Text accessibilityRole="header" style={deleteAccountStyles.title}>Lösche dein Konto</Text>
-            <Text style={deleteAccountStyles.body}>Wenn du dein Konto löschst, werden alle deine Wörter, Quizze und Kategorien entfernt. Diese Aktion kann nicht rückgängig gemacht werden.</Text>
-            <Text style={deleteAccountStyles.body}>Um dein Konto zu löschen, gib bitte dein aktuelles Passwort ein.</Text>
+            <Text accessibilityRole="header" style={deleteAccountStyles.title}>
+              Lösche dein Konto
+            </Text>
+            <Text style={deleteAccountStyles.body}>
+              Wenn du dein Konto löschst, werden alle deine Wörter, Quizze und
+              Kategorien entfernt. Diese Aktion kann nicht rückgängig gemacht
+              werden.
+            </Text>
+            <Text style={deleteAccountStyles.body}>
+              Um dein Konto zu löschen, gib bitte dein aktuelles Passwort ein.
+            </Text>
             <View style={deleteAccountStyles.field}>
               <Text style={deleteAccountStyles.label}>Aktuelles Passwort</Text>
               <View style={deleteAccountStyles.inputContainer}>
@@ -137,23 +179,85 @@ export default function DeleteAccount() {
                   autoCorrect={false}
                   returnKeyType="done"
                   onSubmitEditing={confirmDelete}
-                  style={[deleteAccountStyles.input, focused && styles.inputFieldFocus, !!error && deleteAccountStyles.invalidInput]}
+                  style={[
+                    deleteAccountStyles.input,
+                    focused && styles.inputFieldFocus,
+                    !!error && deleteAccountStyles.invalidInput,
+                  ]}
                 />
-                <View pointerEvents="none" accessible={false} style={deleteAccountStyles.inputIcon}>
+                <View
+                  pointerEvents="none"
+                  accessible={false}
+                  style={deleteAccountStyles.inputIcon}
+                >
                   <LockIcon width={24} height={24} />
                 </View>
-                <Pressable testID="delete-account-toggle-password" accessibilityRole="button" accessibilityLabel={passwordVisible ? "Passwort verbergen" : "Passwort anzeigen"} disabled={busy || deleted} onPress={() => setPasswordVisible((previous) => !previous)} style={({ pressed }) => [deleteAccountStyles.toggle, pressed && styles.pressed]}>
+                <Pressable
+                  testID="delete-account-toggle-password"
+                  accessibilityRole="button"
+                  accessibilityLabel={
+                    passwordVisible ? "Passwort verbergen" : "Passwort anzeigen"
+                  }
+                  disabled={busy || deleted}
+                  onPress={() => setPasswordVisible((previous) => !previous)}
+                  style={({ pressed }) => [
+                    deleteAccountStyles.toggle,
+                    pressed && styles.pressed,
+                  ]}
+                >
                   <PasswordIcon width={24} height={24} />
                 </Pressable>
               </View>
-              {!!error && <Text accessibilityRole="alert" style={deleteAccountStyles.error}>{error}</Text>}
+              {!!error && (
+                <Text
+                  accessibilityRole="alert"
+                  style={deleteAccountStyles.error}
+                >
+                  {error}
+                </Text>
+              )}
             </View>
             {busy && <PreLoader />}
-            <Pressable testID="delete-account-submit" accessibilityRole="button" accessibilityState={{ disabled: busy, busy }} disabled={busy} onPress={confirmDelete} style={({ pressed }) => [styles.button, deleteAccountStyles.deleteButton, pressed && !busy && styles.pressed, busy && styles.buttonDisabled]}>
-              <Text style={[styles.buttonText, busy && styles.buttonTextDisabled]}>{deleted ? "Erneut abmelden" : "Konto endgültig löschen"}</Text>
+            <Pressable
+              testID="delete-account-submit"
+              accessibilityRole="button"
+              accessibilityState={{ disabled: busy, busy }}
+              disabled={busy}
+              onPress={confirmDelete}
+              style={({ pressed }) => [
+                styles.button,
+                deleteAccountStyles.deleteButton,
+                pressed && !busy && styles.pressed,
+                busy && styles.buttonDisabled,
+              ]}
+            >
+              <Text
+                style={[styles.buttonText, busy && styles.buttonTextDisabled]}
+              >
+                {deleted ? "Erneut abmelden" : "Konto endgültig löschen"}
+              </Text>
             </Pressable>
-            <Pressable testID="cancel-delete-account" accessibilityRole="button" disabled={busy || deleted} onPress={returnToProfile} style={({ pressed }) => [styles.button, styles.secondary, pressed && !busy && styles.pressed, (busy || deleted) && styles.buttonDisabled]}>
-              <Text style={[styles.buttonText, styles.secondaryText, (busy || deleted) && styles.buttonTextDisabled]}>Abbrechen</Text>
+            <Pressable
+              testID="cancel-delete-account"
+              accessibilityRole="button"
+              disabled={busy || deleted}
+              onPress={returnToProfile}
+              style={({ pressed }) => [
+                styles.button,
+                styles.secondary,
+                pressed && !busy && styles.pressed,
+                (busy || deleted) && styles.buttonDisabled,
+              ]}
+            >
+              <Text
+                style={[
+                  styles.buttonText,
+                  styles.secondaryText,
+                  (busy || deleted) && styles.buttonTextDisabled,
+                ]}
+              >
+                Abbrechen
+              </Text>
             </Pressable>
           </View>
         </ScrollView>

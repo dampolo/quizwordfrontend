@@ -14,7 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../../context/auth/useAuth";
 import PreLoader from "../../../components/PreLoader/pre-loader";
-import ScreenHeader from "../../../components/ScreenHeader/screen-header";
+import ScreenHeaderAuth from "../../../components/ScreenHeaderAuth/ScreenHeaderAuth";
 import { auth, authCompact, authCompactWidth } from "../../../styles/auth";
 import { resets } from "../../../styles/resets";
 import { styles } from "../../../styles/styles";
@@ -293,7 +293,7 @@ export default function CreateAccount() {
 
   return (
     <SafeAreaView style={resets.screen} edges={["bottom"]}>
-      <ScreenHeader title="" fallbackHref="/quiz/(auth)/login-quiz" />
+      <ScreenHeaderAuth title="" fallbackHref="/quiz/(auth)/login-quiz" />
       <KeyboardAvoidingView style={resets.screen} behavior={keyboardBehavior}>
         <ScrollView
           contentContainerStyle={mainAuthStyle}

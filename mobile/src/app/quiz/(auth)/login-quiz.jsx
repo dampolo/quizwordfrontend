@@ -20,7 +20,7 @@ import MailIcon from "../../../../assets/icons/mail-icon-input-field.svg";
 import LockIcon from "../../../../assets/icons/pwd-lock-icon-input-field.svg";
 import EyeIcon from "../../../../assets/icons/eye.svg";
 import EyeOffIcon from "../../../../assets/icons/eye-off.svg";
-import ScreenHeader from "../../../components/ScreenHeader/screen-header";
+import ScreenHeaderAuth from "../../../components/ScreenHeaderAuth/ScreenHeaderAuth";
 
 
 export default function LoginQuiz() {
@@ -152,7 +152,7 @@ export default function LoginQuiz() {
 
   return (
     <SafeAreaView style={resets.screen} edges={["bottom"]}>
-      <ScreenHeader title="" />
+      <ScreenHeaderAuth title="" />
       <KeyboardAvoidingView
         style={resets.screen}
         behavior={keyboardBehavior}

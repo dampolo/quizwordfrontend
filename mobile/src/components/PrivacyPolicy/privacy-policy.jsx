@@ -1,14 +1,14 @@
 import { Link } from 'expo-router';
 import { ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import ScreenHeader from '../ScreenHeader/screen-header';
+import ScreenHeaderAuth from '../ScreenHeaderAuth/ScreenHeaderAuth';
 import { privacyPolicy } from './privacy-policy.styles';
 
 
 export default function PrivacyPolicy() {
   return (
     <SafeAreaView style={privacyPolicy.screen} edges={['right', 'bottom', 'left']}>
-      <ScreenHeader title="Datenschutzerklärung" />
+      <ScreenHeaderAuth title="Datenschutzerklärung" />
       <ScrollView contentContainerStyle={privacyPolicy.content}>
         <Text accessibilityRole="header" style={privacyPolicy.heading}>1. Datenschutz auf einen Blick</Text>
         <Text accessibilityRole="header" style={privacyPolicy.subheading}>Allgemeine Hinweise</Text>

@@ -6,13 +6,16 @@ import { colors } from '../../styles/basic';
 import Logo from '../Logo/logo';
 
 
-export default function ScreenHeader({ title, fallbackHref = '/website', titleStyle }) {
+export default function ScreenHeaderAuth({ title, fallbackHref = '/website', titleStyle }) {
   const { t } = useTranslation();
 
 
   function goBack() {
-    if (router.canGoBack()) router.back();
-    else router.replace(fallbackHref);
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace(fallbackHref);
+    }
   }
 
 

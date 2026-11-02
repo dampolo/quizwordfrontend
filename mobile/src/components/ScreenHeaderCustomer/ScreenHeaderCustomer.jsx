@@ -1,7 +1,9 @@
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import ArrowLeft from "../../../assets/icons/arrow-left.svg";
+import ProfileIcon from "../../../assets/icons/profile.svg";
+import { useAuth } from "../../context/auth/useAuth";
 import { colors } from "../../styles/basic";
 import Logo from "../Logo/logo";
 
@@ -11,13 +13,18 @@ export default function ScreenHeaderCustomer({
   fallbackHref = "/my-quiz",
   titleStyle,
   style,
+  onProfilePress,
 }) {
   const { t } = useTranslation();
+  const { profile } = useAuth();
 
 
   function goBack() {
-    if (router.canGoBack()) router.back();
-    else router.replace(fallbackHref);
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace(fallbackHref);
+    }
   }
 
 
@@ -40,17 +47,27 @@ export default function ScreenHeaderCustomer({
         {title}
       </Text>
       <Pressable
-        accessibilityRole="link"
-        accessibilityLabel={t("MOBILE.HOME_LABEL")}
+        accessibilityRole="button"
+        accessibilityLabel={t("MOBILE.PROFILE_LABEL", { defaultValue: "Profil" })}
+        disabled={!onProfilePress}
         hitSlop={6}
-        onPress={() => router.navigate("/website")}
+        onPress={onProfilePress}
         style={({ hovered, pressed }) => [
           headerStyles.action,
           { opacity: hovered || pressed ? 0.6 : 1 },
         ]}
       >
-        <Logo size={40} />
+        {profile?.image ? (
+          <Image
+            source={{ uri: profile.image }}
+            style={headerStyles.avatar}
+            resizeMode="cover"
+          />
+        ) : (
+          <ProfileIcon width={40} height={40} />
+        )}
       </Pressable>
+
     </View>
   );
 }
@@ -69,6 +86,11 @@ const headerStyles = StyleSheet.create({
     minHeight: 48,
     alignItems: "center",
     justifyContent: "center",
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
   },
   title: {
     flex: 1,

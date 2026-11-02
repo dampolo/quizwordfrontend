@@ -1,7 +1,7 @@
 import { Link } from "expo-router";
 import { Pressable, ScrollView, Text, View, useWindowDimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ScreenHeader from "../../../components/ScreenHeader/screen-header";
+import ScreenHeaderAuth from "../../../components/ScreenHeaderAuth/ScreenHeaderAuth";
 import { useAuth } from "../../../context/auth/useAuth";
 import { auth, authCompact, authCompactWidth } from "../../../styles/auth";
 import { resets } from "../../../styles/resets";
@@ -25,7 +25,7 @@ export default function Confirmation() {
 
   return (
     <SafeAreaView style={resets.screen} edges={["bottom"]}>
-      <ScreenHeader title="" fallbackHref="/quiz/(auth)/login-quiz" />
+      <ScreenHeaderAuth title="" fallbackHref="/quiz/(auth)/login-quiz" />
       <ScrollView contentContainerStyle={mainAuthStyle}>
         <View style={contentStyle}>
           <View style={auth.formTitle}>

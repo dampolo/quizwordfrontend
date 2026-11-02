@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Pressable, Text, View } from "react-native";
 import PublicLayout from "../../layouts/PublicLayout";
 import { styles } from "../../styles/styles";
-import ScreenHeader from "../ScreenHeader/screen-header";
+import ScreenHeaderAuth from "../ScreenHeaderAuth/ScreenHeaderAuth";
 
 
 export default function HelpDesk() {
@@ -11,7 +11,7 @@ export default function HelpDesk() {
   const [open, setOpen] = useState();
   return (
     <>
-      <ScreenHeader title="Help Desk" />
+      <ScreenHeaderAuth title="Help Desk" />
       <PublicLayout showHeader={false}>
         <View style={[styles.container, styles.section]}>
           <Text accessibilityRole="header" style={styles.heading}>

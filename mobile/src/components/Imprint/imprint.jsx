@@ -1,14 +1,14 @@
 import { Link } from 'expo-router';
 import { ScrollView, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import ScreenHeader from '../ScreenHeader/screen-header';
+import ScreenHeaderAuth from '../ScreenHeaderAuth/ScreenHeaderAuth';
 import { imprint } from './imprint.styles';
 
 
 export default function Imprint() {
   return (
     <SafeAreaView style={imprint.screen} edges={['right', 'bottom', 'left']}>
-      <ScreenHeader title="Impressum" />
+      <ScreenHeaderAuth title="Impressum" />
       <ScrollView contentContainerStyle={imprint.content}>
         <Text accessibilityRole="header" style={imprint.heading}>Angaben gemäß § 5 DDG</Text>
 

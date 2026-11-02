@@ -1,11 +1,10 @@
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import ArrowLeft from "../../../assets/icons/arrow-left.svg";
 import ProfileIcon from "../../../assets/icons/profile.svg";
 import { useAuth } from "../../context/auth/useAuth";
 import { colors } from "../../styles/basic";
-import Logo from "../Logo/logo";
 
 
 export default function ScreenHeaderCustomer({
@@ -17,6 +16,7 @@ export default function ScreenHeaderCustomer({
 }) {
   const { t } = useTranslation();
   const { profile } = useAuth();
+  const navigation = useNavigation("/my-quiz");
 
 
   function goBack() {
@@ -49,9 +49,8 @@ export default function ScreenHeaderCustomer({
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={t("MOBILE.PROFILE_LABEL", { defaultValue: "Profil" })}
-        disabled={!onProfilePress}
         hitSlop={6}
-        onPress={onProfilePress}
+        onPress={onProfilePress ?? (() => navigation.openDrawer())}
         style={({ hovered, pressed }) => [
           headerStyles.action,
           { opacity: hovered || pressed ? 0.6 : 1 },

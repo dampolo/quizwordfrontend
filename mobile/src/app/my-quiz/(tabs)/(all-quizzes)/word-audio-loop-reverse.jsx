@@ -1,4 +1,4 @@
-import WordAudioLoop from "../../../components/WordAudioLoop/word-audio-loop";
+import WordAudioLoop from "../../../../components/WordAudioLoop/word-audio-loop";
 
 
 export default function WordAudioLoopReverse() {

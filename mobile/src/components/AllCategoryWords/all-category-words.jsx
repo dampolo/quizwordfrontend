@@ -127,7 +127,7 @@ export default function AllCategoryWords() {
     function openWord() {
       if (!target) return;
       router.push({
-        pathname: "/my-quiz/(all-words)/show-word",
+        pathname: "/my-quiz/(tabs)/(all-words)/show-word",
         params: { id: String(item.id), language: String(target.language) },
       });
     }
@@ -137,7 +137,7 @@ export default function AllCategoryWords() {
       event.stopPropagation();
       if (!target) return;
       router.push({
-        pathname: "/my-quiz/(all-words)/edit-word",
+        pathname: "/my-quiz/(tabs)/(all-words)/edit-word",
         params: { id: String(item.id), language: String(target.language), targetWord: String(target.id) },
       });
     }

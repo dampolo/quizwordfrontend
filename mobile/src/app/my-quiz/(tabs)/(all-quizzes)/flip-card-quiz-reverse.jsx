@@ -1,4 +1,4 @@
-import FlipCardQuiz from "../../../components/FlipCardQuiz/flip-card-quiz";
+import FlipCardQuiz from "../../../../components/FlipCardQuiz/flip-card-quiz";
 
 
 export default function FlipCardQuizReverse() {

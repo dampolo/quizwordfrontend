@@ -230,7 +230,7 @@ export default function WordAudioLoop({ reverse = false }) {
       router.back();
       return;
     }
-    router.dismissTo({ pathname: "/my-quiz/(all-quizzes)/all-quizzes", params: { language: language || "" } });
+    router.dismissTo({ pathname: "/my-quiz/(tabs)/(all-quizzes)/all-quizzes", params: { language: language || "" } });
   }
 
 

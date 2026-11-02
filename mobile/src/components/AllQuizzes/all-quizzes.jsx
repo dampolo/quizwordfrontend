@@ -47,7 +47,7 @@ function QuizCard({ item, onEdit }) {
 
   function openLearnQuiz() {
     router.push({
-      pathname: "/my-quiz/(all-quizzes)/learn-quiz",
+      pathname: "/my-quiz/(tabs)/(all-quizzes)/learn-quiz",
       params: {
         id: String(item.quiz_id),
         language:
@@ -59,7 +59,7 @@ function QuizCard({ item, onEdit }) {
 
   function openPlayTestQuiz() {
     router.push({
-      pathname: "/my-quiz/(all-quizzes)/play-test-quiz",
+      pathname: "/my-quiz/(tabs)/(all-quizzes)/play-test-quiz",
       params: {
         id: String(item.quiz_id),
         language:
@@ -71,7 +71,7 @@ function QuizCard({ item, onEdit }) {
 
   function openHearQuiz() {
     router.push({
-      pathname: "/my-quiz/(all-quizzes)/hear-quiz",
+      pathname: "/my-quiz/(tabs)/(all-quizzes)/hear-quiz",
       params: {
         id: String(item.quiz_id),
         language:
@@ -83,7 +83,7 @@ function QuizCard({ item, onEdit }) {
 
   function openFlipCardQuiz() {
     router.push({
-      pathname: "/my-quiz/(all-quizzes)/flip-card-quiz",
+      pathname: "/my-quiz/(tabs)/(all-quizzes)/flip-card-quiz",
       params: {
         id: String(item.quiz_id),
         language:
@@ -95,7 +95,7 @@ function QuizCard({ item, onEdit }) {
 
   function openReverseFlipCardQuiz() {
     router.push({
-      pathname: "/my-quiz/(all-quizzes)/flip-card-quiz-reverse",
+      pathname: "/my-quiz/(tabs)/(all-quizzes)/flip-card-quiz-reverse",
       params: {
         id: String(item.quiz_id),
         language:
@@ -107,7 +107,7 @@ function QuizCard({ item, onEdit }) {
 
   function openWordAudioLoop() {
     router.push({
-      pathname: "/my-quiz/(all-quizzes)/word-audio-loop",
+      pathname: "/my-quiz/(tabs)/(all-quizzes)/word-audio-loop",
       params: {
         id: String(item.quiz_id),
         language:
@@ -119,7 +119,7 @@ function QuizCard({ item, onEdit }) {
 
   function openReverseWordAudioLoop() {
     router.push({
-      pathname: "/my-quiz/(all-quizzes)/word-audio-loop-reverse",
+      pathname: "/my-quiz/(tabs)/(all-quizzes)/word-audio-loop-reverse",
       params: {
         id: String(item.quiz_id),
         language:
@@ -132,7 +132,7 @@ function QuizCard({ item, onEdit }) {
   
   function openAllQuizWords() {
     router.push({
-      pathname: "/my-quiz/(all-quizzes)/all-quiz-words",
+      pathname: "/my-quiz/(tabs)/(all-quizzes)/all-quiz-words",
       params: {
         id: String(item.quiz_id),
         language:

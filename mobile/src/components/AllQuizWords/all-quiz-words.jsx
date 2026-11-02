@@ -139,7 +139,7 @@ export default function AllQuizWords() {
       await deleteQuiz(id);
       setDeleteVisible(false);
       router.replace({
-        pathname: "/my-quiz/(all-quizzes)/all-quizzes",
+        pathname: "/my-quiz/(tabs)/(all-quizzes)/all-quizzes",
         params: { language: quiz?.target_language ?? language ?? "" },
       });
     } catch {
@@ -254,7 +254,7 @@ export default function AllQuizWords() {
         return;
       }
       router.push({
-        pathname: "/my-quiz/(all-words)/edit-word",
+        pathname: "/my-quiz/(tabs)/(all-words)/edit-word",
         params: {
           id: String(concept.id),
           targetWord: String(target.id),
@@ -307,7 +307,7 @@ export default function AllQuizWords() {
           style={allQuizWordsStyles.screenHeader}
           title={quiz?.quiz_name ? `Quiz: ${quiz.quiz_name}` : "Quizwörter"}
           fallbackHref={{
-            pathname: "/my-quiz/(all-quizzes)/all-quizzes",
+            pathname: "/my-quiz/(tabs)/(all-quizzes)/all-quizzes",
             params: { language: quiz?.target_language ?? language ?? "" },
           }}
         />
@@ -319,7 +319,7 @@ export default function AllQuizWords() {
                 accessibilityRole="button"
                 accessibilityLabel="Lernen"
                 onPress={() => router.push({
-                    pathname: "/my-quiz/(all-quizzes)/learn-quiz",
+                    pathname: "/my-quiz/(tabs)/(all-quizzes)/learn-quiz",
                     params: {
                       id: String(id),
                       language: String(quiz.target_language ?? language ?? ""),
@@ -341,7 +341,7 @@ export default function AllQuizWords() {
                 accessibilityRole="button"
                 accessibilityLabel="Test schreiben"
                 onPress={() => router.push({
-                    pathname: "/my-quiz/(all-quizzes)/play-test-quiz",
+                    pathname: "/my-quiz/(tabs)/(all-quizzes)/play-test-quiz",
                     params: {
                       id: String(id),
                       language: String(quiz.target_language ?? language ?? ""),
@@ -378,7 +378,7 @@ export default function AllQuizWords() {
                 accessibilityRole="button"
                 accessibilityLabel="Karteikarten"
                 onPress={() => router.push({
-                    pathname: "/my-quiz/(all-quizzes)/flip-card-quiz",
+                    pathname: "/my-quiz/(tabs)/(all-quizzes)/flip-card-quiz",
                     params: {
                       id: String(id),
                       language: String(quiz.target_language ?? language ?? ""),
@@ -403,7 +403,7 @@ export default function AllQuizWords() {
                 accessibilityRole="button"
                 accessibilityLabel="Lernen und hören"
                 onPress={() => router.push({
-                    pathname: "/my-quiz/(all-quizzes)/word-audio-loop",
+                    pathname: "/my-quiz/(tabs)/(all-quizzes)/word-audio-loop",
                     params: {
                       id: String(id),
                       language: String(quiz.target_language ?? language ?? ""),
@@ -425,7 +425,7 @@ export default function AllQuizWords() {
                 accessibilityRole="button"
                 accessibilityLabel="Hören"
                 onPress={() => router.push({
-                    pathname: "/my-quiz/(all-quizzes)/hear-quiz",
+                    pathname: "/my-quiz/(tabs)/(all-quizzes)/hear-quiz",
                     params: {
                       id: String(id),
                       language: String(quiz.target_language ?? language ?? ""),
@@ -447,7 +447,7 @@ export default function AllQuizWords() {
                 accessibilityRole="button"
                 accessibilityLabel="Karteikarten rückwärts"
                 onPress={() => router.push({
-                    pathname: "/my-quiz/(all-quizzes)/flip-card-quiz-reverse",
+                    pathname: "/my-quiz/(tabs)/(all-quizzes)/flip-card-quiz-reverse",
                     params: {
                       id: String(id),
                       language: String(quiz.target_language ?? language ?? ""),
@@ -469,7 +469,7 @@ export default function AllQuizWords() {
                 accessibilityRole="button"
                 accessibilityLabel="Lernen und hören rückwärts"
                 onPress={() => router.push({
-                    pathname: "/my-quiz/(all-quizzes)/word-audio-loop-reverse",
+                    pathname: "/my-quiz/(tabs)/(all-quizzes)/word-audio-loop-reverse",
                     params: {
                       id: String(id),
                       language: String(quiz.target_language ?? language ?? ""),

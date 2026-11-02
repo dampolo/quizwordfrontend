@@ -19,7 +19,7 @@ function buttonStyle({ pressed }) {
 
 
 function addCategory() {
-  router.push("/my-quiz/(all-categories)/add-new-category");
+  router.push("/my-quiz/(tabs)/(all-categories)/add-new-category");
 }
 
 
@@ -104,7 +104,7 @@ export default function AllCategories() {
   function renderCategory({ item }) {
     function openWords() {
       router.push({
-        pathname: "/my-quiz/(all-categories)/all-category-words",
+        pathname: "/my-quiz/(tabs)/(all-categories)/all-category-words",
         params: {
           id: String(item.category_id),
           language: String(item.language_id),
@@ -115,7 +115,7 @@ export default function AllCategories() {
 
     function editCategory() {
       router.push({
-        pathname: "/my-quiz/(all-categories)/edit-category",
+        pathname: "/my-quiz/(tabs)/(all-categories)/edit-category",
         params: {
           id: String(item.category_id),
           language: activeLanguage || "",

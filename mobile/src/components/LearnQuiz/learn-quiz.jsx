@@ -94,7 +94,7 @@ export default function LearnQuiz() {
       return;
     }
     router.dismissTo({
-      pathname: "/my-quiz/(all-quizzes)/all-quizzes",
+      pathname: "/my-quiz/(tabs)/(all-quizzes)/all-quizzes",
       params: { language: language || "" },
     });
   }

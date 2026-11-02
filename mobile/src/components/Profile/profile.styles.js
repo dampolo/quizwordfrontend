@@ -31,6 +31,7 @@ export const profileStyles = StyleSheet.create({
     gap: 16,
   },
   avatar: { alignSelf: "center", borderRadius: 50, overflow: "hidden" },
+  avatarImage: { width: 100, height: 100, borderRadius: 50 },
   row: { gap: 6 },
   label: { color: colors.qwBodyTextColor, fontSize: 14, lineHeight: 21 },
   value: {

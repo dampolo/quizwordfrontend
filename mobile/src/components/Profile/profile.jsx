@@ -1,31 +1,16 @@
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import useVocabulary from "@quizword/shared/vocabulary/useVocabulary";
+import { useAuth } from "../../context/auth/useAuth";
 import ProfileIcon from "../../../assets/icons/profile.svg";
 import ScreenHeaderCustomer from "../ScreenHeaderCustomer/ScreenHeaderCustomer";
 import { profileStyles } from "./profile.styles";
-
-const personalDetails = [
-  ["Kundennummer", "QW-100024"],
-  ["Anrede", "Herr"],
-  ["Vorname", "Max"],
-  ["Nachname", "Mustermann"],
-  ["Telefon", "+49 151 12345678"],
-  ["Straße", "Musterstraße"],
-  ["Hausnummer", "12"],
-  ["Stadt", "Berlin"],
-  ["Postleitzahl", "10115"],
-  ["Abonnement", "Ja"],
-  ["Beschreibung", "Ich lerne gerne neue Sprachen mit Quizword."],
-  ["Aktiv", "Ja"],
-  ["Erstellt am", "01.10.2026"],
-];
-
 
 function InfoRow({ label, value }) {
   return (
     <View style={profileStyles.row}>
       <Text style={profileStyles.label}>{label}</Text>
-      <Text selectable style={profileStyles.value}>{value}</Text>
+      <Text selectable style={profileStyles.value}>{typeof value === "boolean" ? (value ? "Ja" : "Nein") : String(value ?? "").trim() || "–"}</Text>
     </View>
   );
 }
@@ -61,32 +46,51 @@ function ProfileSection({ title, children, editable = true }) {
 
 
 export default function Profile() {
+  const { profile, user } = useAuth();
+  const { userLanguages, nativeLanguage } = useVocabulary();
+
   return (
     <SafeAreaView style={profileStyles.screen} edges={["top", "left", "right", "bottom"]}>
       <ScreenHeaderCustomer title="Profil" />
       <ScrollView contentContainerStyle={profileStyles.content}>
         <Text style={profileStyles.previewNotice}>
-          Beispielprofil mit festen Daten. Bearbeiten und Löschen sind in dieser Vorschau deaktiviert.
+          Bearbeiten und Löschen sind derzeit deaktiviert.
         </Text>
 
-        <ProfileSection title="Foto" >
+        {!profile && <Text style={profileStyles.body}>Keine Profildaten verfügbar.</Text>}
+
+        <ProfileSection title="Foto">
           <View style={profileStyles.avatar}>
-            <ProfileIcon width={100} height={100} accessibilityLabel="Beispiel-Profilbild" />
+            {profile?.image ? (
+              <Image source={{ uri: profile.image }} style={profileStyles.avatarImage} accessibilityLabel="Profilbild" />
+            ) : (
+              <ProfileIcon width={100} height={100} accessibilityLabel="Profilbild" />
+            )}
           </View>
         </ProfileSection>
 
         <ProfileSection title="Deine Daten">
-          {personalDetails.map(([label, value]) => (
-            <InfoRow key={label} label={label} value={value} />
-          ))}
+          <InfoRow label="Kundennummer" value={profile?.customer_number} />
+          <InfoRow label="Anrede" value={profile?.title} />
+          <InfoRow label="Vorname" value={profile?.first_name} />
+          <InfoRow label="Nachname" value={profile?.last_name} />
+          <InfoRow label="Telefon" value={profile?.phone} />
+          <InfoRow label="Straße" value={profile?.street} />
+          <InfoRow label="Hausnummer" value={profile?.street_number} />
+          <InfoRow label="Stadt" value={profile?.city} />
+          <InfoRow label="Postleitzahl" value={profile?.postcode} />
+          <InfoRow label="Abonnement" value={profile?.has_subscription} />
+          <InfoRow label="Beschreibung" value={profile?.description} />
+          <InfoRow label="Aktiv" value={profile?.is_active} />
+          <InfoRow label="Erstellt am" value={profile?.created_at ? new Date(profile.created_at).toLocaleDateString() : null} />
         </ProfileSection>
 
         <ProfileSection title="Benutzername ändern">
-          <InfoRow label="Benutzername" value="max.mustermann" />
+          <InfoRow label="Benutzername" value={profile?.username} />
         </ProfileSection>
 
         <ProfileSection title="E-Mail-Adresse ändern">
-          <InfoRow label="E-Mail" value="max@example.com" />
+          <InfoRow label="E-Mail" value={profile?.email} />
         </ProfileSection>
 
         <ProfileSection title="Passwort ändern">
@@ -94,15 +98,18 @@ export default function Profile() {
         </ProfileSection>
 
         <ProfileSection title="Deine Sprachen">
-          <InfoRow label="Deine Muttersprache" value="Deutsch" />
-          <InfoRow label="Deine Lernsprachen" value={"Englisch\nSpanisch"} />
+          <InfoRow label="Deine Muttersprache" value={nativeLanguage?.language_name} />
+          <InfoRow label="Deine Lernsprachen" value={userLanguages?.map((language) => language.language_name).join("\n")} />
         </ProfileSection>
 
+        {user?.auth_provider === "email" && (
         <ProfileSection title="Anmeldung" editable={false}>
           <Text style={profileStyles.body}>
-            Du bist mit deiner E-Mail-Adresse max@example.com angemeldet.
+            Du bist mit deiner E-Mail-Adresse {profile?.email || "–"} angemeldet.
           </Text>
         </ProfileSection>
+
+        )}
 
         <ProfileSection title="Lösche dein Konto" editable={false}>
           <Text style={profileStyles.body}>

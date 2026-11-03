@@ -1,4 +1,4 @@
-import { confirmContactRedirect } from "../../services/contact";
+import { confirmContactRedirect } from "../../components/Contact/contact";
 import { Link } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Pressable, Text, useWindowDimensions, View } from 'react-native';
@@ -57,5 +57,6 @@ export default function Header() {
     </View>
   );
 }
+
 
 

@@ -1,7 +1,20 @@
-import { Text } from "react-native";
-import { confirmContactRedirect } from "../../services/contact";
+import { Alert } from "react-native";
+import { openURL } from "expo-linking";
 
 
-export default function Contact() {
-  return <Text accessibilityRole="link" onPress={confirmContactRedirect}>Kontakt</Text>;
+export function confirmContactRedirect() {
+  Alert.alert(
+    "Kontakt",
+    "Du wirst zur Webseite von Quiz Word weitergeleitet.",
+    [
+      { text: "Abbrechen", style: "cancel" },
+      {
+        text: "Bestätigen",
+        onPress: () => openURL("https://quiz-word.com/contact").catch(() => {
+          Alert.alert("Kontaktseite konnte nicht geöffnet werden", "Bitte versuche es erneut.");
+        }),
+      },
+    ],
+  );
 }
+

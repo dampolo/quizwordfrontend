@@ -1,4 +1,4 @@
-import { confirmContactRedirect } from "../../services/contact";
+import { confirmContactRedirect } from "../../components/Contact/contact";
 import { Link } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
@@ -59,5 +59,6 @@ export default function Footer() {
     </View>
   );
 }
+
 
 

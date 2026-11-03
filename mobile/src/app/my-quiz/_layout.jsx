@@ -2,7 +2,7 @@ import { QuizProvider } from "@quizword/shared/quiz/provider";
 import { VocabularyProvider } from "@quizword/shared/vocabulary/provider";
 import { TranslationProvider } from "@quizword/shared/translation/provider";
 import { router } from "expo-router";
-import { confirmContactRedirect } from "../../services/contact";
+import { confirmContactRedirect } from "../../components/Contact/contact";
 import {
   Drawer,
   DrawerContentScrollView,
@@ -132,5 +132,6 @@ export default function MyQuizLayout() {
     </VocabularyProvider>
   );
 }
+
 
 

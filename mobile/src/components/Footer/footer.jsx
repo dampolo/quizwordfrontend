@@ -1,3 +1,4 @@
+import { confirmContactRedirect } from "../../services/contact";
 import { Link } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
@@ -41,7 +42,7 @@ export default function Footer() {
           <Link href="/imprint" style={footer.link}>{t('FOOTER.IMPRINT')}</Link>
           <Link href="/privacy-policy" style={footer.link}>{t('FOOTER.PRIVACY_POLICY')}</Link>
           <Link href="/help-desk" style={footer.link}>{t('FOOTER.FAQ')}</Link>
-          <Link href="/contact" style={footer.link}>{t('FOOTER.CONTACT')}</Link>
+          <Text accessibilityRole="link" onPress={confirmContactRedirect} style={footer.link}>{t('FOOTER.CONTACT')}</Text>
         </View>
         <View style={footer.socials}>
           <Pressable accessibilityRole="button" accessibilityLabel={t('MOBILE.SHARE')} onPress={handleShare} style={footer.social}>
@@ -58,3 +59,5 @@ export default function Footer() {
     </View>
   );
 }
+
+

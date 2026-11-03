@@ -1,3 +1,4 @@
+import { confirmContactRedirect } from "../../services/contact";
 import { Link } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Pressable, Text, useWindowDimensions, View } from 'react-native';
@@ -28,7 +29,7 @@ export default function Header() {
           <Link href="/website" style={header.link}>{t('MOBILE.HOME')}</Link>
           <Link href="/price" style={header.link}>{t('HEADER.PRICE')}</Link>
           <Link href="/help-desk" style={header.link}>{t('FOOTER.FAQ')}</Link>
-          <Link href="/contact" style={header.link}>{t('FOOTER.CONTACT')}</Link>
+          <Text accessibilityRole="link" onPress={confirmContactRedirect} style={header.link}>{t('FOOTER.CONTACT')}</Text>
         </View>}
         {!compact && <View style={header.actions}>
           <View style={header.languages} accessibilityLabel={t('MOBILE.LANGUAGE')}>
@@ -56,3 +57,5 @@ export default function Header() {
     </View>
   );
 }
+
+

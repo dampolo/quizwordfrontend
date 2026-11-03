@@ -1,6 +1,6 @@
 import useQuiz from "../../../../context/quiz/useQuiz";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import styles from "./all-quiz-words.module.scss";
 import useDialog from "../../../../context/dialog/useDialog";
@@ -19,6 +19,7 @@ function AllQuizWords() {
   const { openDialog } = useDialog();
   const { id } = useParams();
   const navigate = useNavigate();
+  const previewQuizRef = useRef(null);
   const [attempts, setAttempts] = useState([]);
   const [quiz, setQuiz] = useState(null);
   const [details, setDetails] = useState([]);
@@ -97,28 +98,93 @@ function AllQuizWords() {
           </p>
         </div>
 
-        <div className={styles["action-button"]}>
-          <Link
-            className={`main-quiz-button ${styles["all-quiz-add-btn"]}`}
-            to={`/my-quiz/${id}/learn-quiz?language=${quiz?.target_language}`}
-          >
-            Learn
-          </Link>
-
-          <Link
-            className={`main-quiz-button ${styles["all-quiz-add-btn"]}`}
-            to={`/my-quiz/${id}/play-quiz?language=${quiz?.target_language}`}
-          >
-            Spiel
-          </Link>
-          <Link
-            className={`main-quiz-button ${styles["all-quiz-add-btn"]}`}
-            to={`/my-quiz/${id}/flip-card-quiz?language=${quiz?.target_language}`}
-          >
-            Karteikarten
-          </Link>
+        <div className={styles["quiz-actions"]}>
+          <div className={styles["action-button"]}>
+            <Link
+              className={styles["quiz-action"]}
+              to={`/my-quiz/${id}/learn-quiz?language=${quiz?.target_language}`}
+            >
+              <img src="/assets/learn-quiz.svg" alt="" width={40} height={40} />
+              <span>Lernen</span>
+            </Link>
+            <Link
+              className={styles["quiz-action"]}
+              to={`/my-quiz/${id}/play-quiz?language=${quiz?.target_language}`}
+            >
+              <img src="/assets/write.svg" alt="" width={40} height={40} />
+              <span>Test schreiben</span>
+            </Link>
+            <button
+              className={styles["quiz-action"]}
+              type="button"
+                onClick={() => previewQuizRef.current?.showModal()}
+            >
+              <img src="/assets/preview-quiz.svg" alt="" width={40} height={40} />
+              <span>Vorschau</span>
+            </button>
+            <Link
+              className={styles["quiz-action"]}
+              to={`/my-quiz/${id}/flip-card-quiz?language=${quiz?.target_language}`}
+            >
+              <img src="/assets/flip-card.svg" alt="" width={40} height={40} />
+              <span>Karteikarten</span>
+            </Link>
+          </div>
+          <div className={styles["action-button"]}>
+            <Link
+              className={styles["quiz-action"]}
+              to={`/my-quiz/${id}/word-audio-loop?language=${quiz?.target_language}`}
+            >
+              <img src="/assets/repead.svg" alt="" width={40} height={40} />
+              <span>Lernen und hören</span>
+            </Link>
+            <Link
+              className={styles["quiz-action"]}
+              to={`/my-quiz/${id}/hear-quiz?language=${quiz?.target_language}`}
+            >
+              <img src="/assets/hear.svg" alt="" width={40} height={40} />
+              <span>Hören</span>
+            </Link>
+            <Link
+              className={styles["quiz-action"]}
+              to={`/my-quiz/${id}/flip-card-quiz-reverse?language=${quiz?.target_language}`}
+            >
+              <img src="/assets/flip-card-reverse.svg" alt="" width={40} height={40} />
+              <span>Karteikarten rückwärts</span>
+            </Link>
+            <Link
+              className={styles["quiz-action"]}
+              to={`/my-quiz/${id}/word-audio-loop-reverse?language=${quiz?.target_language}`}
+            >
+              <img src="/assets/repead-reverse.svg" alt="" width={40} height={40} />
+              <span>Lernen und hören rückwärts</span>
+            </Link>
+          </div>
         </div>
       </div>
+
+      <dialog
+        ref={previewQuizRef}
+        className={styles["preview-quiz"]}
+        aria-labelledby="quiz-words-preview-title"
+      >
+        <button
+          type="button"
+          className={styles["preview-quiz__close"]}
+          aria-label="Vorschau schließen"
+          onClick={() => previewQuizRef.current?.close()}
+        >
+          <img src="/assets/xbox.svg" alt="" width={25} height={25} />
+        </button>
+        <h2 id="quiz-words-preview-title">Wort & Übersetzung</h2>
+        {quiz?.concepts?.map((concept) => (
+          <div className={styles["preview-quiz__word"]} key={concept.id}>
+            <strong>{concept.translations[0]?.word}</strong>
+            <span> » </span>
+            <span>{concept.translations[1]?.word}</span>
+          </div>
+        ))}
+      </dialog>
 
       <div className={styles["word-list-attempt"]}>
         <div className={styles["list-head-attempt"]}>

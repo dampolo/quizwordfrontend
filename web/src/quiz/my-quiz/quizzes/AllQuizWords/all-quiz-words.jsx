@@ -191,7 +191,6 @@ function AllQuizWords() {
           <div className={styles["rank"]}>Rang</div>
           <div className={styles["word"]}>Wort & Übersetzung</div>
           <div className={styles["category"]}>Kategorie</div>
-          <div className={styles["streak"]}>Serie</div>
           <div className={styles["actions"]}>Aktionen</div>
         </div>
 
@@ -213,12 +212,6 @@ function AllQuizWords() {
               >
                 {concept.translations[1].category_name}
               </span>
-            </div>
-
-            <div className={styles["streak"]}>
-              🔥
-              <strong>{concept.translations[1].streak}</strong>
-              <span>Days</span>
             </div>
 
             <div className={styles["actions"]}>

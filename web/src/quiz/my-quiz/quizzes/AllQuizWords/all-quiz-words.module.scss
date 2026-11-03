@@ -126,11 +126,10 @@
   .list-row-attempt {
     display: grid;
     grid-template-columns:
-      90px
+      5.625rem
       3.5fr
-      160px
-      140px
-      80px;
+      10rem
+      5rem;
 
     align-items: center;
   }
@@ -219,19 +218,6 @@
     &.culture {
       background: #d8fff2;
       color: #11af7d;
-    }
-  }
-
-  .streak {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    strong {
-      font-size: 1rem;
-    }
-
-    span {
-      color: #777;
     }
   }
 
@@ -531,8 +517,7 @@
       grid-template-columns: 1fr;
     }
 
-    .category,
-    .streak {
+    .category {
       display: none;
     }
 

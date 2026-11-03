@@ -273,31 +273,6 @@ function AllQuizWords() {
 
       {/* ATTEMPTS ENDE */}
 
-      <div className={styles["cards"]}>
-        <div className={`${styles["card"]} goal`}>
-          <h3>Today's Goal</h3>
-          <p>Review 20 new words to keep your streak alive.</p>
-
-          <div className={styles["progress"]}>
-            <div className={styles["progress-fill"]}></div>
-          </div>
-
-          <small>12 / 20 Words • 60%</small>
-        </div>
-
-        <div className={`${styles["card"]} ${styles["mastery"]}`}>
-          <h3>Mastery Level</h3>
-          <p>You've reached B2 fluency level in Vocabulary.</p>
-        </div>
-
-        <div className={`${styles["card"]} ${styles["review"]}`}>
-          <h3>Flashcard Review</h3>
-          <p>Ready to test your memory on recent additions?</p>
-
-          <button>Start Review Session</button>
-        </div>
-      </div>
-
       {/* DEATAILS */}
       <section
         className={`${styles["vocabulary-details"]} ${

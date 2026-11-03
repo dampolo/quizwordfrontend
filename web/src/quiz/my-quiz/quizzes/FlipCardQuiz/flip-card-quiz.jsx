@@ -21,17 +21,26 @@ function FlipCardQuiz({ reverse = false }) {
   const totalQuestions = quiz?.concepts?.length ?? 0;
   const questionNumber = totalQuestions ? currentQuestion + 1 : 0;
 
-
-  const progressBar = (hidden) => (
-    <div className={styles.progress} role="progressbar"
-      aria-hidden={hidden}
-      aria-label="Quizfortschritt" aria-valuemin={0}
-      aria-valuemax={totalQuestions || 1} aria-valuenow={questionNumber}>
-      <span className={styles["progress__fill"]}
-        style={{ width: `${totalQuestions ? (questionNumber / totalQuestions) * 100 : 0}%` }} />
-    </div>
-  );
-
+  function progressBar(hidden) {
+    return (
+      <div
+        className={styles.progress}
+        role="progressbar"
+        aria-hidden={hidden}
+        aria-label="Quizfortschritt"
+        aria-valuemin={0}
+        aria-valuemax={totalQuestions || 1}
+        aria-valuenow={questionNumber}
+      >
+        <span
+          className={styles["progress__fill"]}
+          style={{
+            width: `${totalQuestions ? (questionNumber / totalQuestions) * 100 : 0}%`,
+          }}
+        />
+      </div>
+    );
+  }
 
   function toggleFlipped() {
     setIsFlipped((prev) => !prev);
@@ -126,11 +135,15 @@ function FlipCardQuiz({ reverse = false }) {
           <span className={styles["quiz-name"]}>{quiz?.quiz_name}</span>
 
           {/* Sound */}
-          <button className={styles["sound-button"]} type="button"
+          <button
+            className={styles["sound-button"]}
+            type="button"
             onClick={() =>
               speakWord(
-                quiz?.concepts[currentQuestion].translations[firstTranslation].word,
-                quiz?.concepts[currentQuestion].translations[firstTranslation].language_code,
+                quiz?.concepts[currentQuestion].translations[firstTranslation]
+                  .word,
+                quiz?.concepts[currentQuestion].translations[firstTranslation]
+                  .language_code,
               )
             }
           >
@@ -139,8 +152,15 @@ function FlipCardQuiz({ reverse = false }) {
           {/* Sound Ende */}
 
           <span className={styles["languages"]}>
-            {quiz?.concepts[currentQuestion].translations[firstTranslation].language_name} →{" "}
-            {quiz?.concepts[currentQuestion].translations[secondTranslation].language_name}
+            {
+              quiz?.concepts[currentQuestion].translations[firstTranslation]
+                .language_name
+            }{" "}
+            →{" "}
+            {
+              quiz?.concepts[currentQuestion].translations[secondTranslation]
+                .language_name
+            }
           </span>
 
           <button
@@ -155,7 +175,10 @@ function FlipCardQuiz({ reverse = false }) {
             <h1
               className={`${styles["quiz-card__title-learn"]} ${styles["flip-title"]}`}
             >
-              {quiz?.concepts[currentQuestion].translations[firstTranslation].word}
+              {
+                quiz?.concepts[currentQuestion].translations[firstTranslation]
+                  .word
+              }
             </h1>
           </div>
 
@@ -227,15 +250,20 @@ function FlipCardQuiz({ reverse = false }) {
         <div className={styles["flip-card-back"]}>
           {progressBar(!isFlipped)}
           <span className={styles["languages"]}>
-            {quiz?.concepts[currentQuestion].translations[secondTranslation].language_name}
+            {
+              quiz?.concepts[currentQuestion].translations[secondTranslation]
+                .language_name
+            }
           </span>
 
           {/* Sound */}
           <button
             onClick={() =>
               speakWord(
-                quiz?.concepts[currentQuestion].translations[secondTranslation].word,
-                quiz?.concepts[currentQuestion].translations[secondTranslation].language_code,
+                quiz?.concepts[currentQuestion].translations[secondTranslation]
+                  .word,
+                quiz?.concepts[currentQuestion].translations[secondTranslation]
+                  .language_code,
               )
             }
           >
@@ -258,7 +286,10 @@ function FlipCardQuiz({ reverse = false }) {
             <h1
               className={`${styles["quiz-card__answer-wrapper-learn"]} ${styles["flip-title"]}`}
             >
-              {quiz?.concepts[currentQuestion].translations[secondTranslation].word}
+              {
+                quiz?.concepts[currentQuestion].translations[secondTranslation]
+                  .word
+              }
             </h1>
           </div>
 
@@ -320,7 +351,10 @@ function FlipCardQuiz({ reverse = false }) {
             </button>
           </div>
           <span>
-            {quiz?.concepts[currentQuestion].translations[secondTranslation].sentence}
+            {
+              quiz?.concepts[currentQuestion].translations[secondTranslation]
+                .sentence
+            }
           </span>
           {/* Buttons ENDE */}
         </div>

@@ -232,7 +232,6 @@ function AllWords() {
           <div className={styles["rank"]}>Rang</div>
           <div className={styles["word"]}>Wort & Übersetzung</div>
           <div className={styles["category"]}>Kategorie</div>
-          <div className={styles["streak"]}>Serie</div>
           <div className={styles["actions"]}>Aktionen</div>
         </div>
         {loading ? (
@@ -271,12 +270,6 @@ function AllWords() {
                 >
                   {word.translations[1].category_name}
                 </span>
-              </div>
-
-              <div className={styles["streak"]}>
-                🔥
-                <strong>{word.streak}</strong>
-                <span>Days</span>
               </div>
 
               <div className={styles["actions"]}>

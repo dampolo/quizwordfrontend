@@ -65,7 +65,6 @@ export default function AllCategoryWords() {
             <div>Rang</div>
             <div>Wort & Übersetzung</div>
             <div className={styles["category"]}>Kategorie</div>
-            <div className={styles["streak"]}>Serie</div>
             <div>Aktionen</div>
           </div>
           {concepts.map((concept) => {
@@ -82,7 +81,6 @@ export default function AllCategoryWords() {
                   <p>{target?.word ?? "—"}</p>
                 </Link>
                 <div className={styles["category"]}><span className={styles["badge"]}>{target?.category_name ?? category.category_name}</span></div>
-                <div className={styles["streak"]}>🔥 <strong>{target?.streak ?? 0}</strong> <span>Days</span></div>
                 <div className={styles["actions"]}>
                   {target && (
                     <Link to={`/my-quiz/${concept.id}/edit-word?target-word=${target.id}&language=${target.language}`}>

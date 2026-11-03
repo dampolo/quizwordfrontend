@@ -21,7 +21,7 @@
   .list-head,
   .list-row {
     display: grid;
-    grid-template-columns: 90px minmax(0, 1fr) 160px 140px 80px;
+    grid-template-columns: 5.625rem minmax(0, 1fr) 10rem 5rem;
     align-items: center;
   }
 
@@ -68,15 +68,6 @@
     font-weight: 600;
   }
 
-  .streak {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-
-    strong { font-size: 1rem; }
-    span { color: #777; }
-  }
-
   .pagination {
     display: flex;
     justify-content: space-between;
@@ -119,8 +110,7 @@
       grid-template-columns: 60px minmax(0, 2fr) 75px;
     }
 
-    .category,
-    .streak {
+    .category {
       display: none;
     }
   }

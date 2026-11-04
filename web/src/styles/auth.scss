@@ -19,16 +19,27 @@
     margin: 0.625rem;
 
     &.choose-languages {
-    position: fixed;
-    inset: 0;
-    background-color: basic.$qw-third;
-    border-radius: basic.$qw-border-radius;
-    padding: 2.5rem;
-    margin: 0.625rem;
-    z-index: 1000;
-    max-width: none;
-    margin: 0;
-  }
+      position: fixed;
+      inset: 0;
+      background-color: basic.$qw-third;
+      border-radius: basic.$qw-border-radius;
+      padding: 2.5rem;
+      margin: 0.625rem;
+      z-index: 1000;
+      max-width: none;
+      margin: 0;
+    }
+    &.confirm-email {
+      position: fixed;
+      inset: 0;
+      background-color: basic.$qw-third;
+      border-radius: basic.$qw-border-radius;
+      padding: 2.5rem;
+      margin: 0.625rem;
+      z-index: 2000;
+      max-width: none;
+      margin: 0;
+    }
     .form-title {
       display: flex;
       align-items: center;

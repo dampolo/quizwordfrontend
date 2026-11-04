@@ -8,7 +8,7 @@ import { useAuth } from "../../context/auth/useAuth";
 
 function Confirmation() {
   const [invalidLink, setInvalidLink] = useState(false);
-  const { confirmationMessage, verifyEmail, setConfirmationMessage } =
+  const { confirmationMessage, verifyEmail, setConfirmationMessage, checkAuth } =
     useAuth();
   const { uidb64, token } = useParams();
   const [searchParams] = useSearchParams();
@@ -21,6 +21,7 @@ function Confirmation() {
       async function verify() {
         try {
           await verifyEmail(uidb64, token);
+          await checkAuth();
           if (!active) return;
           setConfirmationMessage("Dein E-Mail wurde erfolgreich bestätigt.");
         } catch (error) {

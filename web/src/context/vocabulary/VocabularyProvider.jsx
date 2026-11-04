@@ -17,9 +17,22 @@ export function VocabularyProvider({ children }) {
   const api = useApi();
   const navigate = useNavigate();
   const onLanguagesLoaded = (data) => {
-    navigate(data.languages_active
-      ? `/my-quiz/all-words?language=${data.learning_languages?.[0]?.id}`
-      : "/my-quiz/choose-languages", { replace: true });
+    navigate(
+      data.languages_active
+        ? `/my-quiz/all-words?language=${data.learning_languages?.[0]?.id}`
+        : "/my-quiz/choose-languages",
+      { replace: true },
+    );
   };
-  return <SharedProvider api={api} apiFetch={apiFetch} onError={toast.error} onLanguagesLoaded={onLanguagesLoaded} speak={speak}>{children}</SharedProvider>;
+  return (
+    <SharedProvider
+      api={api}
+      apiFetch={apiFetch}
+      onError={toast.error}
+      onLanguagesLoaded={onLanguagesLoaded}
+      speak={speak}
+    >
+      {children}
+    </SharedProvider>
+  );
 }

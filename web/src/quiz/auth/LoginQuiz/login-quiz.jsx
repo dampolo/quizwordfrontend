@@ -12,7 +12,7 @@ function LoginQuiz() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const { login, loading } = useAuth();
+  const { login, loginWithGoogle, loading } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -44,6 +44,12 @@ function LoginQuiz() {
       setFormErrors({ message });
     }
   }
+
+
+  function handleSubmitWIthGoogle() {
+    loginWithGoogle();
+  }
+
 
   function validate(values) {
     const errors = {};
@@ -171,10 +177,19 @@ function LoginQuiz() {
           <Link className="btn-password" to="/forgot-password">
             Passwort vergessen?
           </Link>
-          {/* 
-            <div className="seperator-container">
+          <div className="seperator-container">
             <span className="sep-line-txt">ODER</span>
-            </div> */}
+          </div>
+
+          <button
+            className="btn-google"
+            type="button"
+            onClick={handleSubmitWIthGoogle}
+            disabled={loading}
+          >
+            <img src="/assets/google-logo-icon.svg" width="38" height="38" alt="" aria-hidden="true" />
+            Anmeldung mit Google
+          </button>
         </form>
       </section>
     </main>

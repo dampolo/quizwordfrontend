@@ -7,7 +7,7 @@ import BackButton from "../../../../components/BackButton/BackButton";
 import PreLoader from "../../../../components/PreLoader/PreLoader";
 import { useEffect } from "react";
 
-function InfoRow({ label, value, type }){
+function InfoRow({ label, value, type }) {
   function renderValue() {
     if (typeof value === "boolean") {
       return value ? "✅" : "❌";
@@ -18,7 +18,7 @@ function InfoRow({ label, value, type }){
     }
 
     return value || "-";
-  };
+  }
 
   return (
     <div className={styles["profile-user__row"]}>
@@ -26,7 +26,7 @@ function InfoRow({ label, value, type }){
       <span className={styles["profile-user__value"]}>{renderValue()}</span>
     </div>
   );
-};
+}
 
 function Profile() {
   const { user, profile, getProfile } = useAuth();
@@ -46,6 +46,17 @@ function Profile() {
 
   return (
     <div className={styles["profile-user"]}>
+      {user && user.is_email_verified === false && (
+        <>
+          <p>
+            Bitte bestätige deine E-Mail-Adresse. Den Bestätigungslink findest
+            du in deinem Postfach.
+          </p>
+          <Link className={styles["link"]} to="/resend-new-link">
+            Neuen Bestätigungslink anfordern
+          </Link>
+        </>
+      )}
       <BackButton to="/my-quiz/all-words/" />
       <h1 className={styles["title"]}>Profile</h1>
 
@@ -166,7 +177,7 @@ function Profile() {
         <>
           <h2 className={styles["features-title"]}>Anmeldung</h2>
           <div className={styles["profile-user__card"]}>
-              <p>Du bist mit deinem E-Mail {profile.email} angemeldet.</p>
+            <p>Du bist mit deinem E-Mail {profile.email} angemeldet.</p>
           </div>
         </>
       )}

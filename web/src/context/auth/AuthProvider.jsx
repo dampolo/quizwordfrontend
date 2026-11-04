@@ -11,12 +11,14 @@ function WebAuthState({ children }) {
   const auth = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("");
+
   return (
     <AuthContext.Provider value={{ ...auth, isMenuOpen, setIsMenuOpen, confirmationMessage, setConfirmationMessage }}>
       {children}
     </AuthContext.Provider>
   );
 }
+
 
 export function AuthProvider({ children }) {
   const api = useApi();

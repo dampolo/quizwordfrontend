@@ -202,7 +202,7 @@
         &::before {
           content: "";
           position: absolute;
-          background-color: basic.$qw-third;
+          background-color: basic.$qw-fourth;
           height: 0.125rem;
           width: 100%;
           top: 50%;
@@ -224,22 +224,32 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      height: 3.75rem;
-      background-color: basic.$qw-third;
-      border-radius: basic.$qw-border-radius; //3.125rem;
-      color: basic.$qw-third;
+      min-height: 3.75rem;
+      padding: 0.5rem 1rem;
+      background-color: basic.$qw-fourth;
+      border-radius: basic.$qw-border-radius;
+      color: basic.$qw-primary;
+      font: inherit;
+      cursor: pointer;
       border: solid 0.0625rem transparent;
       transition: all 175ms ease-in-out;
-      &:hover {
-        border: solid 0.0625rem basic.$qw-third;
-        outline: basic.$qw-third;
+      &:hover:not(:disabled) {
+        border-color: basic.$qw-secondary;
         font-weight: 500;
       }
-      &:focus {
-        border: solid 0.0625rem basic.$qw-third;
-        outline: basic.$qw-third;
+      &:focus-visible {
+        border-color: basic.$qw-secondary;
+        outline: 0.125rem solid basic.$qw-secondary;
+        outline-offset: 0.125rem;
+      }
+      &:disabled {
+        opacity: 0.6;
+        cursor: wait;
       }
       img {
+        width: 2.375rem;
+        height: 2.375rem;
+        flex-shrink: 0;
         margin-right: 1rem;
       }
     }

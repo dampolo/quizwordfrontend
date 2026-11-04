@@ -105,8 +105,8 @@ function LoginQuiz() {
 
             <div className="input-icon">
               <img
-                width="24"
-                height="24"
+                width={24}
+                height={24}
                 aria-hidden="true"
                 src="./assets/mail-icon-input-field.svg"
                 alt=""
@@ -135,8 +135,8 @@ function LoginQuiz() {
               onClick={() => setIsPasswordVisible((prev) => !prev)}
             >
               <img
-                width="24"
-                height="24"
+                width={24}
+                height={24}
                 className="pwd-eye"
                 src={
                   isPasswordVisible
@@ -149,8 +149,8 @@ function LoginQuiz() {
 
             <div className="input-icon">
               <img
-                width="24"
-                height="24"
+                width={24}
+                height={24}
                 aria-hidden="true"
                 src="./assets/pwd-lock-icon-input-field.svg"
                 alt=""
@@ -187,7 +187,7 @@ function LoginQuiz() {
             onClick={handleSubmitWIthGoogle}
             disabled={loading}
           >
-            <img src="/assets/google-logo-icon.svg" width="38" height="38" alt="" aria-hidden="true" />
+            <img src="/assets/google-logo-icon.svg" width={38} height={38} alt="" aria-hidden="true" />
             Anmeldung mit Google
           </button>
         </form>

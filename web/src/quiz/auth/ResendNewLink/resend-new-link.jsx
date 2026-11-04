@@ -89,8 +89,8 @@ function ResendNewLink() {
 
             <div className="input-icon">
               <img
-                width="24"
-                height="24"
+                width={24}
+                height={24}
                 aria-hidden="true"
                 src="/assets/mail-icon-input-field.svg"
                 alt=""

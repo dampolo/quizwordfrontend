@@ -99,6 +99,12 @@ export function AuthProvider({ children, api, session, onProfileError = console.
     }
   }
 
+
+  function loginWithGoogle() {
+    window.location.assign(`${api}accounts/google/login/`);
+  }
+
+
   async function createAccount(formData) {
     setLoading(true);
 
@@ -396,6 +402,7 @@ export function AuthProvider({ children, api, session, onProfileError = console.
         forgotPassword,
         verifyEmail,
         login,
+        loginWithGoogle,
         logout,
         getProfile,
         checkAuth,

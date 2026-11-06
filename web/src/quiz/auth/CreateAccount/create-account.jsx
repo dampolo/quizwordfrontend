@@ -25,7 +25,7 @@ function CreateAccount() {
   
 	const navigate = useNavigate();
 
-  const { createAccount, loading, setConfirmationMessage } = useAuth();
+  const { createAccount, loginWithGoogle, loading, setConfirmationMessage } = useAuth();
 
   const isFormValid = Object.keys(validateInput(formValues)).length === 0;
 
@@ -293,6 +293,25 @@ function CreateAccount() {
               Weiter
             </button>
           </div>
+          <div className="seperator-container">
+            <span className="sep-line-txt">ODER</span>
+          </div>
+
+          <button
+            className="btn-google"
+            type="button"
+            onClick={loginWithGoogle}
+            disabled={loading}
+          >
+            <img
+              src="/assets/google-logo-icon.svg"
+              width={38}
+              height={38}
+              alt=""
+              aria-hidden="true"
+            />
+            Anmeldung mit Google
+          </button>
         </form>
       </section>
     </main>

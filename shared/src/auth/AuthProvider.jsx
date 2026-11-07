@@ -75,15 +75,25 @@ export function AuthProvider({ children, api, session, onProfileError = console.
   }, [api, request, getProfile]);
 
   async function login(email, password) {
+    return loginWithCredentials("token/", { email, password });
+  }
+
+
+  async function loginWithGoogleIdToken(idToken) {
+    return loginWithCredentials("token/google/", { id_token: idToken });
+  }
+
+
+  async function loginWithCredentials(endpoint, credentials) {
     setLoading(true);
     try {
-      const response = await request(`${api}token/`, {
+      const response = await request(`${api}${endpoint}`, {
         method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(credentials),
       });
 
       const data = await response.json();
@@ -403,6 +413,7 @@ export function AuthProvider({ children, api, session, onProfileError = console.
         verifyEmail,
         login,
         loginWithGoogle,
+        loginWithGoogleIdToken,
         logout,
         getProfile,
         checkAuth,

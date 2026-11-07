@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { lazy, Suspense, useRef, useState } from "react";
 import { Link, router } from "expo-router";
 import {
   KeyboardAvoidingView,
@@ -7,6 +7,7 @@ import {
   ScrollView,
   Text,
   TextInput,
+  TurboModuleRegistry,
   View,
   useWindowDimensions,
 } from "react-native";
@@ -23,6 +24,12 @@ import EyeOffIcon from "../../../../assets/icons/eye-off.svg";
 import ScreenHeaderAuth from "../../../components/ScreenHeaderAuth/ScreenHeaderAuth";
 
 
+const GoogleSignInButton = lazy(async () => {
+  const { GoogleSigninButton } = await import("@react-native-google-signin/google-signin");
+  return { default: GoogleSigninButton };
+});
+
+
 export default function LoginQuiz() {
   const initialValues = { email: "", password: "" };
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -32,10 +39,13 @@ export default function LoginQuiz() {
   const [submitting, setSubmitting] = useState(false);
   const submittingRef = useRef(false);
   const passwordRef = useRef(null);
-  const { login, loading } = useAuth();
+  const { login, loginWithGoogleIdToken, loading } = useAuth();
   const compact = useWindowDimensions().width <= authCompactWidth;
   const busy = loading || submitting;
   const PasswordIcon = isPasswordVisible ? EyeIcon : EyeOffIcon;
+  const googleWebClientId = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID;
+  const showGoogleLogin = Platform.OS === "android" && googleWebClientId
+    && Boolean(TurboModuleRegistry.get("RNGoogleSignin"));
 
 
   function handleChange(name, value) {
@@ -90,6 +100,42 @@ export default function LoginQuiz() {
     }
 
     return errors;
+  }
+
+
+  async function handleGoogleLogin() {
+    if (loading || submittingRef.current) {
+      return;
+    }
+
+    submittingRef.current = true;
+    setSubmitting(true);
+    setFormErrors({});
+    try {
+      const { GoogleSignin, isCancelledResponse, isSuccessResponse } =
+        await import("@react-native-google-signin/google-signin");
+      GoogleSignin.configure({ webClientId: googleWebClientId });
+      await GoogleSignin.hasPlayServices();
+      const result = await GoogleSignin.signIn();
+      if (isCancelledResponse(result)) {
+        return;
+      }
+      if (!isSuccessResponse(result) || !result.data.idToken
+        || !(await loginWithGoogleIdToken(result.data.idToken))) {
+        throw new Error("Google login failed");
+      }
+      router.replace("/my-quiz/all-words");
+    } catch (error) {
+      const detail = error?.response?.detail;
+      setFormErrors({
+        message: typeof detail === "string"
+          ? detail
+          : "Die Google-Anmeldung ist fehlgeschlagen. Bitte versuche es erneut.",
+      });
+    } finally {
+      submittingRef.current = false;
+      setSubmitting(false);
+    }
   }
 
 
@@ -269,6 +315,15 @@ export default function LoginQuiz() {
                 >
                   <Text style={submitTextStyle}>Anmelden</Text>
                 </Pressable>
+                {showGoogleLogin && (
+                  <Suspense fallback={null}>
+                    <GoogleSignInButton
+                      testID="login-google"
+                      disabled={busy}
+                      onPress={handleGoogleLogin}
+                    />
+                  </Suspense>
+                )}
               </View>
               <Link href="/quiz/(auth)/forgot-password" asChild>
                 <Pressable style={auth.btnPassword}>

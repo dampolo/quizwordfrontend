@@ -30,7 +30,13 @@ function AllWords() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const filterDialogRef = useRef(null);
   const selectedWordsDialogRef = useRef(null);
-  const { createQuiz, getLastFlipCard, postRandomQuiz } = useQuiz();
+  const {
+    createQuiz,
+    getLastFlipCard,
+    getRandomFlipCard,
+    postRandomQuiz,
+    loading: quizLoading,
+  } = useQuiz();
   const requestedPage = Number(searchParams.get("page") || 1);
   const currentPage =
     Number.isSafeInteger(requestedPage) && requestedPage > 0
@@ -54,17 +60,17 @@ function AllWords() {
   function handleCheckboxChange(word, checked) {
     setSelectedWords((prev) => {
       if (checked) {
-        return prev.some((item) => item.id === word.id) ? prev : [...prev, word];
+        return prev.some((item) => item.id === word.id)
+          ? prev
+          : [...prev, word];
       }
       return prev.filter((item) => item.id !== word.id);
     });
   }
 
-
   function openDialog() {
     selectedWordsDialogRef.current?.showModal();
   }
-
 
   function openCreateQuizDialog() {
     selectedWordsDialogRef.current?.close();
@@ -123,6 +129,18 @@ function AllWords() {
     const params = new URLSearchParams(searchParams);
     params.set("page", String(page));
     setSearchParams(params);
+  }
+
+  async function playRandomFlipCard() {
+    try {
+      const quiz = await getRandomFlipCard(language);
+      navigate(`/my-quiz/${quiz.quiz_id}/flip-card-quiz?language=${language}`);
+    } catch (error) {
+      toast.error(
+        error.response?.detail ||
+          "Die Karteikarten konnten nicht geladen werden.",
+      );
+    }
   }
 
   async function playLastFlipCard() {
@@ -247,9 +265,7 @@ function AllWords() {
                 <input
                   type="checkbox"
                   checked={selectedWords.some((item) => item.id === word.id)}
-                  onChange={(e) =>
-                    handleCheckboxChange(word, e.target.checked)
-                  }
+                  onChange={(e) => handleCheckboxChange(word, e.target.checked)}
                 />
               </div>
 
@@ -309,6 +325,24 @@ function AllWords() {
       </div>
 
       <div className={styles["cards"]}>
+        {/* Random Flipcard */}
+        <div className={`${styles["card"]} ${styles["mastery"]}`}>
+          <h3>Zufällige Karteikarten</h3>
+          <p>
+            Übe zufällige Wörter{language_name ? ` auf ${language_name}` : ""}{" "}
+            mit Karteikarten.
+          </p>
+          <button
+            type="button"
+            disabled={!language || quizLoading}
+            onClick={playRandomFlipCard}
+          >
+            Start
+          </button>
+        </div>
+
+        {/* Random Flipcard Ende*/}
+
         <div className={`${styles["card"]} ${styles["random"]}`}>
           <h3>Zufällige Wörter wiederholen</h3>
           <p>
@@ -377,10 +411,7 @@ function AllWords() {
             fill="currentColor"
           />
         </svg>
-        <small>
-
-        {selectedWords.length !== 0 ? selectedWords.length : ""}
-        </small>
+        <small>{selectedWords.length !== 0 ? selectedWords.length : ""}</small>
       </button>
 
       <dialog

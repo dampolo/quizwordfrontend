@@ -30,13 +30,7 @@ function AllWords() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const filterDialogRef = useRef(null);
   const selectedWordsDialogRef = useRef(null);
-  const {
-    createQuiz,
-    getLastFlipCard,
-    getRandomFlipCard,
-    postRandomQuiz,
-    loading: quizLoading,
-  } = useQuiz();
+  const { createQuiz, getLastFlipCard, postRandomQuiz } = useQuiz();
   const requestedPage = Number(searchParams.get("page") || 1);
   const currentPage =
     Number.isSafeInteger(requestedPage) && requestedPage > 0
@@ -129,18 +123,6 @@ function AllWords() {
     const params = new URLSearchParams(searchParams);
     params.set("page", String(page));
     setSearchParams(params);
-  }
-
-  async function playRandomFlipCard() {
-    try {
-      const quiz = await getRandomFlipCard(language);
-      navigate(`/my-quiz/${quiz.quiz_id}/flip-card-quiz?language=${language}`);
-    } catch (error) {
-      toast.error(
-        error.response?.detail ||
-          "Die Karteikarten konnten nicht geladen werden.",
-      );
-    }
   }
 
   async function playLastFlipCard() {
@@ -335,8 +317,10 @@ function AllWords() {
           </p>
           <button
             type="button"
-            disabled={!language || quizLoading}
-            onClick={playRandomFlipCard}
+            disabled={!language}
+            onClick={() =>
+              navigate(`/my-quiz/random-repeat-flip-card?${searchParams}`)
+            }
           >
             Start
           </button>

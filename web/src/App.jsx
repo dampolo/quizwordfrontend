@@ -9,6 +9,7 @@ import Login from "./quiz/auth/LoginQuiz/login-quiz";
 import MyQuiz from "./layouts/MyQuiz";
 import AllWords from "./quiz/my-quiz/AllWords/all-words";
 import RandomRepeadWords from "./quiz/my-quiz/AllWords/RandomRepeadWords/random-repead-words";
+import RandomRepeadFlipCard from "./quiz/my-quiz/AllWords/RandomRepeadFlipCard/random-repead-flip-card";
 import ProtectedRoute from "./routing/ProtectedRoute";
 import { VocabularyProvider } from "./context/vocabulary/VocabularyProvider";
 import { QuizProvider } from "./context/quiz/QuizProvider";
@@ -116,6 +117,10 @@ function App() {
               {/* Vocabulary */}
               <Route path="all-words" element={<AllWords />} />
               <Route path="random-repeat-words" element={<RandomRepeadWords />} />
+              <Route
+                path="random-repeat-flip-card"
+                element={<RandomRepeadFlipCard />}
+              />
               <Route path=":id/show-word" element={<ShowWord />} />
               <Route path=":id/edit-word" element={<EditWord />} />
               <Route path="add-new-word" element={<AddNewWord />} />

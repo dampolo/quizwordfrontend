@@ -37,7 +37,43 @@ function renderDialog({ open, options, closeDialog, handleConfirm }) {
           <DialogContentText>{options.description}</DialogContentText>
         </DialogContent>
 
-        <DialogActions>
+        {options.nativeWord && options.targetWord && (
+          <DialogContent
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexWrap: "wrap",
+              gap: "0.3rem",
+              padding: "0 1rem 1.2rem 1rem",
+              textAlign: "center",
+              overflowWrap: "anywhere",
+            }}
+          >
+            <DialogContentText component="strong" sx={{ color: "#4738d6", fontSize: "1rem", fontWeight: 700 }}>
+              {options.nativeWord}
+            </DialogContentText>
+            <span style={{ color: "#bbb", fontSize: "1.2rem" }}>»</span>
+            <DialogContentText sx={{ color: "#444", fontSize: "1rem" }}>
+              {options.targetWord}
+            </DialogContentText>
+          </DialogContent>
+        )}
+
+        <DialogActions
+          disableSpacing
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr))",
+            gridAutoRows: "1fr",
+            gap: "0.5rem",
+            "& > .MuiButton-root": {
+              minWidth: 0,
+              width: "100%",
+              overflowWrap: "anywhere",
+            },
+          }}
+        >
           <Button
             disableRipple
             onClick={closeDialog}
@@ -45,11 +81,9 @@ function renderDialog({ open, options, closeDialog, handleConfirm }) {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              minWidth: "fit-content",
-              width: "auto",
               fontSize: "1rem",
               fontWeight: 600,
-              padding: "0.2rem 0.3rem",
+              padding: "0.2rem 0.75rem",
               background: "transparent",
               color: "#5B5CE2",
               borderRadius: "var(--qw-border-radius)",
@@ -74,9 +108,7 @@ function renderDialog({ open, options, closeDialog, handleConfirm }) {
               justifyContent: "center",
               alignItems: "center",
               textDecoration: "none",
-              maxWidth: "8rem",
-              width: "auto",
-              padding: "0.2rem 0.3rem",
+              padding: "0.2rem 0.75rem",
               fontWeight: 600,
               fontSize: "1rem",
               gap: "0.625rem",

@@ -71,12 +71,15 @@ export default function AddNewWord() {
 
     try {
       const data = await createConcept(getConceptPayload());
-
+      
       // Confirmation needed
       if (data.requires_confirmation) {
+        
         openDialog({
           title: "Weitere Bedeutung hinzufügen?",
           description: "Für dieses Wort existiert bereits eine Übersetzung.",
+          nativeWord: data.confirmation.native_word,
+          targetWord: data.confirmation.existing_translations[0].word,
           confirmText: "Hinzufügen",
           cancelText: "Abbrechen",
           confirmButtonClass: "main-quiz-button",
@@ -134,6 +137,8 @@ export default function AddNewWord() {
         ...getConceptPayload(),
         allow_new_meaning: true,
       };
+
+      
       await createConcept(newFormData);
 
       toast.success(

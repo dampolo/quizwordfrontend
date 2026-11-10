@@ -325,6 +325,7 @@ function AllWords() {
       </div>
 
       <div className={styles["cards"]}>
+        
         {/* Random Flipcard */}
         <div className={`${styles["card"]} ${styles["mastery"]}`}>
           <h3>Zufällige Karteikarten</h3>

@@ -446,7 +446,7 @@ export default function EditWord() {
 
         <hr />
 
-        <div className={styles["action-buttons"]}>
+        <div className={`${styles["action-buttons"]} ${styles["word-action-buttons"]}`}>
           <button
             type="button"
             onClick={handleDelete}

@@ -105,8 +105,20 @@ function FormDialog({
       </DialogContent>
 
       <DialogActions
+        disableSpacing
         sx={{
           alignSelf: "self-end",
+          boxSizing: "border-box",
+          width: "min(100%, 19rem)",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr))",
+          gridAutoRows: "1fr",
+          gap: "0.5rem",
+          "& > .MuiButton-root": {
+            minWidth: 0,
+            width: "100%",
+            overflowWrap: "anywhere",
+          },
         }}
       >
         <Button
@@ -117,11 +129,9 @@ function FormDialog({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            minWidth: "fit-content",
-            width: "auto",
             fontSize: "1rem",
             fontWeight: 600,
-            padding: "0.2rem 0.3rem",
+            padding: "0.2rem 0.75rem",
             background: "transparent",
             color: "#5B5CE2",
             borderRadius: "var(--qw-border-radius)",
@@ -148,9 +158,7 @@ function FormDialog({
             justifyContent: "center",
             alignItems: "center",
             textDecoration: "none",
-            maxWidth: "8rem",
-            width: "auto",
-            padding: "0.2rem 0.3rem",
+            padding: "0.2rem 0.75rem",
             fontWeight: 600,
             fontSize: "1rem",
             gap: "0.625rem",

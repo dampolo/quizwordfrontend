@@ -503,7 +503,7 @@ export default function AddNewWord() {
 
         <hr />
 
-        <div className={styles["action-buttons"]}>
+        <div className={`${styles["action-buttons"]} ${styles["word-action-buttons"]}`}>
           <Link
             to="/my-quiz/all-words"
             className={`${styles["main-quiz-button-cancel"]} ${styles["cancel-btn"]}`}

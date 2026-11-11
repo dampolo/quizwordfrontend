@@ -8,6 +8,7 @@ import ExampleFlipCardQuizReverse from "./ExampleFlipCardQuizReverse/example-fli
 import ExampleWordAudioLoop from "./ExampleWordAudioLoop/example-word-audio-loop";
 import ExampleWordAudioLoopReverse from "./ExampleWordAudioLoopReverse/example-word-audio-loop-reverse";
 import "./Examples.scss";
+import VJSlider from "vjslider/src/js/vjslider.js";
 
 const exampleQuizzes = {
   animals: {
@@ -55,11 +56,21 @@ export default function Examples() {
   const mode = session?.mode;
   const word = quiz?.words[index];
   const flipcards = mode === "flipcards" || mode === "flipcardsReverse";
-  const FlipCardQuiz = mode === "flipcardsReverse" ? ExampleFlipCardQuizReverse : ExampleFlipCardQuiz;
+  const FlipCardQuiz =
+    mode === "flipcardsReverse"
+      ? ExampleFlipCardQuizReverse
+      : ExampleFlipCardQuiz;
   const listening = mode === "listen";
   const audio = mode === "audio" || mode === "audioReverse";
-  const AudioLoop = mode === "audioReverse" ? ExampleWordAudioLoopReverse : ExampleWordAudioLoop;
+  const AudioLoop =
+    mode === "audioReverse"
+      ? ExampleWordAudioLoopReverse
+      : ExampleWordAudioLoop;
   const speech = window.speechSynthesis;
+
+  const instance = new VJSlider(sliderElement.current, {
+    numberOfVisibleSlides: 1,
+  });
 
   function titleFor(id, example) {
     return titles[id] ?? label(example.title);
@@ -119,7 +130,11 @@ export default function Examples() {
               <header className="examples__quiz-heading">
                 <h3>{titleFor(id, example)}</h3>
                 <Tooltip title={label("edit")} arrow>
-                  <button type="button" aria-label={label("edit")} onClick={() => openExample(id, "edit")}>
+                  <button
+                    type="button"
+                    aria-label={label("edit")}
+                    onClick={() => openExample(id, "edit")}
+                  >
                     <img width={20} height={20} src="/assets/edit.svg" alt="" />
                   </button>
                 </Tooltip>
@@ -132,7 +147,12 @@ export default function Examples() {
                     aria-label={label("learn")}
                     onClick={() => openExample(id, "learn")}
                   >
-                    <img width={40} height={40} src="/assets/learn-quiz.svg" alt="" />
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/learn-quiz.svg"
+                      alt=""
+                    />
                   </button>
                 </Tooltip>
 
@@ -142,7 +162,12 @@ export default function Examples() {
                     aria-label={label("test")}
                     onClick={() => openExample(id, "test")}
                   >
-                    <img width={40} height={40} src="/assets/write.svg" alt="" />
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/write.svg"
+                      alt=""
+                    />
                   </button>
                 </Tooltip>
 
@@ -152,7 +177,12 @@ export default function Examples() {
                     aria-label={label("preview")}
                     onClick={() => openExample(id, "preview")}
                   >
-                    <img width={40} height={40} src="/assets/preview-quiz.svg" alt="" />
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/preview-quiz.svg"
+                      alt=""
+                    />
                   </button>
                 </Tooltip>
 
@@ -162,7 +192,12 @@ export default function Examples() {
                     aria-label={label("flipcards")}
                     onClick={() => openExample(id, "flipcards")}
                   >
-                    <img width={40} height={40} src="/assets/flip-card.svg" alt="" />
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/flip-card.svg"
+                      alt=""
+                    />
                   </button>
                 </Tooltip>
               </div>
@@ -174,7 +209,12 @@ export default function Examples() {
                     aria-label={label("audio")}
                     onClick={() => openExample(id, "audio")}
                   >
-                    <img width={40} height={40} src="/assets/repead.svg" alt="" />
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/repead.svg"
+                      alt=""
+                    />
                   </button>
                 </Tooltip>
 
@@ -188,13 +228,22 @@ export default function Examples() {
                   </button>
                 </Tooltip>
 
-                <Tooltip title={label("flipcardsReverse")} placement="top" arrow>
+                <Tooltip
+                  title={label("flipcardsReverse")}
+                  placement="top"
+                  arrow
+                >
                   <button
                     type="button"
                     aria-label={label("flipcardsReverse")}
                     onClick={() => openExample(id, "flipcardsReverse")}
                   >
-                    <img width={40} height={40} src="/assets/flip-card-reverse.svg" alt="" />
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/flip-card-reverse.svg"
+                      alt=""
+                    />
                   </button>
                 </Tooltip>
 
@@ -204,13 +253,21 @@ export default function Examples() {
                     aria-label={label("audioReverse")}
                     onClick={() => openExample(id, "audioReverse")}
                   >
-                    <img width={40} height={40} src="/assets/repead-reverse.svg" alt="" />
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/repead-reverse.svg"
+                      alt=""
+                    />
                   </button>
                 </Tooltip>
               </div>
 
               <footer className="examples__quiz-footer">
-                <button type="button" onClick={() => openExample(id, "preview")}>
+                <button
+                  type="button"
+                  onClick={() => openExample(id, "preview")}
+                >
                   {label("WORD_COUNT", { count: example.words.length })}
                 </button>
                 <span>{label("LANGUAGES")}</span>
@@ -230,7 +287,11 @@ export default function Examples() {
 
       <dialog
         ref={dialogRef}
-        className={mode === "learn" || mode === "test" || audio ? "examples__quiz-dialog" : "examples__dialog"}
+        className={
+          mode === "learn" || mode === "test" || audio
+            ? "examples__quiz-dialog"
+            : "examples__dialog"
+        }
         aria-labelledby="example-quiz-title"
         onClose={() => {
           speech?.cancel();
@@ -255,65 +316,97 @@ export default function Examples() {
             words={quiz.words}
             onClose={() => dialogRef.current.close()}
           />
-        ) : quiz && !flipcards && (
-          <>
-            <form method="dialog" className="examples__close">
-              <button aria-label={label("CLOSE")}>
-                <img width={25} height={25} src="/assets/xbox.svg" alt="" />
-              </button>
-            </form>
-            <h3 id="example-quiz-title">{titleFor(session.id, quiz)} · {label(mode)}</h3>
-
-            {listening && !speech && <p role="status">{label("AUDIO_UNAVAILABLE")}</p>}
-
-            {mode === "preview" && (
-              <ul className="examples__words">
-                {quiz.words.map((entry) => (
-                  <li key={entry.de}>
-                    <span lang="de">{entry.de}</span>
-                    <span lang="en">{entry.en}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-
-            {mode === "edit" && (
-              <form onSubmit={submitAnswer}>
-                <label>
-                  {label("QUIZ_TITLE")}
-                  <input value={answer} onChange={(event) => setAnswer(event.target.value)} required maxLength={50} />
-                </label>
-                <button type="submit">{label("SAVE")}</button>
+        ) : (
+          quiz &&
+          !flipcards && (
+            <>
+              <form method="dialog" className="examples__close">
+                <button aria-label={label("CLOSE")}>
+                  <img width={25} height={25} src="/assets/xbox.svg" alt="" />
+                </button>
               </form>
-            )}
+              <h3 id="example-quiz-title">
+                {titleFor(session.id, quiz)} · {label(mode)}
+              </h3>
 
-            {word && listening && (
-              <>
-                <p>{index + 1} / {quiz.words.length}</p>
-                {listening && (
-                  <button type="button" onClick={playAudio} disabled={!speech}>
-                    {label("PLAY_AUDIO")}
-                  </button>
-                )}
-                {listening && (
-                  <form onSubmit={submitAnswer}>
-                    <label>
-                      {label("HEARD_WORD")}
-                      <input value={answer} onChange={(event) => setAnswer(event.target.value)} required disabled={revealed} lang="en" />
-                    </label>
-                    <button type="submit" disabled={revealed}>{label("CHECK")}</button>
-                  </form>
-                )}
-                {revealed && listening && (
-                  <p role="status">
-                    {label(answer.trim().toLowerCase() === word.en.toLowerCase() ? "CORRECT" : "INCORRECT")}
+              {listening && !speech && (
+                <p role="status">{label("AUDIO_UNAVAILABLE")}</p>
+              )}
+
+              {mode === "preview" && (
+                <ul className="examples__words">
+                  {quiz.words.map((entry) => (
+                    <li key={entry.de}>
+                      <span lang="de">{entry.de}</span>
+                      <span lang="en">{entry.en}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {mode === "edit" && (
+                <form onSubmit={submitAnswer}>
+                  <label>
+                    {label("QUIZ_TITLE")}
+                    <input
+                      value={answer}
+                      onChange={(event) => setAnswer(event.target.value)}
+                      required
+                      maxLength={50}
+                    />
+                  </label>
+                  <button type="submit">{label("SAVE")}</button>
+                </form>
+              )}
+
+              {word && listening && (
+                <>
+                  <p>
+                    {index + 1} / {quiz.words.length}
                   </p>
-                )}
-                {revealed && <p lang="en">{word.en}</p>}
-                <button type="button" onClick={nextWord}>{label("NEXT")}</button>
-              </>
-            )}
-          </>
+                  {listening && (
+                    <button
+                      type="button"
+                      onClick={playAudio}
+                      disabled={!speech}
+                    >
+                      {label("PLAY_AUDIO")}
+                    </button>
+                  )}
+                  {listening && (
+                    <form onSubmit={submitAnswer}>
+                      <label>
+                        {label("HEARD_WORD")}
+                        <input
+                          value={answer}
+                          onChange={(event) => setAnswer(event.target.value)}
+                          required
+                          disabled={revealed}
+                          lang="en"
+                        />
+                      </label>
+                      <button type="submit" disabled={revealed}>
+                        {label("CHECK")}
+                      </button>
+                    </form>
+                  )}
+                  {revealed && listening && (
+                    <p role="status">
+                      {label(
+                        answer.trim().toLowerCase() === word.en.toLowerCase()
+                          ? "CORRECT"
+                          : "INCORRECT",
+                      )}
+                    </p>
+                  )}
+                  {revealed && <p lang="en">{word.en}</p>}
+                  <button type="button" onClick={nextWord}>
+                    {label("NEXT")}
+                  </button>
+                </>
+              )}
+            </>
+          )
         )}
       </dialog>
     </section>

@@ -1,5 +1,5 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import LearnQuizCard from "./LearnQuizCard/learn-quiz-card";
+import LearnQuizCard from "./learn-quiz-card";
 import { useEffect, useState } from "react";
 import useQuiz from "../../../../context/quiz/useQuiz";
 

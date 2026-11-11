@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Tooltip from "@mui/material/Tooltip";
 import ExampleLearnQuiz from "./ExampleLearnQuiz/example-learn-quiz";
+import ExamplePlayQuiz from "./ExamplePlayQuiz/example-play-quiz";
 import "./Examples.scss";
 
 const exampleQuizzes = {
@@ -53,7 +54,6 @@ export default function Examples() {
   const source = reverse ? "en" : "de";
   const target = reverse ? "de" : "en";
   const listening = mode === "listen";
-  const testing = mode === "test";
   const audio = mode === "audio" || mode === "audioReverse";
   const speech = window.speechSynthesis;
 
@@ -222,7 +222,7 @@ export default function Examples() {
 
       <dialog
         ref={dialogRef}
-        className={mode === "learn" ? "examples__learn-dialog" : "examples__dialog"}
+        className={mode === "learn" || mode === "test" ? "examples__quiz-dialog" : "examples__dialog"}
         aria-labelledby="example-quiz-title"
         onClose={() => {
           speech?.cancel();
@@ -235,6 +235,11 @@ export default function Examples() {
             words={quiz.words}
             onClose={() => dialogRef.current.close()}
             t={label}
+          />
+        ) : mode === "test" ? (
+          <ExamplePlayQuiz
+            title={titleFor(session.id, quiz)}
+            words={quiz.words}
           />
         ) : quiz && (
           <>
@@ -275,7 +280,7 @@ export default function Examples() {
               </form>
             )}
 
-            {word && (mode === "flashcards" || mode === "flashcardsReverse" || testing || listening) && (
+            {word && (mode === "flashcards" || mode === "flashcardsReverse" || listening) && (
               <>
                 <p>{index + 1} / {quiz.words.length}</p>
                 {listening && (
@@ -284,16 +289,16 @@ export default function Examples() {
                   </button>
                 )}
                 {!listening && <p lang={source}><strong>{word[source]}</strong></p>}
-                {(testing || listening) && (
+                {listening && (
                   <form onSubmit={submitAnswer}>
                     <label>
-                      {label(listening ? "HEARD_WORD" : "TRANSLATION")}
+                      {label("HEARD_WORD")}
                       <input value={answer} onChange={(event) => setAnswer(event.target.value)} required disabled={revealed} lang={target} />
                     </label>
                     <button type="submit" disabled={revealed}>{label("CHECK")}</button>
                   </form>
                 )}
-                {revealed && (testing || listening) && (
+                {revealed && listening && (
                   <p role="status">
                     {label(answer.trim().toLowerCase() === word[target].toLowerCase() ? "CORRECT" : "INCORRECT")}
                   </p>

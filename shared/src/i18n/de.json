@@ -9,6 +9,10 @@
       "LOGIN": "Anmelden"
     },
     "EXAMPLES": {
+      "JOB": "Beruf",
+      "HOLIDAY": "Urlaub",
+      "PREVIOUS_QUIZ": "Vorheriges Beispielquiz",
+      "NEXT_QUIZ": "Nächstes Beispielquiz",
       "START_AUDIO_LOOP": "Starten",
       "STOP_AUDIO_LOOP": "Stoppen",
       "HIDE_TRANSLATION": "Übersetzung ausblenden",

@@ -41,15 +41,42 @@
   // ========================================
 
   &__card {
+    --slider-control-width: 2.75rem;
+    --slider-control-gap: 1rem;
+
+    position: relative;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: calc(var(--slider-control-width) + var(--slider-control-gap));
+  }
+
+  &__slider-controls {
+    position: absolute;
+    inset: 0;
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    pointer-events: none;
+
+    button {
+      display: grid;
+      place-items: center;
+      width: var(--slider-control-width);
+      height: 2.75rem;
+      padding: 0;
+      border: 0.0625rem solid basic.$qw-border-color;
+      border-radius: basic.$qw-border-radius;
+      background: basic.$qw-fourth;
+      color: basic.$qw-primary;
+      font-size: 1.75rem;
+      line-height: 1;
+      cursor: pointer;
+      pointer-events: auto;
+    }
   }
 
   // Quiz cards and preview dialog
   &__quiz {
-    flex: 0 1 18.75rem;
     min-width: 0;
     padding: 1rem;
     border: 0.0625rem solid #d8d6e8;
@@ -196,10 +223,6 @@
       padding: 0 1.25rem;
     }
 
-    &__card {
-      gap: 1rem;
-    }
-
     &__title {
       font-size: 2rem;
     }
@@ -208,5 +231,14 @@
       font-size: 1rem;
     }
 
+    &__card {
+      --slider-control-width: 2rem;
+      --slider-control-gap: 0.25rem;
+    }
+
   }
+}
+
+.vjslider__slider {
+  gap: 1rem;
 }

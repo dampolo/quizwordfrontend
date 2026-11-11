@@ -9,6 +9,10 @@
       "LOGIN": "Log In"
     },
     "EXAMPLES": {
+      "JOB": "Job",
+      "HOLIDAY": "Holiday",
+      "PREVIOUS_QUIZ": "Previous example quiz",
+      "NEXT_QUIZ": "Next example quiz",
       "START_AUDIO_LOOP": "Start",
       "STOP_AUDIO_LOOP": "Stop",
       "HIDE_TRANSLATION": "Hide translation",

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Tooltip from "@mui/material/Tooltip";
 import ExampleLearnQuiz from "./ExampleLearnQuiz/example-learn-quiz";
@@ -7,8 +7,8 @@ import ExampleFlipCardQuiz from "./ExampleFlipCardQuiz/example-flip-card-quiz";
 import ExampleFlipCardQuizReverse from "./ExampleFlipCardQuizReverse/example-flip-card-quiz-reverse";
 import ExampleWordAudioLoop from "./ExampleWordAudioLoop/example-word-audio-loop";
 import ExampleWordAudioLoopReverse from "./ExampleWordAudioLoopReverse/example-word-audio-loop-reverse";
-import "./Examples.scss";
 import VJSlider from "vjslider/src/js/vjslider.js";
+import "./Examples.scss";
 
 const exampleQuizzes = {
   animals: {
@@ -41,11 +41,33 @@ const exampleQuizzes = {
       { de: "Gießkanne", en: "watering can" },
     ],
   },
+  job: {
+    title: "JOB",
+    words: [
+      { de: "Büro", en: "office" },
+      { de: "Kollege", en: "colleague" },
+      { de: "Besprechung", en: "meeting" },
+      { de: "Aufgabe", en: "task" },
+      { de: "Gehalt", en: "salary" },
+    ],
+  },
+  holiday: {
+    title: "HOLIDAY",
+    words: [
+      { de: "Strand", en: "beach" },
+      { de: "Koffer", en: "suitcase" },
+      { de: "Flughafen", en: "airport" },
+      { de: "Reisepass", en: "passport" },
+      { de: "Unterkunft", en: "accommodation" },
+    ],
+  },
 };
 
 export default function Examples() {
   const { t } = useTranslation();
   const dialogRef = useRef(null);
+  const sliderElement = useRef(null);
+  const slider = useRef(null);
   const [session, setSession] = useState(null);
   const [titles, setTitles] = useState({});
   const [index, setIndex] = useState(0);
@@ -68,9 +90,56 @@ export default function Examples() {
       : ExampleWordAudioLoop;
   const speech = window.speechSynthesis;
 
-  const instance = new VJSlider(sliderElement.current, {
-    numberOfVisibleSlides: 1,
-  });
+  useEffect(() => {
+    const phoneViewport = window.matchMedia("(max-width: 32rem)");
+    const tabletViewport = window.matchMedia("(max-width: 62rem)");
+
+    function getSlideCount() {
+      if (phoneViewport.matches) return 1;
+      return tabletViewport.matches ? 2 : 3;
+    }
+
+    let slideCount = getSlideCount();
+    const instance = new VJSlider(sliderElement.current, {
+      numberOfVisibleSlides: slideCount,
+    });
+    slider.current = instance;
+
+    function updateSlideCount() {
+      const nextSlideCount = getSlideCount();
+      if (nextSlideCount === slideCount) return;
+
+      slideCount = nextSlideCount;
+      instance.reload({ numberOfVisibleSlides: slideCount });
+    }
+
+    phoneViewport.addEventListener("change", updateSlideCount);
+    tabletViewport.addEventListener("change", updateSlideCount);
+    return () => {
+      phoneViewport.removeEventListener("change", updateSlideCount);
+      tabletViewport.removeEventListener("change", updateSlideCount);
+      instance.destroy();
+      slider.current = null;
+    };
+  }, [t]);
+
+  useEffect(() => {
+    // Keep the slider’s DOM copies in sync when an example title is edited.
+    for (const slide of sliderElement.current.querySelectorAll("[data-quiz-id]")) {
+      const id = slide.dataset.quizId;
+      const heading = slide.querySelector("h3");
+      const title = titles[id] ?? t("WEBSITE.EXAMPLES." + exampleQuizzes[id].title);
+      if (heading.textContent !== title) heading.textContent = title;
+    }
+  }, [titles, t]);
+
+  function handleCardClick(event) {
+    // VJSlider clones slides, so handle actions on the shared container.
+    const button = event.target.closest("button[data-quiz-action]");
+    if (!button) return;
+    const { quizId } = button.closest("[data-quiz-id]").dataset;
+    openExample(quizId, button.dataset.quizAction);
+  }
 
   function titleFor(id, example) {
     return titles[id] ?? label(example.title);
@@ -125,155 +194,167 @@ export default function Examples() {
 
         {/* Cards */}
         <div className="examples__card">
-          {Object.entries(exampleQuizzes).map(([id, example]) => (
-            <article className="examples__quiz" key={id}>
-              <header className="examples__quiz-heading">
-                <h3>{titleFor(id, example)}</h3>
-                <Tooltip title={label("edit")} arrow>
-                  <button
-                    type="button"
-                    aria-label={label("edit")}
-                    onClick={() => openExample(id, "edit")}
-                  >
-                    <img width={20} height={20} src="/assets/edit.svg" alt="" />
-                  </button>
-                </Tooltip>
-              </header>
+          <div className="vjslider" ref={sliderElement} onClick={handleCardClick}>
+            <div className="vjslider__slider">
+              {Object.entries(exampleQuizzes).map(([id, example]) => (
+                <article className="vjslider__slide examples__quiz" data-quiz-id={id} key={id}>
+                  <header className="examples__quiz-heading">
+                    <h3>{titleFor(id, example)}</h3>
+                    <Tooltip title={label("edit")} arrow>
+                      <button
+                        type="button"
+                        aria-label={label("edit")}
+                        data-quiz-action="edit"
+                      >
+                        <img width={20} height={20} src="/assets/edit.svg" alt="" />
+                      </button>
+                    </Tooltip>
+                  </header>
 
-              <div className="examples__actions">
-                <Tooltip title={label("learn")} placement="top" arrow>
-                  <button
-                    type="button"
-                    aria-label={label("learn")}
-                    onClick={() => openExample(id, "learn")}
-                  >
-                    <img
-                      width={40}
-                      height={40}
-                      src="/assets/learn-quiz.svg"
-                      alt=""
-                    />
-                  </button>
-                </Tooltip>
+                  <div className="examples__actions">
+                    <Tooltip title={label("learn")} placement="top" arrow>
+                      <button
+                        type="button"
+                        aria-label={label("learn")}
+                        data-quiz-action="learn"
+                      >
+                        <img
+                          width={40}
+                          height={40}
+                          src="/assets/learn-quiz.svg"
+                          alt=""
+                        />
+                      </button>
+                    </Tooltip>
 
-                <Tooltip title={label("test")} placement="top" arrow>
-                  <button
-                    type="button"
-                    aria-label={label("test")}
-                    onClick={() => openExample(id, "test")}
-                  >
-                    <img
-                      width={40}
-                      height={40}
-                      src="/assets/write.svg"
-                      alt=""
-                    />
-                  </button>
-                </Tooltip>
+                    <Tooltip title={label("test")} placement="top" arrow>
+                      <button
+                        type="button"
+                        aria-label={label("test")}
+                        data-quiz-action="test"
+                      >
+                        <img
+                          width={40}
+                          height={40}
+                          src="/assets/write.svg"
+                          alt=""
+                        />
+                      </button>
+                    </Tooltip>
 
-                <Tooltip title={label("preview")} placement="top" arrow>
-                  <button
-                    type="button"
-                    aria-label={label("preview")}
-                    onClick={() => openExample(id, "preview")}
-                  >
-                    <img
-                      width={40}
-                      height={40}
-                      src="/assets/preview-quiz.svg"
-                      alt=""
-                    />
-                  </button>
-                </Tooltip>
+                    <Tooltip title={label("preview")} placement="top" arrow>
+                      <button
+                        type="button"
+                        aria-label={label("preview")}
+                        data-quiz-action="preview"
+                      >
+                        <img
+                          width={40}
+                          height={40}
+                          src="/assets/preview-quiz.svg"
+                          alt=""
+                        />
+                      </button>
+                    </Tooltip>
 
-                <Tooltip title={label("flipcards")} placement="top" arrow>
-                  <button
-                    type="button"
-                    aria-label={label("flipcards")}
-                    onClick={() => openExample(id, "flipcards")}
-                  >
-                    <img
-                      width={40}
-                      height={40}
-                      src="/assets/flip-card.svg"
-                      alt=""
-                    />
-                  </button>
-                </Tooltip>
-              </div>
+                    <Tooltip title={label("flipcards")} placement="top" arrow>
+                      <button
+                        type="button"
+                        aria-label={label("flipcards")}
+                        data-quiz-action="flipcards"
+                      >
+                        <img
+                          width={40}
+                          height={40}
+                          src="/assets/flip-card.svg"
+                          alt=""
+                        />
+                      </button>
+                    </Tooltip>
+                  </div>
 
-              <div className="examples__actions">
-                <Tooltip title={label("audio")} placement="top" arrow>
-                  <button
-                    type="button"
-                    aria-label={label("audio")}
-                    onClick={() => openExample(id, "audio")}
-                  >
-                    <img
-                      width={40}
-                      height={40}
-                      src="/assets/repead.svg"
-                      alt=""
-                    />
-                  </button>
-                </Tooltip>
+                  <div className="examples__actions">
+                    <Tooltip title={label("audio")} placement="top" arrow>
+                      <button
+                        type="button"
+                        aria-label={label("audio")}
+                        data-quiz-action="audio"
+                      >
+                        <img
+                          width={40}
+                          height={40}
+                          src="/assets/repead.svg"
+                          alt=""
+                        />
+                      </button>
+                    </Tooltip>
 
-                <Tooltip title={label("listen")} placement="top" arrow>
-                  <button
-                    type="button"
-                    aria-label={label("listen")}
-                    onClick={() => openExample(id, "listen")}
-                  >
-                    <img width={40} height={40} src="/assets/hear.svg" alt="" />
-                  </button>
-                </Tooltip>
+                    <Tooltip title={label("listen")} placement="top" arrow>
+                      <button
+                        type="button"
+                        aria-label={label("listen")}
+                        data-quiz-action="listen"
+                      >
+                        <img width={40} height={40} src="/assets/hear.svg" alt="" />
+                      </button>
+                    </Tooltip>
 
-                <Tooltip
-                  title={label("flipcardsReverse")}
-                  placement="top"
-                  arrow
-                >
-                  <button
-                    type="button"
-                    aria-label={label("flipcardsReverse")}
-                    onClick={() => openExample(id, "flipcardsReverse")}
-                  >
-                    <img
-                      width={40}
-                      height={40}
-                      src="/assets/flip-card-reverse.svg"
-                      alt=""
-                    />
-                  </button>
-                </Tooltip>
+                    <Tooltip
+                      title={label("flipcardsReverse")}
+                      placement="top"
+                      arrow
+                    >
+                      <button
+                        type="button"
+                        aria-label={label("flipcardsReverse")}
+                        data-quiz-action="flipcardsReverse"
+                      >
+                        <img
+                          width={40}
+                          height={40}
+                          src="/assets/flip-card-reverse.svg"
+                          alt=""
+                        />
+                      </button>
+                    </Tooltip>
 
-                <Tooltip title={label("audioReverse")} placement="top" arrow>
-                  <button
-                    type="button"
-                    aria-label={label("audioReverse")}
-                    onClick={() => openExample(id, "audioReverse")}
-                  >
-                    <img
-                      width={40}
-                      height={40}
-                      src="/assets/repead-reverse.svg"
-                      alt=""
-                    />
-                  </button>
-                </Tooltip>
-              </div>
+                    <Tooltip title={label("audioReverse")} placement="top" arrow>
+                      <button
+                        type="button"
+                        aria-label={label("audioReverse")}
+                        data-quiz-action="audioReverse"
+                      >
+                        <img
+                          width={40}
+                          height={40}
+                          src="/assets/repead-reverse.svg"
+                          alt=""
+                        />
+                      </button>
+                    </Tooltip>
+                  </div>
 
-              <footer className="examples__quiz-footer">
-                <button
-                  type="button"
-                  onClick={() => openExample(id, "preview")}
-                >
-                  {label("WORD_COUNT", { count: example.words.length })}
-                </button>
-                <span>{label("LANGUAGES")}</span>
-              </footer>
-            </article>
-          ))}
+                  <footer className="examples__quiz-footer">
+                    <button
+                      type="button"
+                      data-quiz-action="preview"
+                    >
+                      {label("WORD_COUNT", { count: example.words.length })}
+                    </button>
+                    <span>{label("LANGUAGES")}</span>
+                  </footer>
+                </article>
+              ))}
+            </div>
+          </div>
+          <div className="examples__slider-controls">
+            <button type="button" aria-label={label("PREVIOUS_QUIZ")} onClick={() => slider.current?.prev()}>
+              <span aria-hidden="true">‹</span>
+            </button>
+            <button type="button" aria-label={label("NEXT_QUIZ")} onClick={() => slider.current?.next()}>
+              <span aria-hidden="true">›</span>
+            </button>
+          </div>
         </div>
       </div>
 

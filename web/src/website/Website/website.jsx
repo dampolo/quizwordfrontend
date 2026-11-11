@@ -59,16 +59,16 @@ function Website() {
               <div className="hero__floating-card">
                 <div className="hero__floating-top">
                   <div className="hero__avatars">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span />
+                    <span />
+                    <span />
                   </div>
 
                   <p>15k+ Learners online</p>
                 </div>
 
                 <div className="hero__progress">
-                  <div className="hero__progress-bar"></div>
+                  <div className="hero__progress-bar" />
                 </div>
               </div>
             </div>
@@ -93,7 +93,7 @@ function Website() {
             {/* Card 1 */}
             <div className="steps__single-card">
               <div className="steps__icon steps__icon--purple">
-                <img width="24" height="24" src="./assets/world.svg" alt="" />
+                <img width={24} height={24} src="./assets/world.svg" alt="" />
               </div>
 
               <h3 className="steps__card-title">
@@ -108,7 +108,7 @@ function Website() {
             {/* Card 2 */}
             <div className="steps__single-card">
               <div className="steps__icon steps__icon--green">
-                <img src="./assets/progress.svg" alt="" />
+                <img width={24} height={24} src="./assets/brain.svg" alt="" />
               </div>
 
               <h3 className="steps__card-title">
@@ -123,7 +123,7 @@ function Website() {
             {/* Card 3 */}
             <div className="steps__single-card">
               <div className="steps__icon steps__icon--orange">
-                <img src="./assets/progress.svg" alt="" />
+                <img width={24} height={24} src="./assets/progress.svg" alt="" />
               </div>
 
               <h3 className="steps__card-title">
@@ -144,11 +144,11 @@ function Website() {
         <div className="workflow__container">
           {/* Left Side */}
           <div className="workflow__video">
-            <img
+            {/* <img
               src="/images/tutorial.png"
               alt="Tutorial"
               className="workflow__image"
-            />
+            /> */}
 
             {/* Play Button */}
             <button className="workflow__play">▶</button>
@@ -196,7 +196,6 @@ function Website() {
                 <h3>{t("WEBSITE.HOW_TO_USE_IT.UNLOCK_YOUR_QUIZ.TITLE")}</h3>
 
                 <p>{t("WEBSITE.HOW_TO_USE_IT.UNLOCK_YOUR_QUIZ.DESCRIPTION")}</p>
-
               </div>
             </div>
           </div>
@@ -211,9 +210,7 @@ function Website() {
           {/* Content */}
           <h2 className="journey__title">{t("WEBSITE.CTA.TITLE")}</h2>
 
-          <p className="journey__text">
-            {t("WEBSITE.CTA.DESCRIPTION")}
-          </p>
+          <p className="journey__text">{t("WEBSITE.CTA.DESCRIPTION")}</p>
 
           <Link to="/create-account" className="journey__button">
             {t("WEBSITE.CTA.BUTTON")}

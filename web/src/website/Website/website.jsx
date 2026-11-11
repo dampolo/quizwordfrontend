@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import PreLoader from "../../components/PreLoader/PreLoader";
 import { useAuth } from "../../context/auth/useAuth";
+import Examples from "../Examples/Examples";
 import "./website.scss";
 import { Link, Navigate } from "react-router-dom";
 
@@ -201,6 +202,9 @@ function Website() {
           </div>
         </div>
       </section>
+
+      {/* Examples */}
+      <Examples />
 
       <section className="journey">
         <div className="journey__container">

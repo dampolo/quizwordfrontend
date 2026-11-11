@@ -1,37 +1,16 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import styles from "./learn-quiz.module.scss";
+import LearnQuizCard from "./LearnQuizCard/learn-quiz-card";
 import { useEffect, useState } from "react";
 import useQuiz from "../../../../context/quiz/useQuiz";
-import { Link } from "react-router-dom";
 
 function LearnQuiz() {
   const [quiz, setQuiz] = useState(null);
   const { id } = useParams();
   const { getQuizWords } = useQuiz();
-  const [currentQuestion, setCurrentQuestion] = useState(0);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const redirect = searchParams.get("redirect") === "true";
   const language = searchParams.get("language");
-  const totalQuestions = quiz?.concepts?.length ?? 0;
-  const questionNumber = totalQuestions ? currentQuestion + 1 : 0;
-
-  // You can learn in the infinity loop.
-  // I leave the code commented out and wait for user feedback.
-  function adjustCurrentQuestion() {
-    const isLastWord = currentQuestion === quiz.concepts.length - 1;
-    if (isLastWord && redirect) {
-      setCurrentQuestion(0);
-      // navigate(`/my-quiz/all-quizzes?language=${language}`);
-      return;
-    } else if (isLastWord) {
-      setCurrentQuestion(0);
-      // navigate(`/my-quiz/${id}/all-quiz-words?language=${language}`);
-      return;
-    }
-    setCurrentQuestion((prev) => prev + 1);
-  }
-
   useEffect(() => {
     async function loadData() {
       try {
@@ -54,40 +33,15 @@ function LearnQuiz() {
 
   return (
     <section className="play-quiz">
-      <div className={`${styles["quiz-card"]} ${styles["learn-card"]}`}>
-        <div className={styles.progress} role="progressbar"
-          aria-label="Quizfortschritt" aria-valuemin={0}
-          aria-valuemax={totalQuestions || 1} aria-valuenow={questionNumber}>
-          <span className={styles["progress__fill"]}
-            style={{ width: `${totalQuestions ? (questionNumber / totalQuestions) * 100 : 0}%` }} />
-        </div>
-        <span className={styles["quiz-card__quiz-name"]}>
-                    {quiz?.quiz_name}
-                  </span>
-        <button type="button" className={styles["quiz-card__cancel"]} onClick={cancel}>
-          <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
-        </button>
-        <div className={styles["quiz-card__header"]}>
-          <h1 className={styles["quiz-card__title-learn"]}>
-            {quiz?.concepts[currentQuestion].translations[0].word}
-          </h1>
-        </div>
-        <div className={styles["quiz-card__form"]}>
-          <span className={styles["quiz-card__line"]}></span>
-
-          <span className={styles["quiz-card__answer-wrapper-learn"]}>
-            {quiz?.concepts[currentQuestion].translations[1].word}
-          </span>
-        </div>
-
-        <button
-          type="button"
-          className="main-quiz-button"
-          onClick={adjustCurrentQuestion}
-        >
-          <span>Weiter</span>
-        </button>
-      </div>
+      <LearnQuizCard
+        key={id}
+        quizName={quiz?.quiz_name}
+        words={quiz?.concepts?.map(({ translations }) => ({
+          source: translations[0]?.word,
+          target: translations[1]?.word,
+        })) ?? []}
+        onClose={cancel}
+      />
     </section>
   );
 }

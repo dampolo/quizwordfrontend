@@ -212,6 +212,57 @@
     background: basic.$qw-primary;
     border-radius: 62.4375rem;
   }
+
+  // ========================================
+  // Responsive
+  // ========================================
+
+  @media (max-width: 62rem) {
+    &__image-wrapper {
+      display: none;
+    }
+
+    &__content {
+      max-width: 100%;
+      text-align: center;
+    }
+
+    &__buttons {
+      justify-content: center;
+    }
+
+    &__title {
+      font-size: 3.5rem;
+    }
+  }
+
+  @media (max-width: 37.5rem) {
+    padding: 3.75rem 0;
+
+    &__container {
+      padding: 0 1.25rem;
+    }
+
+    &__title {
+      font-size: 2.7rem;
+    }
+
+    &__description {
+      font-size: 1.05rem;
+    }
+
+    &__buttons {
+      flex-direction: column;
+    }
+
+    &__button {
+      width: 100%;
+    }
+
+    &__floating-card {
+      width: calc(100% - 1.875rem);
+    }
+  }
 }
 
 // ========================================
@@ -219,8 +270,8 @@
 // ========================================
 
 .steps {
-  width: 100%;
   background: basic.$qw-fifth;
+  width: 100%;
   padding: 7.5rem 0;
 
   &__container {
@@ -323,6 +374,40 @@
     font-size: 1.05rem;
     line-height: 1.9;
     color: basic.$qw-body-text-color;
+  }
+
+  @media (max-width: 62rem) {
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__title {
+      font-size: 2.5rem;
+    }
+  }
+
+  @media (max-width: 37.5rem) {
+    padding: 5rem 0;
+
+    &__container {
+      padding: 0 1.25rem;
+    }
+
+    &__card {
+      padding: 2rem 1.625rem;
+    }
+
+    &__title {
+      font-size: 2rem;
+    }
+
+    &__subtitle {
+      font-size: 1rem;
+    }
+
+    &__card-title {
+      font-size: 1.5rem;
+    }
   }
 }
 
@@ -457,6 +542,17 @@
       max-width: 26.25rem;
     }
   }
+
+  @media (max-width: 62rem) {
+    &__container {
+      flex-direction: column;
+      gap: 3.75rem;
+    }
+
+    &__title {
+      font-size: 2.5rem;
+    }
+  }
 }
 
 // ========================================
@@ -468,7 +564,7 @@
   justify-content: center;
   width: 100%;
   padding: 7.5rem 0;
-  background: basic.$qw-fifth;
+  background: basic.$qw-third;
 
   &__container {
     position: relative;
@@ -542,108 +638,8 @@
       box-shadow: 0 0.875rem 2.1875rem rgba(0, 0, 0, 0.12);
     }
   }
-}
 
-// ========================================
-// Responsive
-// ========================================
-
-@media (max-width: 62rem) {
-  .hero {
-    &__image-wrapper {
-      display: none;
-    }
-
-    &__content {
-      max-width: 100%;
-      text-align: center;
-    }
-
-    &__buttons {
-      justify-content: center;
-    }
-
-    &__title {
-      font-size: 3.5rem;
-    }
-  }
-
-  .steps {
-    &__grid {
-      grid-template-columns: 1fr;
-    }
-
-    &__title {
-      font-size: 2.5rem;
-    }
-  }
-
-  .workflow {
-    &__container {
-      flex-direction: column;
-      gap: 3.75rem;
-    }
-
-    &__title {
-      font-size: 2.5rem;
-    }
-  }
-}
-
-@media (max-width: 37.5rem) {
-  .hero {
-    padding: 3.75rem 0;
-
-    &__container {
-      padding: 0 1.25rem;
-    }
-
-    &__title {
-      font-size: 2.7rem;
-    }
-
-    &__description {
-      font-size: 1.05rem;
-    }
-
-    &__buttons {
-      flex-direction: column;
-    }
-
-    &__button {
-      width: 100%;
-    }
-
-    &__floating-card {
-      width: calc(100% - 1.875rem);
-    }
-  }
-
-  .steps {
-    padding: 5rem 0;
-
-    &__container {
-      padding: 0 1.25rem;
-    }
-
-    &__card {
-      padding: 2rem 1.625rem;
-    }
-
-    &__title {
-      font-size: 2rem;
-    }
-
-    &__subtitle {
-      font-size: 1rem;
-    }
-
-    &__card-title {
-      font-size: 1.5rem;
-    }
-  }
-
-  .journey {
+  @media (max-width: 37.5rem) {
     padding: 5rem 1.25rem;
 
     &__container {

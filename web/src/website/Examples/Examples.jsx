@@ -105,10 +105,6 @@ export default function Examples() {
     });
     slider.current = instance;
 
-    const autoplayId = window.setInterval(() => {
-      instance.next();
-    }, 4000);
-
     function updateSlideCount() {
       const nextSlideCount = getSlideCount();
       if (nextSlideCount === slideCount) return;
@@ -122,11 +118,23 @@ export default function Examples() {
     return () => {
       phoneViewport.removeEventListener("change", updateSlideCount);
       tabletViewport.removeEventListener("change", updateSlideCount);
-      window.clearInterval(autoplayId);
       instance.destroy();
       slider.current = null;
     };
   }, [t]);
+
+  useEffect(() => {
+    if (session) return;
+
+    const sliderNode = sliderElement.current;
+    const autoplayId = window.setInterval(() => {
+      if (sliderNode.matches(":hover")) return;
+
+      slider.current?.next();
+    }, 4000);
+
+    return () => window.clearInterval(autoplayId);
+  }, [session]);
 
   useEffect(() => {
     // Keep the slider’s DOM copies in sync when an example title is edited.

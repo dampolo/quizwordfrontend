@@ -5,6 +5,8 @@ import ExampleLearnQuiz from "./ExampleLearnQuiz/example-learn-quiz";
 import ExamplePlayQuiz from "./ExamplePlayQuiz/example-play-quiz";
 import ExampleFlipCardQuiz from "./ExampleFlipCardQuiz/example-flip-card-quiz";
 import ExampleFlipCardQuizReverse from "./ExampleFlipCardQuizReverse/example-flip-card-quiz-reverse";
+import ExampleWordAudioLoop from "./ExampleWordAudioLoop/example-word-audio-loop";
+import ExampleWordAudioLoopReverse from "./ExampleWordAudioLoopReverse/example-word-audio-loop-reverse";
 import "./Examples.scss";
 
 const exampleQuizzes = {
@@ -54,11 +56,9 @@ export default function Examples() {
   const word = quiz?.words[index];
   const flipcards = mode === "flipcards" || mode === "flipcardsReverse";
   const FlipCardQuiz = mode === "flipcardsReverse" ? ExampleFlipCardQuizReverse : ExampleFlipCardQuiz;
-  const reverse = mode === "audioReverse";
-  const source = reverse ? "en" : "de";
-  const target = reverse ? "de" : "en";
   const listening = mode === "listen";
   const audio = mode === "audio" || mode === "audioReverse";
+  const AudioLoop = mode === "audioReverse" ? ExampleWordAudioLoopReverse : ExampleWordAudioLoop;
   const speech = window.speechSynthesis;
 
   function titleFor(id, example) {
@@ -78,15 +78,9 @@ export default function Examples() {
   function playAudio() {
     if (!speech) return;
     speech.cancel();
-    const entries = audio ? quiz.words : [word];
-    const languages = audio ? [source, target] : [target];
-    for (const entry of entries) {
-      for (const language of languages) {
-        const utterance = new SpeechSynthesisUtterance(entry[language]);
-        utterance.lang = language === "de" ? "de-DE" : "en-GB";
-        speech.speak(utterance);
-      }
-    }
+    const utterance = new SpeechSynthesisUtterance(word.en);
+    utterance.lang = "en-GB";
+    speech.speak(utterance);
   }
 
   function nextWord() {
@@ -236,7 +230,7 @@ export default function Examples() {
 
       <dialog
         ref={dialogRef}
-        className={mode === "learn" || mode === "test" ? "examples__quiz-dialog" : "examples__dialog"}
+        className={mode === "learn" || mode === "test" || audio ? "examples__quiz-dialog" : "examples__dialog"}
         aria-labelledby="example-quiz-title"
         onClose={() => {
           speech?.cancel();
@@ -255,6 +249,12 @@ export default function Examples() {
             title={titleFor(session.id, quiz)}
             words={quiz.words}
           />
+        ) : audio ? (
+          <AudioLoop
+            title={titleFor(session.id, quiz)}
+            words={quiz.words}
+            onClose={() => dialogRef.current.close()}
+          />
         ) : quiz && !flipcards && (
           <>
             <form method="dialog" className="examples__close">
@@ -264,24 +264,17 @@ export default function Examples() {
             </form>
             <h3 id="example-quiz-title">{titleFor(session.id, quiz)} · {label(mode)}</h3>
 
-            {(audio || listening) && !speech && <p role="status">{label("AUDIO_UNAVAILABLE")}</p>}
+            {listening && !speech && <p role="status">{label("AUDIO_UNAVAILABLE")}</p>}
 
-            {(mode === "preview" || audio) && (
-              <>
-                {audio && (
-                  <button type="button" onClick={playAudio} disabled={!speech}>
-                    {label("PLAY_AUDIO")}
-                  </button>
-                )}
-                <ul className="examples__words">
-                  {quiz.words.map((entry) => (
-                    <li key={entry.de}>
-                      <span lang={source}>{entry[source]}</span>
-                      <span lang={target}>{entry[target]}</span>
-                    </li>
-                  ))}
-                </ul>
-              </>
+            {mode === "preview" && (
+              <ul className="examples__words">
+                {quiz.words.map((entry) => (
+                  <li key={entry.de}>
+                    <span lang="de">{entry.de}</span>
+                    <span lang="en">{entry.en}</span>
+                  </li>
+                ))}
+              </ul>
             )}
 
             {mode === "edit" && (
@@ -306,17 +299,17 @@ export default function Examples() {
                   <form onSubmit={submitAnswer}>
                     <label>
                       {label("HEARD_WORD")}
-                      <input value={answer} onChange={(event) => setAnswer(event.target.value)} required disabled={revealed} lang={target} />
+                      <input value={answer} onChange={(event) => setAnswer(event.target.value)} required disabled={revealed} lang="en" />
                     </label>
                     <button type="submit" disabled={revealed}>{label("CHECK")}</button>
                   </form>
                 )}
                 {revealed && listening && (
                   <p role="status">
-                    {label(answer.trim().toLowerCase() === word[target].toLowerCase() ? "CORRECT" : "INCORRECT")}
+                    {label(answer.trim().toLowerCase() === word.en.toLowerCase() ? "CORRECT" : "INCORRECT")}
                   </p>
                 )}
-                {revealed && <p lang={target}>{word[target]}</p>}
+                {revealed && <p lang="en">{word.en}</p>}
                 <button type="button" onClick={nextWord}>{label("NEXT")}</button>
               </>
             )}

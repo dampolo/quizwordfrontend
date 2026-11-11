@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import Tooltip from "@mui/material/Tooltip";
 import ExampleLearnQuiz from "./ExampleLearnQuiz/example-learn-quiz";
 import ExamplePlayQuiz from "./ExamplePlayQuiz/example-play-quiz";
+import ExampleFlipCardQuiz from "./ExampleFlipCardQuiz/example-flip-card-quiz";
+import ExampleFlipCardQuizReverse from "./ExampleFlipCardQuizReverse/example-flip-card-quiz-reverse";
 import "./Examples.scss";
 
 const exampleQuizzes = {
@@ -50,7 +52,9 @@ export default function Examples() {
   const quiz = session && exampleQuizzes[session.id];
   const mode = session?.mode;
   const word = quiz?.words[index];
-  const reverse = mode === "flashcardsReverse" || mode === "audioReverse";
+  const flipcards = mode === "flipcards" || mode === "flipcardsReverse";
+  const FlipCardQuiz = mode === "flipcardsReverse" ? ExampleFlipCardQuizReverse : ExampleFlipCardQuiz;
+  const reverse = mode === "audioReverse";
   const source = reverse ? "en" : "de";
   const target = reverse ? "de" : "en";
   const listening = mode === "listen";
@@ -66,7 +70,9 @@ export default function Examples() {
     setIndex(0);
     setRevealed(false);
     setAnswer(mode === "edit" ? titleFor(id, exampleQuizzes[id]) : "");
-    dialogRef.current.showModal();
+    if (mode !== "flipcards" && mode !== "flipcardsReverse") {
+      dialogRef.current.showModal();
+    }
   }
 
   function playAudio() {
@@ -156,11 +162,11 @@ export default function Examples() {
                   </button>
                 </Tooltip>
 
-                <Tooltip title={label("flashcards")} placement="top" arrow>
+                <Tooltip title={label("flipcards")} placement="top" arrow>
                   <button
                     type="button"
-                    aria-label={label("flashcards")}
-                    onClick={() => openExample(id, "flashcards")}
+                    aria-label={label("flipcards")}
+                    onClick={() => openExample(id, "flipcards")}
                   >
                     <img width={40} height={40} src="/assets/flip-card.svg" alt="" />
                   </button>
@@ -188,11 +194,11 @@ export default function Examples() {
                   </button>
                 </Tooltip>
 
-                <Tooltip title={label("flashcardsReverse")} placement="top" arrow>
+                <Tooltip title={label("flipcardsReverse")} placement="top" arrow>
                   <button
                     type="button"
-                    aria-label={label("flashcardsReverse")}
-                    onClick={() => openExample(id, "flashcardsReverse")}
+                    aria-label={label("flipcardsReverse")}
+                    onClick={() => openExample(id, "flipcardsReverse")}
                   >
                     <img width={40} height={40} src="/assets/flip-card-reverse.svg" alt="" />
                   </button>
@@ -220,6 +226,14 @@ export default function Examples() {
         </div>
       </div>
 
+      {flipcards && (
+        <FlipCardQuiz
+          title={titleFor(session.id, quiz)}
+          words={quiz.words}
+          onClose={() => setSession(null)}
+        />
+      )}
+
       <dialog
         ref={dialogRef}
         className={mode === "learn" || mode === "test" ? "examples__quiz-dialog" : "examples__dialog"}
@@ -241,7 +255,7 @@ export default function Examples() {
             title={titleFor(session.id, quiz)}
             words={quiz.words}
           />
-        ) : quiz && (
+        ) : quiz && !flipcards && (
           <>
             <form method="dialog" className="examples__close">
               <button aria-label={label("CLOSE")}>
@@ -280,7 +294,7 @@ export default function Examples() {
               </form>
             )}
 
-            {word && (mode === "flashcards" || mode === "flashcardsReverse" || listening) && (
+            {word && listening && (
               <>
                 <p>{index + 1} / {quiz.words.length}</p>
                 {listening && (
@@ -288,7 +302,6 @@ export default function Examples() {
                     {label("PLAY_AUDIO")}
                   </button>
                 )}
-                {!listening && <p lang={source}><strong>{word[source]}</strong></p>}
                 {listening && (
                   <form onSubmit={submitAnswer}>
                     <label>
@@ -304,9 +317,6 @@ export default function Examples() {
                   </p>
                 )}
                 {revealed && <p lang={target}>{word[target]}</p>}
-                {!revealed && (mode === "flashcards" || mode === "flashcardsReverse") && (
-                  <button type="button" onClick={() => setRevealed(true)}>{label("REVEAL")}</button>
-                )}
                 <button type="button" onClick={nextWord}>{label("NEXT")}</button>
               </>
             )}

@@ -1,0 +1,25 @@
+.example-flip-card {
+  padding: 1rem;
+
+  &:focus {
+    outline: none;
+  }
+  & &__inner {
+    display: grid;
+    margin: 0;
+  }
+
+  & &__face {
+    position: relative;
+    grid-area: 1 / 1;
+    top: auto;
+    height: auto;
+    min-width: 0;
+    padding-inline: clamp(1.25rem, 6vw, 3rem);
+
+    h2 {
+      overflow-wrap: anywhere;
+      max-width: 100%;
+    }
+  }
+}

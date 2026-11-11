@@ -105,6 +105,10 @@ export default function Examples() {
     });
     slider.current = instance;
 
+    const autoplayId = window.setInterval(() => {
+      instance.next();
+    }, 4000);
+
     function updateSlideCount() {
       const nextSlideCount = getSlideCount();
       if (nextSlideCount === slideCount) return;
@@ -118,6 +122,7 @@ export default function Examples() {
     return () => {
       phoneViewport.removeEventListener("change", updateSlideCount);
       tabletViewport.removeEventListener("change", updateSlideCount);
+      window.clearInterval(autoplayId);
       instance.destroy();
       slider.current = null;
     };
@@ -125,10 +130,13 @@ export default function Examples() {
 
   useEffect(() => {
     // Keep the slider’s DOM copies in sync when an example title is edited.
-    for (const slide of sliderElement.current.querySelectorAll("[data-quiz-id]")) {
+    for (const slide of sliderElement.current.querySelectorAll(
+      "[data-quiz-id]",
+    )) {
       const id = slide.dataset.quizId;
       const heading = slide.querySelector("h3");
-      const title = titles[id] ?? t("WEBSITE.EXAMPLES." + exampleQuizzes[id].title);
+      const title =
+        titles[id] ?? t("WEBSITE.EXAMPLES." + exampleQuizzes[id].title);
       if (heading.textContent !== title) heading.textContent = title;
     }
   }, [titles, t]);
@@ -194,10 +202,18 @@ export default function Examples() {
 
         {/* Cards */}
         <div className="examples__card">
-          <div className="vjslider" ref={sliderElement} onClick={handleCardClick}>
+          <div
+            className="vjslider"
+            ref={sliderElement}
+            onClick={handleCardClick}
+          >
             <div className="vjslider__slider">
               {Object.entries(exampleQuizzes).map(([id, example]) => (
-                <article className="vjslider__slide examples__quiz" data-quiz-id={id} key={id}>
+                <article
+                  className="vjslider__slide examples__quiz"
+                  data-quiz-id={id}
+                  key={id}
+                >
                   <header className="examples__quiz-heading">
                     <h3>{titleFor(id, example)}</h3>
                     <Tooltip title={label("edit")} arrow>
@@ -206,7 +222,12 @@ export default function Examples() {
                         aria-label={label("edit")}
                         data-quiz-action="edit"
                       >
-                        <img width={20} height={20} src="/assets/edit.svg" alt="" />
+                        <img
+                          width={20}
+                          height={20}
+                          src="/assets/edit.svg"
+                          alt=""
+                        />
                       </button>
                     </Tooltip>
                   </header>
@@ -295,7 +316,12 @@ export default function Examples() {
                         aria-label={label("listen")}
                         data-quiz-action="listen"
                       >
-                        <img width={40} height={40} src="/assets/hear.svg" alt="" />
+                        <img
+                          width={40}
+                          height={40}
+                          src="/assets/hear.svg"
+                          alt=""
+                        />
                       </button>
                     </Tooltip>
 
@@ -318,7 +344,11 @@ export default function Examples() {
                       </button>
                     </Tooltip>
 
-                    <Tooltip title={label("audioReverse")} placement="top" arrow>
+                    <Tooltip
+                      title={label("audioReverse")}
+                      placement="top"
+                      arrow
+                    >
                       <button
                         type="button"
                         aria-label={label("audioReverse")}
@@ -335,10 +365,7 @@ export default function Examples() {
                   </div>
 
                   <footer className="examples__quiz-footer">
-                    <button
-                      type="button"
-                      data-quiz-action="preview"
-                    >
+                    <button type="button" data-quiz-action="preview">
                       {label("WORD_COUNT", { count: example.words.length })}
                     </button>
                     <span>{label("LANGUAGES")}</span>
@@ -348,10 +375,18 @@ export default function Examples() {
             </div>
           </div>
           <div className="examples__slider-controls">
-            <button type="button" aria-label={label("PREVIOUS_QUIZ")} onClick={() => slider.current?.prev()}>
+            <button
+              type="button"
+              aria-label={label("PREVIOUS_QUIZ")}
+              onClick={() => slider.current?.prev()}
+            >
               <span aria-hidden="true">‹</span>
             </button>
-            <button type="button" aria-label={label("NEXT_QUIZ")} onClick={() => slider.current?.next()}>
+            <button
+              type="button"
+              aria-label={label("NEXT_QUIZ")}
+              onClick={() => slider.current?.next()}
+            >
               <span aria-hidden="true">›</span>
             </button>
           </div>

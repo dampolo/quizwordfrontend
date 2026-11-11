@@ -57,6 +57,7 @@
     align-items: center;
     justify-content: space-between;
     pointer-events: none;
+    inset-inline: calc(var(--slider-control-width) + var(--slider-control-gap) - 1rem);
 
     button {
       display: grid;

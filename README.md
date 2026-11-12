@@ -5,6 +5,10 @@
 | Web (`./web`) | Vite 7.2.5 (`rolldown-vite`), React 19.2.3 |
 | Mobile (`./mobile`) | Expo SDK 58 (`expo` 58.0.17), React Native 0.88.0, React 19.3.0 |
 
+## Backend
+
+The backend for this project is available in a separate GitHub repository. [Quizword backend](https://github.com/dampolo/quizwordbackend)
+
 ## Clone the repository
 
 Run these commands from the directory where you want to keep the project. The clone URL uses SSH, so your GitHub SSH key needs access to the repository.

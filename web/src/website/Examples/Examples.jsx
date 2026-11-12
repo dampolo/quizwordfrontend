@@ -205,11 +205,14 @@ export default function Examples() {
       case "preview":
         return (
           <>
-            <form method="dialog">
-              <button className="examples__preview-close" aria-label={label("CLOSE")}>
-                <img width={25} height={25} src="/assets/xbox.svg" alt="" />
-              </button>
-            </form>
+            <button
+              type="button"
+              className="examples__preview-close"
+              aria-label={label("CLOSE")}
+              onClick={() => dialogRef.current.close()}
+            >
+              <img width={25} height={25} src="/assets/xbox.svg" alt="" />
+            </button>
             <div className="examples__preview-list">
               <h2 id="example-quiz-title" className="examples__preview-heading">
                 {titleFor(session.id, quiz)} — {label("preview")}

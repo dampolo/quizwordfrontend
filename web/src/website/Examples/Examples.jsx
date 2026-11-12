@@ -199,6 +199,140 @@ export default function Examples() {
     setRevealed(true);
   }
 
+  function renderDialogContent() {
+    switch (mode) {
+      case "learn":
+        return (
+          <ExampleLearnQuiz
+            title={titleFor(session.id, quiz)}
+            words={quiz.words}
+            onClose={() => dialogRef.current.close()}
+            t={label}
+          />
+        );
+      case "test":
+        return (
+          <ExamplePlayQuiz
+            title={titleFor(session.id, quiz)}
+            words={quiz.words}
+          />
+        );
+      case "audio":
+      case "audioReverse":
+        return (
+          <AudioLoop
+            title={titleFor(session.id, quiz)}
+            words={quiz.words}
+            onClose={() => dialogRef.current.close()}
+          />
+        );
+      case "preview":
+        return (
+          <>
+            <form method="dialog">
+              <button className="examples__preview-close" aria-label={label("CLOSE")}>
+                <img width={25} height={25} src="/assets/xbox.svg" alt="" />
+              </button>
+            </form>
+            <div className="examples__preview-list">
+              <h2 id="example-quiz-title" className="examples__preview-heading">
+                {titleFor(session.id, quiz)} — {label("preview")}
+              </h2>
+              {quiz.words.map((entry) => (
+                <div className="examples__preview-row" key={entry.de}>
+                  <h3 lang="de">{entry.de}</h3>
+                  <span aria-hidden="true">→</span>
+                  <p lang="en">{entry.en}</p>
+                </div>
+              ))}
+            </div>
+          </>
+        );
+      case "edit":
+      case "listen":
+        return (
+          <>
+            <form method="dialog" className="examples__close">
+              <button aria-label={label("CLOSE")}>
+                <img width={25} height={25} src="/assets/xbox.svg" alt="" />
+              </button>
+            </form>
+            <h3 id="example-quiz-title">
+              {titleFor(session.id, quiz)} · {label(mode)}
+            </h3>
+
+            {listening && !speech && (
+              <p role="status">{label("AUDIO_UNAVAILABLE")}</p>
+            )}
+
+            {mode === "edit" && (
+              <form onSubmit={submitAnswer}>
+                <label>
+                  {label("QUIZ_TITLE")}
+                  <input
+                    value={answer}
+                    onChange={(event) => setAnswer(event.target.value)}
+                    required
+                    maxLength={50}
+                  />
+                </label>
+                <button type="submit">{label("SAVE")}</button>
+              </form>
+            )}
+
+            {word && listening && (
+              <>
+                <p>
+                  {index + 1} / {quiz.words.length}
+                </p>
+                {listening && (
+                  <button
+                    type="button"
+                    onClick={playAudio}
+                    disabled={!speech}
+                  >
+                    {label("PLAY_AUDIO")}
+                  </button>
+                )}
+                {listening && (
+                  <form onSubmit={submitAnswer}>
+                    <label>
+                      {label("HEARD_WORD")}
+                      <input
+                        value={answer}
+                        onChange={(event) => setAnswer(event.target.value)}
+                        required
+                        disabled={revealed}
+                        lang="en"
+                      />
+                    </label>
+                    <button type="submit" disabled={revealed}>
+                      {label("CHECK")}
+                    </button>
+                  </form>
+                )}
+                {revealed && listening && (
+                  <p role="status">
+                    {label(
+                      answer.trim().toLowerCase() === word.en.toLowerCase()
+                        ? "CORRECT"
+                        : "INCORRECT",
+                    )}
+                  </p>
+                )}
+                {revealed && <p lang="en">{word.en}</p>}
+                <button type="button" onClick={nextWord}>
+                  {label("NEXT")}
+                </button>
+              </>
+            )}
+          </>
+        );
+      default:
+        return null;
+    }
+  }
+
   return (
     <section className="examples" id="examples">
       <div className="examples__container">
@@ -424,125 +558,7 @@ export default function Examples() {
           setSession(null);
         }}
       >
-        {mode === "learn" ? (
-          <ExampleLearnQuiz
-            title={titleFor(session.id, quiz)}
-            words={quiz.words}
-            onClose={() => dialogRef.current.close()}
-            t={label}
-          />
-        ) : mode === "test" ? (
-          <ExamplePlayQuiz
-            title={titleFor(session.id, quiz)}
-            words={quiz.words}
-          />
-        ) : audio ? (
-          <AudioLoop
-            title={titleFor(session.id, quiz)}
-            words={quiz.words}
-            onClose={() => dialogRef.current.close()}
-          />
-        ) : mode === "preview" ? (
-          <>
-            <form method="dialog">
-              <button className="examples__preview-close" aria-label={label("CLOSE")}>
-                <img width={25} height={25} src="/assets/xbox.svg" alt="" />
-              </button>
-            </form>
-            <div className="examples__preview-list">
-              <h2 id="example-quiz-title" className="examples__preview-heading">
-                {titleFor(session.id, quiz)} — {label("preview")}
-              </h2>
-              {quiz.words.map((entry) => (
-                <div className="examples__preview-row" key={entry.de}>
-                  <h3 lang="de">{entry.de}</h3>
-                  <span aria-hidden="true">→</span>
-                  <p lang="en">{entry.en}</p>
-                </div>
-              ))}
-            </div>
-          </>
-        ) : (
-          quiz &&
-          !flipcards && (
-            <>
-              <form method="dialog" className="examples__close">
-                <button aria-label={label("CLOSE")}>
-                  <img width={25} height={25} src="/assets/xbox.svg" alt="" />
-                </button>
-              </form>
-              <h3 id="example-quiz-title">
-                {titleFor(session.id, quiz)} · {label(mode)}
-              </h3>
-
-              {listening && !speech && (
-                <p role="status">{label("AUDIO_UNAVAILABLE")}</p>
-              )}
-
-              {mode === "edit" && (
-                <form onSubmit={submitAnswer}>
-                  <label>
-                    {label("QUIZ_TITLE")}
-                    <input
-                      value={answer}
-                      onChange={(event) => setAnswer(event.target.value)}
-                      required
-                      maxLength={50}
-                    />
-                  </label>
-                  <button type="submit">{label("SAVE")}</button>
-                </form>
-              )}
-
-              {word && listening && (
-                <>
-                  <p>
-                    {index + 1} / {quiz.words.length}
-                  </p>
-                  {listening && (
-                    <button
-                      type="button"
-                      onClick={playAudio}
-                      disabled={!speech}
-                    >
-                      {label("PLAY_AUDIO")}
-                    </button>
-                  )}
-                  {listening && (
-                    <form onSubmit={submitAnswer}>
-                      <label>
-                        {label("HEARD_WORD")}
-                        <input
-                          value={answer}
-                          onChange={(event) => setAnswer(event.target.value)}
-                          required
-                          disabled={revealed}
-                          lang="en"
-                        />
-                      </label>
-                      <button type="submit" disabled={revealed}>
-                        {label("CHECK")}
-                      </button>
-                    </form>
-                  )}
-                  {revealed && listening && (
-                    <p role="status">
-                      {label(
-                        answer.trim().toLowerCase() === word.en.toLowerCase()
-                          ? "CORRECT"
-                          : "INCORRECT",
-                      )}
-                    </p>
-                  )}
-                  {revealed && <p lang="en">{word.en}</p>}
-                  <button type="button" onClick={nextWord}>
-                    {label("NEXT")}
-                  </button>
-                </>
-              )}
-            </>
-          )
-        )}
+        {renderDialogContent()}
       </dialog>
     </section>
   );

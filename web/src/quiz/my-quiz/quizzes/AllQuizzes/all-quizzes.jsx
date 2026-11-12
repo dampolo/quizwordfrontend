@@ -346,6 +346,8 @@ function Quizzes() {
         message={message}
         onSubmit={handleEditQuiz}
       />
+
+      {/* PREVIEW */}
       <dialog
         ref={previewQuizRef}
         className={styles["preview-quiz"]}
@@ -394,6 +396,8 @@ function Quizzes() {
           )}
         </div>
       </dialog>
+          {/* PREVIEW Ende*/}
+
     </section>
   );
 }

@@ -2,16 +2,26 @@ import { useId, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "../../../quiz/my-quiz/quizzes/PlayQuiz/play-quiz.module.scss";
 
-export default function ExamplePlayQuiz({ title, words }) {
-  const { t } = useTranslation();
+export default function ExamplePlayQuiz({
+  title,
+  words,
+  sourceLanguage = "de",
+  targetLanguage = "en",
+}) {
+  const { t, i18n } = useTranslation();
   const inputId = useId();
   const hintId = useId();
   const [answer, setAnswer] = useState("");
   const [answers, setAnswers] = useState([]);
   const [hint, setHint] = useState(false);
   const word = words[answers.length];
+  const correctAnswer = word?.[targetLanguage];
   const questionNumber = Math.min(answers.length + 1, words.length);
   const label = (key, options) => t("WEBSITE.EXAMPLES." + key, options);
+  const languageNames = new Intl.DisplayNames(i18n.resolvedLanguage, {
+    type: "language",
+  });
+  const targetName = languageNames.of(targetLanguage);
 
   function submitAnswer(event) {
     event.preventDefault();
@@ -21,7 +31,7 @@ export default function ExamplePlayQuiz({ title, words }) {
     setAnswers([...answers, {
       word,
       submittedAnswer,
-      correct: submittedAnswer.toLowerCase() === word.en.toLowerCase(),
+      correct: submittedAnswer.toLowerCase() === correctAnswer.toLowerCase(),
     }]);
     setAnswer("");
     setHint(false);
@@ -42,7 +52,9 @@ export default function ExamplePlayQuiz({ title, words }) {
           style={{ width: (questionNumber / words.length) * 100 + "%" }}
         />
       </div>
-      <span className={styles["quiz-card__languages"]}>{label("LANGUAGES")}</span>
+      <span className={styles["quiz-card__languages"]}>
+        {languageNames.of(sourceLanguage)} / {targetName}
+      </span>
       <span id="example-quiz-title" className={styles["quiz-card__quiz-name"]}>
         {title}
       </span>
@@ -55,14 +67,18 @@ export default function ExamplePlayQuiz({ title, words }) {
       {word ? (
         <>
           <div className={styles["quiz-card__header"]}>
-            <h2 className={styles["quiz-card__title"]} lang="de">{word.de}</h2>
+            <h2 className={styles["quiz-card__title"]} lang={sourceLanguage}>
+              {word[sourceLanguage]}
+            </h2>
           </div>
           <label htmlFor={inputId} className={styles["quiz-card__subtitle"]}>
-            {label("TRANSLATION")}
+            {targetLanguage === "en"
+              ? label("TRANSLATION")
+              : label("TARGET_TRANSLATION", { language: targetName })}
           </label>
           <div className={styles["hint-container"]}>
             <div id={hintId} className={styles[hint ? "show-hint" : "hide-hint"]}>
-              <p className={styles["hint-text"]}>{label("FIRST_LETTER", { letter: word.en[0] })}</p>
+              <p className={styles["hint-text"]}>{label("FIRST_LETTER", { letter: correctAnswer[0] })}</p>
             </div>
           </div>
           <form className={styles["quiz-card__form"]} onSubmit={submitAnswer}>
@@ -75,7 +91,7 @@ export default function ExamplePlayQuiz({ title, words }) {
                 aria-describedby={hint ? hintId : undefined}
                 autoComplete="off"
                 spellCheck={false}
-                lang="en"
+                lang={targetLanguage}
                 required
               />
               <button
@@ -94,7 +110,7 @@ export default function ExamplePlayQuiz({ title, words }) {
               className={"main-quiz-button " + styles["play-button"]}
               disabled={!answer.trim()}
             >
-              {label(questionNumber === words.length ? "SHOW_RESULTS" : "NEXT")}
+              {label(questionNumber === words.length ? "SHOW_RESULTS" : "LEARN_NEXT")}
             </button>
           </form>
         </>
@@ -108,10 +124,10 @@ export default function ExamplePlayQuiz({ title, words }) {
           </h2>
           <ul className="examples__words">
             {answers.map(({ word, submittedAnswer, correct }) => (
-              <li key={word.de}>
-                <span lang="de">{word.de}</span>
-                <span lang="en">
-                  {correct ? submittedAnswer : <><s>{submittedAnswer}</s> → {word.en}</>}
+              <li key={word[sourceLanguage]}>
+                <span lang={sourceLanguage}>{word[sourceLanguage]}</span>
+                <span lang={targetLanguage}>
+                  {correct ? submittedAnswer : <><s>{submittedAnswer}</s> → {word[targetLanguage]}</>}
                 </span>
               </li>
             ))}

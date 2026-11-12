@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import BackButton from "../../../components/BackButton/BackButton";
 import ExampleLearnQuiz from "../ExampleLearnQuiz/example-learn-quiz";
+import ExamplePlayQuiz from "../ExamplePlayQuiz/example-play-quiz";
 import "../Examples.scss";
 import "./more-examples.scss";
 import { moreExamples } from "./more-examples-data";
@@ -20,24 +21,47 @@ export default function MoreExamples() {
 
   const languages = Object.keys(moreExamples);
   const [activeLanguage, setActiveLanguage] = useState("english");
-  const [learnCategory, setLearnCategory] = useState(null);
-  const learnDialog = useRef(null);
+  const [quizSession, setQuizSession] = useState(null);
+  const quizDialog = useRef(null);
   const targetLanguage = languageCodes[activeLanguage];
   const sourceLanguageKey = activeLanguage === "german" ? "english" : "german";
   const sourceLanguage = languageCodes[sourceLanguageKey];
   const languageNames = new Intl.DisplayNames(i18n.resolvedLanguage, {
     type: "language",
   });
-  const learnWords = learnCategory
-    ? moreExamples[activeLanguage][learnCategory].map((word, index) => ({
-        [sourceLanguage]: moreExamples[sourceLanguageKey][learnCategory][index],
+  const quizWords = quizSession
+    ? moreExamples[activeLanguage][quizSession.category].map((word, index) => ({
+        [sourceLanguage]: moreExamples[sourceLanguageKey][quizSession.category][index],
         [targetLanguage]: word,
       }))
     : [];
 
-  function openLearnQuiz(category) {
-    setLearnCategory(category);
-    learnDialog.current.showModal();
+  function openQuiz(category, mode) {
+    setQuizSession({ category, mode });
+    quizDialog.current.showModal();
+  }
+
+  function renderQuiz() {
+    if (!quizSession) return null;
+
+    const quizProps = {
+      title: label(quizSession.category.toUpperCase()),
+      words: quizWords,
+      sourceLanguage,
+      targetLanguage,
+    };
+
+    if (quizSession.mode === "test") {
+      return <ExamplePlayQuiz {...quizProps} />;
+    }
+
+    return (
+      <ExampleLearnQuiz
+        {...quizProps}
+        onClose={() => quizDialog.current.close()}
+        t={label}
+      />
+    );
   }
 
   return (
@@ -96,7 +120,7 @@ export default function MoreExamples() {
                   type="button"
                   aria-label={label("learn")}
                   data-quiz-action="learn"
-                  onClick={() => openLearnQuiz(id)}
+                  onClick={() => openQuiz(id, "learn")}
                 >
                   <img
                     width={40}
@@ -112,6 +136,7 @@ export default function MoreExamples() {
                   type="button"
                   aria-label={label("test")}
                   data-quiz-action="test"
+                  onClick={() => openQuiz(id, "test")}
                 >
                   <img
                     width={40}
@@ -235,21 +260,12 @@ export default function MoreExamples() {
         ))}
       </div>
       <dialog
-        ref={learnDialog}
+        ref={quizDialog}
         className="examples__quiz-dialog"
         aria-labelledby="example-quiz-title"
-        onClose={() => setLearnCategory(null)}
+        onClose={() => setQuizSession(null)}
       >
-        {learnCategory && (
-          <ExampleLearnQuiz
-            title={label(learnCategory.toUpperCase())}
-            words={learnWords}
-            sourceLanguage={sourceLanguage}
-            targetLanguage={targetLanguage}
-            onClose={() => learnDialog.current.close()}
-            t={label}
-          />
-        )}
+        {renderQuiz()}
       </dialog>
     </main>
   );

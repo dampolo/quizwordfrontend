@@ -1,7 +1,8 @@
 import Tooltip from "@mui/material/Tooltip";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import BackButton from "../../../components/BackButton/BackButton";
+import ExampleLearnQuiz from "../ExampleLearnQuiz/example-learn-quiz";
 import "../Examples.scss";
 import "./more-examples.scss";
 import { moreExamples } from "./more-examples-data";
@@ -19,11 +20,25 @@ export default function MoreExamples() {
 
   const languages = Object.keys(moreExamples);
   const [activeLanguage, setActiveLanguage] = useState("english");
+  const [learnCategory, setLearnCategory] = useState(null);
+  const learnDialog = useRef(null);
   const targetLanguage = languageCodes[activeLanguage];
-  const sourceLanguage = targetLanguage === "de" ? "en" : "de";
+  const sourceLanguageKey = activeLanguage === "german" ? "english" : "german";
+  const sourceLanguage = languageCodes[sourceLanguageKey];
   const languageNames = new Intl.DisplayNames(i18n.resolvedLanguage, {
     type: "language",
   });
+  const learnWords = learnCategory
+    ? moreExamples[activeLanguage][learnCategory].map((word, index) => ({
+        [sourceLanguage]: moreExamples[sourceLanguageKey][learnCategory][index],
+        [targetLanguage]: word,
+      }))
+    : [];
+
+  function openLearnQuiz(category) {
+    setLearnCategory(category);
+    learnDialog.current.showModal();
+  }
 
   return (
     <main className="more-examples">
@@ -51,7 +66,7 @@ export default function MoreExamples() {
       </ul>
 
       <div className="category">
-        {Object?.entries(moreExamples["english"]).map(([id, words]) => (
+        {Object.entries(moreExamples[activeLanguage]).map(([id, words]) => (
           <article
             className="examples__quiz"
             data-quiz-id={id}
@@ -81,6 +96,7 @@ export default function MoreExamples() {
                   type="button"
                   aria-label={label("learn")}
                   data-quiz-action="learn"
+                  onClick={() => openLearnQuiz(id)}
                 >
                   <img
                     width={40}
@@ -218,6 +234,23 @@ export default function MoreExamples() {
           </article>
         ))}
       </div>
+      <dialog
+        ref={learnDialog}
+        className="examples__quiz-dialog"
+        aria-labelledby="example-quiz-title"
+        onClose={() => setLearnCategory(null)}
+      >
+        {learnCategory && (
+          <ExampleLearnQuiz
+            title={label(learnCategory.toUpperCase())}
+            words={learnWords}
+            sourceLanguage={sourceLanguage}
+            targetLanguage={targetLanguage}
+            onClose={() => learnDialog.current.close()}
+            t={label}
+          />
+        )}
+      </dialog>
     </main>
   );
 }

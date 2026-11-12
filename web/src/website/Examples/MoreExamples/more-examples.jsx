@@ -2,6 +2,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import BackButton from "../../../components/BackButton/BackButton";
+import ExampleFlipCardQuiz from "../ExampleFlipCardQuiz/example-flip-card-quiz";
 import ExampleLearnQuiz from "../ExampleLearnQuiz/example-learn-quiz";
 import ExamplePlayQuiz from "../ExamplePlayQuiz/example-play-quiz";
 import "../Examples.scss";
@@ -22,6 +23,7 @@ export default function MoreExamples() {
   const languages = Object.keys(moreExamples);
   const [activeLanguage, setActiveLanguage] = useState("english");
   const [quizSession, setQuizSession] = useState(null);
+  const isFlipCard = quizSession?.mode === "flipcards";
   const quizDialog = useRef(null);
   const targetLanguage = languageCodes[activeLanguage];
   const sourceLanguageKey = activeLanguage === "german" ? "english" : "german";
@@ -38,7 +40,9 @@ export default function MoreExamples() {
 
   function openQuiz(category, mode) {
     setQuizSession({ category, mode });
-    quizDialog.current.showModal();
+    if (mode !== "flipcards") {
+      quizDialog.current.showModal();
+    }
   }
 
   function renderQuiz() {
@@ -50,6 +54,10 @@ export default function MoreExamples() {
       sourceLanguage,
       targetLanguage,
     };
+
+    if (isFlipCard) {
+      return <ExampleFlipCardQuiz {...quizProps} onClose={() => setQuizSession(null)} />;
+    }
 
     if (quizSession.mode === "test") {
       return <ExamplePlayQuiz {...quizProps} />;
@@ -195,6 +203,7 @@ export default function MoreExamples() {
                   type="button"
                   aria-label={label("flipcards")}
                   data-quiz-action="flipcards"
+                  onClick={() => openQuiz(id, "flipcards")}
                 >
                   <img
                     width={40}
@@ -291,13 +300,14 @@ export default function MoreExamples() {
           </article>
         ))}
       </div>
+      {isFlipCard && renderQuiz()}
       <dialog
         ref={quizDialog}
         className={quizSession?.mode === "preview" ? "examples__preview" : "examples__quiz-dialog"}
         aria-labelledby="example-quiz-title"
         onClose={() => setQuizSession(null)}
       >
-        {renderQuiz()}
+        {!isFlipCard && renderQuiz()}
       </dialog>
     </main>
   );

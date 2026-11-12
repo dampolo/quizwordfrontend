@@ -5,8 +5,17 @@ import SpeakButton from "../../../components/SpeakButton/SpeakButton";
 import styles from "../../../quiz/my-quiz/quizzes/FlipCardQuiz/flip-card-quiz.module.scss";
 import "./example-flip-card-quiz.scss";
 
-export default function ExampleFlipCardQuiz({ title, words, onClose, reverse = false }) {
-  const { t } = useTranslation();
+const speechLocales = { de: "de-DE", en: "en-GB", es: "es-ES", fr: "fr-FR" };
+
+export default function ExampleFlipCardQuiz({
+  title,
+  words,
+  onClose,
+  reverse = false,
+  sourceLanguage = "de",
+  targetLanguage = "en",
+}) {
+  const { t, i18n } = useTranslation();
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [pendingStep, setPendingStep] = useState(0);
@@ -14,9 +23,11 @@ export default function ExampleFlipCardQuiz({ title, words, onClose, reverse = f
   const label = (key) => t("WEBSITE.EXAMPLES." + key);
   const word = words[index];
   const speech = window.speechSynthesis;
-  const frontLanguage = reverse ? "en" : "de";
-  const backLanguage = reverse ? "de" : "en";
-  const languageNames = { de: label("GERMAN"), en: label("ENGLISH") };
+  const frontLanguage = reverse ? targetLanguage : sourceLanguage;
+  const backLanguage = reverse ? sourceLanguage : targetLanguage;
+  const languageNames = new Intl.DisplayNames(i18n.resolvedLanguage, {
+    type: "language",
+  });
 
   useEffect(() => {
     const trigger = document.activeElement;
@@ -83,7 +94,7 @@ export default function ExampleFlipCardQuiz({ title, words, onClose, reverse = f
     if (!speech) return;
     const language = flipped ? backLanguage : frontLanguage;
     const utterance = new SpeechSynthesisUtterance(word[language]);
-    utterance.lang = language === "de" ? "de-DE" : "en-GB";
+    utterance.lang = speechLocales[language] ?? language;
     speech.cancel();
     speech.speak(utterance);
   }
@@ -129,7 +140,9 @@ export default function ExampleFlipCardQuiz({ title, words, onClose, reverse = f
         </div>
         {!isBack && <span className={styles["quiz-name"]}>{title}</span>}
         <span className={styles.languages}>
-          {isBack ? languageNames[language] : `${languageNames[frontLanguage]} / ${languageNames[backLanguage]}`}
+          {isBack
+            ? languageNames.of(language)
+            : `${languageNames.of(frontLanguage)} / ${languageNames.of(backLanguage)}`}
         </span>
         {speech && (
           <button type="button" aria-label={label("PLAY_AUDIO")} className={styles["sound-button"]} disabled={!!pendingStep} onClick={speak}>

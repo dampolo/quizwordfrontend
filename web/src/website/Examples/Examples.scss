@@ -41,13 +41,15 @@
   // ========================================
 
   &__card {
-    --slider-control-width: 2.75rem;
+    --slider-control-width: 1.75rem;
     --slider-control-gap: 1rem;
 
     position: relative;
     max-width: 80rem;
     margin-inline: auto;
-    padding-inline: calc(var(--slider-control-width) + var(--slider-control-gap));
+    padding-inline: calc(
+      var(--slider-control-width) + var(--slider-control-gap)
+    );
   }
 
   &__slider-controls {
@@ -57,12 +59,14 @@
     align-items: center;
     justify-content: space-between;
     pointer-events: none;
-    inset-inline: calc(var(--slider-control-width) + var(--slider-control-gap) - 1rem);
+    inset-inline: calc(
+      var(--slider-control-width) + var(--slider-control-gap) - 1rem
+    );
 
     button {
       display: grid;
       place-items: center;
-      width: var(--slider-control-width);
+      width: 2.75rem;
       height: 2.75rem;
       padding: 0;
       border: 0.0625rem solid basic.$qw-border-color;
@@ -210,7 +214,6 @@
     }
   }
 
-
   @media (max-width: 62rem) {
     &__title {
       font-size: 2.5rem;
@@ -233,10 +236,17 @@
     }
 
     &__card {
-      --slider-control-width: 2rem;
+      --slider-control-width: 0rem;
       --slider-control-gap: 0.25rem;
     }
-
+    &__slider-controls {
+      inset-inline: calc(
+        var(--slider-control-width) + var(--slider-control-gap) - 1rem
+      );
+    }
+    &__slider-controls button {
+      width: 2.75rem;
+    }
   }
 }
 

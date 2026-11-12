@@ -55,6 +55,30 @@ export default function MoreExamples() {
       return <ExamplePlayQuiz {...quizProps} />;
     }
 
+    if (quizSession.mode === "preview") {
+      return (
+        <>
+          <form method="dialog">
+            <button className="examples__preview-close" aria-label={label("CLOSE")}>
+              <img width={25} height={25} src="/assets/xbox.svg" alt="" />
+            </button>
+          </form>
+          <div className="examples__preview-list">
+            <h2 id="example-quiz-title" className="examples__preview-heading">
+              {quizProps.title} - {label("preview")}
+            </h2>
+            {quizWords.map((word) => (
+              <div className="examples__preview-row" key={word[sourceLanguage]}>
+                <h3 lang={sourceLanguage}>{word[sourceLanguage]}</h3>
+                <span aria-hidden="true">→</span>
+                <p lang={targetLanguage}>{word[targetLanguage]}</p>
+              </div>
+            ))}
+          </div>
+        </>
+      );
+    }
+
     return (
       <ExampleLearnQuiz
         {...quizProps}
@@ -152,6 +176,7 @@ export default function MoreExamples() {
                   type="button"
                   aria-label={label("preview")}
                   data-quiz-action="preview"
+                  onClick={() => openQuiz(id, "preview")}
                 >
                   <img
                     width={40}
@@ -249,7 +274,11 @@ export default function MoreExamples() {
             </div>
 
             <footer className="examples__quiz-footer">
-              <button type="button" data-quiz-action="preview">
+              <button
+                type="button"
+                data-quiz-action="preview"
+                onClick={() => openQuiz(id, "preview")}
+              >
                 {label("WORD_COUNT", { count: words.length })}
               </button>
               <span>
@@ -261,7 +290,7 @@ export default function MoreExamples() {
       </div>
       <dialog
         ref={quizDialog}
-        className="examples__quiz-dialog"
+        className={quizSession?.mode === "preview" ? "examples__preview" : "examples__quiz-dialog"}
         aria-labelledby="example-quiz-title"
         onClose={() => setQuizSession(null)}
       >

@@ -36,6 +36,28 @@
     color: basic.$qw-body-text-color;
   }
 
+  &__more {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+  }
+
+  &__more-link {
+    padding: 0.75rem 1.5rem;
+    border-radius: basic.$qw-border-radius;
+    background: basic.$qw-primary;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: basic.$first-transition;
+
+    &:hover,
+    &:focus-visible {
+      background: basic.$qw-color-heading;
+      color: #fff;
+    }
+  }
+
   // ========================================
   // Card
   // ========================================

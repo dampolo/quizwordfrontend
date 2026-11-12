@@ -5,6 +5,7 @@ import ForgotPassword from "./quiz/auth/ForgotPassword/forgot-password";
 import ResendNewLink from "./quiz/auth/ResendNewLink/resend-new-link";
 import PublicLayout from "./layouts/PublicLayout";
 import Website from "./website/Website/website";
+import MoreExamples from "./website/Examples/MoreExamples/more-examples";
 import Login from "./quiz/auth/LoginQuiz/login-quiz";
 import MyQuiz from "./layouts/MyQuiz";
 import AllWords from "./quiz/my-quiz/AllWords/all-words";
@@ -62,6 +63,7 @@ function App() {
       <Routes>
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Website />} />
+          <Route path="/more-examples" element={<MoreExamples />} />
           <Route path="/login" element={<Login />} />
           <Route path="/imprint" element={<Imprint />} />
           <Route path="/contact" element={<Contact />} />

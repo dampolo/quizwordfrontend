@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 import ExampleHearQuiz from "./ExampleHearQuiz/example-hear-quiz";
 import ExampleLearnQuiz from "./ExampleLearnQuiz/example-learn-quiz";
@@ -460,6 +461,15 @@ export default function Examples() {
               <span aria-hidden="true" className="examples__arrow-right" />
             </button>
           </div>
+        </div>
+        <div className="examples__more">
+          <Link
+            to="/more-examples"
+            className="examples__more-link"
+            aria-label={label("MORE_EXAMPLES")}
+          >
+            {label("MORE")}
+          </Link>
         </div>
       </div>
 

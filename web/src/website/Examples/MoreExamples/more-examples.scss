@@ -1,0 +1,48 @@
+@use "../../../styles/basic";
+
+.more-examples {
+  background: #fafbff;
+  padding: 7.5rem 2rem;
+  text-align: center;
+
+  &__back {
+    width: fit-content;
+  }
+
+  &__title {
+    color: basic.$qw-color-heading;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    margin: 0;
+  }
+
+  &__languages-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__language {
+    padding: 0.5rem 1rem;
+    border-radius: basic.$qw-border-radius;
+    background: #eef5ff;
+
+    &:hover,
+    &[aria-pressed="true"] {
+      background: #bed2ff;
+    }
+  }
+
+  .category {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+    gap: 1rem;
+    max-width: 80rem;
+    margin: 2rem auto 0;
+    text-align: start;
+  }
+}

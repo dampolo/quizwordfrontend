@@ -414,7 +414,9 @@ export default function Examples() {
         className={
           mode === "learn" || mode === "test" || audio
             ? "examples__quiz-dialog"
-            : "examples__dialog"
+            : mode === "preview"
+              ? "examples__preview"
+              : "examples__dialog"
         }
         aria-labelledby="example-quiz-title"
         onClose={() => {
@@ -440,6 +442,26 @@ export default function Examples() {
             words={quiz.words}
             onClose={() => dialogRef.current.close()}
           />
+        ) : mode === "preview" ? (
+          <>
+            <form method="dialog">
+              <button className="examples__preview-close" aria-label={label("CLOSE")}>
+                <img width={25} height={25} src="/assets/xbox.svg" alt="" />
+              </button>
+            </form>
+            <div className="examples__preview-list">
+              <h2 id="example-quiz-title" className="examples__preview-heading">
+                {titleFor(session.id, quiz)} — {label("preview")}
+              </h2>
+              {quiz.words.map((entry) => (
+                <div className="examples__preview-row" key={entry.de}>
+                  <h3 lang="de">{entry.de}</h3>
+                  <span aria-hidden="true">→</span>
+                  <p lang="en">{entry.en}</p>
+                </div>
+              ))}
+            </div>
+          </>
         ) : (
           quiz &&
           !flipcards && (
@@ -455,17 +477,6 @@ export default function Examples() {
 
               {listening && !speech && (
                 <p role="status">{label("AUDIO_UNAVAILABLE")}</p>
-              )}
-
-              {mode === "preview" && (
-                <ul className="examples__words">
-                  {quiz.words.map((entry) => (
-                    <li key={entry.de}>
-                      <span lang="de">{entry.de}</span>
-                      <span lang="en">{entry.en}</span>
-                    </li>
-                  ))}
-                </ul>
               )}
 
               {mode === "edit" && (

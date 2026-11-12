@@ -3,11 +3,16 @@ import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import BackButton from "../../../components/BackButton/BackButton";
 import ExampleFlipCardQuiz from "../ExampleFlipCardQuiz/example-flip-card-quiz";
+import ExampleFlipCardQuizReverse from "../ExampleFlipCardQuizReverse/example-flip-card-quiz-reverse";
 import ExampleLearnQuiz from "../ExampleLearnQuiz/example-learn-quiz";
 import ExamplePlayQuiz from "../ExamplePlayQuiz/example-play-quiz";
-import "../Examples.scss";
 import "./more-examples.scss";
 import { moreExamples } from "./more-examples-data";
+
+const flipCardComponents = {
+  flipcards: ExampleFlipCardQuiz,
+  flipcardsReverse: ExampleFlipCardQuizReverse,
+};
 
 const languageCodes = {
   english: "en",
@@ -23,7 +28,7 @@ export default function MoreExamples() {
   const languages = Object.keys(moreExamples);
   const [activeLanguage, setActiveLanguage] = useState("english");
   const [quizSession, setQuizSession] = useState(null);
-  const isFlipCard = quizSession?.mode === "flipcards";
+  const FlipCard = flipCardComponents[quizSession?.mode];
   const quizDialog = useRef(null);
   const targetLanguage = languageCodes[activeLanguage];
   const sourceLanguageKey = activeLanguage === "german" ? "english" : "german";
@@ -40,7 +45,7 @@ export default function MoreExamples() {
 
   function openQuiz(category, mode) {
     setQuizSession({ category, mode });
-    if (mode !== "flipcards") {
+    if (!flipCardComponents[mode]) {
       quizDialog.current.showModal();
     }
   }
@@ -55,12 +60,12 @@ export default function MoreExamples() {
       targetLanguage,
     };
 
-    if (isFlipCard) {
-      return <ExampleFlipCardQuiz {...quizProps} onClose={() => setQuizSession(null)} />;
+    if (FlipCard) {
+      return <FlipCard {...quizProps} onClose={() => setQuizSession(null)} />;
     }
 
     if (quizSession.mode === "test") {
-      return <ExamplePlayQuiz {...quizProps} />;
+      return <ExamplePlayQuiz {...quizProps} resultsClassName="more-examples__words" />;
     }
 
     if (quizSession.mode === "preview") {
@@ -68,18 +73,18 @@ export default function MoreExamples() {
         <>
           <button
             type="button"
-            className="examples__preview-close"
+            className="more-examples__preview-close"
             aria-label={label("CLOSE")}
             onClick={() => quizDialog.current.close()}
           >
             <img width={25} height={25} src="/assets/xbox.svg" alt="" />
           </button>
-          <div className="examples__preview-list">
-            <h2 id="example-quiz-title" className="examples__preview-heading">
+          <div className="more-examples__preview-list">
+            <h2 id="example-quiz-title" className="more-examples__preview-heading">
               {quizProps.title} - {label("preview")}
             </h2>
             {quizWords.map((word) => (
-              <div className="examples__preview-row" key={word[sourceLanguage]}>
+              <div className="more-examples__preview-row" key={word[sourceLanguage]}>
                 <h3 lang={sourceLanguage}>{word[sourceLanguage]}</h3>
                 <span aria-hidden="true">→</span>
                 <p lang={targetLanguage}>{word[targetLanguage]}</p>
@@ -127,11 +132,11 @@ export default function MoreExamples() {
       <div className="category">
         {Object.entries(moreExamples[activeLanguage]).map(([id, words]) => (
           <article
-            className="examples__quiz"
+            className="more-examples__quiz"
             data-quiz-id={id}
             key={id}
           >
-            <header className="examples__quiz-heading">
+            <header className="more-examples__quiz-heading">
               <h3>{label(id.toUpperCase())}</h3>
               <Tooltip title={label("edit")} arrow>
                 <button
@@ -149,7 +154,7 @@ export default function MoreExamples() {
               </Tooltip>
             </header>
 
-            <div className="examples__actions">
+            <div className="more-examples__actions">
               <Tooltip title={label("learn")} placement="top" arrow>
                 <button
                   type="button"
@@ -215,7 +220,7 @@ export default function MoreExamples() {
               </Tooltip>
             </div>
 
-            <div className="examples__actions">
+            <div className="more-examples__actions">
               <Tooltip title={label("audio")} placement="top" arrow>
                 <button
                   type="button"
@@ -247,14 +252,15 @@ export default function MoreExamples() {
               </Tooltip>
 
               <Tooltip
-                title={label("flipcardsReverse")}
+                title={label("REVERSE_FLIPCARDS")}
                 placement="top"
                 arrow
               >
                 <button
                   type="button"
-                  aria-label={label("flipcardsReverse")}
+                  aria-label={label("REVERSE_FLIPCARDS")}
                   data-quiz-action="flipcardsReverse"
+                  onClick={() => openQuiz(id, "flipcardsReverse")}
                 >
                   <img
                     width={40}
@@ -285,7 +291,7 @@ export default function MoreExamples() {
               </Tooltip>
             </div>
 
-            <footer className="examples__quiz-footer">
+            <footer className="more-examples__quiz-footer">
               <button
                 type="button"
                 data-quiz-action="preview"
@@ -300,14 +306,14 @@ export default function MoreExamples() {
           </article>
         ))}
       </div>
-      {isFlipCard && renderQuiz()}
+      {FlipCard && renderQuiz()}
       <dialog
         ref={quizDialog}
-        className={quizSession?.mode === "preview" ? "examples__preview" : "examples__quiz-dialog"}
+        className={quizSession?.mode === "preview" ? "more-examples__preview" : "more-examples__quiz-dialog"}
         aria-labelledby="example-quiz-title"
         onClose={() => setQuizSession(null)}
       >
-        {!isFlipCard && renderQuiz()}
+        {!FlipCard && renderQuiz()}
       </dialog>
     </main>
   );

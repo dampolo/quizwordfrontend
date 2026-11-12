@@ -7,6 +7,7 @@ export default function ExamplePlayQuiz({
   words,
   sourceLanguage = "de",
   targetLanguage = "en",
+  resultsClassName = "examples__words",
 }) {
   const { t, i18n } = useTranslation();
   const inputId = useId();
@@ -122,7 +123,7 @@ export default function ExamplePlayQuiz({
               total: words.length,
             })}
           </h2>
-          <ul className="examples__words">
+          <ul className={resultsClassName}>
             {answers.map(({ word, submittedAnswer, correct }) => (
               <li key={word[sourceLanguage]}>
                 <span lang={sourceLanguage}>{word[sourceLanguage]}</span>

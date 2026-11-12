@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Tooltip from "@mui/material/Tooltip";
+import ExampleHearQuiz from "./ExampleHearQuiz/example-hear-quiz";
 import ExampleLearnQuiz from "./ExampleLearnQuiz/example-learn-quiz";
 import ExamplePlayQuiz from "./ExamplePlayQuiz/example-play-quiz";
 import ExampleFlipCardQuiz from "./ExampleFlipCardQuiz/example-flip-card-quiz";
@@ -70,25 +71,20 @@ export default function Examples() {
   const slider = useRef(null);
   const [session, setSession] = useState(null);
   const [titles, setTitles] = useState({});
-  const [index, setIndex] = useState(0);
-  const [revealed, setRevealed] = useState(false);
   const [answer, setAnswer] = useState("");
   const label = (key, options) => t("WEBSITE.EXAMPLES." + key, options);
   const quiz = session && exampleQuizzes[session.id];
   const mode = session?.mode;
-  const word = quiz?.words[index];
   const flipcards = mode === "flipcards" || mode === "flipcardsReverse";
   const FlipCardQuiz =
     mode === "flipcardsReverse"
       ? ExampleFlipCardQuizReverse
       : ExampleFlipCardQuiz;
-  const listening = mode === "listen";
   const audio = mode === "audio" || mode === "audioReverse";
   const AudioLoop =
     mode === "audioReverse"
       ? ExampleWordAudioLoopReverse
       : ExampleWordAudioLoop;
-  const speech = window.speechSynthesis;
 
   useEffect(() => {
     const phoneViewport = window.matchMedia("(max-width: 32rem)");
@@ -163,40 +159,19 @@ export default function Examples() {
 
   function openExample(id, mode) {
     setSession({ id, mode });
-    setIndex(0);
-    setRevealed(false);
     setAnswer(mode === "edit" ? titleFor(id, exampleQuizzes[id]) : "");
     if (mode !== "flipcards" && mode !== "flipcardsReverse") {
       dialogRef.current.showModal();
     }
   }
 
-  function playAudio() {
-    if (!speech) return;
-    speech.cancel();
-    const utterance = new SpeechSynthesisUtterance(word.en);
-    utterance.lang = "en-GB";
-    speech.speak(utterance);
-  }
-
-  function nextWord() {
-    speech?.cancel();
-    setIndex((current) => (current + 1) % quiz.words.length);
-    setRevealed(false);
-    setAnswer("");
-  }
-
-  function submitAnswer(event) {
+  function saveTitle(event) {
     event.preventDefault();
-    if (mode === "edit") {
-      const title = answer.trim();
-      if (title) {
-        setTitles((current) => ({ ...current, [session.id]: title }));
-        dialogRef.current.close();
-      }
-      return;
+    const title = answer.trim();
+    if (title) {
+      setTitles((current) => ({ ...current, [session.id]: title }));
+      dialogRef.current.close();
     }
-    setRevealed(true);
   }
 
   function renderDialogContent() {
@@ -248,8 +223,15 @@ export default function Examples() {
             </div>
           </>
         );
-      case "edit":
       case "listen":
+        return (
+          <ExampleHearQuiz
+            title={titleFor(session.id, quiz)}
+            words={quiz.words}
+            t={label}
+          />
+        );
+      case "edit":
         return (
           <>
             <form method="dialog" className="examples__close">
@@ -258,74 +240,20 @@ export default function Examples() {
               </button>
             </form>
             <h3 id="example-quiz-title">
-              {titleFor(session.id, quiz)} · {label(mode)}
+              {titleFor(session.id, quiz)} – {label(mode)}
             </h3>
-
-            {listening && !speech && (
-              <p role="status">{label("AUDIO_UNAVAILABLE")}</p>
-            )}
-
-            {mode === "edit" && (
-              <form onSubmit={submitAnswer}>
-                <label>
-                  {label("QUIZ_TITLE")}
-                  <input
-                    value={answer}
-                    onChange={(event) => setAnswer(event.target.value)}
-                    required
-                    maxLength={50}
-                  />
-                </label>
-                <button type="submit">{label("SAVE")}</button>
-              </form>
-            )}
-
-            {word && listening && (
-              <>
-                <p>
-                  {index + 1} / {quiz.words.length}
-                </p>
-                {listening && (
-                  <button
-                    type="button"
-                    onClick={playAudio}
-                    disabled={!speech}
-                  >
-                    {label("PLAY_AUDIO")}
-                  </button>
-                )}
-                {listening && (
-                  <form onSubmit={submitAnswer}>
-                    <label>
-                      {label("HEARD_WORD")}
-                      <input
-                        value={answer}
-                        onChange={(event) => setAnswer(event.target.value)}
-                        required
-                        disabled={revealed}
-                        lang="en"
-                      />
-                    </label>
-                    <button type="submit" disabled={revealed}>
-                      {label("CHECK")}
-                    </button>
-                  </form>
-                )}
-                {revealed && listening && (
-                  <p role="status">
-                    {label(
-                      answer.trim().toLowerCase() === word.en.toLowerCase()
-                        ? "CORRECT"
-                        : "INCORRECT",
-                    )}
-                  </p>
-                )}
-                {revealed && <p lang="en">{word.en}</p>}
-                <button type="button" onClick={nextWord}>
-                  {label("NEXT")}
-                </button>
-              </>
-            )}
+            <form onSubmit={saveTitle}>
+              <label>
+                {label("QUIZ_TITLE")}
+                <input
+                  value={answer}
+                  onChange={(event) => setAnswer(event.target.value)}
+                  required
+                  maxLength={50}
+                />
+              </label>
+              <button type="submit">{label("SAVE")}</button>
+            </form>
           </>
         );
       default:
@@ -546,17 +474,14 @@ export default function Examples() {
       <dialog
         ref={dialogRef}
         className={
-          mode === "learn" || mode === "test" || audio
+          mode === "learn" || mode === "test" || mode === "listen" || audio
             ? "examples__quiz-dialog"
             : mode === "preview"
               ? "examples__preview"
               : "examples__dialog"
         }
         aria-labelledby="example-quiz-title"
-        onClose={() => {
-          speech?.cancel();
-          setSession(null);
-        }}
+        onClose={() => setSession(null)}
       >
         {renderDialogContent()}
       </dialog>

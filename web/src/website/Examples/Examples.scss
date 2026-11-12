@@ -50,6 +50,10 @@
     padding-inline: calc(
       var(--slider-control-width) + var(--slider-control-gap)
     );
+
+    .vjslider__slider {
+      gap: 1rem;
+    }
   }
 
   &__slider-controls {
@@ -69,15 +73,35 @@
       width: 2.75rem;
       height: 2.75rem;
       padding: 0;
-      border: 0.0625rem solid basic.$qw-border-color;
+      border: 0.0625rem solid transparent;
       border-radius: basic.$qw-border-radius;
-      background: basic.$qw-fourth;
+      background: basic.$qw-third;
       color: basic.$qw-primary;
-      font-size: 1.75rem;
-      line-height: 1;
-      cursor: pointer;
       pointer-events: auto;
+      transition: basic.$first-transition;
+
+      &:hover,
+      &:focus-visible {
+        background: basic.$qw-primary;
+        color: #f7f8ff;
+      }
     }
+  }
+
+  &__arrow-left,
+  &__arrow-right {
+    width: 2rem;
+    height: 2rem;
+    background: currentColor;
+    mask: var(--arrow-icon) center / contain no-repeat;
+  }
+
+  &__arrow-left {
+    --arrow-icon: url("/assets/arrow-left.svg");
+  }
+
+  &__arrow-right {
+    --arrow-icon: url("/assets/arrow-right.svg");
   }
 
   // Quiz cards and preview dialog
@@ -213,14 +237,18 @@
       border-bottom: 0.0625rem solid basic.$qw-border-color;
     }
   }
+}
 
-  @media (max-width: 62rem) {
+@media (max-width: 62rem) {
+  .examples {
     &__title {
       font-size: 2.5rem;
     }
   }
+}
 
-  @media (max-width: 37.5rem) {
+@media (max-width: 37.5rem) {
+  .examples {
     padding: 5rem 0;
 
     &__container {
@@ -248,8 +276,4 @@
       width: 2.75rem;
     }
   }
-}
-
-.vjslider__slider {
-  gap: 1rem;
 }

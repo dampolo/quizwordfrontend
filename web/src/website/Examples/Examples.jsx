@@ -388,14 +388,14 @@ export default function Examples() {
               aria-label={label("PREVIOUS_QUIZ")}
               onClick={() => slider.current?.prev()}
             >
-              <span aria-hidden="true">‹</span>
+              <span aria-hidden="true" className="examples__arrow-left" />
             </button>
             <button
               type="button"
               aria-label={label("NEXT_QUIZ")}
               onClick={() => slider.current?.next()}
             >
-              <span aria-hidden="true">›</span>
+              <span aria-hidden="true" className="examples__arrow-right" />
             </button>
           </div>
         </div>

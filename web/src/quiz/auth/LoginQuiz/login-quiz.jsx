@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/auth/useAuth";
 import PreLoader from "../../../components/PreLoader/PreLoader";
@@ -8,6 +9,7 @@ import "./login-quiz.scss";
 import PageTitle from "../../../components/PageTitle/PageTitle";
 
 function LoginQuiz() {
+  const { t } = useTranslation();
   const initialValues = { email: "", password: "" };
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [formValues, setFormValues] = useState(initialValues);
@@ -38,10 +40,10 @@ function LoginQuiz() {
 
       navigate("/my-quiz/all-words");
     } catch (err) {
-      const message = err.response?.detail || "Login Fehler";
+      const message = err.response?.detail;
 
-      toast.error(message);
-      setFormErrors({ message });
+      toast.error(message || t("LOGIN.ERROR"));
+      setFormErrors({ login: true, message });
     }
   }
 
@@ -60,11 +62,11 @@ function LoginQuiz() {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%+\-/*?&#])[A-Za-z\d@$!%+\-/*?&#]{10,}$/;
 
     if (!values.email || !regexEmail.test(values.email)) {
-      errors.email = "Dein E-Mail ist unvollständig/inkorrekt.";
+      errors.email = true;
     }
 
     if (!values.password || !regexPassword.test(values.password)) {
-      errors.password = "Dein Passwort ist nicht korrekt.";
+      errors.password = true;
     }
 
     return errors;
@@ -72,32 +74,31 @@ function LoginQuiz() {
 
   return (
     <main className="main-auth">
-      <PageTitle title="Login" />
+      <PageTitle title={t("LOGIN.TITLE")} />
       <section className="main-content-customer">
         <div className="form-title">
-          <h1 className="form-title-name">Anmeldung</h1>
+          <h1 className="form-title-name">{t("LOGIN.TITLE")}</h1>
         </div>
 
         <p className="description">
-          Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit
-          verwendest.
+          {t("LOGIN.DESCRIPTION")}
         </p>
         <p className="description">
-          Hast du kein konto?
+          {t("LOGIN.NO_ACCOUNT")}{" "}
           <Link className="new-user-link" to="/create-account">
-            Konto erstellen
+            {t("LOGIN.CREATE_ACCOUNT")}
           </Link>
         </p>
 
         <form onSubmit={handleSubmit}>
           <div className="input-container">
-            <label htmlFor="email">E-Mail-Adresse</label>
+            <label htmlFor="email">{t("LOGIN.EMAIL")}</label>
             <input
               className="input-field"
               id="email"
               type="email"
               name="email"
-              placeholder="beispielname@email.com"
+              placeholder={t("LOGIN.EMAIL_PLACEHOLDER")}
               autoComplete="email"
               value={formValues.email}
               onChange={handleChange}
@@ -113,18 +114,20 @@ function LoginQuiz() {
               />
             </div>
 
-            <div className="warn-txt">{formErrors.email}</div>
+            <div className="warn-txt">
+              {formErrors.email && t("LOGIN.INVALID_EMAIL")}
+            </div>
           </div>
 
           <div className="input-container">
-            <label htmlFor="password">Passwort</label>
+            <label htmlFor="password">{t("LOGIN.PASSWORD")}</label>
             <input
               autoComplete="current-password"
               id="password"
               className="input-field"
               type={isPasswordVisible ? "text" : "password"}
               name="password"
-              placeholder="Passwort"
+              placeholder={t("LOGIN.PASSWORD")}
               value={formValues.password}
               onChange={handleChange}
             />
@@ -143,7 +146,7 @@ function LoginQuiz() {
                     ? "./assets/eye.svg"
                     : "./assets/eye-off.svg"
                 }
-                alt={isPasswordVisible ? "verstecken" : "zeigen"}
+                alt={t(isPasswordVisible ? "LOGIN.HIDE_PASSWORD" : "LOGIN.SHOW_PASSWORD")}
               />
             </button>
 
@@ -158,11 +161,12 @@ function LoginQuiz() {
             </div>
 
             <div className="warn-txt warn-txt-hight">
-              {formErrors.password || formErrors.message}
+              {formErrors.password && t("LOGIN.INVALID_PASSWORD")}
+              {formErrors.login && (formErrors.message || t("LOGIN.ERROR"))}
             </div>
           </div>
 
-          {loading ? <PreLoader /> : <></>}
+          {loading && <PreLoader label={t("LOGIN.LOADING")} />}
 
           <div className="btn-container">
             <button
@@ -170,15 +174,15 @@ function LoginQuiz() {
               type="submit"
               disabled={loading}
             >
-              Anmelden
+              {t("LOGIN.SUBMIT")}
             </button>
           </div>
 
           <Link className="btn-password" to="/forgot-password">
-            Passwort vergessen?
+            {t("LOGIN.FORGOT_PASSWORD")}
           </Link>
           <div className="seperator-container">
-            <span className="sep-line-txt">ODER</span>
+            <span className="sep-line-txt">{t("LOGIN.OR")}</span>
           </div>
 
           <button
@@ -188,7 +192,7 @@ function LoginQuiz() {
             disabled={loading}
           >
             <img src="/assets/google-logo-icon.svg" width={38} height={38} alt="" aria-hidden="true" />
-            Anmeldung mit Google
+            {t("LOGIN.GOOGLE")}
           </button>
         </form>
       </section>

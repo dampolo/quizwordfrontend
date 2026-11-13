@@ -1,9 +1,10 @@
 import { afterEach, expect, it, vi } from "vitest";
-import { cleanup, render, waitFor } from "@testing-library/react";
+import { act, cleanup, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../../../context/auth/useAuth";
+import i18n from "../../../i18n/i18n";
 import LoginQuiz from "./login-quiz";
 
 // Replace authentication so the test never calls the real backend.
@@ -21,9 +22,10 @@ vi.mock("react-router-dom", async (importOriginal) => ({
   useNavigate: vi.fn(),
 }));
 
-afterEach(() => {
+afterEach(async () => {
   cleanup();
   vi.resetAllMocks();
+  await i18n.changeLanguage("en");
 });
 
 // Shared setup for the remaining scenarios; selectors do not depend on labels.
@@ -76,6 +78,24 @@ it("shows both validation errors when the form is empty", async () => {
   expect(navigate).not.toHaveBeenCalled();
 });
 
+it("updates the login labels and existing validation errors when the language changes", async () => {
+  const { user, email, submit, emailError, passwordError } = renderLogin();
+
+  await user.click(submit);
+  expect(email.labels[0].textContent).toBe("Email address");
+  expect(emailError.textContent).toBe("Enter a valid email address.");
+
+  await act(async () => {
+    await i18n.changeLanguage("de");
+  });
+
+  expect(document.title).toBe("Anmeldung | Quiz Word");
+  expect(email.labels[0].textContent).toBe("E-Mail-Adresse");
+  expect(submit.textContent).toBe("Anmelden");
+  expect(emailError.textContent).toBe("Gib eine gültige E-Mail-Adresse ein.");
+  expect(passwordError.textContent).toBe("Dein Passwort ist nicht korrekt.");
+});
+
 it("shows an email error for an address rejected by component validation", async () => {
   const { submitCredentials, emailError, passwordError, login, navigate } = renderLogin();
 
@@ -120,8 +140,8 @@ it("shows the fallback error when login rejects without API details", async () =
   await submitCredentials();
 
   await waitFor(() => {
-    expect(toast.error).toHaveBeenCalledWith("Login Fehler");
-    expect(passwordError.textContent).toBe("Login Fehler");
+    expect(toast.error).toHaveBeenCalledWith("Login failed.");
+    expect(passwordError.textContent).toBe("Login failed.");
   });
   expect(navigate).not.toHaveBeenCalled();
 });

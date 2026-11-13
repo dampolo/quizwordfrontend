@@ -1,9 +1,10 @@
 import { afterEach, expect, it, vi } from "vitest";
-import { cleanup, render, waitFor } from "@testing-library/react";
+import { act, cleanup, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../../../context/auth/useAuth";
+import i18n from "../../../i18n/i18n";
 import CreateAccount from "./create-account";
 
 // Replace authentication so the tests never call the real backend.
@@ -16,9 +17,10 @@ vi.mock("react-router-dom", async (importOriginal) => ({
   useNavigate: vi.fn(),
 }));
 
-afterEach(() => {
+afterEach(async () => {
   cleanup();
   vi.resetAllMocks();
+  await i18n.changeLanguage("en");
 });
 
 function renderCreateAccount({ loading = false } = {}) {
@@ -103,6 +105,24 @@ it("blocks registration with an invalid email", async () => {
   expect(navigate).not.toHaveBeenCalled();
 });
 
+it("switches the privacy link and an existing validation error to German", async () => {
+  const { user, container, email, emailError } = renderCreateAccount();
+  const privacyLink = container.querySelector('a[href="/privacy-policy"]');
+
+  await user.click(email);
+  await user.tab();
+  expect(emailError.textContent).toBe("Enter a valid email address.");
+  expect(privacyLink.textContent).toBe("privacy policy");
+
+  await act(async () => {
+    await i18n.changeLanguage("de");
+  });
+
+  expect(document.title).toBe("Konto erstellen | Quiz Word");
+  expect(emailError.textContent).toBe("Gib eine gültige E-Mail-Adresse ein.");
+  expect(privacyLink.textContent).toBe("Datenschutzerklärung");
+});
+
 it.each([
   ["too short", "Abc123!"],
   ["missing lowercase", "STRONGPASS123!"],
@@ -122,7 +142,7 @@ it("blocks mismatched passwords and enables submission after correcting them", a
   const { user, fillForm, repeatedPassword, repeatedPasswordError, submit, createAccount } = renderCreateAccount();
   await fillForm({ repeatedPasswordValue: "DifferentPass123!" });
 
-  expect(repeatedPasswordError.textContent).toBe("Passwörter stimmen nicht überein.");
+  expect(repeatedPasswordError.textContent).toBe("Passwords do not match.");
   expect(submit.disabled).toBe(true);
   expect(createAccount).not.toHaveBeenCalled();
 
@@ -142,7 +162,7 @@ it("requires privacy acceptance and validates the checkbox on blur", async () =>
   expect(submit.disabled).toBe(false);
   await user.click(checkbox);
   await user.tab();
-  expect(checkboxError.textContent).toBe("Bitte akzeptiere die Datenschutzerklärung.");
+  expect(checkboxError.textContent).toBe("Please accept the privacy policy.");
   expect(submit.disabled).toBe(true);
   expect(createAccount).not.toHaveBeenCalled();
 });
@@ -159,7 +179,7 @@ it.each(["StrongPass123!", "StrongPass123#"])("creates an account with %s and na
   });
   await waitFor(() => {
     expect(setConfirmationMessage).toHaveBeenCalledWith(
-      "Du bist erfolgreich registriert. Um dich anzumelden, musst du dein E-Mail bestätigen!"
+      "Your account has been created. Confirm your email address to log in."
     );
     expect(navigate).toHaveBeenCalledWith("/confirmation");
   });
@@ -170,7 +190,7 @@ it.each([
   [{ response: { email: ["Email already registered"] } }, "Email already registered"],
   [{ response: { password: ["Password rejected"] } }, "Password rejected"],
   [{ response: { detail: "Registration unavailable" } }, "Registration unavailable"],
-  [new Error("Network unavailable"), "Account creation failed"],
+  [new Error("Network unavailable"), "Account creation failed."],
 ])("shows the API or fallback error without navigating (%s)", async (error, message) => {
   const { user, fillForm, submit, createAccount, setConfirmationMessage, navigate } = renderCreateAccount();
   createAccount.mockRejectedValue(error);

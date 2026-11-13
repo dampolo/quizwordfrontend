@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/auth/useAuth";
 import BackButton from "../../../components/BackButton/BackButton";
@@ -7,6 +8,7 @@ import { toast } from "react-toastify";
 import PageTitle from "../../../components/PageTitle/PageTitle";
 
 function CreateAccount() {
+  const { t } = useTranslation();
   const initialValues = {
     email: "",
     password: "",
@@ -46,16 +48,14 @@ function CreateAccount() {
   async function submitAccount(values) {
     try {
       await createAccount(values);
-      setConfirmationMessage(
-        "Du bist erfolgreich registriert. Um dich anzumelden, musst du dein E-Mail bestätigen!",
-      );
+      setConfirmationMessage(t("CREATE_ACCOUNT.CONFIRMATION"));
       navigate("/confirmation");
     } catch (err) {
       const message =
         err.response?.email?.[0] ||
         err.response?.password?.[0] ||
         err.response?.detail ||
-        "Account creation failed";
+        t("CREATE_ACCOUNT.ERROR");
 
       toast.error(message);
     }
@@ -94,23 +94,22 @@ function CreateAccount() {
     const errors = {};
 
     if (touchedFields.email && !regexEmail.test(values.email)) {
-      errors.email = "E-Mail ist unvollständig/inkorrekt.";
+      errors.email = true;
     }
 
     if (touchedFields.password && !regexPassword.test(values.password)) {
-      errors.password =
-        "Mindestens 10 Zeichen erforderlich: ein Klein- u. ein Großbuchstabe, eine Zahl und ein Sonderzeichen.";
+      errors.password = true;
     }
 
     if (
       touchedFields.repeated_password &&
       values.password !== values.repeated_password
     ) {
-      errors.notMatch = "Passwörter stimmen nicht überein.";
+      errors.notMatch = true;
     }
 
     if (touchedFields.checked && !values.checked) {
-      errors.checked = "Bitte akzeptiere die Datenschutzerklärung.";
+      errors.checked = true;
     }
 
     return errors;
@@ -118,24 +117,24 @@ function CreateAccount() {
 
   return (
     <main className="main-auth">
-      <PageTitle title="Konto restellen" />
+      <PageTitle title={t("LOGIN.CREATE_ACCOUNT")} />
       <section className="main-content-customer">
-        <BackButton to="/login" />
+        <BackButton to="/login" label={t("CREATE_ACCOUNT.BACK_TO_LOGIN")} />
 
         <div className="form-title">
-          <h1 className="form-title-name">Konto erstellen</h1>
+          <h1 className="form-title-name">{t("LOGIN.CREATE_ACCOUNT")}</h1>
         </div>
 
         <p className="description">
-          Hast du schon ein Konto?{" "}
+          {t("CREATE_ACCOUNT.HAS_ACCOUNT")}{" "}
           <Link className="new-user-link" to="/login">
-            Anmelden
+            {t("LOGIN.SUBMIT")}
           </Link>
         </p>
 
         <form onSubmit={handleSubmit}>
           <div className="input-container">
-            <label htmlFor="email">Dein E-Mail</label>
+            <label htmlFor="email">{t("LOGIN.EMAIL")}</label>
 
             <input
               id="email"
@@ -143,7 +142,7 @@ function CreateAccount() {
               autoComplete="email"
               className="input-field"
               type="email"
-              placeholder="beispielname@email.com"
+              placeholder={t("LOGIN.EMAIL_PLACEHOLDER")}
               value={formValues.email}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -160,12 +159,12 @@ function CreateAccount() {
             </div>
 
             <div className="warn-txt">
-              <span>{formErrors.email}</span>
+              <span>{formErrors.email && t("LOGIN.INVALID_EMAIL")}</span>
             </div>
           </div>
 
           <div className="input-container">
-            <label htmlFor="password">Passwort</label>
+            <label htmlFor="password">{t("LOGIN.PASSWORD")}</label>
 
             <input
               id="password"
@@ -173,7 +172,7 @@ function CreateAccount() {
               autoComplete="new-password"
               type={isPasswordTopVisible ? "text" : "password"}
               className="input-field input-field-pwd-icon"
-              placeholder="Passwort"
+              placeholder={t("LOGIN.PASSWORD")}
               value={formValues.password}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -193,7 +192,7 @@ function CreateAccount() {
                     ? "/assets/eye.svg"
                     : "/assets/eye-off.svg"
                 }
-                alt={isPasswordTopVisible ? "verstecken" : "zeigen"}
+                alt={t(isPasswordTopVisible ? "LOGIN.HIDE_PASSWORD" : "LOGIN.SHOW_PASSWORD")}
               />
             </button>
 
@@ -207,11 +206,13 @@ function CreateAccount() {
               />
             </div>
 
-            <div className="warn-txt">{formErrors.password}</div>
+            <div className="warn-txt">
+              {formErrors.password && t("CREATE_ACCOUNT.PASSWORD_REQUIREMENTS")}
+            </div>
           </div>
 
           <div className="input-container">
-            <label htmlFor="repeated_password">Wiederhole dein Passwort</label>
+            <label htmlFor="repeated_password">{t("CREATE_ACCOUNT.REPEAT_PASSWORD")}</label>
 
             <input
               id="repeated_password"
@@ -219,7 +220,7 @@ function CreateAccount() {
               autoComplete="new-password"
               className="input-field"
               type={isPasswordBottomVisible ? "text" : "password"}
-              placeholder="Wiederhole dein Passwort"
+              placeholder={t("CREATE_ACCOUNT.REPEAT_PASSWORD")}
               value={formValues.repeated_password}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -239,7 +240,7 @@ function CreateAccount() {
                     ? "/assets/eye.svg"
                     : "/assets/eye-off.svg"
                 }
-                alt={isPasswordBottomVisible ? "verstecken" : "zeigen"}
+                alt={t(isPasswordBottomVisible ? "LOGIN.HIDE_PASSWORD" : "LOGIN.SHOW_PASSWORD")}
               />
             </button>
 
@@ -252,7 +253,9 @@ function CreateAccount() {
               />
             </div>
 
-            <div className="warn-txt">{formErrors.notMatch}</div>
+            <div className="warn-txt">
+              {formErrors.notMatch && t("CREATE_ACCOUNT.PASSWORD_MISMATCH")}
+            </div>
           </div>
 
           <div className="checkbox-container">
@@ -268,21 +271,23 @@ function CreateAccount() {
             </div>
 
             <div className="checkbox-description">
-              <label htmlFor="checkbox" id="checkbox">
-                Ich stimme der{" "}
-                <Link className="privacy" to="/privacy-policy" target="blank">
-                  Datenschutzerklärung
-                </Link>{" "}
-                zu.
+              <label htmlFor="checkbox">
+                <Trans
+                  t={t}
+                  i18nKey="CREATE_ACCOUNT.PRIVACY_AGREEMENT"
+                  components={{
+                    privacyLink: <Link className="privacy" to="/privacy-policy" target="blank" />,
+                  }}
+                />
               </label>
 
               <div className="checkbox-description warn-txt">
-                {formErrors.checked}
+                {formErrors.checked && t("CREATE_ACCOUNT.PRIVACY_REQUIRED")}
               </div>
             </div>
           </div>
 
-          {loading ? <PreLoader /> : <></>}
+          {loading && <PreLoader label={t("LOGIN.LOADING")} />}
 
           <div className="btn-container">
             <button
@@ -290,11 +295,11 @@ function CreateAccount() {
               disabled={!isFormValid || loading}
               className="main-quiz-button"
             >
-              Weiter
+              {t("CREATE_ACCOUNT.CONTINUE")}
             </button>
           </div>
           <div className="seperator-container">
-            <span className="sep-line-txt">ODER</span>
+            <span className="sep-line-txt">{t("LOGIN.OR")}</span>
           </div>
 
           <button
@@ -310,7 +315,7 @@ function CreateAccount() {
               alt=""
               aria-hidden="true"
             />
-            Anmeldung mit Google
+            {t("LOGIN.GOOGLE")}
           </button>
         </form>
       </section>

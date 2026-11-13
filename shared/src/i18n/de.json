@@ -199,6 +199,37 @@
     "ANSWER": "ANTWORT",
     "MEANING": "Bedeutung"
   },
+  "LOGIN": {
+    "TITLE": "Anmeldung",
+    "DESCRIPTION": "Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du täglich verwendest.",
+    "NO_ACCOUNT": "Hast du noch kein Konto?",
+    "CREATE_ACCOUNT": "Konto erstellen",
+    "EMAIL": "E-Mail-Adresse",
+    "EMAIL_PLACEHOLDER": "beispielname@email.com",
+    "PASSWORD": "Passwort",
+    "SHOW_PASSWORD": "Passwort anzeigen",
+    "HIDE_PASSWORD": "Passwort verbergen",
+    "INVALID_EMAIL": "Gib eine gültige E-Mail-Adresse ein.",
+    "INVALID_PASSWORD": "Dein Passwort ist nicht korrekt.",
+    "ERROR": "Anmeldung fehlgeschlagen.",
+    "LOADING": "Wird geladen...",
+    "SUBMIT": "Anmelden",
+    "FORGOT_PASSWORD": "Passwort vergessen?",
+    "OR": "ODER",
+    "GOOGLE": "Anmelden mit Google"
+  },
+  "CREATE_ACCOUNT": {
+    "BACK_TO_LOGIN": "Zurück zur Anmeldung",
+    "HAS_ACCOUNT": "Hast du schon ein Konto?",
+    "REPEAT_PASSWORD": "Wiederhole dein Passwort",
+    "PASSWORD_REQUIREMENTS": "Verwende mindestens 10 Zeichen, darunter einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen.",
+    "PASSWORD_MISMATCH": "Die Passwörter stimmen nicht überein.",
+    "PRIVACY_AGREEMENT": "Ich stimme der <privacyLink>Datenschutzerklärung</privacyLink> zu.",
+    "PRIVACY_REQUIRED": "Bitte akzeptiere die Datenschutzerklärung.",
+    "CONTINUE": "Weiter",
+    "CONFIRMATION": "Dein Konto wurde erstellt. Bestätige deine E-Mail-Adresse, um dich anzumelden.",
+    "ERROR": "Das Konto konnte nicht erstellt werden."
+  },
   "CONTACT": {
     "TITLE": "Kontakt",
     "TITLE_H3": "Möchtes du etwas ansprechen?",

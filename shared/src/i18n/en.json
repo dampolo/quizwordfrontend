@@ -199,6 +199,37 @@
     "ANSWER": "ANSWER",
     "MEANING": "MEANING"
   },
+  "LOGIN": {
+    "TITLE": "Log in",
+    "DESCRIPTION": "We recommend using your work daily address.",
+    "NO_ACCOUNT": "Don't have an account?",
+    "CREATE_ACCOUNT": "Create an account",
+    "EMAIL": "Email address",
+    "EMAIL_PLACEHOLDER": "name@example.com",
+    "PASSWORD": "Password",
+    "SHOW_PASSWORD": "Show password",
+    "HIDE_PASSWORD": "Hide password",
+    "INVALID_EMAIL": "Enter a valid email address.",
+    "INVALID_PASSWORD": "Your password is invalid.",
+    "ERROR": "Login failed.",
+    "LOADING": "Loading...",
+    "SUBMIT": "Log in",
+    "FORGOT_PASSWORD": "Forgot your password?",
+    "OR": "OR",
+    "GOOGLE": "Log in with Google"
+  },
+  "CREATE_ACCOUNT": {
+    "BACK_TO_LOGIN": "Back to login",
+    "HAS_ACCOUNT": "Already have an account?",
+    "REPEAT_PASSWORD": "Repeat your password",
+    "PASSWORD_REQUIREMENTS": "Use at least 10 characters, including a lowercase letter, an uppercase letter, a number, and a special character.",
+    "PASSWORD_MISMATCH": "Passwords do not match.",
+    "PRIVACY_AGREEMENT": "I agree to the <privacyLink>privacy policy</privacyLink>.",
+    "PRIVACY_REQUIRED": "Please accept the privacy policy.",
+    "CONTINUE": "Continue",
+    "CONFIRMATION": "Your account has been created. Confirm your email address to log in.",
+    "ERROR": "Account creation failed."
+  },
   "CONTACT": {
     "TITLE": "Contact",
     "TITLE_H3": "Would you like to discuss something?",

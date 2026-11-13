@@ -10,7 +10,7 @@ function PublicLayout() {
   const language = i18n.resolvedLanguage;
 
   function changeLanguage(nextLanguage) {
-    void i18n.changeLanguage(nextLanguage);
+    i18n.changeLanguage(nextLanguage);
     localStorage.setItem(siteLanguageKey, nextLanguage);
   }
 

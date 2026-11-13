@@ -3,7 +3,7 @@ import "./footer.scss";
 
 import { Link } from "react-router-dom";
 
-function Footer() {
+function Footer({ language, onLanguageChange }) {
   const currentDate = new Date().getFullYear();
   const { t } = useTranslation();
 
@@ -56,6 +56,20 @@ function Footer() {
             {t("FOOTER.CONTACT")}
           </Link>
         </nav>
+
+        {onLanguageChange && (
+          <label>
+            {language === "de" ? "Sprache" : "Language"}
+
+            <select
+              value={language}
+              onChange={(event) => onLanguageChange(event.target.value)}
+            >
+              <option value="de">Deutsch</option>
+              <option value="en">English</option>
+            </select>
+          </label>
+        )}
 
         {/* Right Icons */}
         <div className="footer__socials">

@@ -234,7 +234,7 @@ function AllWords() {
           <div className={styles["category"]}>Kategorie</div>
           <div className={styles["actions"]}>Aktionen</div>
         </div>
-        {loading ? (
+        {!loading ? (
           <div className="show-container">
             <PreLoader />
           </div>

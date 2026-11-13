@@ -9,6 +9,10 @@
       "LOGIN": "Log In"
     },
     "EXAMPLES": {
+      "REVERSE_FLIPCARDS": "Reverse flipcards",
+      "MORE_EXAMPLES": "More examples",
+      "BACK_TO_HOME": "Back to homepage",
+      "MORE": "More",
       "JOB": "Job",
       "HOLIDAY": "Holiday",
       "PREVIOUS_QUIZ": "Previous example quiz",
@@ -50,11 +54,13 @@
       "SAVE": "Save",
       "HEARD_WORD": "Word you heard",
       "TRANSLATION": "English translation",
+      "TARGET_TRANSLATION": "Translation ({{language}})",
       "CHECK": "Check",
       "CORRECT": "Correct!",
       "INCORRECT": "Incorrect. The answer is below.",
       "REVEAL": "Show translation",
       "NEXT": "Next word",
+      "LEARN_NEXT": "Next",
       "AUDIO_UNAVAILABLE": "Speech playback is unavailable in this browser."
     },
     "HOW_IT_WORKS": {

@@ -9,6 +9,10 @@
       "LOGIN": "Anmelden"
     },
     "EXAMPLES": {
+      "REVERSE_FLIPCARDS": "Karteikarten in umgekehrter Richtung",
+      "MORE_EXAMPLES": "Weitere Beispiele",
+      "BACK_TO_HOME": "Zurück zur Startseite",
+      "MORE": "Mehr",
       "JOB": "Beruf",
       "HOLIDAY": "Urlaub",
       "PREVIOUS_QUIZ": "Vorheriges Beispielquiz",
@@ -50,11 +54,13 @@
       "SAVE": "Speichern",
       "HEARD_WORD": "Gehörtes Wort",
       "TRANSLATION": "Englische Übersetzung",
+      "TARGET_TRANSLATION": "Übersetzung ({{language}})",
       "CHECK": "Prüfen",
       "CORRECT": "Richtig!",
       "INCORRECT": "Falsch. Die Lösung steht unten.",
       "REVEAL": "Übersetzung anzeigen",
       "NEXT": "Nächstes Wort",
+      "LEARN_NEXT": "Weiter",
       "AUDIO_UNAVAILABLE": "Die Sprachausgabe ist in diesem Browser nicht verfügbar."
     },
     "HOW_IT_WORKS": {

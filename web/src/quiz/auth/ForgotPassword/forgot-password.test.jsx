@@ -1,8 +1,9 @@
 import { afterEach, expect, it, vi } from "vitest";
-import { cleanup, render, waitFor } from "@testing-library/react";
+import { act, cleanup, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/auth/useAuth";
+import i18n from "../../../i18n/i18n";
 import ForgotPassword from "./forgot-password";
 
 // Replace authentication so the test never calls the real backend.
@@ -13,9 +14,10 @@ vi.mock("react-router-dom", async (importOriginal) => ({
   useNavigate: vi.fn(),
 }));
 
-afterEach(() => {
+afterEach(async () => {
   cleanup();
   vi.resetAllMocks();
+  await i18n.changeLanguage("en");
 });
 
 function renderForgotPassword({ loading = false } = {}) {
@@ -60,7 +62,7 @@ it.each(["invalid", "user@example", "user@example.c", "user name@example.com"])(
 
     await user.type(email, emailValue);
 
-    expect(emailError.textContent).toBe("E-Mail ist unvollständig/inkorrekt.");
+    expect(emailError.textContent).toBe("Enter a valid email address.");
     expect(submit.disabled).toBe(true);
     await user.click(submit);
     expect(forgotPassword).not.toHaveBeenCalled();
@@ -71,7 +73,7 @@ it("clears the error after correcting the email and disables submission when cle
   const { user, forgotPassword, email, emailError, submit } = renderForgotPassword();
 
   await user.type(email, "invalid");
-  expect(emailError.textContent).toBe("E-Mail ist unvollständig/inkorrekt.");
+  expect(emailError.textContent).toBe("Enter a valid email address.");
   expect(submit.disabled).toBe(true);
 
   await user.clear(email);
@@ -82,20 +84,34 @@ it("clears the error after correcting the email and disables submission when cle
 
   await user.clear(email);
   expect(email.value).toBe("");
-  expect(emailError.textContent).toBe("E-Mail ist unvollständig/inkorrekt.");
+  expect(emailError.textContent).toBe("Enter a valid email address.");
   expect(submit.disabled).toBe(true);
   expect(forgotPassword).not.toHaveBeenCalled();
 });
 
-it("submits a valid email once with the correct payload", async () => {
-  const { user, forgotPassword, email, submit } = renderForgotPassword();
+it("submits a valid email and shows the confirmation in the selected language", async () => {
+  const { user, forgotPassword, setConfirmationMessage, navigate, email, emailError, submit } = renderForgotPassword();
   forgotPassword.mockResolvedValue(true);
 
+  await user.type(email, "invalid");
+  await act(async () => {
+    await i18n.changeLanguage("de");
+  });
+
+  expect(document.title).toBe("Passwort vergessen | Quiz Word");
+  expect(emailError.textContent).toBe("Gib eine gültige E-Mail-Adresse ein.");
+  expect(submit.textContent).toBe("E-Mail senden");
+
+  await user.clear(email);
   await user.type(email, "user@example.com");
   await user.click(submit);
 
   expect(forgotPassword).toHaveBeenCalledTimes(1);
   expect(forgotPassword).toHaveBeenCalledWith({ email: "user@example.com" });
+  expect(setConfirmationMessage).toHaveBeenCalledWith(
+    "Schau in deinem Postfach nach der E-Mail zum Zurücksetzen deines Passworts.",
+  );
+  expect(navigate).toHaveBeenCalledWith("/confirmation?redirect=true");
 });
 
 it("preserves the email without confirming or navigating when the request fails", async () => {

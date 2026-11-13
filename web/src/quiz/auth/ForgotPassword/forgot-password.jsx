@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import "./forgot-password.scss";
 import { Link, useNavigate } from "react-router-dom";
 import BackButton from "../../../components/BackButton/BackButton";
@@ -7,6 +8,7 @@ import PreLoader from "../../../components/PreLoader/PreLoader";
 import PageTitle from "../../../components/PageTitle/PageTitle";
 
 function ForgotPassword() {
+  const { t } = useTranslation();
   const { forgotPassword, setConfirmationMessage, loading } = useAuth();
 
   const initialValues = { email: "" };
@@ -28,7 +30,7 @@ function ForgotPassword() {
 
     try {
       await forgotPassword(formValues);
-      setConfirmationMessage("Du kannst jetzt dein E-Mail prüfen.");
+      setConfirmationMessage(t("FORGOT_PASSWORD.CONFIRMATION"));
       navigate("/confirmation?redirect=true");
       setFormValues(initialValues);
     } catch (error) {
@@ -50,7 +52,7 @@ function ForgotPassword() {
     const errors = {};
 
     if (!regexEmail.test(values.email)) {
-      errors.email = "E-Mail ist unvollständig/inkorrekt.";
+      errors.email = true;
     }
 
     return errors;
@@ -58,24 +60,24 @@ function ForgotPassword() {
 
   return (
     <main className="main-auth">
-      <PageTitle title="Passwort vergessen" />
+      <PageTitle title={t("FORGOT_PASSWORD.TITLE")} />
       <section className="main-content-customer">
-        <BackButton to="/login" />
+        <BackButton to="/login" label={t("CREATE_ACCOUNT.BACK_TO_LOGIN")} />
 
         <div className="form-title">
-          <h1 className="form-title-name">Passwort vergessen</h1>
+          <h1 className="form-title-name">{t("FORGOT_PASSWORD.TITLE")}</h1>
         </div>
 
         <form className="form" onSubmit={recoveryForm}>
           <div className="input-container">
-            <label htmlFor="email">Bitte gib deine E-Mail ein:</label>
+            <label htmlFor="email">{t("FORGOT_PASSWORD.EMAIL_PROMPT")}</label>
 
             <input
               className="input-field"
               id="email"
               type="email"
               name="email"
-              placeholder="beispielname@email.com"
+              placeholder={t("LOGIN.EMAIL_PLACEHOLDER")}
               autoComplete="email"
               value={formValues.email}
               onChange={handleChange}
@@ -91,20 +93,21 @@ function ForgotPassword() {
               />
             </div>
 
-            <div className="warn-txt">{formErrors.email}</div>
+            <div className="warn-txt">
+              {formErrors.email && t("LOGIN.INVALID_EMAIL")}
+            </div>
           </div>
 
           <p className="description">
-            Wir senden Dir eine E-Mail, <br />
-            über die Du dein Passwort ändern kannst.
+            {t("FORGOT_PASSWORD.DESCRIPTION")}
           </p>
 
-          {loading ? <PreLoader /> : <></>}
+          {loading && <PreLoader label={t("LOGIN.LOADING")} />}
 
           
           <div className="btn-container">
             <Link className="back-button" to="/customer/profile">
-              Abbrechen
+              {t("FORGOT_PASSWORD.CANCEL")}
             </Link>
 
             <button
@@ -112,7 +115,7 @@ function ForgotPassword() {
               type="submit"
               disabled={!isFormValid || loading}
             >
-              E-Mail senden
+              {t("FORGOT_PASSWORD.SUBMIT")}
             </button>
           </div>
         </form>

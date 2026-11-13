@@ -9,15 +9,27 @@ function cancelPlayback(session) {
   window.speechSynthesis.cancel();
 }
 
-export default function ExampleWordAudioLoop({ title, words, onClose, reverse = false }) {
-  const { t } = useTranslation();
+const speechLocales = { de: "de-DE", en: "en-GB", es: "es-ES", fr: "fr-FR" };
+
+export default function ExampleWordAudioLoop({
+  title,
+  words,
+  onClose,
+  reverse = false,
+  sourceLanguage = "de",
+  targetLanguage = "en",
+}) {
+  const { t, i18n } = useTranslation();
   const playback = useRef(null);
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [failed, setFailed] = useState(false);
-  const source = reverse ? "en" : "de";
-  const target = reverse ? "de" : "en";
+  const source = reverse ? targetLanguage : sourceLanguage;
+  const target = reverse ? sourceLanguage : targetLanguage;
+  const languageNames = new Intl.DisplayNames(i18n.resolvedLanguage, {
+    type: "language",
+  });
   const word = words[index];
   const canSpeak = Boolean(window.speechSynthesis && window.SpeechSynthesisUtterance);
   const label = (key) => t("WEBSITE.EXAMPLES." + key);
@@ -47,7 +59,7 @@ export default function ExampleWordAudioLoop({ title, words, onClose, reverse = 
       if (!session.active) return;
       setIndex(wordIndex);
       const utterance = new window.SpeechSynthesisUtterance(words[wordIndex][language]);
-      utterance.lang = language === "de" ? "de-DE" : "en-GB";
+      utterance.lang = speechLocales[language] ?? language;
       session.utterance = utterance;
       utterance.onend = () => {
         if (!session.active) return;
@@ -77,7 +89,7 @@ export default function ExampleWordAudioLoop({ title, words, onClose, reverse = 
   return (
     <div className={`${styles["quiz-card"]} ${styles["learn-card"]}`}>
       <span className={styles.languages}>
-        {label(reverse ? "ENGLISH" : "GERMAN")} → {label(reverse ? "GERMAN" : "ENGLISH")}
+        {languageNames.of(source)} → {languageNames.of(target)}
       </span>
       <div
         className={styles.progress}

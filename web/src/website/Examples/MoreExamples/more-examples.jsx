@@ -7,6 +7,7 @@ import ExampleFlipCardQuizReverse from "../ExampleFlipCardQuizReverse/example-fl
 import ExampleLearnQuiz from "../ExampleLearnQuiz/example-learn-quiz";
 import ExampleHearQuiz from "../ExampleHearQuiz/example-hear-quiz";
 import ExamplePlayQuiz from "../ExamplePlayQuiz/example-play-quiz";
+import ExampleWordAudioLoop from "../ExampleWordAudioLoop/example-word-audio-loop";
 import "./more-examples.scss";
 import { moreExamples } from "./more-examples-data";
 
@@ -75,6 +76,14 @@ export default function MoreExamples() {
             {...quizProps}
             t={label}
             resultsClassName="more-examples__words"
+          />
+        );
+
+      case "audio":
+        return (
+          <ExampleWordAudioLoop
+            {...quizProps}
+            onClose={() => quizDialog.current.close()}
           />
         );
 
@@ -240,6 +249,7 @@ export default function MoreExamples() {
                   type="button"
                   aria-label={label("audio")}
                   data-quiz-action="audio"
+                  onClick={() => openQuiz(id, "audio")}
                 >
                   <img
                     width={40}

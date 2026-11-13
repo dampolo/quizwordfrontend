@@ -5,6 +5,7 @@ import BackButton from "../../../components/BackButton/BackButton";
 import ExampleFlipCardQuiz from "../ExampleFlipCardQuiz/example-flip-card-quiz";
 import ExampleFlipCardQuizReverse from "../ExampleFlipCardQuizReverse/example-flip-card-quiz-reverse";
 import ExampleLearnQuiz from "../ExampleLearnQuiz/example-learn-quiz";
+import ExampleHearQuiz from "../ExampleHearQuiz/example-hear-quiz";
 import ExamplePlayQuiz from "../ExamplePlayQuiz/example-play-quiz";
 import "./more-examples.scss";
 import { moreExamples } from "./more-examples-data";
@@ -60,48 +61,61 @@ export default function MoreExamples() {
       targetLanguage,
     };
 
-    if (FlipCard) {
-      return <FlipCard {...quizProps} onClose={() => setQuizSession(null)} />;
-    }
+    switch (quizSession.mode) {
+      case "flipcards":
+      case "flipcardsReverse":
+        return <FlipCard {...quizProps} onClose={() => setQuizSession(null)} />;
 
-    if (quizSession.mode === "test") {
-      return <ExamplePlayQuiz {...quizProps} resultsClassName="more-examples__words" />;
-    }
+      case "test":
+        return <ExamplePlayQuiz {...quizProps} resultsClassName="more-examples__words" />;
 
-    if (quizSession.mode === "preview") {
-      return (
-        <>
-          <button
-            type="button"
-            className="more-examples__preview-close"
-            aria-label={label("CLOSE")}
-            onClick={() => quizDialog.current.close()}
-          >
-            <img width={25} height={25} src="/assets/xbox.svg" alt="" />
-          </button>
-          <div className="more-examples__preview-list">
-            <h2 id="example-quiz-title" className="more-examples__preview-heading">
-              {quizProps.title} - {label("preview")}
-            </h2>
-            {quizWords.map((word) => (
-              <div className="more-examples__preview-row" key={word[sourceLanguage]}>
-                <h3 lang={sourceLanguage}>{word[sourceLanguage]}</h3>
-                <span aria-hidden="true">→</span>
-                <p lang={targetLanguage}>{word[targetLanguage]}</p>
-              </div>
-            ))}
-          </div>
-        </>
-      );
-    }
+      case "listen":
+        return (
+          <ExampleHearQuiz
+            {...quizProps}
+            t={label}
+            resultsClassName="more-examples__words"
+          />
+        );
 
-    return (
-      <ExampleLearnQuiz
-        {...quizProps}
-        onClose={() => quizDialog.current.close()}
-        t={label}
-      />
-    );
+      case "preview":
+        return (
+          <>
+            <button
+              type="button"
+              className="more-examples__preview-close"
+              aria-label={label("CLOSE")}
+              onClick={() => quizDialog.current.close()}
+            >
+              <img width={25} height={25} src="/assets/xbox.svg" alt="" />
+            </button>
+            <div className="more-examples__preview-list">
+              <h2 id="example-quiz-title" className="more-examples__preview-heading">
+                {quizProps.title} - {label("preview")}
+              </h2>
+              {quizWords.map((word) => (
+                <div className="more-examples__preview-row" key={word[sourceLanguage]}>
+                  <h3 lang={sourceLanguage}>{word[sourceLanguage]}</h3>
+                  <span aria-hidden="true">→</span>
+                  <p lang={targetLanguage}>{word[targetLanguage]}</p>
+                </div>
+              ))}
+            </div>
+          </>
+        );
+
+      case "learn":
+        return (
+          <ExampleLearnQuiz
+            {...quizProps}
+            onClose={() => quizDialog.current.close()}
+            t={label}
+          />
+        );
+
+      default:
+        return null;
+    }
   }
 
   return (
@@ -241,6 +255,7 @@ export default function MoreExamples() {
                   type="button"
                   aria-label={label("listen")}
                   data-quiz-action="listen"
+                  onClick={() => openQuiz(id, "listen")}
                 >
                   <img
                     width={40}

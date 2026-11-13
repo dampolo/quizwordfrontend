@@ -1,8 +1,19 @@
 import { useEffect, useId, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import SpeakButton from "../../../components/SpeakButton/SpeakButton";
 import styles from "../../../quiz/my-quiz/quizzes/HearQuiz/hear-quiz.module.scss";
 
-export default function ExampleHearQuiz({ title, words, t }) {
+const speechLocales = { de: "de-DE", en: "en-GB", es: "es-ES", fr: "fr-FR" };
+
+export default function ExampleHearQuiz({
+  title,
+  words,
+  t,
+  sourceLanguage = "de",
+  targetLanguage = "en",
+  resultsClassName = "examples__words",
+}) {
+  const { i18n } = useTranslation();
   const inputId = useId();
   const hintId = useId();
   const playback = useRef(null);
@@ -12,6 +23,10 @@ export default function ExampleHearQuiz({ title, words, t }) {
   const [speaking, setSpeaking] = useState(false);
   const [failed, setFailed] = useState(false);
   const word = words[answers.length];
+  const targetWord = word?.[targetLanguage];
+  const languageNames = new Intl.DisplayNames(i18n.resolvedLanguage, {
+    type: "language",
+  });
   const questionNumber = Math.min(answers.length + 1, words.length);
   const canSpeak = Boolean(window.speechSynthesis && window.SpeechSynthesisUtterance);
 
@@ -33,8 +48,8 @@ export default function ExampleHearQuiz({ title, words, t }) {
   function playAudio() {
     stopPlayback();
     setFailed(false);
-    const utterance = new window.SpeechSynthesisUtterance(word.en);
-    utterance.lang = "en-GB";
+    const utterance = new window.SpeechSynthesisUtterance(targetWord);
+    utterance.lang = speechLocales[targetLanguage] ?? targetLanguage;
     playback.current = utterance;
     setSpeaking(true);
 
@@ -63,7 +78,7 @@ export default function ExampleHearQuiz({ title, words, t }) {
     setAnswers([...answers, {
       word,
       submittedAnswer,
-      correct: submittedAnswer.toLowerCase() === word.en.toLowerCase(),
+      correct: submittedAnswer.toLowerCase() === targetWord.toLowerCase(),
     }]);
     setAnswer("");
     setHint(false);
@@ -86,7 +101,7 @@ export default function ExampleHearQuiz({ title, words, t }) {
         />
       </div>
       <span className={styles["quiz-card__languages"]}>
-        {t("GERMAN")} → {t("ENGLISH")}
+        {languageNames.of(sourceLanguage)} → {languageNames.of(targetLanguage)}
       </span>
       <span id="example-quiz-title" className={styles["quiz-card__quiz-name"]}>
         {title}
@@ -137,7 +152,7 @@ export default function ExampleHearQuiz({ title, words, t }) {
                 onChange={(event) => setAnswer(event.target.value)}
                 autoComplete="off"
                 spellCheck={false}
-                lang="en"
+                lang={targetLanguage}
                 required
               />
               <button
@@ -169,13 +184,13 @@ export default function ExampleHearQuiz({ title, words, t }) {
               total: words.length,
             })}
           </h2>
-          <ul className="examples__words">
+          <ul className={resultsClassName}>
             {answers.map(({ word, submittedAnswer, correct }) => (
-              <li key={word.de}>
-                <span lang="de">{word.de}</span>
-                <span lang="en">
+              <li key={word[sourceLanguage]}>
+                <span lang={sourceLanguage}>{word[sourceLanguage]}</span>
+                <span lang={targetLanguage}>
                   {correct ? submittedAnswer : (
-                    <><s>{submittedAnswer}</s> → {word.en}</>
+                    <><s>{submittedAnswer}</s> → {word[targetLanguage]}</>
                   )}
                 </span>
               </li>

@@ -17,10 +17,10 @@ const flipCardComponents = {
 };
 
 const languageCodes = {
-  english: "en",
-  german: "de",
-  spain: "es",
-  french: "fr",
+  English: "en",
+  German: "de",
+  Spain: "es",
+  French: "fr",
 };
 
 export default function MoreExamples() {
@@ -28,12 +28,12 @@ export default function MoreExamples() {
   const label = (key, options) => t("WEBSITE.EXAMPLES." + key, options);
 
   const languages = Object.keys(moreExamples);
-  const [activeLanguage, setActiveLanguage] = useState("english");
+  const [activeLanguage, setActiveLanguage] = useState("English");
   const [quizSession, setQuizSession] = useState(null);
   const FlipCard = flipCardComponents[quizSession?.mode];
   const quizDialog = useRef(null);
   const targetLanguage = languageCodes[activeLanguage];
-  const sourceLanguageKey = activeLanguage === "german" ? "english" : "german";
+  const sourceLanguageKey = activeLanguage === "German" ? "English" : "German";
   const sourceLanguage = languageCodes[sourceLanguageKey];
   const languageNames = new Intl.DisplayNames(i18n.resolvedLanguage, {
     type: "language",

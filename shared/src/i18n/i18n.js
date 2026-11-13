@@ -6,11 +6,11 @@ export const resources = {
   en: { translation: en },
 };
 
-export function initializeI18n(i18n, reactPlugin) {
+export function initializeI18n(i18n, reactPlugin, language = "en") {
   i18n.use(reactPlugin).init({
     resources,
-    lng: "de",
-    fallbackLng: "de",
+    lng: language,
+    fallbackLng: "en",
     supportedLngs: ["de", "en"],
     interpolation: { escapeValue: false },
   });

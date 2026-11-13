@@ -8,6 +8,7 @@ import ExampleLearnQuiz from "../ExampleLearnQuiz/example-learn-quiz";
 import ExampleHearQuiz from "../ExampleHearQuiz/example-hear-quiz";
 import ExamplePlayQuiz from "../ExamplePlayQuiz/example-play-quiz";
 import ExampleWordAudioLoop from "../ExampleWordAudioLoop/example-word-audio-loop";
+import ExampleWordAudioLoopReverse from "../ExampleWordAudioLoopReverse/example-word-audio-loop-reverse";
 import "./more-examples.scss";
 import { moreExamples } from "./more-examples-data";
 
@@ -82,6 +83,14 @@ export default function MoreExamples() {
       case "audio":
         return (
           <ExampleWordAudioLoop
+            {...quizProps}
+            onClose={() => quizDialog.current.close()}
+          />
+        );
+
+      case "audioReverse":
+        return (
+          <ExampleWordAudioLoopReverse
             {...quizProps}
             onClose={() => quizDialog.current.close()}
           />
@@ -305,6 +314,7 @@ export default function MoreExamples() {
                   type="button"
                   aria-label={label("audioReverse")}
                   data-quiz-action="audioReverse"
+                  onClick={() => openQuiz(id, "audioReverse")}
                 >
                   <img
                     width={40}

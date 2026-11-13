@@ -235,7 +235,7 @@ function AllWords() {
           <div className={styles["actions"]}>Aktionen</div>
         </div>
         {loading ? (
-          <div className="show-container ">
+          <div className="show-container">
             <PreLoader />
           </div>
         ) : words?.results?.length === 0 ? (

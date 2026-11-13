@@ -9,9 +9,9 @@ function Website() {
   const { loading, isAuthenticated } = useAuth();
   const { t } = useTranslation();
 
-  if (!loading) {
+  if (loading) {
     return (
-      <div className="show-container ">
+      <div className="show-container-webpage">
         <PreLoader />
       </div>
     );

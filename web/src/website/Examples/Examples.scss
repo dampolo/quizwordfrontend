@@ -42,20 +42,10 @@
     margin-top: 1.5rem;
   }
 
-  &__more-link {
-    padding: 0.75rem 1.5rem;
-    border-radius: basic.$qw-border-radius;
-    background: basic.$qw-primary;
-    color: #fff;
-    font-weight: 600;
-    text-decoration: none;
-    transition: basic.$first-transition;
-
-    &:hover,
-    &:focus-visible {
-      background: basic.$qw-color-heading;
-      color: #fff;
-    }
+  &__more-link.main-quiz-button {
+    padding: 0rem 0.5rem;
+    margin: 0;
+    max-width: fit-content;
   }
 
   // ========================================

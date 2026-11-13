@@ -468,7 +468,7 @@ export default function Examples() {
         <div className="examples__more">
           <Link
             to="/more-examples"
-            className="examples__more-link"
+            className="examples__more-link main-quiz-button"
             aria-label={label("MORE_EXAMPLES")}
           >
             {label("MORE")}

@@ -230,6 +230,19 @@
     "CONFIRMATION": "Your account has been created. Confirm your email address to log in.",
     "ERROR": "Account creation failed."
   },
+  "FORGOT_PASSWORD": {
+    "TITLE": "Forgot password",
+    "EMAIL_PROMPT": "Enter your email address",
+    "DESCRIPTION": "We'll email you a link to reset your password.",
+    "CANCEL": "Cancel",
+    "SUBMIT": "Send email",
+    "CONFIRMATION": "Check your inbox for a password reset email."
+  },
+  "VERIFY_EMAIL_REQUIRED": {
+    "TITLE": "Verify your email",
+    "DESCRIPTION": "Please verify your email address. You'll find the verification link in your inbox.",
+    "RESEND_LINK": "Request a new verification link"
+  },
   "CONTACT": {
     "TITLE": "Contact",
     "TITLE_H3": "Would you like to discuss something?",

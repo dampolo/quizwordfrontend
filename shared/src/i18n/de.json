@@ -230,6 +230,19 @@
     "CONFIRMATION": "Dein Konto wurde erstellt. Bestätige deine E-Mail-Adresse, um dich anzumelden.",
     "ERROR": "Das Konto konnte nicht erstellt werden."
   },
+  "FORGOT_PASSWORD": {
+    "TITLE": "Passwort vergessen",
+    "EMAIL_PROMPT": "Gib deine E-Mail-Adresse ein",
+    "DESCRIPTION": "Wir senden dir per E-Mail einen Link, mit dem du dein Passwort zurücksetzen kannst.",
+    "CANCEL": "Abbrechen",
+    "SUBMIT": "E-Mail senden",
+    "CONFIRMATION": "Schau in deinem Postfach nach der E-Mail zum Zurücksetzen deines Passworts."
+  },
+  "VERIFY_EMAIL_REQUIRED": {
+    "TITLE": "E-Mail bestätigen",
+    "DESCRIPTION": "Bitte bestätige deine E-Mail-Adresse. Den Bestätigungslink findest du in deinem Postfach.",
+    "RESEND_LINK": "Neuen Bestätigungslink anfordern"
+  },
   "CONTACT": {
     "TITLE": "Kontakt",
     "TITLE_H3": "Möchtes du etwas ansprechen?",

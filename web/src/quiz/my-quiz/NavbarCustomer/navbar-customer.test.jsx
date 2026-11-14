@@ -1,12 +1,16 @@
 import { afterEach, expect, it, vi } from "vitest";
-import { cleanup, fireEvent, render } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import useVocabulary from "../../../context/vocabulary/useVocabulary";
+import i18n from "../../../i18n/i18n";
 import NavbarCustomer from "./navbar-customer";
 
 vi.mock("../../../context/vocabulary/useVocabulary", () => ({ default: vi.fn() }));
 
-afterEach(cleanup);
+afterEach(async () => {
+  cleanup();
+  await i18n.changeLanguage("en");
+});
 
 function setup(entry, languages = [{ id: 2 }, { id: 3 }]) {
   useVocabulary.mockReturnValue({ userLanguages: languages });
@@ -40,4 +44,21 @@ it("defaults to the first language when no language is selected", () => {
 it("omits the language query when no languages are available", () => {
   const { links } = setup("/my-quiz/profile", []);
   links.forEach((link) => expect(link.getAttribute("href")).not.toContain("?"));
+});
+
+it("updates the navigation labels without changing the selected quiz language", async () => {
+  setup("/my-quiz/all-words?language=3");
+  expect(screen.getAllByRole("link").map((link) => link.textContent)).toEqual([
+    "Categories", "All Words", "New", "Quizzes", "Translator",
+  ]);
+
+  await act(async () => {
+    await i18n.changeLanguage("de");
+  });
+
+  expect(screen.getAllByRole("link").map((link) => link.textContent)).toEqual([
+    "Kategorien", "Wörter", "Neu", "Quizze", "Übersetzer",
+  ]);
+  expect(screen.getByRole("link", { name: "Wörter" }).getAttribute("href"))
+    .toBe("/my-quiz/all-words?language=3");
 });

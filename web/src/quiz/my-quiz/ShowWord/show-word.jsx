@@ -6,9 +6,11 @@ import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import BackButton from "../../../components/BackButton/BackButton";
 import EditButton from "../../../components/EditButton/EditButton";
 
+
 import PreLoader from "../../../components/PreLoader/PreLoader";
 import styles from "./show-word.module.scss";
 import SpeakButton from "../../../components/SpeakButton/SpeakButton";
+import RepeadButton from "../../../components/RepeadButton/RepeadButton";
 
 export default function ShowWord() {
   const { id } = useParams();
@@ -43,6 +45,9 @@ export default function ShowWord() {
           to={`/my-quiz/all-words?language=${languageId}`}
           className={styles["arrow-back"]}
         />
+
+        <RepeadButton/>
+        
         <EditButton
           to={`/my-quiz/${formData?.id}/edit-word?target-word=${formData?.translations[1].id}&language=${formData?.translations[1].language}`}
         />

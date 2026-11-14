@@ -1,0 +1,21 @@
+@use "./../../styles/basic.scss";
+
+.repead-button {
+  display: flex;
+  justify-self: baseline;
+  align-self: flex-start;
+  background: none;
+  border: 0.0625rem solid transparent;
+  border-radius: basic.$qw-border-radius;
+  background: basic.$qw-third;
+  transition: basic.$first-transition;
+
+  &:hover {
+    background: basic.$color-hover;
+  }
+
+  &:focus-visible {
+    outline: basic.$focus;
+    outline-offset: 0.125rem;
+  }
+}

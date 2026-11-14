@@ -7,6 +7,21 @@
   padding: 28px;
   background: #f8f8ff;
   color: #071b36;
+
+  .audio-dialog {
+    width: min(760px, calc(100% - 2rem));
+    max-height: calc(100% - 2rem);
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: basic.$qw-border-radius;
+    background: transparent;
+
+    &::backdrop {
+      background: rgba(52, 33, 214, 0.4);;
+    }
+  }
+
   .actions {
     display: flex;
     justify-content: space-between;

@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import BackButton from "../../../components/BackButton/BackButton";
 import EditButton from "../../../components/EditButton/EditButton";
+
+import WordAudioLoop from "./WordAudioLoop/word-audio-loop";
 
 
 import PreLoader from "../../../components/PreLoader/PreLoader";
@@ -20,6 +21,21 @@ export default function ShowWord() {
   const languageId = searchParams.get("language");
   const [formData, setFormData] = useState(null);
   const [wordLoaded, setWordLoaded] = useState(false);
+  const audioDialogRef = useRef(null);
+  const [audioOpen, setAudioOpen] = useState(false);
+  const translations = formData?.translations;
+  const canRepeat = wordLoaded && Boolean(translations?.[0]?.word && translations?.[1]?.word);
+
+  function openAudioDialog() {
+    audioDialogRef.current.showModal();
+    setAudioOpen(true);
+  }
+
+  function closeAudioDialog() {
+    audioDialogRef.current.close();
+  }
+
+
 
   useEffect(() => {
     async function loadWord() {
@@ -46,10 +62,10 @@ export default function ShowWord() {
           className={styles["arrow-back"]}
         />
 
-        <RepeadButton/>
-        
+        <RepeadButton onClick={openAudioDialog} disabled={!canRepeat} />
+
         <EditButton
-          to={`/my-quiz/${formData?.id}/edit-word?target-word=${formData?.translations[1].id}&language=${formData?.translations[1].language}`}
+          to={`/my-quiz/${formData?.id}/edit-word?target-word=${translations?.[1]?.id}&language=${translations?.[1]?.language}`}
         />
       </div>
 
@@ -142,6 +158,17 @@ export default function ShowWord() {
           )}
         </div>
       )}
+
+      <dialog
+        ref={audioDialogRef}
+        className={styles["audio-dialog"]}
+        aria-labelledby="word-audio-title"
+        onClose={() => setAudioOpen(false)}
+      >
+        {audioOpen && canRepeat && (
+          <WordAudioLoop translations={translations} onClose={closeAudioDialog} />
+        )}
+      </dialog>
     </section>
   );
 }

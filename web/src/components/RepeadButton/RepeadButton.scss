@@ -10,8 +10,17 @@
   background: basic.$qw-third;
   transition: basic.$first-transition;
 
-  &:hover {
-    background: basic.$color-hover;
+  svg path {
+    stroke: basic.$qw-primary;
+  }
+
+  &:hover,
+  &:focus {
+    background: basic.$qw-primary;
+
+    svg path {
+      stroke: #f7f8ff;
+    }
   }
 
   &:focus-visible {

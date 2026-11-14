@@ -1,9 +1,14 @@
-import { Link } from "react-router-dom";
 import "./RepeadButton.scss";
 
-function RepeadButton({ to, className = "" }) {
+function RepeadButton({ onClick, disabled, className = "" }) {
   return (
-    <Link to={to} className={`repead-button ${className}`}>
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label="Wort wiederholen"
+      className={`repead-button ${className}`}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={40}
@@ -31,7 +36,7 @@ function RepeadButton({ to, className = "" }) {
           />
         </g>
       </svg>
-    </Link>
+    </button>
   );
 }
 

@@ -82,7 +82,7 @@
     .list-row {
       display: grid;
       grid-template-columns:
-        1.25rem
+        2rem
         5.625rem
         1fr
         10rem
@@ -98,6 +98,9 @@
       text-transform: uppercase;
       font-weight: 600;
       color: #888;
+      .check {
+        padding-left: 1rem;
+      }
     }
 
     .list-row {
@@ -120,6 +123,9 @@
         justify-content: center;
         align-items: center;
         padding-left: 1rem;
+        input[type="checkbox"] {
+          cursor: pointer;
+        }
       }
 
       .category {
@@ -501,7 +507,7 @@
       .list-row {
         display: grid;
         grid-template-columns:
-          1.25rem
+          2rem
           3.75rem
           2fr
           4.6875rem;

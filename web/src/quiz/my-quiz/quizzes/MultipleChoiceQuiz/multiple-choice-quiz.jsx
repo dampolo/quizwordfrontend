@@ -1,10 +1,10 @@
 import styles from "./multiple-choice-quiz.module.scss";
 
 const choices = [
-  { letter: "A", word: "Das Pferd", gender: "Neutrum" },
-  { letter: "B", word: "Der Hund", gender: "Maskulin" },
-  { letter: "C", word: "Die Katze", gender: "Feminin" },
-  { letter: "D", word: "Das Schaf", gender: "Neutrum" },
+  { letter: "A", word: "Das Pferd", gender: "Neutrum", kuku: "kuku" },
+  { letter: "B", word: "Der Hund", gender: "Maskulin", kuku: "kuku"},
+  { letter: "C", word: "Die Katze", gender: "Feminin", kuku: "kuku" },
+  { letter: "D", word: "Das Schaf", gender: "Neutrum", kuku: "kuku" },
 ];
 
 function MultipleChoiceQuiz() {
@@ -24,7 +24,6 @@ function MultipleChoiceQuiz() {
             </div>
             <div className={styles.word}>
               <h1>horse</h1>
-              <span className={styles.pronunciation}>/hɔːrs/</span>
               <button
                 className={styles.audio}
                 type="button"
@@ -40,7 +39,7 @@ function MultipleChoiceQuiz() {
           className={styles.choices}
           aria-labelledby="multiple-choice-prompt"
         >
-          {choices.map(({ letter, word, gender }) => (
+          {choices.map(({ letter, word, gender, kuku }) => (
             <label className={styles.choice} key={letter}>
               <span className={styles.letter} aria-hidden="true">
                 {letter}
@@ -48,6 +47,7 @@ function MultipleChoiceQuiz() {
               <span>
                 <strong>{word}</strong>
                 <small>Singular • {gender}</small>
+                <small>{kuku}</small>
               </span>
               <input
                 className={styles.radio}

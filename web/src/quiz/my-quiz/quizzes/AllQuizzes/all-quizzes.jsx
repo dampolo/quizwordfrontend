@@ -295,6 +295,7 @@ function Quizzes() {
                 </Tooltip>
                 {/* Audio loop reverse end*/}
               </div>
+              
               {/* Multiple choice */}
               <div className={styles["action-button"]}>
                 <Tooltip title="Multi" placement="top" arrow>

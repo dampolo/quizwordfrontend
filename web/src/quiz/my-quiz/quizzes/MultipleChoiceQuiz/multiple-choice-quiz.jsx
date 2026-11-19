@@ -1,19 +1,33 @@
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import styles from "./multiple-choice-quiz.module.scss";
 
 const choices = [
-  { letter: "A", word: "Das Pferd"},
-  { letter: "B", word: "Der Hund"},
-  { letter: "C", word: "Die Katze"},
-  { letter: "D", word: "Das Schaf"},
+  { letter: "A", word: "Das Pferd" },
+  { letter: "B", word: "Der Hund" },
+  { letter: "C", word: "Die Katze" },
+  { letter: "D", word: "Das Schaf" },
 ];
 
 function MultipleChoiceQuiz() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const redirect = searchParams.get("redirect")
+  const language = searchParams.get("language")
+
+  
+  function cancel() {
+    if (redirect) {
+      navigate(`/my-quiz/all-quizzes?language=${language}`);
+    } else {
+      navigate(`/my-quiz/${id}/all-quiz-words`);
+    }
+  }
+
   return (
     <section className="play-quiz">
-      <div
-        className={styles.quiz}
-        aria-label="Multiple-Choice-Quiz"
-      >
+      <div className={styles.quiz} aria-label="Multiple-Choice-Quiz">
         <header className={styles.header}>
           <div>
             <div className={styles.prompt}>
@@ -30,6 +44,14 @@ function MultipleChoiceQuiz() {
               </button>
             </div>
           </div>
+
+          <button
+            type="button"
+            onClick={cancel}
+            className={styles["quiz-card__cancel"]}
+          >
+            <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
+          </button>
         </header>
 
         <fieldset

@@ -55,6 +55,7 @@ import FlipCardQuiz from "./quiz/my-quiz/quizzes/FlipCardQuiz/flip-card-quiz";
 import FlipCardQuizReverse from "./quiz/my-quiz/quizzes/FlipCardQuizReverse/flip-card-quiz-reverse";
 import Translation from "./quiz/my-quiz/Translate/Translation";
 import { TranslationProvider } from "./context/translation/TranslationProvider";
+import MultipleChoiceQuiz from "./quiz/my-quiz/quizzes/MultipleChoiceQuiz/multiple-choice-quiz";
 
 function App() {
   return (
@@ -135,6 +136,8 @@ function App() {
               />
               {/* Quizzes */}
               <Route path="all-quizzes" element={<AllQuizzes />} />
+              <Route path="multiple-choice-quiz" element={<MultipleChoiceQuiz />} />
+
               <Route path="add-new-quiz" element={<AddNewQuiz />} />
               <Route path=":id/all-quiz-words" element={<AllQuizWords />} />
               <Route path=":id/play-quiz" element={<PlayQuiz />} />

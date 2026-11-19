@@ -1,10 +1,10 @@
 import styles from "./multiple-choice-quiz.module.scss";
 
 const choices = [
-  { letter: "A", word: "Das Pferd", gender: "Neutrum", kuku: "kuku" },
-  { letter: "B", word: "Der Hund", gender: "Maskulin", kuku: "kuku"},
-  { letter: "C", word: "Die Katze", gender: "Feminin", kuku: "kuku" },
-  { letter: "D", word: "Das Schaf", gender: "Neutrum", kuku: "kuku" },
+  { letter: "A", word: "Das Pferd"},
+  { letter: "B", word: "Der Hund"},
+  { letter: "C", word: "Die Katze"},
+  { letter: "D", word: "Das Schaf"},
 ];
 
 function MultipleChoiceQuiz() {
@@ -18,9 +18,6 @@ function MultipleChoiceQuiz() {
           <div>
             <div className={styles.prompt}>
               <span>Was ist die richtige Übersetzung für:</span>
-              <span className={styles.category}>
-                Substantiv (Nomen) • Tierwelt
-              </span>
             </div>
             <div className={styles.word}>
               <h1>horse</h1>
@@ -39,15 +36,13 @@ function MultipleChoiceQuiz() {
           className={styles.choices}
           aria-labelledby="multiple-choice-prompt"
         >
-          {choices.map(({ letter, word, gender, kuku }) => (
+          {choices.map(({ letter, word }) => (
             <label className={styles.choice} key={letter}>
               <span className={styles.letter} aria-hidden="true">
                 {letter}
               </span>
               <span>
                 <strong>{word}</strong>
-                <small>Singular • {gender}</small>
-                <small>{kuku}</small>
               </span>
               <input
                 className={styles.radio}

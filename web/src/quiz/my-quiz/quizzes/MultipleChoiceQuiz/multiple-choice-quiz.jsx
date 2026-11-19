@@ -1,5 +1,8 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import styles from "./multiple-choice-quiz.module.scss";
+import useQuiz from "@quizword/shared/quiz/useQuiz";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const choices = [
   { letter: "A", word: "Das Pferd" },
@@ -9,14 +12,15 @@ const choices = [
 ];
 
 function MultipleChoiceQuiz() {
+  const { getMultipleChoiceQuiz } = useQuiz();
   const { id } = useParams();
+  const [quiz, setQuiz] = useState(null);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const redirect = searchParams.get("redirect")
-  const language = searchParams.get("language")
+  const redirect = searchParams.get("redirect");
+  const language = searchParams.get("language");
 
-  
   function cancel() {
     if (redirect) {
       navigate(`/my-quiz/all-quizzes?language=${language}`);
@@ -24,6 +28,24 @@ function MultipleChoiceQuiz() {
       navigate(`/my-quiz/${id}/all-quiz-words`);
     }
   }
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const quizData = await getMultipleChoiceQuiz(id, language);
+        
+        setQuiz(quizData);
+        console.log(quizData);
+      } catch (error) {
+        toast.error(
+          error.response?.message ?? error.response?.detail ?? error.message,
+        );
+
+        // toast.error(`Failed to load quiz. ${error}`);
+      }
+    }
+    loadData();
+  }, [id, language]);
 
   return (
     <section className="play-quiz">

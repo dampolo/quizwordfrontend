@@ -47,7 +47,6 @@ function Quizzes() {
     }
   }
 
-
   async function openPreviewQuiz(id) {
     setQuiz(null);
     previewQuizRef.current?.showModal();
@@ -65,7 +64,6 @@ function Quizzes() {
     }
   }
 
-
   function selectLanguage(languageId) {
     if (languageId === null) {
       setSearchParams({});
@@ -79,7 +77,6 @@ function Quizzes() {
     setDialogDescription("Du kannst Name des Quizzes ändern: ");
     setDialogOpen(true);
   }
-
 
   function closePreviewQuiz() {
     previewQuizRef.current?.close();
@@ -298,6 +295,23 @@ function Quizzes() {
                 </Tooltip>
                 {/* Audio loop reverse end*/}
               </div>
+              {/* Multiple choice */}
+              <div className={styles["action-button"]}>
+                <Tooltip title="Multi" placement="top" arrow>
+                  <Link
+                    className={styles["action-button__icon"]}
+                    to={`/my-quiz/${quiz.quiz_id}/multiple-choice-quiz?language=${quiz?.target_language}&redirect=true`}
+                  >
+                    <img
+                      width={40}
+                      height={40}
+                      src="/assets/multiple-choice.svg"
+                      alt="multiple-choice"
+                    />
+                  </Link>
+                </Tooltip>
+              </div>
+              {/* Multiple choice end*/}
 
               <div className={styles["vocab-card__footer"]}>
                 <Link
@@ -363,9 +377,7 @@ function Quizzes() {
         </button>
         <div className={styles["preview-quiz__list"]}>
           <div className={styles["preview-quiz__head"]}>
-            <h2 id="preview-quiz-title">
-              Wort & Übersetzung
-            </h2>
+            <h2 id="preview-quiz-title">Wort & Übersetzung</h2>
             <div className={styles["preview-quiz__actions"]}>Aktionen</div>
           </div>
 
@@ -396,8 +408,7 @@ function Quizzes() {
           )}
         </div>
       </dialog>
-          {/* PREVIEW Ende*/}
-
+      {/* PREVIEW Ende*/}
     </section>
   );
 }

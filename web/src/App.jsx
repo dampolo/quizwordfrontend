@@ -136,7 +136,6 @@ function App() {
               />
               {/* Quizzes */}
               <Route path="all-quizzes" element={<AllQuizzes />} />
-              <Route path="multiple-choice-quiz" element={<MultipleChoiceQuiz />} />
 
               <Route path="add-new-quiz" element={<AddNewQuiz />} />
               <Route path=":id/all-quiz-words" element={<AllQuizWords />} />
@@ -148,6 +147,7 @@ function App() {
               <Route path=":id/word-audio-loop" element={<WordAudioLoop />} />
               <Route path=":id/word-audio-loop-reverse" element={<WordAudioLoopReverse />} />
               <Route path=":id/quiz-results" element={<QuizResults />} />
+              <Route path=":id/multiple-choice-quiz" element={<MultipleChoiceQuiz />} />
               <Route path="choose-languages" element={<ChooseLanguages />} />
               <Route path="edit-languages" element={<EditLanguages />} />
               <Route path="settings" element={<Settings />} />

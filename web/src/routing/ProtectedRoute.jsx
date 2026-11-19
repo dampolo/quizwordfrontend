@@ -8,7 +8,7 @@ export default function ProtectedRoute() {
 
   if (loading) {
     return (
-      <div className="show-container ">
+      <div className="show-container-my-quiz">
         <PreLoader />
       </div>
     );

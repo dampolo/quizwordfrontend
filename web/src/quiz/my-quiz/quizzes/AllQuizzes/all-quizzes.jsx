@@ -8,8 +8,10 @@ import useVocabulary from "../../../../context/vocabulary/useVocabulary";
 import FormDialog from "../../../../components/FormDialog/FormDialog";
 import { toast } from "react-toastify";
 import Tooltip from "@mui/material/Tooltip";
+import { useTranslation } from "react-i18next";
 
 function Quizzes() {
+  const { t, i18n } = useTranslation();
   const {
     getFiltredQuizzes,
     quizzes,
@@ -26,8 +28,6 @@ function Quizzes() {
   const [message, setMessage] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
-  const [dialogTitle, setDialogTitle] = useState("");
-  const [dialogDescription, setDialogDescription] = useState("");
   const previewQuizRef = useRef(null);
   const [quiz, setQuiz] = useState(null);
   const [loadingWords, setLoadingWords] = useState(false);
@@ -42,7 +42,7 @@ function Quizzes() {
     } catch (error) {
       toast.error(
         error.response?.detail ||
-          "Die Karteikarten konnten nicht geladen werden.",
+          t("ACTIVE_QUIZZES.FLASHCARDS_ERROR"),
       );
     }
   }
@@ -57,7 +57,7 @@ function Quizzes() {
       setQuiz(quizData);
     } catch (error) {
       console.error(error);
-      toast.error("Die Quizvorschau konnte nicht geladen werden.");
+      toast.error(t("ACTIVE_QUIZZES.PREVIEW_ERROR"));
       setQuiz(null);
     } finally {
       setLoadingWords(false);
@@ -73,8 +73,6 @@ function Quizzes() {
   }
 
   function openDialog() {
-    setDialogTitle("Edit Quiz");
-    setDialogDescription("Du kannst Name des Quizzes ändern: ");
     setDialogOpen(true);
   }
 
@@ -97,11 +95,12 @@ function Quizzes() {
 
     try {
       await putQuiz(payload, selectedQuiz?.quiz_id);
-      toast.success(`Quiz "${quizName}" wurde geändert!`);
+      toast.success(t("ACTIVE_QUIZZES.EDIT_SUCCESS", { quizName }));
       setDialogOpen(false);
       getFiltredQuizzes(language);
     } catch (error) {
-      const message = error.response?.detail[0] || "Error";
+      const detail = error.response?.detail;
+      const message = (Array.isArray(detail) ? detail[0] : detail) || t("ACTIVE_QUIZZES.EDIT_ERROR");
       setMessage(message);
       toast.error(message);
     }
@@ -111,11 +110,9 @@ function Quizzes() {
     <section className={styles["all-quizzes"]}>
       <header className={styles["topbar"]}>
         <div>
-          <h1>Aktive Quizze</h1>
+          <h1>{t("ACTIVE_QUIZZES.TITLE")}</h1>
           <p>
-            Setze deinen Lernfortschritt fort. Teste dein Wissen mit kürzlich
-            hinzugefügten Vokabeln oder konzentriere dich auf deine
-            Schwachstellen.
+            {t("ACTIVE_QUIZZES.DESCRIPTION")}
           </p>
         </div>
       </header>
@@ -128,7 +125,7 @@ function Quizzes() {
             className={styles["language-button"]}
             onClick={() => selectLanguage(null)}
           >
-            Alle
+            {t("ACTIVE_QUIZZES.ALL")}
           </button>
         </li>
 
@@ -151,15 +148,15 @@ function Quizzes() {
       <div className={styles["category"]}>
         {loading ? (
           <div className="show-container">
-            <PreLoader />
+            <PreLoader label={t("LOGIN.LOADING")} />
           </div>
         ) : quizzes.length === 0 ? (
-          <p className={styles["no-quiz"]}>Du hast hier kein Quiz erstellt.</p>
+          <p className={styles["no-quiz"]}>{t("ACTIVE_QUIZZES.EMPTY")}</p>
         ) : (
           quizzes.map((quiz) => (
             <article className={styles["vocab-card"]} key={quiz.quiz_id}>
               <h3>{quiz.quiz_name}</h3>
-              <Tooltip title="Edit Title" placement="top" arrow>
+              <Tooltip title={t("ACTIVE_QUIZZES.EDIT_TITLE")} placement="top" arrow>
                 <button
                   type="button"
                   className={styles["edit"]}
@@ -168,12 +165,12 @@ function Quizzes() {
                     openDialog();
                   }}
                 >
-                  <img src="/assets/edit.svg" alt="edit" />
+                  <img src="/assets/edit.svg" alt={t("ACTIVE_QUIZZES.EDIT_TITLE")} />
                 </button>
               </Tooltip>
 
               <div className={styles["action-button"]}>
-                <Tooltip title="Lernen" placement="top" arrow>
+                <Tooltip title={t("ACTIVE_QUIZZES.LEARN")} placement="top" arrow>
                   <Link
                     className={styles["action-button__icon"]}
                     to={`/my-quiz/${quiz.quiz_id}/learn-quiz?language=${quiz?.target_language}&redirect=true`}
@@ -182,11 +179,11 @@ function Quizzes() {
                       width={40}
                       height={40}
                       src="/assets/learn-quiz.svg"
-                      alt="learn"
+                      alt={t("ACTIVE_QUIZZES.LEARN")}
                     />
                   </Link>
                 </Tooltip>
-                <Tooltip title="Test schreiben" placement="top" arrow>
+                <Tooltip title={t("ACTIVE_QUIZZES.TEST")} placement="top" arrow>
                   <Link
                     className={styles["action-button__icon"]}
                     to={`/my-quiz/${quiz.quiz_id}/play-quiz?language=${quiz?.target_language}&redirect=true`}
@@ -195,12 +192,12 @@ function Quizzes() {
                       width={40}
                       height={40}
                       src="/assets/write.svg"
-                      alt="play"
+                      alt={t("ACTIVE_QUIZZES.TEST")}
                     />
                   </Link>
                 </Tooltip>
 
-                <Tooltip title="Vorschau" placement="top" arrow>
+                <Tooltip title={t("ACTIVE_QUIZZES.PREVIEW")} placement="top" arrow>
                   <button
                     type="button"
                     onClick={() => openPreviewQuiz(quiz.quiz_id)}
@@ -210,12 +207,12 @@ function Quizzes() {
                       width={40}
                       height={40}
                       src="/assets/preview-quiz.svg"
-                      alt="Vorschau"
+                      alt={t("ACTIVE_QUIZZES.PREVIEW")}
                     />
                   </button>
                 </Tooltip>
                 {/* Flip Card */}
-                <Tooltip title="Karteikarten" placement="top" arrow>
+                <Tooltip title={t("ACTIVE_QUIZZES.FLASHCARDS")} placement="top" arrow>
                   <Link
                     className={styles["action-button__icon"]}
                     to={`/my-quiz/${quiz.quiz_id}/flip-card-quiz?language=${quiz?.target_language}&redirect=true`}
@@ -224,7 +221,7 @@ function Quizzes() {
                       width={40}
                       height={40}
                       src="/assets/flip-card.svg"
-                      alt="look"
+                      alt={t("ACTIVE_QUIZZES.FLASHCARDS")}
                     />
                   </Link>
                 </Tooltip>
@@ -233,7 +230,7 @@ function Quizzes() {
 
               <div className={styles["action-button"]}>
                 {/* Audio loop */}
-                <Tooltip title="Lernen and hören" placement="bottom" arrow>
+                <Tooltip title={t("ACTIVE_QUIZZES.AUDIO")} placement="bottom" arrow>
                   <Link
                     className={styles["action-button__icon"]}
                     to={`/my-quiz/${quiz.quiz_id}/word-audio-loop?language=${quiz?.target_language}&redirect=true`}
@@ -242,13 +239,13 @@ function Quizzes() {
                       width={40}
                       height={40}
                       src="/assets/repead.svg"
-                      alt="repead"
+                      alt={t("ACTIVE_QUIZZES.AUDIO")}
                     />
                   </Link>
                 </Tooltip>
                 {/* Audio loop end*/}
                 {/* HEAR Card */}
-                <Tooltip title="Hören" placement="bottom" arrow>
+                <Tooltip title={t("ACTIVE_QUIZZES.LISTEN")} placement="bottom" arrow>
                   <Link
                     className={styles["action-button__icon"]}
                     to={`/my-quiz/${quiz.quiz_id}/hear-quiz?language=${quiz?.target_language}&redirect=true`}
@@ -257,14 +254,14 @@ function Quizzes() {
                       width={40}
                       height={40}
                       src="/assets/hear.svg"
-                      alt="look"
+                      alt={t("ACTIVE_QUIZZES.LISTEN")}
                     />
                   </Link>
                 </Tooltip>
                 {/* HEAR Card end*/}
 
                 {/* Flip Card */}
-                <Tooltip title="Karteikarten" placement="top" arrow>
+                <Tooltip title={t("ACTIVE_QUIZZES.FLASHCARDS_REVERSE")} placement="top" arrow>
                   <Link
                     className={styles["action-button__icon"]}
                     to={`/my-quiz/${quiz.quiz_id}/flip-card-quiz-reverse?language=${quiz?.target_language}&redirect=true`}
@@ -273,14 +270,14 @@ function Quizzes() {
                       width={40}
                       height={40}
                       src="/assets/flip-card-reverse.svg"
-                      alt="look"
+                      alt={t("ACTIVE_QUIZZES.FLASHCARDS_REVERSE")}
                     />
                   </Link>
                 </Tooltip>
                 {/* Flip Card end*/}
 
                 {/* Audio loop reverse */}
-                <Tooltip title="Lernen and hören" placement="bottom" arrow>
+                <Tooltip title={t("ACTIVE_QUIZZES.AUDIO_REVERSE")} placement="bottom" arrow>
                   <Link
                     className={styles["action-button__icon"]}
                     to={`/my-quiz/${quiz.quiz_id}/word-audio-loop-reverse?language=${quiz?.target_language}&redirect=true`}
@@ -289,7 +286,7 @@ function Quizzes() {
                       width={40}
                       height={40}
                       src="/assets/repead-reverse.svg"
-                      alt="repead"
+                      alt={t("ACTIVE_QUIZZES.AUDIO_REVERSE")}
                     />
                   </Link>
                 </Tooltip>
@@ -298,7 +295,7 @@ function Quizzes() {
               
               {/* Multiple choice */}
               <div className={styles["action-button"]}>
-                <Tooltip title="Multi" placement="top" arrow>
+                <Tooltip title={t("ACTIVE_QUIZZES.MULTIPLE_CHOICE")} placement="top" arrow>
                   <Link
                     className={styles["action-button__icon"]}
                     to={`/my-quiz/${quiz.quiz_id}/multiple-choice-quiz?language=${quiz?.target_language}&redirect=true`}
@@ -307,7 +304,7 @@ function Quizzes() {
                       width={40}
                       height={40}
                       src="/assets/multiple-choice.svg"
-                      alt="multiple-choice"
+                      alt={t("ACTIVE_QUIZZES.MULTIPLE_CHOICE")}
                     />
                   </Link>
                 </Tooltip>
@@ -320,13 +317,13 @@ function Quizzes() {
                   className={styles["vocab-card__meta"]}
                 >
                   <span>▦</span>
-                  <strong>{quiz.concepts_count} Words</strong>
+                  <strong>{t("ACTIVE_QUIZZES.WORD_COUNT", { count: quiz.concepts_count })}</strong>
                 </Link>
 
                 <div className={styles["vocab-card__updated"]}>
-                  <span>Erstellt:</span>
+                  <span>{t("ACTIVE_QUIZZES.CREATED")}</span>
                   <strong>
-                    {new Date(quiz.created_at).toLocaleDateString("de-DE", {
+                    {new Date(quiz.created_at).toLocaleDateString(i18n.resolvedLanguage, {
                       day: "2-digit",
                       month: "2-digit",
                       year: "numeric",
@@ -342,10 +339,10 @@ function Quizzes() {
       </div>
       <div className={styles["cards"]}>
         <div className={`${styles["card"]} ${styles["mastery"]}`}>
-          <h3>Zufällige Karteikarten</h3>
-          <p>Starte die Karteikarten eines zufälligen Quizzes.</p>
+          <h3>{t("ACTIVE_QUIZZES.RANDOM_TITLE")}</h3>
+          <p>{t("ACTIVE_QUIZZES.RANDOM_DESCRIPTION")}</p>
           <button type="button" onClick={playRandomFlipCard} disabled={loading}>
-            Start
+            {t("ACTIVE_QUIZZES.START")}
           </button>
         </div>
 
@@ -354,8 +351,9 @@ function Quizzes() {
 
       <FormDialog
         quizName={selectedQuiz?.quiz_name}
-        dialogTitle={dialogTitle}
-        dialogDescription={dialogDescription}
+        dialogTitle={t("ACTIVE_QUIZZES.EDIT_TITLE")}
+        dialogDescription={t("ACTIVE_QUIZZES.EDIT_DESCRIPTION")}
+        inputLabel={t("ACTIVE_QUIZZES.QUIZ_NAME")}
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
         message={message}
@@ -371,20 +369,20 @@ function Quizzes() {
         <button
           type="button"
           onClick={closePreviewQuiz}
-          aria-label="Vorschau schließen"
+          aria-label={t("ACTIVE_QUIZZES.CLOSE_PREVIEW")}
           className={styles["preview-quiz__close"]}
         >
-          <img width={25} height={25} src="/assets/xbox.svg" alt="Close" />
+          <img width={25} height={25} src="/assets/xbox.svg" alt="" />
         </button>
         <div className={styles["preview-quiz__list"]}>
           <div className={styles["preview-quiz__head"]}>
-            <h2 id="preview-quiz-title">Wort & Übersetzung</h2>
-            <div className={styles["preview-quiz__actions"]}>Aktionen</div>
+            <h2 id="preview-quiz-title">{t("YOUR_VOCABULARY.WORD_TRANSLATION")}</h2>
+            <div className={styles["preview-quiz__actions"]}>{t("YOUR_VOCABULARY.ACTIONS")}</div>
           </div>
 
           {loadingWords ? (
             <div className="show-container">
-              <PreLoader />
+              <PreLoader label={t("LOGIN.LOADING")} />
             </div>
           ) : (
             quiz?.concepts?.map((concept) => (
@@ -397,11 +395,11 @@ function Quizzes() {
 
                 <div className={styles["preview-quiz__actions"]}>
                   <Link
-                    aria-label="Wort bearbeiten"
+                    aria-label={t("ACTIVE_QUIZZES.EDIT_WORD")}
                     onClick={closePreviewQuiz}
                     to={`/my-quiz/${concept.id}/edit-word?target-word=${concept.translations[1].id}&language=${concept.translations[1].language}`}
                   >
-                    <img src="/assets/edit.svg" alt="edit" />
+                    <img src="/assets/edit.svg" alt="" />
                   </Link>
                 </div>
               </div>

@@ -14,7 +14,6 @@ function AllQuizWords() {
     deleteQuiz,
     getAttemptQuizScore,
     getAttemptDetails,
-    loading,
   } = useQuiz();
   const { openDialog } = useDialog();
   const { id } = useParams();
@@ -25,6 +24,9 @@ function AllQuizWords() {
   const [details, setDetails] = useState([]);
   const [selectedAttempt, setSelectedAttempt] = useState(null);
   const [vocabularyDetails, setVocabularyDetails] = useState(false);
+  const [loadingWords, setLoadingWords] = useState(false)
+  const [loading, setLoading] = useState(false)
+
 
   async function deleteCurrentQuiz() {
     try {
@@ -47,6 +49,8 @@ function AllQuizWords() {
   }
 
   async function handleAttemptDetails(id) {
+    setLoadingWords(true);
+
     try {
       const data = await getAttemptDetails(id);
       setDetails(data.answers);
@@ -55,11 +59,14 @@ function AllQuizWords() {
       setSelectedAttempt(data);
     } catch (err) {
       console.log(err);
+    } finally{
+      setLoadingWords(false)
     }
   }
 
   useEffect(() => {
     async function loadData() {
+      setLoading(true)
       try {
         const [quizData, attemptsData] = await Promise.all([
           getQuizWords(id),
@@ -69,6 +76,8 @@ function AllQuizWords() {
         setAttempts(attemptsData);
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -303,6 +312,10 @@ function AllQuizWords() {
               <p>Du hast bis jetzt keine Quize gemacht.</p>
             ) : details.length === 0 ? (
               <p>"Klicke auf 🔍, um die Details anzuzeigen."</p>
+            ) : loadingWords ? (
+              <div className="show-container">
+                <PreLoader />
+              </div>
             ) : (
               details.map((item) => (
                 <div

@@ -127,15 +127,32 @@ export function QuizProvider({ children, api: apiOverride, apiFetch: fetchOverri
       const data = await response.json();
 
       if (!response.ok) {
-        const error = new Error("Failed to get quiz");
-        error.response = data;
-        throw error;
+        throw new Error(data.detail || "Failed to load quiz.");
       }
 
       return data;
     } catch (error) {
       console.error(error);
       throw error;
+    }
+  }
+
+  async function getMultipleChoiceQuiz(id, language) {
+    try {
+      const response = await apiFetch(
+        `${api}multiple-choice-quiz/?id=${id}&language=${language}`
+      );
+      const data = await response.json();
+      if(!response.ok) {
+        const error = new Error("Failed to get quiz");
+        error.response = data
+        throw error
+      }
+      return data
+    } catch (error) {
+        console.log(error);
+        throw error
+              
     }
   }
 
@@ -288,6 +305,7 @@ export function QuizProvider({ children, api: apiOverride, apiFetch: fetchOverri
         postQuizAnswers,
         getRandomFlipCard,
         postRandomQuiz,
+        getMultipleChoiceQuiz,
       }}
     >
       {children}

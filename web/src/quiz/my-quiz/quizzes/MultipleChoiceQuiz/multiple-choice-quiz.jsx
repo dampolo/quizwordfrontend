@@ -17,7 +17,7 @@ function MultipleChoiceQuiz() {
   const [answers, setAnswers] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const concepts = quiz?.concept_ids ?? [];
+  const concepts = quiz?.concepts ?? [];
   const currentConcept = concepts[currentQuestionIndex];
   const questionTranslations = currentConcept?.translations;
 
@@ -59,7 +59,7 @@ function MultipleChoiceQuiz() {
           direction: "FORWARD",
           answers: updatedAnswers,
         });
-        navigate(`/my-quiz/${id}/quiz-results`, { state: result });
+        navigate(`/my-quiz/${id}/quiz-results?language=${language}&redirect=true`, { state: result });
       } catch (error) {
         toast.error(error.message || "Quiz could not be submitted.");
       } finally {
@@ -84,6 +84,8 @@ function MultipleChoiceQuiz() {
         setAnswers([]);
         setSelectedOption(null);
         setFormData({ answer: "" });
+        console.log(quizData);
+        
       } catch (error) {
         toast.error(
           error.response?.message ?? error.response?.detail ?? error.message,

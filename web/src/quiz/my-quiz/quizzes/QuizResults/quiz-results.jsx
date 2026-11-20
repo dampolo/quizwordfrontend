@@ -1,10 +1,29 @@
-import { useLocation, useParams, Link } from "react-router-dom";
+import {
+  useLocation,
+  useParams,
+  Link,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import styles from "./quiz-results.module.scss";
 import BackButton from "../../../../components/BackButton/BackButton";
 
 function QuizResults() {
   const { id } = useParams();
   const { state } = useLocation();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const redirect = searchParams.get("redirect") === "true";
+  const language = searchParams.get("language");
+
+  function repead() {
+    if (redirect) {
+      // Multichoice
+      navigate(`/my-quiz/${id}/multiple-choice-quiz?language=${language}`);
+    } else {
+      navigate(`/my-quiz/${id}/play-quiz`);
+    }
+  }
 
   const details = state?.results || [];
 
@@ -60,7 +79,7 @@ function QuizResults() {
         </Link>
         <Link
           className={`main-quiz-button ${styles["save-btn"]}`}
-          to={`/my-quiz/${id}/play-quiz`}
+          onClick={repead}
         >
           Wiederholen
         </Link>

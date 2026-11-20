@@ -4,12 +4,20 @@ import useApiFetch from "../api/useApiFetch.js";
 
 import QuizContext from "./QuizContext.jsx";
 
-export function QuizProvider({ children, api: apiOverride, apiFetch: fetchOverride, request, onError = console.error }) {
+export function QuizProvider({
+  children,
+  api: apiOverride,
+  apiFetch: fetchOverride,
+  request,
+  onError = console.error,
+}) {
   const contextApi = useApi();
   const api = apiOverride ?? contextApi;
   const defaultFetch = useApiFetch(request, api);
   const apiFetch = fetchOverride ?? defaultFetch;
   const [loading, setLoading] = useState(false);
+  const [loadFlipCard, setLoadFlipCard] = useState(false);
+
   const [quizzes, setQuizzes] = useState([]);
 
   async function getQuizzes() {
@@ -119,6 +127,10 @@ export function QuizProvider({ children, api: apiOverride, apiFetch: fetchOverri
   // Do not call setLoading(true) in this function.
   // It will affect the quiz preview in AllQuizzes.
   async function getQuizWords(id, isFlipcard = false) {
+    if (isFlipcard) {
+      setLoadFlipCard(true);
+    }
+
     try {
       const response = await apiFetch(
         `${api}quizzes/${id}?is_flipcard=${isFlipcard}`,
@@ -134,25 +146,28 @@ export function QuizProvider({ children, api: apiOverride, apiFetch: fetchOverri
     } catch (error) {
       console.error(error);
       throw error;
+    } finally {
+      if (isFlipcard) {
+        setLoadFlipCard(false);
+      }
     }
   }
 
   async function getMultipleChoiceQuiz(id, language) {
     try {
       const response = await apiFetch(
-        `${api}multiple-choice-quiz/?id=${id}&language=${language}`
+        `${api}multiple-choice-quiz/?id=${id}&language=${language}`,
       );
       const data = await response.json();
-      if(!response.ok) {
+      if (!response.ok) {
         const error = new Error("Failed to get quiz");
-        error.response = data
-        throw error
+        error.response = data;
+        throw error;
       }
-      return data
+      return data;
     } catch (error) {
-        console.log(error);
-        throw error
-              
+      console.log(error);
+      throw error;
     }
   }
 
@@ -200,12 +215,15 @@ export function QuizProvider({ children, api: apiOverride, apiFetch: fetchOverri
     setLoading(true);
 
     try {
-      const response = await apiFetch(`${api}random-quiz/?language=${language}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await apiFetch(
+        `${api}random-quiz/?language=${language}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       const data = await response.json();
 
@@ -222,10 +240,11 @@ export function QuizProvider({ children, api: apiOverride, apiFetch: fetchOverri
   }
 
   async function getRandomFlipCard(language) {
-    setLoading(true);
-
+    setLoadFlipCard(true);
     try {
-      const response = await apiFetch(`${api}random-flipcard-quiz/?language=${language}`);
+      const response = await apiFetch(
+        `${api}random-flipcard-quiz/?language=${language}`,
+      );
 
       const data = await response.json();
 
@@ -237,7 +256,7 @@ export function QuizProvider({ children, api: apiOverride, apiFetch: fetchOverri
 
       return data;
     } finally {
-      setLoading(false);
+      setLoadFlipCard(false);
     }
   }
 
@@ -292,6 +311,7 @@ export function QuizProvider({ children, api: apiOverride, apiFetch: fetchOverri
       value={{
         loading,
         quizzes,
+        loadFlipCard,
         putQuiz,
         createQuiz,
         deleteQuiz,

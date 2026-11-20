@@ -3,6 +3,7 @@ import styles from "./flip-card-quiz.module.scss";
 import { useEffect, useState } from "react";
 import useQuiz from "../../../../context/quiz/useQuiz";
 import SpeakButton from "../../../../components/SpeakButton/SpeakButton";
+import PreLoader from "../../../../components/PreLoader/PreLoader";
 import useVocabulary from "../../../../context/vocabulary/useVocabulary";
 
 function FlipCardQuiz({ reverse = false }) {
@@ -10,7 +11,7 @@ function FlipCardQuiz({ reverse = false }) {
   const secondTranslation = reverse ? 0 : 1;
   const [quiz, setQuiz] = useState(null);
   const { id } = useParams();
-  const { getQuizWords } = useQuiz();
+  const { getQuizWords, loadFlipCard } = useQuiz();
   const { speakWord, speakActive } = useVocabulary();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const navigate = useNavigate();
@@ -175,10 +176,12 @@ function FlipCardQuiz({ reverse = false }) {
             <h1
               className={`${styles["quiz-card__title-learn"]} ${styles["flip-title"]}`}
             >
-              {
+              {loadFlipCard ? (
+                <PreLoader />
+              ) : (
                 quiz?.concepts[currentQuestion].translations[firstTranslation]
                   .word
-              }
+              )}
             </h1>
           </div>
 

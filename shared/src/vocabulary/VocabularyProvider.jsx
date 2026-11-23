@@ -12,6 +12,7 @@ export function VocabularyProvider({ children, api: apiOverride, apiFetch: fetch
   const [words, setWords] = useState([]);
   const [categories, setCategories] = useState([]);
   const [userLanguages, setUserLanguages] = useState([]);
+  const [loadingUserLanguages, setLoadingUserLanguages] = useState(true);
   const [languages, setLanguages] = useState([]);
 
   const [nativeLanguage, setNativeLanguage] = useState([]);
@@ -120,20 +121,25 @@ export function VocabularyProvider({ children, api: apiOverride, apiFetch: fetch
   }
 
   async function getUserLanguages() {
-    const response = await apiFetch(`${api}user-languages/`, {
-      credentials: "include",
-    });
+    setLoadingUserLanguages(true);
+    try {
+      const response = await apiFetch(`${api}user-languages/`, {
+        credentials: "include",
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error("Failed to load languages.");
+      if (!response.ok) {
+        throw new Error("Failed to load languages.");
+      }
+
+      setUserLanguages(data.learning_languages);
+      setNativeLanguage(data.native_language);
+
+      return data;
+    } finally {
+      setLoadingUserLanguages(false);
     }
-
-    setUserLanguages(data.learning_languages);
-    setNativeLanguage(data.native_language);
-
-    return data;
   }
 
   async function getLanguages() {
@@ -432,6 +438,7 @@ export function VocabularyProvider({ children, api: apiOverride, apiFetch: fetch
         loading,
         languages,
         userLanguages,
+        loadingUserLanguages,
         nativeLanguage,
         nextPage,
         previousPage,

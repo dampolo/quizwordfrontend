@@ -556,7 +556,7 @@ function AllWords() {
             </button>
           </div>
 
-          <div className={styles["action-buttons"]}>
+          <div className={`${styles["action-buttons"]} ${styles["word-action-buttons"]}`}>
             <button
               type="button"
               className={`${styles["main-quiz-button-cancel"]} ${styles["cancel-btn"]}`}

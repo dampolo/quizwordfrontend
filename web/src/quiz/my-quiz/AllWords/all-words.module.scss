@@ -10,7 +10,6 @@
   background: basic.$qw-bg-quiz;
   color: #222;
 
-
   .vocabulary__header {
     display: flex;
     justify-content: space-between;
@@ -462,6 +461,17 @@
       background: rgba(52, 33, 214, 0.4);
     }
 
+    &__container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    &__input {
+      width: 100%;
+    }
+
     &__close {
       position: absolute;
       top: 1rem;
@@ -489,6 +499,12 @@
       padding: 0.75rem;
       border: 0.0625rem solid basic.$qw-border-color;
       border-radius: basic.$qw-border-radius;
+    }
+    .delete-button {
+      padding: 0.75rem;
+      border: 0.0625rem solid #e5e7eb;
+      border-radius: 0.625rem;
+      margin-top: auto;
     }
   }
 }

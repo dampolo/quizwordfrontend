@@ -123,6 +123,23 @@ function AllWords() {
     setFormData({ date: "", dateFrom: "", dateTill: "" });
   }
 
+  function handleDeleteDate() {
+    setFormData({
+      date: "",
+    });
+  }
+
+  function handleDeleteDateFrom() {
+    setFormData({
+      dateFrom: "",
+    });
+  }
+  function handleDeleteDateTill() {
+    setFormData({
+      dateTill: "",
+    });
+  }
+
   function submitFilter() {
     const params = new URLSearchParams(searchParams);
     for (const [field, param] of Object.entries(dateFilterParams)) {
@@ -179,7 +196,11 @@ function AllWords() {
     if (filterDate || filterDateFrom || filterDateTill) {
       getDateFilteredConcepts(
         language,
-        { date: filterDate, dateFrom: filterDateFrom, dateTill: filterDateTill },
+        {
+          date: filterDate,
+          dateFrom: filterDateFrom,
+          dateTill: filterDateTill,
+        },
         currentPage,
       );
     } else if (language) {
@@ -334,7 +355,6 @@ function AllWords() {
       </div>
 
       <div className={styles["cards"]}>
-        
         {/* Random Flipcard */}
         <div className={`${styles["card"]} ${styles["mastery"]}`}>
           <h3>Zufällige Karteikarten</h3>
@@ -475,33 +495,67 @@ function AllWords() {
         </button>
         <form method="dialog" onSubmit={submitFilter}>
           <h2 id="filter-dialog-title">Filter</h2>
-          <label htmlFor="date">Datum</label>
-          <input
-            id="date"
-            name="date"
-            type="date"
-            value={formData.date}
-            onChange={handleChange}
-          />
 
-          <div>
-            <label htmlFor="dateFrom">Von</label>
-            <input
-              id="dateFrom"
-              name="dateFrom"
-              type="date"
-              value={formData.dateFrom}
-              onChange={handleChange}
-            />
-            <label htmlFor="dateTill">Bis</label>
-            <input
-              id="dateTill"
-              name="dateTill"
-              type="date"
-              value={formData.dateTill}
-              onChange={handleChange}
-            />
+          <div className={styles["filter-dialog__container"]}>
+            <div className={styles["filter-dialog__input"]}>
+              <label htmlFor="date">Datum</label>
+              <input
+                id="date"
+                name="date"
+                type="date"
+                value={formData.date}
+                onChange={handleChange}
+              />
+            </div>
+            <button
+              type="button"
+              onClick={handleDeleteDate}
+              className={styles["delete-button"]}
+            >
+              <img width={24} height={24} src="/assets/trash.svg" alt="trash" />
+            </button>
           </div>
+
+          <div className={styles["filter-dialog__container"]}>
+            <div className={styles["filter-dialog__input"]}>
+              <label htmlFor="dateFrom">Von</label>
+              <input
+                id="dateFrom"
+                name="dateFrom"
+                type="date"
+                value={formData.dateFrom}
+                onChange={handleChange}
+              />
+            </div>
+            <button
+              type="button"
+              onClick={handleDeleteDateFrom}
+              className={styles["delete-button"]}
+            >
+              <img width={24} height={24} src="/assets/trash.svg" alt="trash" />
+            </button>
+          </div>
+
+          <div className={styles["filter-dialog__container"]}>
+            <div className={styles["filter-dialog__input"]}>
+              <label htmlFor="dateTill">Bis</label>
+              <input
+                id="dateTill"
+                name="dateTill"
+                type="date"
+                value={formData.dateTill}
+                onChange={handleChange}
+              />
+            </div>
+            <button
+              type="button"
+              onClick={handleDeleteDateTill}
+              className={styles["delete-button"]}
+            >
+              <img width={24} height={24} src="/assets/trash.svg" alt="trash" />
+            </button>
+          </div>
+
           <div className={styles["action-buttons"]}>
             <button
               type="button"

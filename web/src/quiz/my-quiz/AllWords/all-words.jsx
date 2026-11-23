@@ -13,6 +13,12 @@ import PageTitle from "../../../components/PageTitle/PageTitle";
 import Search from "../../../components/Search/Search";
 import Tooltip from "@mui/material/Tooltip";
 
+const dateFilterParams = {
+  date: "created_at__date",
+  dateFrom: "created_at__date__gte",
+  dateTill: "created_at__date__lte",
+};
+
 function AllWords() {
   const {
     words,
@@ -38,14 +44,15 @@ function AllWords() {
       : 1;
   const [message, setMessage] = useState("");
 
-  const filterDate = searchParams.get("created_at__date") || "";
-  const filterDateFrom = searchParams.get("created_at__date__gte") || "";
-  const filterDateTill = searchParams.get("created_at__date__lte") || "";
+  const filterDate = searchParams.get(dateFilterParams.date) || "";
+  const filterDateFrom = searchParams.get(dateFilterParams.dateFrom) || "";
+  const filterDateTill = searchParams.get(dateFilterParams.dateTill) || "";
+  const hasDateFilter = Boolean(filterDate || filterDateFrom || filterDateTill);
 
   const [formData, setFormData] = useState({
     date: filterDate,
     dateFrom: filterDateFrom,
-    dateTill: filterDateTill
+    dateTill: filterDateTill,
   });
 
   const language = searchParams.get("language");
@@ -71,6 +78,15 @@ function AllWords() {
 
   function openDialog() {
     selectedWordsDialogRef.current?.showModal();
+  }
+
+  function openFilterDialog() {
+    setFormData({
+      date: filterDate,
+      dateFrom: filterDateFrom,
+      dateTill: filterDateTill,
+    });
+    filterDialogRef.current?.showModal();
   }
 
   function openCreateQuizDialog() {
@@ -99,21 +115,22 @@ function AllWords() {
   }
 
   function handleChange(e) {
-    const {name, value} = e.target
-    setFormData({...formData, [name]: value})
+    const { name, value } = e.target;
+    setFormData((previous) => ({ ...previous, [name]: value }));
   }
 
-  function removefilter() {
-    setFormData("");
+  function removeFilter() {
+    setFormData({ date: "", dateFrom: "", dateTill: "" });
   }
 
   function submitFilter() {
-    submitFilter
     const params = new URLSearchParams(searchParams);
-    if (filterDate) {
-      params.set("created_at__date", formData.date);
-    } else {
-      params.delete("created_at__date");
+    for (const [field, param] of Object.entries(dateFilterParams)) {
+      if (formData[field]) {
+        params.set(param, formData[field]);
+      } else {
+        params.delete(param);
+      }
     }
     params.set("page", "1");
     setSelectedWords([]);
@@ -159,14 +176,18 @@ function AllWords() {
   }
 
   useEffect(() => {
-    if (filterDate) {
-      getDateFilteredConcepts(language, filterDate, currentPage);
+    if (filterDate || filterDateFrom || filterDateTill) {
+      getDateFilteredConcepts(
+        language,
+        { date: filterDate, dateFrom: filterDateFrom, dateTill: filterDateTill },
+        currentPage,
+      );
     } else if (language) {
       getFiltredConcepts(language, currentPage);
     } else {
       getConcepts(currentPage);
     }
-  }, [language, currentPage, filterDate]);
+  }, [language, currentPage, filterDate, filterDateFrom, filterDateTill]);
 
   return (
     <div className={styles["vocabulary"]}>
@@ -217,16 +238,13 @@ function AllWords() {
           </li>
         ))}
         <li
-          className={`${styles["language-single"]} ${filterDate ? styles["active"] : ""}`}
+          className={`${styles["language-single"]} ${hasDateFilter ? styles["active"] : ""}`}
         >
           <button
             type="button"
             className={styles["language-button"]}
             aria-label="Filter öffnen"
-            onClick={() => {
-              setFormData(filterDate);
-              filterDialogRef.current?.showModal();
-            }}
+            onClick={openFilterDialog}
           >
             <Tooltip title="Filter" placement="top" arrow>
               <img src="/assets/filter.svg" alt="filter" />
@@ -463,32 +481,32 @@ function AllWords() {
             name="date"
             type="date"
             value={formData.date}
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
 
           <div>
-            <label htmlFor="dateFrom"></label>
+            <label htmlFor="dateFrom">Von</label>
             <input
-            id="dateFrom"
-            name="dateFrom"
-            type="date"
-            value={formData.dateFrom}
-            onChange={(e) => handleChange(e)}
-          />
-            <label htmlFor="dateTill"></label>
+              id="dateFrom"
+              name="dateFrom"
+              type="date"
+              value={formData.dateFrom}
+              onChange={handleChange}
+            />
+            <label htmlFor="dateTill">Bis</label>
             <input
-            id="dateTill"
-            name="dateTill"
-            type="date"
-            value={formData.dateTill}
-            onChange={(e) => handleChange(e)}
-          />
+              id="dateTill"
+              name="dateTill"
+              type="date"
+              value={formData.dateTill}
+              onChange={handleChange}
+            />
           </div>
           <div className={styles["action-buttons"]}>
             <button
               type="button"
               className={`${styles["main-quiz-button-cancel"]} ${styles["cancel-btn"]}`}
-              onClick={removefilter}
+              onClick={removeFilter}
             >
               {t("BUTTONS.REMOVE")}
             </button>

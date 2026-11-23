@@ -228,8 +228,15 @@ export function VocabularyProvider({ children, api: apiOverride, apiFetch: fetch
     [api, apiFetch],
   );
 
-  async function getDateFilteredConcepts(language, date, page = 1) {
-    const params = new URLSearchParams({ created_at__date: date, page });
+  async function getDateFilteredConcepts(
+    language,
+    { date, dateFrom, dateTill },
+    page = 1,
+  ) {
+    const params = new URLSearchParams({ page });
+    if (date) params.set("created_at__date", date);
+    if (dateFrom) params.set("created_at__date__gte", dateFrom);
+    if (dateTill) params.set("created_at__date__lte", dateTill);
     if (language) params.set("language", language);
     setLoading(true);
 

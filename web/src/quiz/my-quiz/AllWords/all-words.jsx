@@ -39,7 +39,14 @@ function AllWords() {
   const [message, setMessage] = useState("");
 
   const filterDate = searchParams.get("created_at__date") || "";
-  const [date, setDate] = useState(() => filterDate);
+  const filterDateFrom = searchParams.get("created_at__date__gte") || "";
+  const filterDateTill = searchParams.get("created_at__date__lte") || "";
+
+  const [formData, setFormData] = useState({
+    date: filterDate,
+    dateFrom: filterDateFrom,
+    dateTill: filterDateTill
+  });
 
   const language = searchParams.get("language");
   const active = language ? Number(language) : null;
@@ -92,17 +99,19 @@ function AllWords() {
   }
 
   function handleChange(e) {
-    setDate(e.target.value);
+    const {name, value} = e.target
+    setFormData({...formData, [name]: value})
   }
 
   function removefilter() {
-    setDate("");
+    setFormData("");
   }
 
-  function submit() {
+  function submitFilter() {
+    submitFilter
     const params = new URLSearchParams(searchParams);
-    if (date) {
-      params.set("created_at__date", date);
+    if (filterDate) {
+      params.set("created_at__date", formData.date);
     } else {
       params.delete("created_at__date");
     }
@@ -215,7 +224,7 @@ function AllWords() {
             className={styles["language-button"]}
             aria-label="Filter öffnen"
             onClick={() => {
-              setDate(filterDate);
+              setFormData(filterDate);
               filterDialogRef.current?.showModal();
             }}
           >
@@ -446,16 +455,35 @@ function AllWords() {
         >
           <img width={25} height={25} src="/assets/xbox.svg" alt="" />
         </button>
-        <form method="dialog" onSubmit={submit}>
+        <form method="dialog" onSubmit={submitFilter}>
           <h2 id="filter-dialog-title">Filter</h2>
           <label htmlFor="date">Datum</label>
           <input
             id="date"
             name="date"
             type="date"
-            value={date}
+            value={formData.date}
             onChange={(e) => handleChange(e)}
           />
+
+          <div>
+            <label htmlFor="dateFrom"></label>
+            <input
+            id="dateFrom"
+            name="dateFrom"
+            type="date"
+            value={formData.dateFrom}
+            onChange={(e) => handleChange(e)}
+          />
+            <label htmlFor="dateTill"></label>
+            <input
+            id="dateTill"
+            name="dateTill"
+            type="date"
+            value={formData.dateTill}
+            onChange={(e) => handleChange(e)}
+          />
+          </div>
           <div className={styles["action-buttons"]}>
             <button
               type="button"

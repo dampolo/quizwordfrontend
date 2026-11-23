@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import useVocabulary from "../../context/vocabulary/useVocabulary";
 import { useAuth } from "../../context/auth/useAuth";
 import styles from "./Search.module.scss";
 
 function Search() {
+  const { t } = useTranslation();
   const { userLanguages, languages, searchVocabulary } = useVocabulary();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -46,7 +48,7 @@ function Search() {
             query,
             results: [],
             loading: false,
-            error: error.message || "Die Vokabelsuche ist fehlgeschlagen.",
+            error: error.message || true,
           });
         }
       }
@@ -70,7 +72,7 @@ function Search() {
     );
     if (!targetLanguage) {
       toast.error(
-        "Die Zielsprache des Suchergebnisses konnte nicht zugeordnet werden.",
+        t("VOCABULARY_SEARCH.LANGUAGE_ERROR"),
       );
       return;
     }
@@ -101,7 +103,7 @@ function Search() {
   return (
     <search
       className={styles["search-container"]}
-      aria-label="Vokabelsuche"
+      aria-label={t("VOCABULARY_SEARCH.TITLE")}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) {
           setIsResultsVisible(false);
@@ -121,12 +123,12 @@ function Search() {
           htmlFor="vocabulary-search"
           className={styles["visually-hidden"]}
         >
-          Wörter und Übersetzungen suchen
+          {t("VOCABULARY_SEARCH.PROMPT")}
         </label>
         <button
           className={styles["search-btn"]}
           type="submit"
-          aria-label="Suchen"
+          aria-label={t("VOCABULARY_SEARCH.SUBMIT")}
         >
           <svg
             width="20"
@@ -146,7 +148,7 @@ function Search() {
           type="search"
           id="vocabulary-search"
           name="search"
-          placeholder="Wörter und Übersetzungen suchen …"
+          placeholder={t("VOCABULARY_SEARCH.PROMPT")}
           value={searchTerm}
           onChange={(event) => {
             setSearchTerm(event.target.value);
@@ -170,7 +172,7 @@ function Search() {
           <button
             className={styles["close-btn"]}
             type="button"
-            aria-label="Suche löschen"
+            aria-label={t("VOCABULARY_SEARCH.CLEAR")}
             onClick={() => {
               setSearchTerm("");
               setCurrentIndex(-1);
@@ -187,17 +189,17 @@ function Search() {
       >
         <p className={styles["search-hint"]} role="status">
           {searchLoading
-            ? "Wörter werden gesucht …"
+            ? t("VOCABULARY_SEARCH.LOADING")
             : searchError
-              ? searchError
+              ? (searchError === true ? t("VOCABULARY_SEARCH.ERROR") : searchError)
               : searchResults.length === 0
-                ? "Keine passenden Wörter gefunden."
-                : `${searchResults.length} Treffer für „${searchTerm}“`}
+                ? t("VOCABULARY_SEARCH.EMPTY")
+                : t("VOCABULARY_SEARCH.MATCHES", { count: searchResults.length, query: searchTerm })}
         </p>
         <ul
           id="vocabulary-search-results"
           role="listbox"
-          aria-label="Gefundene Wörter"
+          aria-label={t("VOCABULARY_SEARCH.RESULTS")}
         >
           {searchResults.map((word, index) => (
             <li

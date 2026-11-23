@@ -103,12 +103,13 @@ function AllWords() {
 
     try {
       await createQuiz(payload);
-      toast.success(`Quiz "${quizName}" wurde erstellt!`);
+      toast.success(t("YOUR_VOCABULARY.QUIZ_CREATED", { quizName }));
       setDialogOpen(false);
       setSelectedWords([]);
       navigate(`/my-quiz/all-words/?${searchParams.toString()}`);
     } catch (error) {
-      const message = error.response?.detail || "Error";
+      const message =
+        error.response?.detail || t("YOUR_VOCABULARY.CREATE_ERROR");
       setMessage(message);
       toast.error(message);
     }
@@ -175,7 +176,8 @@ function AllWords() {
         `/my-quiz/${response.quiz_id}/flip-card-quiz?language=${response?.target_language}`,
       );
     } catch (error) {
-      const message = error.response?.detail || "Error";
+      const message =
+        error.response?.detail || t("YOUR_VOCABULARY.LAST_FLASHCARDS_ERROR");
 
       toast.error(message);
     }
@@ -184,9 +186,12 @@ function AllWords() {
   async function createRandomQuiz() {
     try {
       const response = await postRandomQuiz(language);
-      toast.success(`Quiz "${response.quiz_name}" wurde erstellt!`);
+      toast.success(
+        t("YOUR_VOCABULARY.QUIZ_CREATED", { quizName: response.quiz_name }),
+      );
     } catch (error) {
-      const message = error.response?.detail || "Error";
+      const message =
+        error.response?.detail || t("YOUR_VOCABULARY.CREATE_ERROR");
 
       toast.error(message);
     }
@@ -212,16 +217,12 @@ function AllWords() {
 
   return (
     <div className={styles["vocabulary"]}>
-      <PageTitle title="Alle Wörter" />
+      <PageTitle title={t("NAVBAR.ALL_WORDS")} />
 
       <div className={styles["vocabulary__header"]}>
         <div>
-          <h1>Deine Vokabeln</h1>
-          <p>
-            Organisiere und verfolge deinen Lernfortschritt. Verwalte
-            Übersetzungen, Kategorien und Wiederholungspläne für alle deine
-            gespeicherten Ausdrücke.
-          </p>
+          <h1>{t("YOUR_VOCABULARY.TITLE")}</h1>
+          <p>{t("YOUR_VOCABULARY.DESCRIPTION")}</p>
           <Search />
         </div>
 
@@ -232,43 +233,47 @@ function AllWords() {
             className={`main-quiz-button ${styles["create-quiz"]}`}
             disabled={selectedWords.length < 3}
           >
-            + Quiz
+            {t("YOUR_VOCABULARY.ADD_QUIZ")}
           </button>
 
           <Link
             className={`main-quiz-button ${styles["add-btn"]}`}
             to="/my-quiz/add-new-word"
           >
-            + Wort
+            {t("YOUR_VOCABULARY.ADD_WORD")}
           </Link>
         </div>
       </div>
 
       <ul className={styles["languages-list"]}>
-        {userLanguages?.map((lang) => (
-          <li
-            className={`${styles["language-single"]} ${active === lang.id ? styles["active"] : ""}`}
-            key={lang.id}
-          >
-            <button
-              className={styles["language-button"]}
-              onClick={() => selectLanguage(lang.id)}
+        {!userLanguages ? (
+          <PreLoader />
+        ) : (
+          userLanguages?.map((lang) => (
+            <li
+              className={`${styles["language-single"]} ${active === lang.id ? styles["active"] : ""}`}
+              key={lang.id}
             >
-              {lang.language_name}
-            </button>
-          </li>
-        ))}
+              <button
+                className={styles["language-button"]}
+                onClick={() => selectLanguage(lang.id)}
+              >
+                {lang.language_name}
+              </button>
+            </li>
+          ))
+        )}
         <li
           className={`${styles["language-single"]} ${hasDateFilter ? styles["active"] : ""}`}
         >
           <button
             type="button"
             className={styles["language-button"]}
-            aria-label="Filter öffnen"
+            aria-label={t("YOUR_VOCABULARY.OPEN_FILTER")}
             onClick={openFilterDialog}
           >
-            <Tooltip title="Filter" placement="top" arrow>
-              <img src="/assets/filter.svg" alt="filter" />
+            <Tooltip title={t("YOUR_VOCABULARY.FILTER")} placement="top" arrow>
+              <img src="/assets/filter.svg" alt="" />
             </Tooltip>
           </button>
         </li>
@@ -277,17 +282,23 @@ function AllWords() {
       <div className={styles["word-list"]}>
         <div className={styles["list-head"]}>
           <div className={styles["check"]}>+</div>
-          <div className={styles["rank"]}>Rang</div>
-          <div className={styles["word"]}>Wort & Übersetzung</div>
-          <div className={styles["category"]}>Kategorie</div>
-          <div className={styles["actions"]}>Aktionen</div>
+          <div className={styles["rank"]}>{t("YOUR_VOCABULARY.RANK")}</div>
+          <div className={styles["word"]}>
+            {t("YOUR_VOCABULARY.WORD_TRANSLATION")}
+          </div>
+          <div className={styles["category"]}>
+            {t("YOUR_VOCABULARY.CATEGORY")}
+          </div>
+          <div className={styles["actions"]}>
+            {t("YOUR_VOCABULARY.ACTIONS")}
+          </div>
         </div>
         {loading ? (
           <div className="show-container">
-            <PreLoader />
+            <PreLoader label={t("LOGIN.LOADING")} />
           </div>
         ) : words?.results?.length === 0 ? (
-          <p className={styles["no-words"]}>Du hast hier keine Wörter.</p>
+          <p className={styles["no-words"]}>{t("YOUR_VOCABULARY.EMPTY")}</p>
         ) : (
           words?.results?.map((word) => (
             <div className={styles["list-row"]} key={word.translations[1].id}>
@@ -295,6 +306,9 @@ function AllWords() {
                 <input
                   type="checkbox"
                   checked={selectedWords.some((item) => item.id === word.id)}
+                  aria-label={t("YOUR_VOCABULARY.SELECT_WORD", {
+                    word: word.translations[1].word,
+                  })}
                   onChange={(e) => handleCheckboxChange(word, e.target.checked)}
                 />
               </div>
@@ -323,7 +337,10 @@ function AllWords() {
                   to={`/my-quiz/${word.id}/edit-word?target-word=${word.translations[1].id}&language=${word.translations[1].language}`}
                   state={{ wordsSearch: searchParams.toString() }}
                 >
-                  <img src="/assets/edit.svg" alt="edit" />
+                  <img
+                    src="/assets/edit.svg"
+                    alt={t("ACTIVE_QUIZZES.EDIT_WORD")}
+                  />
                 </Link>
               </div>
             </div>
@@ -331,13 +348,16 @@ function AllWords() {
         )}
 
         <div className={styles["pagination"]}>
-          <span>{words?.count} Wörter</span>
+          <span>
+            {t("ACTIVE_QUIZZES.WORD_COUNT", { count: words?.count ?? 0 })}
+          </span>
 
           <div className={styles["pages"]}>
             <button
               type="button"
               className={`main-quiz-button ${styles["btn-pagination"]}`}
               disabled={!previousPage}
+              aria-label={t("YOUR_VOCABULARY.PREVIOUS_PAGE")}
               onClick={() => changePage(currentPage - 1)}
             >
               &lt;
@@ -346,6 +366,7 @@ function AllWords() {
             <button
               className={`main-quiz-button ${styles["btn-pagination"]}`}
               disabled={!nextPage}
+              aria-label={t("YOUR_VOCABULARY.NEXT_PAGE")}
               onClick={() => changePage(currentPage + 1)}
             >
               &gt;
@@ -357,10 +378,14 @@ function AllWords() {
       <div className={styles["cards"]}>
         {/* Random Flipcard */}
         <div className={`${styles["card"]} ${styles["mastery"]}`}>
-          <h3>Zufällige Karteikarten</h3>
+          <h3>{t("ACTIVE_QUIZZES.RANDOM_TITLE")}</h3>
           <p>
-            Übe zufällige Wörter{language_name ? ` auf ${language_name}` : ""}{" "}
-            mit Karteikarten.
+            {t(
+              language_name
+                ? "YOUR_VOCABULARY.FLASHCARDS_LANGUAGE"
+                : "YOUR_VOCABULARY.FLASHCARDS_DESCRIPTION",
+              { language: language_name },
+            )}
           </p>
           <button
             type="button"
@@ -369,18 +394,21 @@ function AllWords() {
               navigate(`/my-quiz/random-repeat-flip-card?${searchParams}`)
             }
           >
-            Start
+            {t("ACTIVE_QUIZZES.START")}
           </button>
         </div>
 
         {/* Random Flipcard Ende*/}
 
         <div className={`${styles["card"]} ${styles["random"]}`}>
-          <h3>Zufällige Wörter wiederholen</h3>
+          <h3>{t("YOUR_VOCABULARY.REPEAT_TITLE")}</h3>
           <p>
-            Höre beide Übersetzungen(
-            {language_name ? ` auf ${language_name}` : ""}) und wiederhole
-            danach das nächste Wort.
+            {t(
+              language_name
+                ? "YOUR_VOCABULARY.REPEAT_LANGUAGE"
+                : "YOUR_VOCABULARY.REPEAT_DESCRIPTION",
+              { language: language_name },
+            )}
           </p>
           <button
             type="button"
@@ -389,34 +417,48 @@ function AllWords() {
               navigate(`/my-quiz/random-repeat-words?language=${language}`)
             }
           >
-            Start
+            {t("ACTIVE_QUIZZES.START")}
           </button>
         </div>
         <div className={`${styles["card"]} goal`}>
-          <h3>Today's Goal</h3>
-          <p>Review 20 new words to keep your streak alive.</p>
+          <h3>{t("YOUR_VOCABULARY.GOAL_TITLE")}</h3>
+          <p>{t("YOUR_VOCABULARY.GOAL_DESCRIPTION", { count: 20 })}</p>
 
           <div className={styles["progress"]}>
             <div className={styles["progress-fill"]}></div>
           </div>
 
-          <small>12 / 20 Words • 60%</small>
+          <small>
+            {t("YOUR_VOCABULARY.GOAL_PROGRESS", {
+              completed: 12,
+              total: 20,
+              percent: 60,
+            })}
+          </small>
         </div>
 
         <div className={`${styles["card"]} ${styles["random"]}`}>
-          <h3>Random Quiz</h3>
+          <h3>{t("YOUR_VOCABULARY.RANDOM_QUIZ")}</h3>
           <p>
-            Erstelle ein Quiz{language_name ? ` auf ${language_name}` : ""} aus
-            5 gemischten Wörtern.
+            {t(
+              language_name
+                ? "YOUR_VOCABULARY.RANDOM_QUIZ_LANGUAGE"
+                : "YOUR_VOCABULARY.RANDOM_QUIZ_DESCRIPTION",
+              { language: language_name, count: 5 },
+            )}
           </p>
 
-          <button onClick={createRandomQuiz}>Start</button>
+          <button onClick={createRandomQuiz}>
+            {t("ACTIVE_QUIZZES.START")}
+          </button>
         </div>
 
         <div className={`${styles["card"]} ${styles["mastery"]}`}>
-          <h3>Karteikarten</h3>
-          <p>Fange die letzten Karteikarten an.</p>
-          <button onClick={playLastFlipCard}>Start</button>
+          <h3>{t("ACTIVE_QUIZZES.FLASHCARDS")}</h3>
+          <p>{t("YOUR_VOCABULARY.LAST_FLASHCARDS")}</p>
+          <button onClick={playLastFlipCard}>
+            {t("ACTIVE_QUIZZES.START")}
+          </button>
         </div>
 
         {/* Start last quiz */}
@@ -429,6 +471,7 @@ function AllWords() {
         type="submit"
         onClick={openDialog}
         className={`main-quiz-button ${styles["create-quiz-small"]}`}
+        aria-label={t("YOUR_VOCABULARY.CREATE_QUIZ")}
         disabled={selectedWords.length < 3}
       >
         <svg
@@ -454,13 +497,15 @@ function AllWords() {
         <button
           type="button"
           className={styles["selected-words-dialog__close"]}
-          aria-label="Schließen"
+          aria-label={t("YOUR_VOCABULARY.CLOSE")}
           onClick={() => selectedWordsDialogRef.current?.close()}
         >
           <img width={25} height={25} src="/assets/xbox.svg" alt="" />
         </button>
         <div className={styles["selected-words-dialog__list"]}>
-          <h2 id="selected-words-dialog-title">Wort & Übersetzung</h2>
+          <h2 id="selected-words-dialog-title">
+            {t("YOUR_VOCABULARY.WORD_TRANSLATION")}
+          </h2>
           {selectedWords.map((word) => (
             <div className={styles["selected-words-dialog__row"]} key={word.id}>
               <h3>{word.translations[0].word}</h3>
@@ -475,7 +520,7 @@ function AllWords() {
           onClick={openCreateQuizDialog}
           disabled={selectedWords.length < 3}
         >
-          Quiz erstellen
+          {t("YOUR_VOCABULARY.CREATE_QUIZ")}
         </button>
       </dialog>
       {/* dialog Filter */}
@@ -488,17 +533,17 @@ function AllWords() {
         <button
           type="button"
           className={styles["filter-dialog__close"]}
-          aria-label="Filter schließen"
+          aria-label={t("YOUR_VOCABULARY.CLOSE_FILTER")}
           onClick={() => filterDialogRef.current?.close()}
         >
           <img width={25} height={25} src="/assets/xbox.svg" alt="" />
         </button>
         <form method="dialog" onSubmit={submitFilter}>
-          <h2 id="filter-dialog-title">Filter</h2>
+          <h2 id="filter-dialog-title">{t("YOUR_VOCABULARY.FILTER")}</h2>
 
           <div className={styles["filter-dialog__container"]}>
             <div className={styles["filter-dialog__input"]}>
-              <label htmlFor="date">Datum</label>
+              <label htmlFor="date">{t("YOUR_VOCABULARY.DATE")}</label>
               <input
                 id="date"
                 name="date"
@@ -509,16 +554,17 @@ function AllWords() {
             </div>
             <button
               type="button"
+              aria-label={t("YOUR_VOCABULARY.CLEAR_DATE")}
               onClick={handleDeleteDate}
               className={styles["delete-button"]}
             >
-              <img width={24} height={24} src="/assets/trash.svg" alt="trash" />
+              <img width={24} height={24} src="/assets/trash.svg" alt="" />
             </button>
           </div>
 
           <div className={styles["filter-dialog__container"]}>
             <div className={styles["filter-dialog__input"]}>
-              <label htmlFor="dateFrom">Von</label>
+              <label htmlFor="dateFrom">{t("YOUR_VOCABULARY.DATE_FROM")}</label>
               <input
                 id="dateFrom"
                 name="dateFrom"
@@ -529,16 +575,17 @@ function AllWords() {
             </div>
             <button
               type="button"
+              aria-label={t("YOUR_VOCABULARY.CLEAR_DATE_FROM")}
               onClick={handleDeleteDateFrom}
               className={styles["delete-button"]}
             >
-              <img width={24} height={24} src="/assets/trash.svg" alt="trash" />
+              <img width={24} height={24} src="/assets/trash.svg" alt="" />
             </button>
           </div>
 
           <div className={styles["filter-dialog__container"]}>
             <div className={styles["filter-dialog__input"]}>
-              <label htmlFor="dateTill">Bis</label>
+              <label htmlFor="dateTill">{t("YOUR_VOCABULARY.DATE_TILL")}</label>
               <input
                 id="dateTill"
                 name="dateTill"
@@ -549,14 +596,17 @@ function AllWords() {
             </div>
             <button
               type="button"
+              aria-label={t("YOUR_VOCABULARY.CLEAR_DATE_TILL")}
               onClick={handleDeleteDateTill}
               className={styles["delete-button"]}
             >
-              <img width={24} height={24} src="/assets/trash.svg" alt="trash" />
+              <img width={24} height={24} src="/assets/trash.svg" alt="" />
             </button>
           </div>
 
-          <div className={`${styles["action-buttons"]} ${styles["word-action-buttons"]}`}>
+          <div
+            className={`${styles["action-buttons"]} ${styles["word-action-buttons"]}`}
+          >
             <button
               type="button"
               className={`${styles["main-quiz-button-cancel"]} ${styles["cancel-btn"]}`}
@@ -586,6 +636,11 @@ function AllWords() {
       <FormDialog
         open={dialogOpen}
         selectedWordsCount={selectedWords.length}
+        dialogTitle={t("YOUR_VOCABULARY.CREATE_QUIZ")}
+        dialogDescription={t("YOUR_VOCABULARY.CREATE_DESCRIPTION", {
+          count: selectedWords.length,
+        })}
+        inputLabel={t("ACTIVE_QUIZZES.QUIZ_NAME")}
         onClose={() => setDialogOpen(false)}
         message={message}
         onSubmit={handleCreateQuiz}

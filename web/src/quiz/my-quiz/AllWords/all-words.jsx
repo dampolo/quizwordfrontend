@@ -24,6 +24,7 @@ function AllWords() {
     words,
     loading,
     userLanguages,
+    loadingUserLanguages,
     getFiltredConcepts,
     getDateFilteredConcepts,
     nextPage,
@@ -246,7 +247,7 @@ function AllWords() {
       </div>
 
       <ul className={styles["languages-list"]}>
-        {!userLanguages ? (
+        {loadingUserLanguages ? (
           <PreLoader />
         ) : (
           userLanguages?.map((lang) => (

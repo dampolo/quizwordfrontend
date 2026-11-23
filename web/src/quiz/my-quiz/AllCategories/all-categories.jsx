@@ -12,6 +12,7 @@ export default function AllCategories() {
   const {
     categories,
     userLanguages,
+    loadingUserLanguages,
     loading,
     getFiltredCategories,
     getCategories,
@@ -68,19 +69,23 @@ export default function AllCategories() {
           </button>
         </li>
 
-        {userLanguages.map((lang) => (
-          <li
-            className={`${styles["language-single"]} ${active === lang.id ? styles["active"] : ""}`}
-            key={lang.id}
-          >
-            <button
-              className={styles["language-button"]}
-              onClick={() => selectLanguage(lang.id)}
+        {loadingUserLanguages ? (
+          <PreLoader />
+        ) : (
+          userLanguages.map((lang) => (
+            <li
+              className={`${styles["language-single"]} ${active === lang.id ? styles["active"] : ""}`}
+              key={lang.id}
             >
-              {lang.language_name}
-            </button>
-          </li>
-        ))}
+              <button
+                className={styles["language-button"]}
+                onClick={() => selectLanguage(lang.id)}
+              >
+                {lang.language_name}
+              </button>
+            </li>
+          ))
+        )}
       </ul>
       <section className={styles["category"]}>
         {loading ? (

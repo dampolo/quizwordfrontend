@@ -21,7 +21,7 @@ function Quizzes() {
     getQuizWords,
     getRandomFlipCard,
   } = useQuiz();
-  const { userLanguages } = useVocabulary();
+  const { userLanguages, loadingUserLanguages } = useVocabulary();
   const [searchParams, setSearchParams] = useSearchParams();
   const language = searchParams.get("language");
   const active = language ? Number(language) : null;
@@ -129,19 +129,23 @@ function Quizzes() {
           </button>
         </li>
 
-        {userLanguages.map((lang) => (
-          <li
-            key={lang.id}
-            className={`${styles["language-single"]} ${active === lang.id ? styles["active"] : ""}`}
-          >
-            <button
-              className={styles["language-button"]}
-              onClick={() => selectLanguage(lang.id)}
+        {loadingUserLanguages ? (
+          <PreLoader />
+        ) : (
+          userLanguages.map((lang) => (
+            <li
+              key={lang.id}
+              className={`${styles["language-single"]} ${active === lang.id ? styles["active"] : ""}`}
             >
-              {lang.language_name}
-            </button>
-          </li>
-        ))}
+              <button
+                className={styles["language-button"]}
+                onClick={() => selectLanguage(lang.id)}
+              >
+                {lang.language_name}
+              </button>
+            </li>
+          ))
+        )}
       </ul>
 
       {/* Quiz */}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import Tooltip from "@mui/material/Tooltip";
 import useTextTranslation from "../../../context/translation/useTranslation";
 import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import styles from "./Translation.module.scss";
@@ -191,14 +192,25 @@ function Translation() {
         >
           <div className={styles["result-header"]}>
             <h3>{t("TRANSLATOR.RESULT")}</h3>
-            <button
-              type="button"
-              className={styles["conjugation-button"]}
-              disabled={!translatedText?.target_conjugations}
-              aria-label={t("TRANSLATOR.CONJUGATIONS", { defaultValue: "Konjugationen" })}
+            <Tooltip
+              title={t(translatedText?.target_conjugations
+                ? "TRANSLATOR.VIEW_CONJUGATIONS"
+                : "TRANSLATOR.NO_CONJUGATIONS")}
+              placement="top"
+              arrow
+              describeChild
             >
-              <img src="/assets/table.svg" alt="" />
-            </button>
+              <span className={styles["conjugation-tooltip"]}>
+                <button
+                  type="button"
+                  className={styles["conjugation-button"]}
+                  disabled={!translatedText?.target_conjugations}
+                  aria-label={t("TRANSLATOR.CONJUGATIONS")}
+                >
+                  <img src="/assets/table.svg" alt="" />
+                </button>
+              </span>
+            </Tooltip>
           </div>
           {translatedText ? (
             <p className={styles["translation-result"]}>

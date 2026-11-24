@@ -112,6 +112,9 @@
     "TRANSLATING": "Wird übersetzt ...",
     "SUBMIT": "Übersetzen",
     "RESULT": "Übersetzung",
+    "CONJUGATIONS": "Konjugationen",
+    "VIEW_CONJUGATIONS": "Weitere Konjugationen anzeigen",
+    "NO_CONJUGATIONS": "Keine Übersetzung mit Konjugationen verfügbar",
     "NATIVE_LANGUAGE_REQUIRED": "Zum Hinzufügen muss eine der Sprachen deine Muttersprache sein.",
     "ADD_WORD": "Übersetztes Wort hinzufügen"
   },

@@ -112,6 +112,9 @@
     "TRANSLATING": "Translating...",
     "SUBMIT": "Translate",
     "RESULT": "Translation",
+    "CONJUGATIONS": "Conjugations",
+    "VIEW_CONJUGATIONS": "View more conjugations",
+    "NO_CONJUGATIONS": "No translation with conjugations available",
     "NATIVE_LANGUAGE_REQUIRED": "One of the languages must be your native language to add this word.",
     "ADD_WORD": "Add translated word"
   },

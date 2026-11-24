@@ -99,6 +99,10 @@
           font-weight: 500;
         }
 
+        .conjugation-tooltip {
+          display: inline-flex;
+        }
+
         .conjugation-button {
           display: inline-flex;
           align-items: center;
@@ -116,6 +120,7 @@
           &:disabled {
             opacity: 0.4;
             cursor: default;
+            pointer-events: none;
           }
 
           &:focus-visible {

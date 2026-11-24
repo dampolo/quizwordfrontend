@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import { Link, useSearchParams } from "react-router-dom";
 import PreLoader from "../../../components/PreLoader/PreLoader";
@@ -9,6 +10,7 @@ import Tooltip from '@mui/material/Tooltip';
 
 
 export default function AllCategories() {
+  const { t } = useTranslation();
   const {
     categories,
     userLanguages,
@@ -39,13 +41,12 @@ export default function AllCategories() {
 
   return (
     <section className={styles["vocab-page"]}>
-      <PageTitle title="Kategorien" />
+      <PageTitle title={t("NAVBAR.CATEGORIES")} />
       <header className={styles["topbar"]}>
         <div>
-          <h1>Vokabelkategorien</h1>
+          <h1>{t("VOCABULARY_CATEGORIES.TITLE")}</h1>
           <p>
-            Organisiere deinen Lernfortschritt nach Thema und
-            Schwierigkeitsgrad.
+            {t("VOCABULARY_CATEGORIES.DESCRIPTION")}
           </p>
         </div>
 
@@ -53,7 +54,7 @@ export default function AllCategories() {
           className={`main-quiz-button ${styles["add-new-category-button"]}`}
           to="/my-quiz/add-new-category"
         >
-          + Kategorie
+          {t("VOCABULARY_CATEGORIES.ADD_CATEGORY")}
         </Link>
       </header>
 
@@ -65,12 +66,12 @@ export default function AllCategories() {
             className={styles["language-button"]}
             onClick={() => selectLanguage(null)}
           >
-            Alle
+            {t("VOCABULARY_CATEGORIES.ALL")}
           </button>
         </li>
 
         {loadingUserLanguages ? (
-          <PreLoader />
+          <PreLoader label={t("LOGIN.LOADING")} />
         ) : (
           userLanguages.map((lang) => (
             <li
@@ -90,11 +91,11 @@ export default function AllCategories() {
       <section className={styles["category"]}>
         {loading ? (
           <div className="show-container">
-            <PreLoader />
+            <PreLoader label={t("LOGIN.LOADING")} />
           </div>
         ) : categories.length === 0 ? (
           <p className={styles["no-category"]}>
-            Du hast hier keine Kategorie erstellt.
+            {t("VOCABULARY_CATEGORIES.EMPTY")}
           </p>
         ) : (
           categories.map((cat) => (
@@ -104,12 +105,12 @@ export default function AllCategories() {
             >
               <div className={styles["card-actions"]}>
                 <h3>{cat.category_name}</h3>
-                <Tooltip title="Edit Title" placement="top" arrow>
+                <Tooltip title={t("VOCABULARY_CATEGORIES.EDIT_TITLE")} placement="top" arrow>
                   <Link
                     className={styles["edit"]}
                     to={`/my-quiz/all-categories/${cat.category_id}/edit-category?language=${language}`}
                   >
-                    <img src="/assets/edit.svg" alt="edit" />
+                    <img src="/assets/edit.svg" alt={t("VOCABULARY_CATEGORIES.EDIT_TITLE")} />
                   </Link>
                 </Tooltip>
               </div>
@@ -120,7 +121,7 @@ export default function AllCategories() {
                   className={styles["card__meta"]}
                 >
                   <span>▦</span>
-                  <strong>{cat.concepts_count} Words</strong>
+                  <strong>{t("VOCABULARY_CATEGORIES.WORD_COUNT", { count: cat.concepts_count ?? 0 })}</strong>
                 </Link>
                 <span>{cat.language_name}</span>
               </div>
@@ -130,8 +131,8 @@ export default function AllCategories() {
 
         <Link className={styles["add-card"]} to="/my-quiz/add-new-category">
           <span>⊕</span>
-          <strong>Neue Kategorie hinzufügen</strong>
-          <small>Erstelle eine individuelle Lernliste.</small>
+          <strong>{t("ADD_NEW_CATEGORY_BUTTON.TITLE_2")}</strong>
+          <small>{t("ADD_NEW_CATEGORY_BUTTON.DESCRIPTION")}</small>
         </Link>
       </section>
     </section>

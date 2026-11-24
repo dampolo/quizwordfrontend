@@ -2,7 +2,6 @@ import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import { useEffect, useState } from "react";
 import {
   Link,
-  useLocation,
   useNavigate,
   useParams,
   useSearchParams,
@@ -57,10 +56,7 @@ export default function EditWord() {
   const targetWord = searchParams.get("target-word");
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const returnParams = new URLSearchParams(
-    location.state?.wordsSearch ?? searchParams.toString(),
-  );
+  const returnParams = new URLSearchParams(searchParams);
   returnParams.delete("target-word");
   const returnTo = `/my-quiz/all-words?${returnParams.toString()}`;
 

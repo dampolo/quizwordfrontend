@@ -24,6 +24,14 @@ export default function ShowWord() {
   const audioDialogRef = useRef(null);
   const [audioOpen, setAudioOpen] = useState(false);
   const translations = formData?.translations;
+  const target = translations?.[1];
+  const returnParams = new URLSearchParams(searchParams);
+  returnParams.delete("target-word");
+  const editParams = new URLSearchParams(returnParams);
+  if (target) {
+    editParams.set("target-word", String(target.id));
+    editParams.set("language", String(target.language));
+  }
   const canRepeat = wordLoaded && Boolean(translations?.[0]?.word && translations?.[1]?.word);
 
   function openAudioDialog() {
@@ -58,15 +66,13 @@ export default function ShowWord() {
     <section className={styles["show-word-page"]}>
       <div className={styles["actions"]}>
         <BackButton
-          to={`/my-quiz/all-words?language=${languageId}`}
+          to={`/my-quiz/all-words?${returnParams}`}
           className={styles["arrow-back"]}
         />
 
         <RepeadButton onClick={openAudioDialog} disabled={!canRepeat} />
 
-        <EditButton
-          to={`/my-quiz/${formData?.id}/edit-word?target-word=${translations?.[1]?.id}&language=${translations?.[1]?.language}`}
-        />
+        {target && <EditButton to={`/my-quiz/${id}/edit-word?${editParams}`} />}
       </div>
 
       <h1>Wort ansehen</h1>

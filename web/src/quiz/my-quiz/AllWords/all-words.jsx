@@ -170,6 +170,14 @@ function AllWords() {
     setSearchParams(params);
   }
 
+  function getWordUrl(word, action) {
+    const params = new URLSearchParams(searchParams);
+    const target = word.translations[1];
+    params.set("target-word", String(target.id));
+    params.set("language", String(target.language));
+    return `/my-quiz/${word.id}/${action}?${params}`;
+  }
+
   async function playLastFlipCard() {
     try {
       const response = await getLastFlipCard();
@@ -318,7 +326,7 @@ function AllWords() {
 
               <Link
                 className={styles["word"]}
-                to={`/my-quiz/${word.id}/show-word?target-word=${word.translations[1].id}&language=${word.translations[1].language}`}
+                to={getWordUrl(word, "show-word")}
               >
                 <h3>{word.translations[0].word}</h3>
                 <span>»</span>
@@ -335,8 +343,7 @@ function AllWords() {
 
               <div className={styles["actions"]}>
                 <Link
-                  to={`/my-quiz/${word.id}/edit-word?target-word=${word.translations[1].id}&language=${word.translations[1].language}`}
-                  state={{ wordsSearch: searchParams.toString() }}
+                  to={getWordUrl(word, "edit-word")}
                 >
                   <img
                     src="/assets/edit.svg"

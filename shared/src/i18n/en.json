@@ -110,6 +110,12 @@
     "TRANSLATOR": "Translator"
   },
   "VOCABULARY_CATEGORIES": {
+    "ADD_CATEGORY": "+ Category",
+    "ALL": "All",
+    "EMPTY": "You haven't created any categories here.",
+    "EDIT_TITLE": "Edit category title",
+    "WORD_COUNT_one": "{{count}} word",
+    "WORD_COUNT_other": "{{count}} words",
     "TITLE": "Vocabulary Categories",
     "DESCRIPTION": "Organize your learning journey by topic and difficulty."
   },

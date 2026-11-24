@@ -110,6 +110,12 @@
     "TRANSLATOR": "Übersetzer"
   },
   "VOCABULARY_CATEGORIES": {
+    "ADD_CATEGORY": "+ Kategorie",
+    "ALL": "Alle",
+    "EMPTY": "Du hast hier noch keine Kategorie erstellt.",
+    "EDIT_TITLE": "Kategorietitel bearbeiten",
+    "WORD_COUNT_one": "{{count}} Wort",
+    "WORD_COUNT_other": "{{count}} Wörter",
     "TITLE": "Vokabelkategorien",
     "DESCRIPTION": "Organisiere deinen Lernfortschritt nach Thema und Schwierigkeitsgrad."
   },

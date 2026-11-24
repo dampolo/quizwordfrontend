@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useTranslation from "../../../context/translation/useTranslation";
+import { useTranslation } from "react-i18next";
+import useTextTranslation from "../../../context/translation/useTranslation";
 import useVocabulary from "../../../context/vocabulary/useVocabulary";
 import styles from "./Translation.module.scss";
 
 function Translation() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [submittedTranslation, setSubmittedTranslation] = useState(null);
   const [text, setText] = useState("");
@@ -38,7 +40,7 @@ function Translation() {
     languageOptions.find((language) => String(language.id) === targetId),
   );
 
-  const { translate, translatedText, loading, error } = useTranslation();
+  const { translate, translatedText, loading, error } = useTextTranslation();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -91,12 +93,12 @@ function Translation() {
 
   return (
     <section className={styles["translation"]}>
-      <h2>Übersetzer</h2>
+      <h2>{t("NAVBAR.TRANSLATOR")}</h2>
       <div className={styles["translation-content"]}>
         <form onSubmit={handleSubmit}>
           <fieldset>
             <div className={styles["input-container"]}>
-              <label htmlFor="translation-text">Text</label>
+              <label htmlFor="translation-text">{t("TRANSLATOR.TEXT")}</label>
               <input
                 id="translation-text"
                 name="text"
@@ -107,7 +109,7 @@ function Translation() {
               />
             </div>
             <div className={styles["input-container"]}>
-              <label htmlFor="translation-source">Ausgangssprache</label>
+              <label htmlFor="translation-source">{t("TRANSLATOR.SOURCE_LANGUAGE")}</label>
               <select
                 id="translation-source"
                 name="source"
@@ -115,7 +117,7 @@ function Translation() {
                 onChange={(event) => setSource(event.target.value)}
                 required
               >
-                <option value="">Wähle Sprache</option>
+                <option value="">{t("TRANSLATOR.SELECT_LANGUAGE")}</option>
                 {languageOptions.map((language) => (
                   <option key={language.id} value={String(language.id)}>
                     {language.language_name}
@@ -129,14 +131,14 @@ function Translation() {
                 className={styles["switch-button"]}
                 type="button"
                 onClick={switchLanguage}
-                aria-label="Sprachen tauschen"
+                aria-label={t("TRANSLATOR.SWAP_LANGUAGES")}
               >
-                <img src="/assets/switch.svg" alt="switch language" />
+                <img src="/assets/switch.svg" alt="" />
               </button>
             </div>
 
             <div className={styles["input-container"]}>
-              <label htmlFor="translation-target">Zielsprache</label>
+              <label htmlFor="translation-target">{t("TRANSLATOR.TARGET_LANGUAGE")}</label>
               <select
                 id="translation-target"
                 name="target"
@@ -144,7 +146,7 @@ function Translation() {
                 onChange={(event) => setTarget(event.target.value)}
                 required
               >
-                <option value="">Wähle Sprache</option>
+                <option value="">{t("TRANSLATOR.SELECT_LANGUAGE")}</option>
                 {languageOptions.map((language) => (
                   <option key={language.id} value={String(language.id)}>
                     {language.language_name}
@@ -154,8 +156,7 @@ function Translation() {
             </div>
             {sourceId && targetId && (!source || !target) && (
               <p role="alert">
-                Für eine ausgewählte Sprache fehlt der Sprachcode. Bitte lade
-                die Seite nach dem Backend-Update neu.
+                {t("TRANSLATOR.MISSING_LANGUAGE_CODE")}
               </p>
             )}
             <button
@@ -165,7 +166,7 @@ function Translation() {
                 loading || !text.trim() || !source.trim() || !target.trim()
               }
             >
-              {loading ? "Wird übersetzt…" : "Übersetzen"}
+              {t(loading ? "TRANSLATOR.TRANSLATING" : "TRANSLATOR.SUBMIT")}
             </button>
           </fieldset>
         </form>
@@ -178,7 +179,7 @@ function Translation() {
           aria-live="polite"
           aria-busy={loading}
         >
-          <h3>Übersetzung: </h3>
+          <h3>{t("TRANSLATOR.RESULT")}</h3>
           {translatedText ? (
             <p className={styles["translation-result"]}>{translatedText}</p>
           ) : (
@@ -187,7 +188,7 @@ function Translation() {
           <div className={styles["action"]}>
             {canAdd && !includesNativeLanguage && (
               <p className={styles["info"]}>
-                Zum Hinzufügen muss eine der Sprachen deine Muttersprache sein.
+                {t("TRANSLATOR.NATIVE_LANGUAGE_REQUIRED")}
               </p>
             )}
             <button
@@ -195,6 +196,7 @@ function Translation() {
               className={`main-quiz-button ${styles["add-word"]}`}
               disabled={!canAdd || !includesNativeLanguage}
               onClick={handleAdd}
+              aria-label={t("TRANSLATOR.ADD_WORD")}
             >
               +
             </button>

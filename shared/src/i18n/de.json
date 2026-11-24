@@ -102,6 +102,19 @@
       "BUTTON": "Kostenloses Konto erstellen"
     }
   },
+  "TRANSLATOR": {
+    "TEXT": "Text",
+    "SOURCE_LANGUAGE": "Ausgangssprache",
+    "TARGET_LANGUAGE": "Zielsprache",
+    "SELECT_LANGUAGE": "Wähle eine Sprache",
+    "SWAP_LANGUAGES": "Sprachen tauschen",
+    "MISSING_LANGUAGE_CODE": "Für eine ausgewählte Sprache fehlt der Sprachcode. Bitte lade die Seite nach dem Backend-Update neu.",
+    "TRANSLATING": "Wird übersetzt ...",
+    "SUBMIT": "Übersetzen",
+    "RESULT": "Übersetzung",
+    "NATIVE_LANGUAGE_REQUIRED": "Zum Hinzufügen muss eine der Sprachen deine Muttersprache sein.",
+    "ADD_WORD": "Übersetztes Wort hinzufügen"
+  },
   "NAVBAR": {
     "CATEGORIES": "Kategorien",
     "ALL_WORDS": "Wörter",

@@ -102,6 +102,19 @@
       "BUTTON": "Create Free Account"
     }
   },
+  "TRANSLATOR": {
+    "TEXT": "Text",
+    "SOURCE_LANGUAGE": "Source language",
+    "TARGET_LANGUAGE": "Target language",
+    "SELECT_LANGUAGE": "Select a language",
+    "SWAP_LANGUAGES": "Swap languages",
+    "MISSING_LANGUAGE_CODE": "A selected language is missing its language code. Please reload the page after the backend update.",
+    "TRANSLATING": "Translating...",
+    "SUBMIT": "Translate",
+    "RESULT": "Translation",
+    "NATIVE_LANGUAGE_REQUIRED": "One of the languages must be your native language to add this word.",
+    "ADD_WORD": "Add translated word"
+  },
   "NAVBAR": {
     "CATEGORIES": "Categories",
     "ALL_WORDS": "All Words",

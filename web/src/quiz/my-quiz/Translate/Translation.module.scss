@@ -150,6 +150,96 @@
   }
 }
 
+.conjugation-dialog {
+  margin: auto;
+  width: min(52rem, calc(100% - 2rem));
+  max-height: calc(100% - 2rem);
+  padding: 0;
+  overflow: auto;
+  border: 0.0625rem solid basic.$qw-border-color;
+  border-radius: basic.$qw-border-radius;
+  background: basic.$qw-bg-quiz;
+  color: basic.$qw-color-heading;
+
+  &::backdrop {
+    background: rgba(52, 33, 214, 0.4);
+  }
+}
+
+.conjugation-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: basic.$qw-fourth;
+  border-bottom: 0.0625rem solid basic.$qw-border-color;
+}
+
+.conjugation-close {
+  display: grid;
+  place-items: center;
+  padding: 0.375rem;
+  border: 0.0625rem solid #dddded;
+  border-radius: 50%;
+  background: basic.$qw-fourth;
+  cursor: pointer;
+
+  &:hover {
+    background: #f6f6fb;
+  }
+
+  &:focus-visible {
+    outline: basic.$focus;
+    outline-offset: 0.125rem;
+  }
+}
+
+.conjugation-content {
+  padding: 1rem;
+}
+
+.conjugation-mood + .conjugation-mood {
+  margin-top: 1.5rem;
+}
+
+.conjugation-mood h4,
+.conjugation-tense h5 {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.conjugation-mood h4 {
+  color: basic.$qw-primary;
+}
+
+.conjugation-tenses {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.75rem;
+}
+
+.conjugation-tense {
+  padding: 0.75rem;
+  border: 0.0625rem solid basic.$qw-border-color;
+  border-radius: basic.$qw-border-radius;
+  background: basic.$qw-fifth;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    color: basic.$qw-body-text-color;
+    overflow-wrap: anywhere;
+  }
+}
+
 @media (max-width: 46rem) {
   .translation {
     .translation-content {

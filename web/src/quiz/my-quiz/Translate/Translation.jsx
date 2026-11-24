@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Tooltip from "@mui/material/Tooltip";
@@ -9,6 +9,7 @@ import styles from "./Translation.module.scss";
 function Translation() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const conjugationDialogRef = useRef(null);
   const [submittedTranslation, setSubmittedTranslation] = useState(null);
   const [text, setText] = useState("");
   const { nativeLanguage, userLanguages = [] } = useVocabulary();
@@ -43,6 +44,7 @@ function Translation() {
 
   const { translate, translatedText, loading, error } = useTextTranslation();
   const translatedWord = translatedText?.translated_text?.trim() ?? "";
+  const targetResults = translatedText?.target_results;
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -206,6 +208,8 @@ function Translation() {
                   className={styles["conjugation-button"]}
                   disabled={!translatedText?.target_conjugations}
                   aria-label={t("TRANSLATOR.CONJUGATIONS")}
+                  aria-haspopup="dialog"
+                  onClick={() => conjugationDialogRef.current?.showModal()}
                 >
                   <img src="/assets/table.svg" alt="" />
                 </button>
@@ -238,6 +242,51 @@ function Translation() {
           </div>
         </div>
       </div>
+
+      <dialog
+        ref={conjugationDialogRef}
+        className={styles["conjugation-dialog"]}
+        aria-labelledby="conjugation-dialog-title"
+      >
+        <div className={styles["conjugation-header"]}>
+          <h3 id="conjugation-dialog-title">
+            {t("TRANSLATOR.CONJUGATIONS")} ·{" "}
+            {targetResults?.verb?.infinitive ?? translatedWord}
+          </h3>
+          <header>
+            <button
+              type="button"
+              className={styles["conjugation-close"]}
+              aria-label={t("YOUR_VOCABULARY.CLOSE")}
+              onClick={() => conjugationDialogRef.current?.close()}
+            >
+              <img width={25} height={25} src="/assets/xbox.svg" alt="" />
+            </button>
+          </header>
+        </div>
+        <div
+          className={styles["conjugation-content"]}
+          lang={targetResults?.verb?.lang}
+        >
+          {Object.entries(targetResults?.moods ?? {}).map(([mood, tenses]) => (
+            <section key={mood} className={styles["conjugation-mood"]}>
+              <h4>{mood.replaceAll("-", " ")}</h4>
+              <div className={styles["conjugation-tenses"]}>
+                {Object.entries(tenses).map(([tense, forms]) => (
+                  <div key={tense} className={styles["conjugation-tense"]}>
+                    <h5>{tense.replaceAll("-", " ")}</h5>
+                    <ul>
+                      {forms.flatMap(({ c }) => c).map((form, index) => (
+                        <li key={index}>{form}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      </dialog>
     </section>
   );
 }

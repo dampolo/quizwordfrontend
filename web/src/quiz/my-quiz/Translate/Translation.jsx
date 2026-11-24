@@ -11,6 +11,7 @@ function Translation() {
   const navigate = useNavigate();
   const conjugationDialogRef = useRef(null);
   const [submittedTranslation, setSubmittedTranslation] = useState(null);
+  const [addAttempted, setAddAttempted] = useState(false);
   const [text, setText] = useState("");
   const { nativeLanguage, userLanguages = [] } = useVocabulary();
   const languageOptions = [nativeLanguage, ...userLanguages].filter(
@@ -51,6 +52,7 @@ function Translation() {
     if (loading || !text.trim() || !source.trim() || !target.trim()) {
       return;
     }
+    setAddAttempted(false);
     setSubmittedTranslation({ text: text.trim(), sourceId, targetId });
     await translate({
       text: text.trim(),
@@ -69,7 +71,11 @@ function Translation() {
       submittedTranslation.targetId === nativeId);
 
   function handleAdd() {
-    if (!canAdd || !includesNativeLanguage) {
+    if (!canAdd) {
+      return;
+    }
+    if (!includesNativeLanguage) {
+      setAddAttempted(true);
       return;
     }
     const translations = [
@@ -225,7 +231,7 @@ function Translation() {
           )}
 
           <div className={styles["action"]}>
-            {canAdd && !includesNativeLanguage && (
+            {addAttempted && canAdd && !includesNativeLanguage && (
               <p className={styles["info"]}>
                 {t("TRANSLATOR.NATIVE_LANGUAGE_REQUIRED")}
               </p>
@@ -233,7 +239,7 @@ function Translation() {
             <button
               type="button"
               className={`main-quiz-button ${styles["add-word"]}`}
-              disabled={!canAdd || !includesNativeLanguage}
+              disabled={!canAdd}
               onClick={handleAdd}
               aria-label={t("TRANSLATOR.ADD_WORD")}
             >

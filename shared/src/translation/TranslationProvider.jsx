@@ -9,7 +9,7 @@ export function TranslationProvider({ children, api: apiOverride, apiFetch: fetc
   const api = apiOverride ?? contextApi;
   const defaultFetch = useApiFetch(request, api);
   const apiFetch = fetchOverride ?? defaultFetch;
-  const [translatedText, setTranslatedText] = useState("");
+  const [translatedText, setTranslatedText] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -17,7 +17,7 @@ export function TranslationProvider({ children, api: apiOverride, apiFetch: fetc
   async function translate(translationData) {
     setLoading(true);
     setError("");
-    setTranslatedText("");
+    setTranslatedText(null);
 
     try {
       const response = await apiFetch(`${api}translate/`, {
@@ -42,7 +42,7 @@ export function TranslationProvider({ children, api: apiOverride, apiFetch: fetc
         throw new Error("Der Server hat keine gültige Übersetzung zurückgegeben.");
       }
 
-      setTranslatedText(data.translated_text);
+      setTranslatedText(data);
     } catch (error) {
       const message = error instanceof Error
         ? error.message

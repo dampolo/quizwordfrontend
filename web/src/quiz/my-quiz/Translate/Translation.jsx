@@ -41,10 +41,13 @@ function Translation() {
   );
 
   const { translate, translatedText, loading, error } = useTextTranslation();
+  const translatedWord = translatedText?.translated_text?.trim() ?? "";
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (loading || !text.trim() || !source.trim() || !target.trim()) return;
+    if (loading || !text.trim() || !source.trim() || !target.trim()) {
+      return;
+    }
     setSubmittedTranslation({ text: text.trim(), sourceId, targetId });
     await translate({
       text: text.trim(),
@@ -54,23 +57,28 @@ function Translation() {
   }
 
   const nativeId = String(nativeLanguage?.id ?? "");
-  const canAdd =
-    submittedTranslation && translatedText.trim() && !loading && !error;
+  const canAdd = Boolean(
+    submittedTranslation && translatedWord && !loading && !error,
+  );
   const includesNativeLanguage =
     submittedTranslation &&
     (submittedTranslation.sourceId === nativeId ||
       submittedTranslation.targetId === nativeId);
 
   function handleAdd() {
-    if (!canAdd || !includesNativeLanguage) return;
+    if (!canAdd || !includesNativeLanguage) {
+      return;
+    }
     const translations = [
       {
         language: submittedTranslation.sourceId,
         word: submittedTranslation.text,
       },
-      { language: submittedTranslation.targetId, word: translatedText.trim() },
+      { language: submittedTranslation.targetId, word: translatedWord },
     ];
-    if (translations[0].language !== nativeId) translations.reverse();
+    if (translations[0].language !== nativeId) {
+      translations.reverse();
+    }
     navigate("/my-quiz/add-new-word", { state: { translations } });
   }
 
@@ -109,7 +117,9 @@ function Translation() {
               />
             </div>
             <div className={styles["input-container"]}>
-              <label htmlFor="translation-source">{t("TRANSLATOR.SOURCE_LANGUAGE")}</label>
+              <label htmlFor="translation-source">
+                {t("TRANSLATOR.SOURCE_LANGUAGE")}
+              </label>
               <select
                 id="translation-source"
                 name="source"
@@ -138,7 +148,9 @@ function Translation() {
             </div>
 
             <div className={styles["input-container"]}>
-              <label htmlFor="translation-target">{t("TRANSLATOR.TARGET_LANGUAGE")}</label>
+              <label htmlFor="translation-target">
+                {t("TRANSLATOR.TARGET_LANGUAGE")}
+              </label>
               <select
                 id="translation-target"
                 name="target"
@@ -155,9 +167,7 @@ function Translation() {
               </select>
             </div>
             {sourceId && targetId && (!source || !target) && (
-              <p role="alert">
-                {t("TRANSLATOR.MISSING_LANGUAGE_CODE")}
-              </p>
+              <p role="alert">{t("TRANSLATOR.MISSING_LANGUAGE_CODE")}</p>
             )}
             <button
               type="submit"
@@ -179,12 +189,25 @@ function Translation() {
           aria-live="polite"
           aria-busy={loading}
         >
-          <h3>{t("TRANSLATOR.RESULT")}</h3>
+          <div className={styles["result-header"]}>
+            <h3>{t("TRANSLATOR.RESULT")}</h3>
+            <button
+              type="button"
+              className={styles["conjugation-button"]}
+              disabled={!translatedText?.target_conjugations}
+              aria-label={t("TRANSLATOR.CONJUGATIONS", { defaultValue: "Konjugationen" })}
+            >
+              <img src="/assets/table.svg" alt="" />
+            </button>
+          </div>
           {translatedText ? (
-            <p className={styles["translation-result"]}>{translatedText}</p>
+            <p className={styles["translation-result"]}>
+              {translatedText.translated_text}
+            </p>
           ) : (
             <span>---</span>
           )}
+
           <div className={styles["action"]}>
             {canAdd && !includesNativeLanguage && (
               <p className={styles["info"]}>

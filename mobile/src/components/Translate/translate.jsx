@@ -34,6 +34,7 @@ function languageKey(language) {
 export default function Translate() {
   const { nativeLanguage, userLanguages = [] } = useVocabulary();
   const { translate, translatedText, loading, error } = useTranslation();
+  const translatedWord = translatedText?.translated_text?.trim() ?? "";
   const [text, setText] = useState("");
   const [selectedSource, setSource] = useState(null);
   const [selectedTarget, setTarget] = useState(null);
@@ -65,7 +66,7 @@ export default function Translate() {
     (submitted.sourceId === nativeId || submitted.targetId === nativeId);
   const canSubmit = !loading && Boolean(text.trim() && source && target);
   const hasResult = Boolean(
-    submitted && translatedText.trim() && !loading && !error,
+    submitted && translatedWord && !loading && !error,
   );
   const canAdd =
     hasResult &&
@@ -105,8 +106,8 @@ export default function Translate() {
     router.navigate({
       pathname: "/my-quiz/add-new-word",
       params: {
-        sourceWord: nativeIsSource ? submitted.text : translatedText.trim(),
-        targetWord: nativeIsSource ? translatedText.trim() : submitted.text,
+        sourceWord: nativeIsSource ? submitted.text : translatedWord,
+        targetWord: nativeIsSource ? translatedWord : submitted.text,
         targetLanguage: nativeIsSource
           ? submitted.targetId
           : submitted.sourceId,
@@ -265,7 +266,7 @@ export default function Translate() {
               Übersetzung
             </Text>
             <Text selectable style={translateStyles.body}>
-              {hasResult ? translatedText : "---"}
+              {hasResult ? translatedWord : "---"}
             </Text>
             {hasResult && !includesNativeLanguage && (
               <Text style={translateStyles.body}>
